@@ -1,16 +1,21 @@
 import React from 'react';
 import { TabBar } from 'antd-mobile';
+import Home from '../components/home';
 
 class Index extends React.Component{
 	constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'redTab',
+      selectedTab: 'blueTab',
       hidden: false,
-      fullScreen: true,
+			fullScreen: true
     };
 	}
 
+	componentDidMount(){
+		
+	}
+	
   render() {
     return (
       <div style={this.state.fullScreen ? { position: 'fixed', height: '100vh', width: '100%', top: 0 } : { height: 400 }}>
@@ -43,7 +48,8 @@ class Index extends React.Component{
             }}
             data-seed="logId"
           >
-            第一个页面组件
+            {/* 第一个页面组件 */}
+						<Home />
           </TabBar.Item>
           <TabBar.Item
             icon={
