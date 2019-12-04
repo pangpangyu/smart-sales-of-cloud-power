@@ -1,0 +1,23 @@
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+import App from '../App.js';
+import Index from '../view/index';
+import ErrorPage from '../view/ErrorPage';
+
+export default class ROUTER extends React.Component{
+  render(){
+    return (
+      <Router>
+        <Route>
+          <App>
+            <Switch>
+              <Route exact path="/" component={Index}></Route>
+              <Route component={ErrorPage}></Route>
+            </Switch>
+          </App>
+        </Route>
+      </Router>
+    )
+  }
+}
