@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.less';
+import './assets/css/app.less';
 
 class App extends React.Component{
   render(){

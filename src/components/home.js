@@ -7,31 +7,47 @@ class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      carouselList: []
+      carouselList: [],
+      slideIndex:0
     }
   }
   componentDidMount(){
     const that = this
-    api.findOneInfoByLocation().then(res => {
-      if(res.status === 0){
-				that.setState({
-					carouselList:res.data.displayImages
-				})
-			}
+    // api.findOneInfoByLocation().then(res => {
+    //   if(res.status === 0){
+		// 		that.setState({
+		// 			carouselList:res.data.displayImages
+		// 		})
+		// 	}
+    // })
+    let arr = [
+      {url:require('../assets/img/banner.png'),name:'banner'},
+      {url:require('../assets/img/banner.png'),name:'banner'},
+      {url:require('../assets/img/banner.png'),name:'banner'}
+    ]
+    that.setState({
+      carouselList:arr
     })
 	}
   render(){
     return(
-      <div>
+      <div className="banner">
         <Carousel
           autoplay={false}
           infinite
-          beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-          afterChange={index => console.log('slide to', index)}
+          cellSpacing={8}
+          slideWidth={0.8}
+          dots={false}
+          afterChange={index => this.setState({ slideIndex: index })}
+          style={{padding:'20px 0',overflow:'inherit'}}
         >
           {this.state.carouselList.map((item,index) => (
-            <div key={index}>
-              <img src={ baseUrl + item.url } alt={item.name} style={{width:"100%"}}/>
+            <div 
+              className="banner-item"
+              key={index} 
+              style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',}}>
+              <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
+              {/* baseUrl +  */}
             </div>
           ))}
         </Carousel>
