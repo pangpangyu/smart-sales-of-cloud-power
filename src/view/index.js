@@ -26,18 +26,18 @@ class Index extends React.Component{
           hidden={this.state.hidden}
         >
           <TabBar.Item
-            title="Life"
-            key="Life"
+            title="首页"
+            key="home"
             icon={<div style={{
               width: '22px',
               height: '22px',
-              background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
+              background: "url(" + require('../assets/img/img013.png') + ") center center /  21px 19px no-repeat"}}
             />
             }
             selectedIcon={<div style={{
               width: '22px',
               height: '22px',
-              background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
+              background: "url(" + require('../assets/img/img013.png') + ") center center /  21px 19px no-repeat"}}
             />
             }
             selected={this.state.selectedTab === 'blueTab'}
@@ -48,7 +48,6 @@ class Index extends React.Component{
             }}
             data-seed="logId"
           >
-            {/* 第一个页面组件 */}
 						<Home />
           </TabBar.Item>
           <TabBar.Item
@@ -56,18 +55,18 @@ class Index extends React.Component{
               <div style={{
                 width: '22px',
                 height: '22px',
-                background: 'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat' }}
+                background: "url(" + require('../assets/img/img014.png') + ") center center /  21px 19px no-repeat"}}
               />
             }
             selectedIcon={
               <div style={{
                 width: '22px',
                 height: '22px',
-                background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat' }}
+                background: "url(" + require('../assets/img/img014.png') + ") center center /  21px 19px no-repeat"}}
               />
             }
-            title="Koubei"
-            key="Koubei"
+            title="云块"
+            key="yunkuai"
             selected={this.state.selectedTab === 'redTab'}
             onPress={() => {
               this.setState({
@@ -76,7 +75,6 @@ class Index extends React.Component{
             }}
             data-seed="logId1"
           >
-            
             第二个页面组件
           </TabBar.Item>
           <TabBar.Item
@@ -84,18 +82,18 @@ class Index extends React.Component{
               <div style={{
                 width: '22px',
                 height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
+                background: "url(" + require('../assets/img/img015.png') + ") center center /  21px 19px no-repeat"}}
               />
             }
             selectedIcon={
               <div style={{
                 width: '22px',
                 height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
+                background: "url(" + require('../assets/img/img015.png') + ") center center /  21px 19px no-repeat"}}
               />
             }
-            title="Friend"
-            key="Friend"
+            title="赞品"
+            key="good"
             selected={this.state.selectedTab === 'greenTab'}
             onPress={() => {
               this.setState({
@@ -106,9 +104,21 @@ class Index extends React.Component{
             第三个页面组件
           </TabBar.Item>
           <TabBar.Item
-            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
-            title="My"
+            icon={
+              <div style={{
+                width: '22px',
+                height: '22px',
+                background: "url(" + require('../assets/img/img016.png') + ") center center /  21px 19px no-repeat"}}
+              />
+            }
+            selectedIcon={
+              <div style={{
+                width: '22px',
+                height: '22px',
+                background: "url(" + require('../assets/img/img016.png') + ") center center /  21px 19px no-repeat"}}
+              />
+            }
+            title="我的"
             key="my"
             selected={this.state.selectedTab === 'yellowTab'}
             onPress={() => {
