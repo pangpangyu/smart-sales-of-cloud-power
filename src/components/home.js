@@ -12,7 +12,18 @@ class Home extends React.Component{
       carouselList: [],
       slideIndex:0,
       menuList:[
-        { id:1,name:'',url:'' }
+        { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/' },
+        { id:2 ,name:'客户管理',url:require('../assets/img/img002.png'),link:'/' },
+        { id:3 ,name:'合同管理',url:require('../assets/img/img003.png'),link:'/' },
+        { id:4 ,name:'结算管理',url:require('../assets/img/img004.png'),link:'/' },
+        { id:5 ,name:'电量跟踪',url:require('../assets/img/img005.png'),link:'/' },
+        { id:6 ,name:'经营分析',url:require('../assets/img/img006.png'),link:'/' },
+        { id:7 ,name:'考勤管理',url:require('../assets/img/img007.png'),link:'/' },
+        { id:8 ,name:'信息发布',url:require('../assets/img/img008.png'),link:'/' },
+        { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/' },
+        { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'/' },
+        { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/' },
+        { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/' }
       ]
     }
   }
@@ -81,17 +92,20 @@ class Home extends React.Component{
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
-        {/* <Grid data={data1}
+        <Grid data={this.state.menuList}
           columnNum={4}
-          renderItem={dataItem => (
-            <div style={{ padding: '12.5px' }}>
-              <img src={dataItem.icon} style={{ width: '75px', height: '75px' }} alt="" />
-              <div style={{ color: '#888', fontSize: '14px', marginTop: '12px' }}>
-                <span>I am title..</span>
-              </div>
+          hasLine={false}
+          renderItem={item => (
+            <div style={{padding:'5px 0'}}>
+              <Link to={item.link}>
+                <img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
+                <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
+                  <span>{item.name}</span>
+                </div>
+              </Link>
             </div>
           )}
-        /> */}
+        />
       </div>
     )
   }
