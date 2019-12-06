@@ -7,7 +7,7 @@ export default class NewList extends React.Component{
     super(props)
     this.state = {
       companyNewList:[
-        { id: 1,title:'山西电力市场合同电量转让交易公告', time:'8分钟前', isNew: true },
+        { id: 1,title:'山西电力市场合同电量转让交易公告山西电力市场合同电量转让交易公告', time:'8分钟前', isNew: true },
         { id: 2,title:'山西电力市场合同电量转让交易公告', time:'20分钟前', isNew: true },
         { id: 3,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
         { id: 4,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
@@ -37,9 +37,9 @@ export default class NewList extends React.Component{
         <Header title={'公司公告'} back={true} search={false}/>
         <div className="company-search-view">
           <div className="company-search">
-            <from onSubmit={(e) => this.getSearchTxt(e)}>
+            <form onSubmit={(e) => this.getSearchTxt(e)}>
               <input type="search" placeholder="搜公告标题、内容、介绍" onChange={(e) => this.getSearchData(e.target.value)}/>
-            </from>
+            </form>
           </div>
         </div>
         <div className="company-new-list" style={{paddingTop:'74px'}}>
@@ -51,10 +51,11 @@ export default class NewList extends React.Component{
                           <div className="time">发布时间：{item.time}</div>
                         </div>
                         <div className="new">
-                          <span>new</span>
-                          <i className="iconfont "></i>
+                          { item.isNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
+                          <i className="iconfont iconyou"></i>
                         </div>
                       </Link>
+                      <div style={{background:'#f0f1f3',height:'11px'}}></div>
                     </div>
           }) }
         </div>
