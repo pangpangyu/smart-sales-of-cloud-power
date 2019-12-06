@@ -23,7 +23,7 @@ class Home extends React.Component{
         { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/' },
         { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'/' },
         { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/' },
-        { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/' }
+        { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/newList' }
       ]
     }
   }
