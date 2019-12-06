@@ -18,7 +18,7 @@ class Index extends React.Component{
 	
   render() {
     return (
-      <div style={this.state.fullScreen ? { position: 'fixed', height: '100vh', width: '100%', top: 0 } : { height: 400 }}>
+      <div style={this.state.fullScreen ? { position: 'fixed', height: '100vh', width: '100%', top: 0, background: '#fff' } : { height: 400 }}>
         <TabBar
           unselectedTintColor="#949494"
           tintColor="#33A3F4"
