@@ -6,6 +6,7 @@ import Index from '../view/index';
 import NewList from '../view/newList';
 import TodoList from '../view/todolist';
 import TodoDet from '../view/todoDet';
+import NewDetaile from '../view/newDetaile';
 import ErrorPage from '../view/ErrorPage';
 
 export default class ROUTER extends React.Component{
@@ -17,6 +18,7 @@ export default class ROUTER extends React.Component{
             <Switch>
               <Route exact path="/" component={Index}></Route>
               <Route path="/newList" component={NewList}></Route>
+              <Route path="/newDetaile/:id" component={NewDetaile}></Route>
               <Route path="/todolist" component={TodoList}></Route>
               <Route path="/todoDet" component={TodoDet}></Route>
               <Route component={ErrorPage}></Route>

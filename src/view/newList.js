@@ -45,7 +45,7 @@ export default class NewList extends React.Component{
         <div className="company-new-list" style={{paddingTop:'74px'}}>
           { this.state.companyNewList.map(item => {
             return  <div key={item.id} className="item">
-                      <Link to="/">
+                      <Link to={`/newDetaile/${item.id}`}>
                         <div className="info">
                           <div className="title">{item.title}</div>
                           <div className="time">发布时间：{item.time}</div>
