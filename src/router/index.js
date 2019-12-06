@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import App from '../App.js';
 import Index from '../view/index';
+import NewList from '../view/newList';
 import ErrorPage from '../view/ErrorPage';
 
 export default class ROUTER extends React.Component{
@@ -13,6 +14,7 @@ export default class ROUTER extends React.Component{
           <App>
             <Switch>
               <Route exact path="/" component={Index}></Route>
+              <Route path="/newList" component={NewList}></Route>
               <Route component={ErrorPage}></Route>
             </Switch>
           </App>
