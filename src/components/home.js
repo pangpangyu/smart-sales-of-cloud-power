@@ -37,7 +37,7 @@ class Home extends React.Component{
   render(){
     return(
       <div>
-        <Header title={'首页'} back={true} search={true}/>
+        <Header title={'首页'} back={false} search={false}/>
         <div className="banner">
           <Carousel
             autoplay={false}
