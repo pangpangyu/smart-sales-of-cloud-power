@@ -1,15 +1,19 @@
 import React from 'react';
-import { Carousel } from 'antd-mobile';
+import { Carousel, Grid  } from 'antd-mobile';
 // import api from '../api/index';
 // import { baseUrl } from '../config/index';
 import { Link } from 'react-router-dom';
+import Header from '../components/header';
 
 class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       carouselList: [],
-      slideIndex:0
+      slideIndex:0,
+      menuList:[
+        { id:1,name:'',url:'' }
+      ]
     }
   }
   componentDidMount(){
@@ -33,6 +37,7 @@ class Home extends React.Component{
   render(){
     return(
       <div>
+        <Header title={'首页'} back={true} search={true}/>
         <div className="banner">
           <Carousel
             autoplay={false}
@@ -41,6 +46,7 @@ class Home extends React.Component{
             slideWidth={0.8}
             dots={false}
             afterChange={index => this.setState({ slideIndex: index })}
+            style={{height:'180px'}}
           >
             {this.state.carouselList.map((item,index) => (
               <div 
@@ -75,6 +81,17 @@ class Home extends React.Component{
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        {/* <Grid data={data1}
+          columnNum={4}
+          renderItem={dataItem => (
+            <div style={{ padding: '12.5px' }}>
+              <img src={dataItem.icon} style={{ width: '75px', height: '75px' }} alt="" />
+              <div style={{ color: '#888', fontSize: '14px', marginTop: '12px' }}>
+                <span>I am title..</span>
+              </div>
+            </div>
+          )}
+        /> */}
       </div>
     )
   }
