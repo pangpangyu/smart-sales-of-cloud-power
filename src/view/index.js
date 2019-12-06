@@ -1,7 +1,6 @@
 import React from 'react';
 import { TabBar } from 'antd-mobile';
 import Home from '../components/home';
-import ContractManage from '../components/contractManage';
 
 class Index extends React.Component{
 	constructor(props) {
@@ -79,7 +78,6 @@ class Index extends React.Component{
           >
             
             第二个页面组件
-           
           </TabBar.Item>
           <TabBar.Item
             icon={
