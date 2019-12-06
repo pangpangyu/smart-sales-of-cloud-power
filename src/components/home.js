@@ -12,7 +12,7 @@ class Home extends React.Component{
       carouselList: [],
       slideIndex:0,
       menuList:[
-        { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/' },
+        { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/contractManage' },
         { id:2 ,name:'客户管理',url:require('../assets/img/img002.png'),link:'/' },
         { id:3 ,name:'合同管理',url:require('../assets/img/img003.png'),link:'/' },
         { id:4 ,name:'结算管理',url:require('../assets/img/img004.png'),link:'/' },
@@ -51,13 +51,14 @@ class Home extends React.Component{
         <Header title={'首页'} back={false} search={false}/>
         <div className="banner">
           <Carousel
-            autoplay={false}
-            infinite
             cellSpacing={8}
             slideWidth={0.8}
             dots={false}
+            autoplay
+            infinite
+            autoplayInterval={3000}
             afterChange={index => this.setState({ slideIndex: index })}
-            style={{height:'180px'}}
+            style={{minHeight:'180px'}}
           >
             {this.state.carouselList.map((item,index) => (
               <div 
