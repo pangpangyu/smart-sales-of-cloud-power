@@ -127,6 +127,60 @@
                 }
             }
         }
+        &.contpd{
+            padding: 0 0 10px;
+            .det_list{
+                li{
+                    border-top: 10px solid #f0f1f3;
+                    padding: 0 15px;
+                    &:first-child{
+                        border-top: none;
+                    }
+                    .title{
+                        line-height: 54px;
+                        border-bottom: 1px solid #f0f1f3;
+                        p{
+                            font-size: 15px;
+                        }
+                    }
+                    .web{
+                        position: relative;
+                        padding: 10px 0;
+                        p{
+                            line-height: 25px;
+                            font-size: 12px;
+                            span{
+                                color: #999;
+                            }
+                        }
+                        .result{
+                            position: absolute;
+                            top: 50%;
+                            right: 0;
+                            transform: translateY(-50%);
+                            text-align: center;
+                            span{
+                                display: block;
+                                height: 30px;
+                                line-height: 30px;
+                                border-radius: 30px;
+                                width: 92px;
+                                font-size: 12px;
+                                color: #fff;
+                                background: -webkit-linear-gradient(left, #82baf9, #288dfd); ;
+                            }
+                            p{
+                                color: #a6bcd4;
+                                &.on{
+                                    color: #fd0119;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
     }
     .f_btn{
         position: fixed;
@@ -138,15 +192,15 @@
         height: 44px;
         line-height: 44px;
         background: #288dfd;
-        a{
+        .btn{
             display: block;
             flex: 1;
             font-size: 15px;
             color: #fff;
             border-left: 1px solid #a6bcd4;
-        }
-        &::first-child{
-            border-left: none;
+            &:first-child{
+                border-left: none;
+            }
         }
     }
 }

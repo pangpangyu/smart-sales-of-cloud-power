@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../components/header'
+import { Button } from 'antd-mobile';
 
 export default class Todolist extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ export default class Todolist extends React.Component {
                         </div>
                     </div>
                     <div className="f_btn">
-                        <a href="#">关闭</a>
+                    <Button className="btn" type="primary">关闭</Button>
                     </div>
                 </div>
             </div>
