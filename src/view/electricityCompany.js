@@ -123,7 +123,7 @@ export default class ElectricityCompany extends React.Component{
         { this.state.companyList &&  this.state.companyList.map(item => {
           return  <div key={item.id}>
                     <div className="electricityCompany-item">
-                      <Link to={`/electricityCompanyInfo/${this.state.type}/${item.id}`}>
+                      <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}`}>
                         <div className="info">
                           <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.companyName}</p>
                           <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.name}</span>{item.tel}</p>

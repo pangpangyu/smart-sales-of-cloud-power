@@ -12,6 +12,7 @@ import TodoDet from '../view/todoDet';
 import TodoDetLc from '../view/todoDetLc';
 import TodoDetList from '../view/todoDetList';
 import NewDetaile from '../view/newDetaile';
+import HouserNum from '../view/houseNum';
 import Customer from '../view/customer';
 import ElectricityCompany from '../view/electricityCompany';
 import Survey from '../view/survey';
@@ -36,7 +37,7 @@ export default class ROUTER extends React.Component{
               {/*type  1为公司公告  2为消息提醒  */}
               <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
               {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
-              <Route path="/electricityCompanyDetail/:type/:id" component={ElectricityCompanyDetail}></Route>
+              <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
               <Route path="/customer" component={Customer}></Route>
               <Route path="/todolist" component={TodoList}></Route>
               <Route path="/todoDet" component={TodoDet}></Route>
