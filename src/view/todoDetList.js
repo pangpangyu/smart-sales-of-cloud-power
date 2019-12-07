@@ -15,19 +15,12 @@ export default class Todolist extends React.Component {
                 <div className="tododet">
                     <div className="top">
                         <h3>山西电力合同审核流程图</h3>
-                        <p>[流程编号]</p>
                     </div>
                     <div className="cont">
-                        <div className="process">
-                            <p>办理意见 请签批</p>
-                            <div className="img">
-                                <img src={require('../assets/img/img202.jpg')}></img>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div className="f_btn">
-                        <a href="#">流程轨迹</a>
-                        <a href="#">流程图</a>
+                        <a href="#">关闭</a>
                     </div>
                 </div>
             </div>

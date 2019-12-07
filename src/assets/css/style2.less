@@ -37,6 +37,7 @@
         line-height: 30px; 
         padding: 10px 0; 
         h3{ 
+            font-weight: bold;
             font-size: 16px; 
             color: #2b2a30; 
         }
@@ -46,7 +47,7 @@
         }
     }
     .cont{ 
-        padding: 0 20px; 
+        padding: 0 20px 10px; 
         background: #fff; 
         border-top: 10px solid #f0f1f3;
         .step_list{ 
@@ -112,6 +113,20 @@
                 }
             }
         }
+
+        .process{
+            padding-top: 20px;
+            p{
+                font-size: 15px;
+            }
+            .img{
+                margin-top: 20px;
+                img{
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
     }
     .f_btn{
         position: fixed;
@@ -128,6 +143,10 @@
             flex: 1;
             font-size: 15px;
             color: #fff;
+            border-left: 1px solid #a6bcd4;
+        }
+        &::first-child{
+            border-left: none;
         }
     }
 }
