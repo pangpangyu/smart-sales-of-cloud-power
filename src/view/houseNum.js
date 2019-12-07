@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import ContractAttachment from './contractAttachment';
+import AccountManagement from './accountManagement';
 import PowerDetails from './powerDetails';
 import { Tabs, View } from 'antd-mobile';
 
@@ -40,7 +41,11 @@ export default class Todolist extends React.Component {
         }
         this.state = {
             tabs: tabs,
-            title: title
+            title: title,
+            userList:[
+                { id:1, name:'张三', c:true, email:'Test01@163.com', tel:'13546789898', account:'XXZHANGSAN', birthday:'12月31日' },
+                { id:2, name:'李四', c:false, email:'Test01@163.com', tel:'13546789898', account:'XXZHANGSAN', birthday:'12月31日' }
+            ]
         }
     }
     render() {
@@ -70,6 +75,14 @@ export default class Todolist extends React.Component {
                             <View>
                                 {/*  合同内容  */}
                                 <PowerDetails />
+                            </View>
+                            <View>
+                                {/*  附件信息  */}
+                                <ContractAttachment />
+                            </View>
+                            <View>
+                                {/*  账户管理  */}
+                                <AccountManagement userList={this.state.userList}/>
                             </View>
                             <View>
                                 {/*  附件信息  */}
