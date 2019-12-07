@@ -32,7 +32,9 @@ class ContractMes extends React.Component {
         return (
             <Fragment>
                 <div className="contract-mes">
-                    <ModuleTit title="合同基本信息" imgurl={img1} />
+                    <ModuleTit title="合同基本信息" imgurl={img1} >            
+                    </ModuleTit>
+                   
                     <div className="module-list">
                         <ul>
                             <li className="item">

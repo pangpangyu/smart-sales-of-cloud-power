@@ -9,11 +9,13 @@ class ContractManage extends React.Component{
         this.state = {
             contractManageList:[
                 {
+                    id:1,
                     tit:'01信息技术公司2019补充协议',
                     m1:'1000',
                     m2:'2018-01-01~2019-12-30'
                 },
                 {
+                    id:2,
                     tit:'01信息技术公司2019补充协议',
                     m1:'1000',
                     m2:'2018-01-01~2019-12-30'
@@ -34,7 +36,7 @@ class ContractManage extends React.Component{
                    this.state.contractManageList.map((item,index)=>{
                        return(
                         <li className="item" key={index}>
-                            <Link to="/">
+                            <Link to={`/contractDetail/${item.id}`}>
                                 <div className="tit">{item.tit}</div> 
                                 <div className="mes">
                                     <span>签约电量：</span>{item.m1}兆瓦时

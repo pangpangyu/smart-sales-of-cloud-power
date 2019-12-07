@@ -6,6 +6,7 @@ import Index from '../view/index';
 import NewList from '../view/newList';
 import ContractManage from '../view/contractManage';
 import ContractDetail from '../view/contractDetail';
+import ContractReview from '../view/contractReview';
 import TodoList from '../view/todolist';
 import TodoDet from '../view/todoDet';
 import TodoDetLc from '../view/todoDetLc';
@@ -25,7 +26,8 @@ export default class ROUTER extends React.Component{
               <Route exact path="/" component={Index}></Route>
               <Route path="/newList/:type" component={NewList}></Route>
               <Route path="/contractManage" component={ContractManage}></Route>
-              <Route path="/contractDetail" component={ContractDetail}></Route>
+              <Route path="/contractDetail/:id" component={ContractDetail}></Route>
+              <Route path="/contractReview" component={ContractReview}></Route>
               <Route path="/newDetaile/:id" component={NewDetaile}></Route>
               <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
               {/*type  1为公司公告  2为消息提醒  */}
