@@ -14,6 +14,7 @@ import TodoDetList from '../view/todoDetList';
 import NewDetaile from '../view/newDetaile';
 import Customer from '../view/customer';
 import ElectricityCompany from '../view/electricityCompany';
+import Survey from '../view/survey';
 import ErrorPage from '../view/ErrorPage';
 
 export default class ROUTER extends React.Component{
@@ -25,6 +26,7 @@ export default class ROUTER extends React.Component{
             <Switch>
               <Route exact path="/" component={Index}></Route>
               <Route path="/newList/:type" component={NewList}></Route>
+              <Route path="/survey" component={Survey}></Route>
               <Route path="/contractManage" component={ContractManage}></Route>
               <Route path="/contractDetail/:id" component={ContractDetail}></Route>
               <Route path="/contractReview" component={ContractReview}></Route>
