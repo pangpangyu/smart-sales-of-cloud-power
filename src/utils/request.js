@@ -1,7 +1,7 @@
 import axios from 'axios'
 var request = axios.create({})
 
-request.defaults.baseURL = process.env === "product" ? "/" : "/"
+request.defaults.baseURL = process.env === "product" ? "/api/" : "/"
 request.defaults.timeout = 60000
 request.defaults.withCredentials = true
 request.defaults.crossDomain = true
