@@ -1,6 +1,9 @@
 import React from 'react';
 import Header from '../components/header';
-
+/**
+ * 公司公告详情
+ * 消息提醒详情
+ */
 export default class NewDetaile extends React.Component{
   constructor(props){
     super(props)

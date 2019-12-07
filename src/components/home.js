@@ -5,6 +5,9 @@ import { Carousel, Grid  } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
+/**
+ * 首页
+ */
 class Home extends React.Component{
   constructor(props){
     super(props)

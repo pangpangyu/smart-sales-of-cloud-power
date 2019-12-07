@@ -3,6 +3,10 @@ import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import { AliveScope } from 'react-activation';
 
+/**
+ * 公司公告列表
+ * 消息提醒列表
+ */
 export default class NewList extends React.Component{
   constructor(props){
     super(props)
