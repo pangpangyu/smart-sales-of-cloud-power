@@ -5,7 +5,7 @@ import F2 from '@antv/f2'
  * 售电概况
  */
 
-export default class Survey extends React.Component{
+class Survey extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -160,12 +160,13 @@ export default class Survey extends React.Component{
      </div>
     )
   }
- 
+
 }
 
+export default Survey;
 
 
 
 
 
- 
+
