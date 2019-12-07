@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel, Grid  } from 'antd-mobile';
-// import api from '../api/index';
-// import { baseUrl } from '../config/index';
+import api from '../api/index';
+import { baseImgUrl } from '../config/index';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
@@ -12,7 +12,10 @@ class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      carouselList: [],
+      carouselList: [
+        { id:1, url:require('../assets/img/banner.png'), name:'banner' },
+        { id:1, url:require('../assets/img/banner.png'), name:'banner' }
+      ],
       slideIndex:0,
       menuList:[
         { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/contractManage' },
@@ -32,21 +35,13 @@ class Home extends React.Component{
   }
   componentDidMount(){
     const that = this
-    // api.findOneInfoByLocation().then(res => {
+    // api.GetHomeCarouselList({}).then(res => {
     //   if(res.status === 0){
 		// 		that.setState({
 		// 			carouselList:res.data.displayImages
 		// 		})
 		// 	}
     // })
-    let arr = [
-      {url:require('../assets/img/banner.png'),name:'banner'},
-      {url:require('../assets/img/banner.png'),name:'banner'},
-      {url:require('../assets/img/banner.png'),name:'banner'}
-    ]
-    that.setState({
-      carouselList:arr
-    })
 	}
   render(){
     return(
@@ -69,8 +64,8 @@ class Home extends React.Component{
                 key={index} >
                   <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',}}>
                     <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
+                    {/* baseImgUrl +  */}
                   </div>
-                {/* baseUrl +  */}
               </div>
             ))}
           </Carousel>
