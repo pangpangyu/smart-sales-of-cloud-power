@@ -18,9 +18,10 @@ export default class ROUTER extends React.Component{
           <App>
             <Switch>
               <Route exact path="/" component={Index}></Route>
-              <Route path="/newList" component={NewList}></Route>
+              <Route path="/newList/:type" component={NewList}></Route>
               <Route path="/contractManage" component={ContractManage}></Route>
-              <Route path="/newDetaile/:id" component={NewDetaile}></Route>
+              <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
+              {/*type  1为公司公告  2为消息提醒  */}
               <Route path="/todolist" component={TodoList}></Route>
               <Route path="/todoDet" component={TodoDet}></Route>
               <Route component={ErrorPage}></Route>

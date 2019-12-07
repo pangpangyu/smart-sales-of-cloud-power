@@ -44,23 +44,23 @@ export default class NewList extends React.Component{
           </div>
         </div>
         <div className="company-new-list" style={{paddingTop:'74px'}}>
-          { this.state.companyNewList.map(item => {
-            return  <AliveScope>
-                      <div key={item.id} className="item">
-                        <Link to={`/newDetaile/${item.id}`}>
-                          <div className="info">
-                            <div className="title">{item.title}</div>
-                            <div className="time">发布时间：{item.time}</div>
-                          </div>
-                          <div className="new">
-                            { item.isNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
-                            <i className="iconfont iconyou"></i>
-                          </div>
-                        </Link>
-                        <div style={{background:'#f0f1f3',height:'11px'}}></div>
-                      </div>
-                    </AliveScope>
-          }) }
+          <AliveScope>
+            { this.state.companyNewList.map(item => {
+                return  <div key={item.id} className="item">
+                          <Link to={`/newDetaile/${item.id}`}>
+                            <div className="info">
+                              <div className="title">{item.title}</div>
+                              <div className="time">发布时间：{item.time}</div>
+                            </div>
+                            <div className="new">
+                              { item.isNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
+                              <i className="iconfont iconyou"></i>
+                            </div>
+                          </Link>
+                          <div style={{background:'#f0f1f3',height:'11px'}}></div>
+                        </div>
+            }) }
+          </AliveScope>
         </div>
       </div>
     )
