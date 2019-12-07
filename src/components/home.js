@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel, Grid  } from 'antd-mobile';
-import api from '../api/index';
-import { baseImgUrl } from '../config/index';
+// import api from '../api/index';
+// import { baseImgUrl } from '../config/index';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
@@ -12,9 +12,11 @@ class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
+      imgHeight: 140,
       carouselList: [
         { id:1, url:require('../assets/img/banner.png'), name:'banner' },
-        { id:1, url:require('../assets/img/banner.png'), name:'banner' }
+        { id:2, url:require('../assets/img/banner.png'), name:'banner' },
+        { id:3, url:require('../assets/img/banner.png'), name:'banner' }
       ],
       slideIndex:0,
       menuList:[
@@ -48,27 +50,30 @@ class Home extends React.Component{
       <div>
         <Header title={'首页'} back={false} search={false}/>
         <div className="banner">
-          <Carousel
-            cellSpacing={8}
-            slideWidth={0.8}
-            dots={false}
-            autoplay
-            infinite
-            autoplayInterval={3000}
-            afterChange={index => this.setState({ slideIndex: index })}
-            style={{minHeight:'180px'}}
-          >
-            {this.state.carouselList.map((item,index) => (
-              <div 
-                className="banner-item"
-                key={index} >
-                  <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',}}>
-                    <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
-                    {/* baseImgUrl +  */}
+          {
+            (this.state.carouselList && this.state.carouselList.length) && 
+            <Carousel
+                cellSpacing={8}
+                slideWidth={0.8}
+                dots={false}
+                autoplay
+                infinite
+                autoplayInterval={3000}
+                afterChange={index => this.setState({ slideIndex: index })}
+                style={{minHeight:'180px'}}
+              >
+                {this.state.carouselList.map((item,index) => (
+                  <div 
+                    className="banner-item"
+                    key={index} >
+                      <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',height:this.state.imgHeight}}>
+                        <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
+                        {/* baseImgUrl +  */}
+                      </div>
                   </div>
-              </div>
-            ))}
-          </Carousel>
+                ))}
+              </Carousel>
+          }
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="new-abstract">
