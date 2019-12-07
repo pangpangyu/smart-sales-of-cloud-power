@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/header';
 import { Link } from 'react-router-dom';
+import NoData from '../components/noData';
 /**
  * 售电公司
  */
@@ -135,6 +136,7 @@ export default class ElectricityCompany extends React.Component{
                     <div style={{height:'10px',background:'#f0f1f3'}}></div>
                   </div>
         })}
+        { !this.state.companyList && <NoData /> }
       </div>
     )
   }
