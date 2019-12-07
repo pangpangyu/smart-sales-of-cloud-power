@@ -5,13 +5,207 @@ const api = {
     return request.post('nuts/login',params)
   },
   //首页轮播图列表
-  findOneInfoByLocation(params){
+  GetHomeCarouselList(params){
     return request.get('system/official/findOneInfoByLocation?location=index_picture')
   },
-  //消息提醒
-  systemMessageListData(params){
-    return request.post('systemMessageListData?hasHandled=false')
-  }
+  //获取轮播图片
+  GetCarouselDownload(params){
+    return request.get('nuts/file/download/' + params)
+  },
+  //首页消息提醒  其他消息页面也可以用这个
+  GetNewList(params){
+    //{"rowNumber":0,"pageSize":5}
+    return request.post('systemMessageListData?hasHandled=false',params)
+  },
+  //公司公告列表
+  GetCompanyNoticeList(params){
+    return request.get('nuts/crud/find/models_nuts_WebPage' + params)
+  },
+  //公司公告详情
+  GetCompanyNoticeDetail(params){
+    return request.get('internalWeb/findContent' + params)
+  },
+  //待办事项列表
+  GetScheduleList(params){
+    //{"rowNumber":0,"pageSize":5}
+    return request.get('nuts/crud/processTask' + params)
+  },
+  //售电情况总览
+  GetTabControlData(params){
+    return request.post('admin/getTabControlData' , params)
+  },
+  //电力用户查询基础数据获取
+  GetPowerUserAdvancedSearchOptions(params){
+    return request.get('admin/compamy/getPowerUserAdvancedSearchOptions')
+  },
+  //电力用户列表
+  GetPowerUsersList(params){
+    return request.post('admin/company/crud/advancedSearchListPowerUser',params)
+  },
+  //电力用户详情基本信息
+  GetPowerUsersDetail(params){
+    return request.get('admin/company/crud/getPowerUserByIdForUpdate'+params)
+  },
+  //户号信息
+  GetPowerUsersMemberInfo(params){
+    return request.get('admin/company/crud/getPowerTradeInfoTableData'+params)
+  },
+  //账号管理
+  GetPowerUsersMemberManage(params){
+    return request.get('admin/company/crud/getCompanyStaffTableData'+params)
+  },
+  //年度预计电量
+  GetPowerYearEstimate(params){
+    return request.get('admin/company/crud/getYearPowerTableData'+params)
+  },
+  //发电厂客户列表
+  GetPowerPlantList(params){
+    return request.post('admin/company/crud/supplierlistData',params)
+  },
+  //发电厂客户详情
+  GetPowerPlantDetail(params){
+    return request.get('admin/company/crud/getPowerSupplierByIdForUpdate'+params)
+  },
+  //机组成本
+  GetPowerPlantCost(params){
+    return request.get('admin/company/crud/getPowerGeneratorTableData'+params)
+  },
+  //交易信息
+  GetPowerPlantTransactionInfo(params){
+    return request.get('admin/company/crud/getUnitCostTableData'+params)
+  },
+  //合作方客户列表
+  GetPartnersList(params){
+    return request.post('/admin/company/crud/supplierlistData',params)
+  },
+  //合作方客户详情
+  GetPartnersUserDetail(params){
+    return request.get('admin/company/crud/getPartnerByIdForUpdate'+params)
+  },
+  //合作方账号管理
+  GetPartnersUserMemberManage(params){
+    return request.get('admin/company/crud/getCompanyStaffTableData'+params)
+  },
+  //售电公司客户列表
+  GetSellingElectricityList(params){
+    return request.get('admin/market/advancedSearchListPowerCompany'+params)
+  },
+  //售电公司客户详情
+  GetSellingElectricityDetail(params){
+    return request.get('admin/company/crud/getPowerByIdForUpdate'+params)
+  },
+  //售电合同列表
+  GetContractList(params){
+    return request.post('admin/contract/getPowerUserContract',params)
+  },
+  //售电合同详情
+  GetContractDetail(params){
+    return request.get('admin/contract/powerUserContractView'+params)
+  },
+  //合同word导出
+  GetContractDownloadWord(params){
+    return request.get('nuts/crud/contract/wordTransForm'+params)
+  },
+  //合同Pdf导出
+  GetContractDownloadPDF(params){
+    return request.get('nuts/crud/contract/PdfTransform'+params)
+  },
+  //电量跟踪列表
+  GetRealtimePowerTableData(params){
+    return request.post('admin/trade/getRealtimePowerTableData',params)
+  },
+  //电量对比分析
+  GetElecData(params){
+    return request.post('admin/tradeElecAnalysis/getElecData',params)
+  },
+  //交易电量分析  ---和上面接口一样  待定---
+  GetElecData2(params){
+    return request.post('admin/tradeElecAnalysis/getElecData',params)
+  },
+  //购电成本分析
+  GetBuyPowerCostAnalysis(params){
+    return request.post('admin/costAnalysis/getData',params)
+  },
+  //收益分析
+  GetRevenueAnalysis(params){
+    return request.post('admin/business/getAnnualProfitAnalysis',params)
+  },
+  //考勤列表
+  GetLeaveTableData(params){
+    return request.post('admin/attendance/getLeaveTableData',params)
+  },
+  //获取考勤部门信息
+  GetDefaultPersonalInfo(params){
+    return request.get('admin/attendance/getDefaultPersonalInfo'+params)
+  },
+  //请假类型
+  GetleaveTypeOptions(params){
+    return request.get('admin/attendance/getleaveTypeOptions'+params)
+  },
+  //请假审批状态
+  GetAuditTypeOptions(params){
+    return request.get('admin/attendance/getAuditTypeOptions'+params)
+  },
+  //保存请假
+  GetSaveLeave(params){
+    return request.post('admin/attendance/oneleaveSave',params)
+  },
+  //提交请假
+  GetSubmitLeave(params){
+    return request.post('admin/attendance/submitSign',params)
+  },
+  //信息列表
+  GetInfoPublishData(params){
+    return request.post('admin/getInfoPublishData',params)
+  },
+  //信息详情   新建时候发布位置type=create  修改时候发布位置type=modify
+  GetInfoPublishDataDetail(params){
+    return request.get('/admin/system/getOneInfoPublishData'+params)
+  },
+  //撤销发布
+  CencalpublishSubmit(params){
+    return request.get('admin/system/cencalpublishSubmit'+params)
+  },
+  //修改保存 ???
+  SetSaveEdit(params){
+    return request.get('nuts/crud/save/models_system_InfoPublish')
+  },
+  //附件、图片上传
+  UploadFile(params){
+    return request.get('nuts/file/upload')
+  },
+  //消息状态
+  getByEnum(params){
+    return request.get('selectOption/getByEnum'+params)
+  },
+  //公告信息列表
+  getNoticeList(params){
+    return request.post('/market/trade/notice/search',params)
+  },
+  //结果信息列表
+  getResultList(params){
+    return request.get('market/trade/result/search'+params)
+  },
+  //结果信息详情
+  getResultDetail(params){
+    return request.get('market/trade/unified/search'+params)
+  },
+  //备用信息列表
+  GetBackupList(params){
+    return request.get('market/trade/backup/search'+params)
+  },
+  //输变电检修信息列表
+  GetSubstationList(params){
+    return request.get('market/trade/substation/search'+params)
+  },
+  //阻塞信息列表
+  GetBlackList(params){
+    return request.get('market/trade/black/search'+params)
+  },
+  //必开必停信息列表
+  GetBeginAndStopList(params){
+    return request.get('/market/trade/start_stop/search'+params)
+  },
 }
 
 export default api

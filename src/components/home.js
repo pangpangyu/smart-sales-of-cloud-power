@@ -32,15 +32,12 @@ class Home extends React.Component{
   }
   componentDidMount(){
     const that = this
-    api.findOneInfoByLocation({}).then(res => {
+    api.GetHomeCarouselList({}).then(res => {
       if(res.status === 0){
 				that.setState({
 					carouselList:res.data.displayImages
 				})
 			}
-    })
-    api.systemMessageListData({}).then(res => {
-      
     })
 	}
   render(){
