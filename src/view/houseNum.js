@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/header'
 import ContractAttachment from './contractAttachment';
 import AccountManagement from './accountManagement';
+import AnnualEstimatedPower from './annualEstimatedPower';
 import PowerDetails from './powerDetails';
 import { Tabs, View } from 'antd-mobile';
 
@@ -85,8 +86,8 @@ export default class Todolist extends React.Component {
                                 <AccountManagement userList={this.state.userList}/>
                             </View>
                             <View>
-                                {/*  附件信息  */}
-                                <ContractAttachment />
+                                {/*  年预计电量  */}
+                                <AnnualEstimatedPower />
                             </View>
                         </Tabs>
                     </div>
