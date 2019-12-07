@@ -12,9 +12,9 @@ export default class NewList extends React.Component{
     super(props)
     console.log(this.props.match.params.type)
     let title = "消息"
-    if(this.props.match.params.type == 1){
+    if(this.props.match.params.type === 1){
       title = '公司公告'
-    }else if(this.props.match.params.type == 2){
+    }else if(this.props.match.params.type === 2){
       title = '消息提醒'
     }
     this.state = {

@@ -35,7 +35,7 @@ export default class customer extends React.Component{
         </div>
         <div style={{height:'10px'}}></div>
         <div className="customer-item">
-          <Link to="/">
+          <Link to="/electricityCompany">
             <div className="icon"><i className="iconfont iconshoudiangongsi"></i></div>
             <div className="title">售电公司信息</div>
             <i className="iconfont iconyou"></i>

@@ -72,20 +72,20 @@ code {
   font-size: 18px;
   color: #ffffff;
   z-index: 1;
-  .title{
+  .header-title{
     margin:0 40px 0 40px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .back{
+  .header-back{
     position: absolute;
     left: 0;
     top:0;
     width: 40px;
     cursor: pointer;
   }
-  .search{
+  .header-search{
     position: absolute;
     right: 0;
     top:0;
@@ -246,4 +246,61 @@ code {
     }
   }
 }
-
+.electricityCompany{
+  .title{
+    text-align: center;
+    background: #fff;
+    padding:20px 0;
+    &>div{
+      display: inline-block;
+      margin:0 20px;
+      vertical-align: top;
+      .iconfont{
+        display: inline-block;
+        font-size: 34px;
+        color: #94c0f4;
+        line-height: 39px;
+      }
+    }
+  }
+  .electricityCompany-search{
+    background: #fff;
+    padding:20px 15px;
+    .search-input{
+      background: #e8ecf0;
+      line-height: 36px;
+      height: 36px;
+      border-radius: 18px;
+      padding:0 18px;
+      input{
+        width:100%;
+        background:#e8ecf0 url('../img/img017.png') no-repeat left center;
+        background-size:auto 16px;
+        line-height: 30px;
+        height: 30px;
+        font-size: 12px;
+        color: #333;
+        border:none;
+        padding-left: 20px;
+      }
+    }
+  }
+  .electricityCompany-item{
+    background: #fff;
+    padding:20px 15px;
+    a{
+      display: flex;
+      align-items: center;
+      .info{
+        width: 0;
+        flex: 1;
+      }
+      .address{
+        width: 100px;
+        text-align: right;
+        color: #94c0f4;
+        font-size: 11px;
+      }
+    }
+  }
+}
