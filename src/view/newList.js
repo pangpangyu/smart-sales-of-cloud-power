@@ -1,8 +1,10 @@
 import React from 'react';
 import Header from '../components/header';
 import { Link } from 'react-router-dom';
-import { AliveScope } from 'react-activation';
-
+import api from '../api/index';
+import {
+  KeepAlive
+} from 'react-keep-alive';
 /**
  * 公司公告列表
  * 消息提醒列表
@@ -33,6 +35,31 @@ export default class NewList extends React.Component{
     }
   }
 
+  componentDidMount(){
+    const that = this
+    
+    let params = {
+      "rowNumber": 0,
+      "pageSize": 5,
+      "conditions": [
+        {
+          "name": "",
+          "value": "",
+          "operator": ""
+        }
+      ],
+      "orders": [
+        {
+          "order": "",
+          "name": ""
+        }
+      ]
+    }
+    api.GetCompanyNoticeList(params).then(res => {
+
+    })
+  }
+
   getSearchData = (val) => {
     this.setState({
       search:val
@@ -48,6 +75,7 @@ export default class NewList extends React.Component{
     return (
       <div style={{background:'#fff'}}>
         <Header title={this.state.title} back={true} search={false}/>
+        <KeepAlive name="NewList">
         <div className="company-search-view">
           <div className="company-search">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
@@ -56,7 +84,6 @@ export default class NewList extends React.Component{
           </div>
         </div>
         <div className="company-new-list" style={{paddingTop:'74px'}}>
-          <AliveScope>
             { this.state.companyNewList.map(item => {
                 return  <div key={item.id} className="item">
                           <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
@@ -72,8 +99,8 @@ export default class NewList extends React.Component{
                           <div style={{background:'#f0f1f3',height:'11px'}}></div>
                         </div>
             }) }
-          </AliveScope>
         </div>
+        </KeepAlive>
       </div>
     )
   }

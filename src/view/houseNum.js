@@ -49,6 +49,9 @@ export default class Todolist extends React.Component {
             ]
         }
     }
+    componentDidMount(){
+        document.documentElement.scrollTop = document.body.scrollTop =0;
+    }
     render() {
         return (
             <div style={{ minHeight: '100vh', background: '#f0f1f3' }}>

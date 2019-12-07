@@ -19,7 +19,7 @@ const api = {
   },
   //公司公告列表
   GetCompanyNoticeList(params){
-    return request.get('nuts/crud/find/models_nuts_WebPage' + params)
+    return request.get('nuts/crud/find/models_nuts_WebPage',{params:params})
   },
   //公司公告详情
   GetCompanyNoticeDetail(params){

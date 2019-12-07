@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import NoData from '../components/noData';
+import api from '../api/index';
 /**
  * 售电公司
  */
@@ -28,16 +29,49 @@ export default class ElectricityCompany extends React.Component{
       title: title,
       type: this.props.match.params.type,
       search: search,
-      companyList: [
-        { id:1, companyName:'信息技术股份有限公司信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市太原市' },
-        { id:2, companyName:'信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市' },
-        { id:3, companyName:'信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市' },
-        { id:4, companyName:'信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市' },
-        { id:5, companyName:'信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市' },
-        { id:6, companyName:'信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市' },
-        { id:7, companyName:'信息技术股份有限公司', name:'张三', tel:'15987861235', address:'太原市' }
+      companyList: [],
+      pageIndex:0,
+      total:0
+    }
+  }
+  componentDidMount(){
+    const that = this
+    if(that.state.type === '1'){
+      that.getPowerUserList()
+    }
+  }
+  //获取电力用户
+  getPowerUserList = () => {
+    const that = this
+    let params = {
+      "rowNumber": that.state.pageIndex,
+      "pageSize": 10,
+      "conditions": [
+        {
+          "operator": "",
+          "name": "",
+          "value": ""
+        },
+        {
+          "operator": "",
+          "name": "",
+          "value": ""
+        },
+        {
+          "operator": "",
+          "name": "",
+          "value": ""
+        }
       ]
     }
+    api.GetPowerUsersList(params).then(res => {
+      if(res.status === 0){
+        that.setState({
+          companyList:res.data.rows,
+          total:res.data.rowCount
+        })
+      }
+    })
   }
   //售电
   sellingElectricity = () => {
@@ -46,7 +80,7 @@ export default class ElectricityCompany extends React.Component{
         <div className="title">
           <div><i className="iconfont iconshoudiangongsi"></i></div>
           <div>
-            <p style={{fontSize:'23px',color:'#288dfd'}}>4335</p>
+            <p style={{fontSize:'23px',color:'#288dfd'}}>{ this.state.total }</p>
             <p style={{fontSize:'11px',color:'#999999',paddingTop:'4px'}}>售电公司总数</p>
           </div>
         </div>
@@ -66,7 +100,7 @@ export default class ElectricityCompany extends React.Component{
         <div className="title">
           <div><i className="iconfont iconziyuan"></i></div>
           <div>
-            <p style={{fontSize:'23px',color:'#288dfd'}}>4335</p>
+            <p style={{fontSize:'23px',color:'#288dfd'}}>{ this.state.total }</p>
             <p style={{fontSize:'11px',color:'#999999',paddingTop:'4px'}}>发电企业总数</p>
           </div>
         </div>
@@ -81,7 +115,7 @@ export default class ElectricityCompany extends React.Component{
         <div className="title">
           <div><i className="iconfont iconziyuan1"></i></div>
           <div>
-            <p style={{fontSize:'23px',color:'#288dfd'}}>4335</p>
+            <p style={{fontSize:'23px',color:'#288dfd'}}>{ this.state.total }</p>
             <p style={{fontSize:'11px',color:'#999999',paddingTop:'4px'}}>合作方总数</p>
           </div>
         </div>
@@ -101,7 +135,7 @@ export default class ElectricityCompany extends React.Component{
         <div className="title">
           <div style={{lineHeight:'39px'}}><img src={ require('../assets/img/img019.png') } style={{display:'inline-block',verticalAlign:'middle'}} alt=""/></div>
           <div>
-            <p style={{fontSize:'23px',color:'#288dfd'}}>4335</p>
+            <p style={{fontSize:'23px',color:'#288dfd'}}>{ this.state.total }</p>
             <p style={{fontSize:'11px',color:'#999999',paddingTop:'4px'}}>用电企业总数</p>
           </div>
         </div>
@@ -112,31 +146,30 @@ export default class ElectricityCompany extends React.Component{
   render(){
     return(
       <div style={{minHeight:'100vh',background:'#f0f1f3'}} className="electricityCompany">
+          <Header title={this.state.title} back={true} search={this.state.search}/>
 
-        <Header title={this.state.title} back={true} search={this.state.search}/>
-
-        { this.state.type === '1' && this.powerUsers() }
-        { this.state.type === '2' && this.electricityGeneration() }
-        { this.state.type === '3' && this.partners() }
-        { this.state.type === '4' && this.sellingElectricity() }
-        
-        { this.state.companyList &&  this.state.companyList.map(item => {
-          return  <div key={item.id}>
-                    <div className="electricityCompany-item">
-                      <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}`}>
-                        <div className="info">
-                          <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.companyName}</p>
-                          <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.name}</span>{item.tel}</p>
-                        </div>
-                        <div className="address">
-                          { item.address }
-                        </div>
-                      </Link>
+          { this.state.type === '1' && this.powerUsers() }
+          { this.state.type === '2' && this.electricityGeneration() }
+          { this.state.type === '3' && this.partners() }
+          { this.state.type === '4' && this.sellingElectricity() }
+          
+          { this.state.companyList &&  this.state.companyList.map(item => {
+            return  <div key={item.id}>
+                      <div className="electricityCompany-item">
+                        <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}`}>
+                          <div className="info">
+                            <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.name}</p>
+                            <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                          </div>
+                          <div className="address">
+                            { item.adminRegion }
+                          </div>
+                        </Link>
+                      </div>
+                      <div style={{height:'10px',background:'#f0f1f3'}}></div>
                     </div>
-                    <div style={{height:'10px',background:'#f0f1f3'}}></div>
-                  </div>
-        })}
-        { !this.state.companyList && <NoData /> }
+          })}
+          { !this.state.companyList && <NoData /> }
       </div>
     )
   }

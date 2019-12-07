@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel, Grid  } from 'antd-mobile';
-// import api from '../api/index';
-// import { baseImgUrl } from '../config/index';
+import api from '../api/index';
+import { baseImgUrl } from '../config/index';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
@@ -13,11 +13,8 @@ class Home extends React.Component{
     super(props)
     this.state = {
       imgHeight: 140,
-      carouselList: [
-        { id:1, url:require('../assets/img/banner.png'), name:'banner' },
-        { id:2, url:require('../assets/img/banner.png'), name:'banner' },
-        { id:3, url:require('../assets/img/banner.png'), name:'banner' }
-      ],
+      carouselList: [],
+      newList:[],
       slideIndex:0,
       menuList:[
         { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/survey' },
@@ -37,21 +34,40 @@ class Home extends React.Component{
   }
   componentDidMount(){
     const that = this
-    // api.GetHomeCarouselList({}).then(res => {
-    //   if(res.status === 0){
-		// 		that.setState({
-		// 			carouselList:res.data.displayImages
-		// 		})
-		// 	}
-    // })
-	}
+    document.documentElement.scrollTop = document.body.scrollTop =0;
+    that.GetHomeCarouselList()
+    that.GetNewList()
+  }
+  GetHomeCarouselList = () => {
+    const that = this
+    api.GetHomeCarouselList({}).then(res => {
+      if(res.status === 0){
+				that.setState({
+					carouselList:res.data.displayImages
+				})
+			}
+    })
+  }
+  GetNewList = () => {
+    const that = this
+    let params = {"rowNumber":0,"pageSize":5}
+    api.GetNewList(params).then(res => {
+      if(res.status === 0){
+        that.setState({
+          newList:res.data.rows
+        })
+      }
+    })
+  }
+
+
   render(){
     return(
       <div>
         <Header title={'首页'} back={false} search={false}/>
-        <div className="banner">
+        <div className="banner" style={{height:'180px'}}>
           {
-            (this.state.carouselList && this.state.carouselList.length) && 
+            this.state.carouselList && 
             <Carousel
                 cellSpacing={8}
                 slideWidth={0.8}
@@ -67,8 +83,7 @@ class Home extends React.Component{
                     className="banner-item"
                     key={index} >
                       <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',height:this.state.imgHeight}}>
-                        <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
-                        {/* baseImgUrl +  */}
+                        <img src={ baseImgUrl + item.url } alt={item.name} style={{width:"100%"}}/>
                       </div>
                   </div>
                 ))}
@@ -76,24 +91,28 @@ class Home extends React.Component{
           }
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
-        <div className="new-abstract">
-          <i className="iconfont iconxiaoxi"></i>
-          <div className="new-abstract">
-          <Carousel className="my-carousel"
-            vertical
-            dots={false}
-            dragging={false}
-            swiping={false}
-            autoplay
-            infinite
-            autoplayInterval={3000}
-            resetAutoplay={false}
-          >
-            {['ringringringringringringringringringringringringringringringringringringringring', 'ruby', 'iPhone', 'iPod', 'sorry', 'tourism', 'coke', 'ticket', 'note'].map(type => (
-              <div className="v-item" key={type}><Link to="/newList/1">{type}</Link></div>
-            ))}
-          </Carousel>
-          </div>
+        <div style={{height:'50px',overflow:'hidden'}}>
+          { this.state.newList &&  
+            <div className="new-abstract">
+              <i className="iconfont iconxiaoxi"></i>
+              <div className="new-abstract">
+                <Carousel className="my-carousel"
+                  vertical
+                  dots={false}
+                  dragging={false}
+                  swiping={false}
+                  autoplay
+                  infinite
+                  autoplayInterval={3000}
+                  resetAutoplay={false}
+                >
+                  {this.state.newList.map(item => (
+                    <div className="v-item" key={item.id}><Link to="/newList/1">{item.title}</Link></div>
+                  ))}
+                </Carousel>
+              </div>
+            </div>
+          }
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <Grid data={this.state.menuList}

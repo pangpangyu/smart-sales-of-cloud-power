@@ -1,0 +1,15 @@
+export function setCookies(key,val,time){
+  let date = new Date();
+  let expiresDays = time;
+  date.setTime(date.getTime()+expiresDays*24*3600*1000); 
+  let dm = document.domain;
+  let dmArr = dm.split('.')
+  if(dm === 'localhost'){
+    dm = dm;
+  }else if(dmArr.length === 4 && dm.indexOf('192.168') > -1){
+    dm = dm;
+  }else if(dmArr.length >=2 && dm.indexOf('.com') > -1){
+    dm = dmArr.slice(-2).join('.');
+  }
+  document.cookie=`${key}=${val};expires=${date.toGMTString()};domain=${dm}`;
+}

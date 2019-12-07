@@ -1,8 +1,11 @@
 import axios from 'axios'
-
 var request = axios.create({})
 
 request.defaults.baseURL = process.env === "product" ? "/" : "/"
+request.defaults.timeout = 60000
+request.defaults.withCredentials = true
+request.defaults.crossDomain = true
+
 request.interceptors.request.use(
   config => {
     return config
