@@ -5,6 +5,9 @@ import { Carousel, Grid  } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
+/**
+ * 首页
+ */
 class Home extends React.Component{
   constructor(props){
     super(props)
@@ -12,8 +15,8 @@ class Home extends React.Component{
       carouselList: [],
       slideIndex:0,
       menuList:[
-        { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/' },
-        { id:2 ,name:'客户管理',url:require('../assets/img/img002.png'),link:'/' },
+        { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/contractManage' },
+        { id:2 ,name:'客户管理',url:require('../assets/img/img002.png'),link:'/customer' },
         { id:3 ,name:'合同管理',url:require('../assets/img/img003.png'),link:'/' },
         { id:4 ,name:'结算管理',url:require('../assets/img/img004.png'),link:'/' },
         { id:5 ,name:'电量跟踪',url:require('../assets/img/img005.png'),link:'/' },
@@ -22,8 +25,8 @@ class Home extends React.Component{
         { id:8 ,name:'信息发布',url:require('../assets/img/img008.png'),link:'/' },
         { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/' },
         { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'/' },
-        { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/' },
-        { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/newList' }
+        { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/todolist' },
+        { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/newList/1' }
       ]
     }
   }
@@ -51,13 +54,14 @@ class Home extends React.Component{
         <Header title={'首页'} back={false} search={false}/>
         <div className="banner">
           <Carousel
-            autoplay={false}
-            infinite
             cellSpacing={8}
             slideWidth={0.8}
             dots={false}
+            autoplay
+            infinite
+            autoplayInterval={3000}
             afterChange={index => this.setState({ slideIndex: index })}
-            style={{height:'180px'}}
+            style={{minHeight:'180px'}}
           >
             {this.state.carouselList.map((item,index) => (
               <div 
@@ -86,7 +90,7 @@ class Home extends React.Component{
             resetAutoplay={false}
           >
             {['ringringringringringringringringringringringringringringringringringringringring', 'ruby', 'iPhone', 'iPod', 'sorry', 'tourism', 'coke', 'ticket', 'note'].map(type => (
-              <div className="v-item" key={type}><Link to="/newList">{type}</Link></div>
+              <div className="v-item" key={type}><Link to="/newList/1">{type}</Link></div>
             ))}
           </Carousel>
           </div>

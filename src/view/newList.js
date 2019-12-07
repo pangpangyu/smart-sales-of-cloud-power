@@ -1,11 +1,24 @@
 import React from 'react';
 import Header from '../components/header';
 import { Link } from 'react-router-dom';
+import { AliveScope } from 'react-activation';
 
+/**
+ * 公司公告列表
+ * 消息提醒列表
+ */
 export default class NewList extends React.Component{
   constructor(props){
     super(props)
+    let title = "消息"
+    if(this.props.match.params.type === '1'){
+      title = '公司公告'
+    }else if(this.props.match.params.type === '2'){
+      title = '消息提醒'
+    }
     this.state = {
+      title:title,
+      type:this.props.match.params.type || 0,
       companyNewList:[
         { id: 1,title:'山西电力市场合同电量转让交易公告山西电力市场合同电量转让交易公告', time:'8分钟前', isNew: true },
         { id: 2,title:'山西电力市场合同电量转让交易公告', time:'20分钟前', isNew: true },
@@ -34,7 +47,7 @@ export default class NewList extends React.Component{
   render(){
     return (
       <div style={{background:'#fff'}}>
-        <Header title={'公司公告'} back={true} search={false}/>
+        <Header title={this.state.title} back={true} search={false}/>
         <div className="company-search-view">
           <div className="company-search">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
@@ -43,21 +56,23 @@ export default class NewList extends React.Component{
           </div>
         </div>
         <div className="company-new-list" style={{paddingTop:'74px'}}>
-          { this.state.companyNewList.map(item => {
-            return  <div key={item.id} className="item">
-                      <Link to={`/newDetaile/${item.id}`}>
-                        <div className="info">
-                          <div className="title">{item.title}</div>
-                          <div className="time">发布时间：{item.time}</div>
+          <AliveScope>
+            { this.state.companyNewList.map(item => {
+                return  <div key={item.id} className="item">
+                          <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
+                            <div className="info">
+                              <div className="title">{item.title}</div>
+                              <div className="time">发布时间：{item.time}</div>
+                            </div>
+                            <div className="new">
+                              { item.isNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
+                              <i className="iconfont iconyou"></i>
+                            </div>
+                          </Link>
+                          <div style={{background:'#f0f1f3',height:'11px'}}></div>
                         </div>
-                        <div className="new">
-                          { item.isNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
-                          <i className="iconfont iconyou"></i>
-                        </div>
-                      </Link>
-                      <div style={{background:'#f0f1f3',height:'11px'}}></div>
-                    </div>
-          }) }
+            }) }
+          </AliveScope>
         </div>
       </div>
     )

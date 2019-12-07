@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabBar } from 'antd-mobile';
 import Home from '../components/home';
+import NoData from '../components/noData';
 
 class Index extends React.Component{
 	constructor(props) {
@@ -24,6 +25,7 @@ class Index extends React.Component{
           tintColor="#33A3F4"
           barTintColor="white"
           hidden={this.state.hidden}
+          prerenderingSiblingsNumber={0}
         >
           <TabBar.Item
             title="首页"
@@ -69,13 +71,13 @@ class Index extends React.Component{
             key="yunkuai"
             selected={this.state.selectedTab === 'redTab'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'redTab',
-              });
+              // this.setState({
+              //   selectedTab: 'redTab',
+              // });
             }}
             data-seed="logId1"
           >
-            第二个页面组件
+            <NoData />
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -96,9 +98,9 @@ class Index extends React.Component{
             key="good"
             selected={this.state.selectedTab === 'greenTab'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-              });
+              // this.setState({
+              //   selectedTab: 'greenTab',
+              // });
             }}
           >
             第三个页面组件
@@ -122,9 +124,9 @@ class Index extends React.Component{
             key="my"
             selected={this.state.selectedTab === 'yellowTab'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'yellowTab',
-              });
+              // this.setState({
+              //   selectedTab: 'yellowTab',
+              // });
             }}
           >
             第四个页面组件
@@ -133,11 +135,6 @@ class Index extends React.Component{
       </div>
 		);
 	}
-	// render(){
-	// 	return(
-	// 		<div>123</div>
-	// 	)
-	// }
 }
 
 export default Index;
