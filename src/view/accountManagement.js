@@ -14,7 +14,7 @@ export default class AccountManagement extends React.Component{
     return(
       <div className="module-list2">
         { this.props.userList && this.props.userList.map(item => {
-          return  <div style={{marginBottom:'20px'}}>
+          return  <div style={{marginBottom:'20px'}} key={item.id}>
                     <Link to={`/account/${item.id}`}>
                       <div className="title" style={{fontSize:'15px',color:'#2b2a30',padding:'12px 15px'}}>{item.name} {item.c ? '(常)':''} </div>
                       <div className="item">

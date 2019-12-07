@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../components/header';
-import Item from 'antd-mobile/lib/popover/Item';
 /**
  * 账户信息
  */

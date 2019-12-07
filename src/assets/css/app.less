@@ -385,15 +385,39 @@ code {
     }
   }
 }
-.chooes-year{
-  display: flex;
-  padding:10px 15px;
-  &>div{
-    flex: 1;
-    font-size: 15px;
-    color: #2b2a30;
-    &.r{
-      text-align: right;
+.annualEstimatedPower{
+  .chooes-year{
+    display: flex;
+    padding:10px 15px;
+    &>div{
+      flex: 1;
+      font-size: 15px;
+      color: #2b2a30;
+      &.r{
+        text-align: right;
+      }
+    }
+  }
+  .m-list{
+    padding:0 15px;
+    ul{
+      li{
+        width: 25%;
+        float: left;
+        text-align: center;
+        margin-bottom: 30px;
+        .p1{
+          font-size: 11px;
+          color: #2b2a30;
+        }
+        .p2{
+          background: #f0f1f3;
+          font-size: 16px;
+          color: #288dfd;
+          line-height: 40px;
+          margin-top: 6px;
+        }
+      }
     }
   }
 }
