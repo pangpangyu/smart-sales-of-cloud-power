@@ -12,7 +12,10 @@ class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      carouselList: [],
+      carouselList: [
+        { id:1, url:require('../assets/img/banner.png'), name:'banner' },
+        { id:1, url:require('../assets/img/banner.png'), name:'banner' }
+      ],
       slideIndex:0,
       menuList:[
         { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/contractManage' },
@@ -32,13 +35,13 @@ class Home extends React.Component{
   }
   componentDidMount(){
     const that = this
-    api.GetHomeCarouselList({}).then(res => {
-      if(res.status === 0){
-				that.setState({
-					carouselList:res.data.displayImages
-				})
-			}
-    })
+    // api.GetHomeCarouselList({}).then(res => {
+    //   if(res.status === 0){
+		// 		that.setState({
+		// 			carouselList:res.data.displayImages
+		// 		})
+		// 	}
+    // })
 	}
   render(){
     return(
@@ -60,7 +63,8 @@ class Home extends React.Component{
                 className="banner-item"
                 key={index} >
                   <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',}}>
-                    <img src={ baseImgUrl + item.url } alt={item.name} style={{width:"100%"}}/>
+                    <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
+                    {/* baseImgUrl +  */}
                   </div>
               </div>
             ))}
