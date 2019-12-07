@@ -7,6 +7,7 @@ import NewList from '../view/newList';
 import ContractManage from '../view/contractManage';
 import TodoList from '../view/todolist';
 import TodoDet from '../view/todoDet';
+import TodoDetLc from '../view/todoDetLc';
 import NewDetaile from '../view/newDetaile';
 import Customer from '../view/customer';
 import ElectricityCompany from '../view/electricityCompany';
@@ -28,6 +29,7 @@ export default class ROUTER extends React.Component{
               <Route path="/customer" component={Customer}></Route>
               <Route path="/todolist" component={TodoList}></Route>
               <Route path="/todoDet" component={TodoDet}></Route>
+              <Route path="/todoDetLc" component={TodoDetLc}></Route>
               <Route component={ErrorPage}></Route>
             </Switch>
           </App>
