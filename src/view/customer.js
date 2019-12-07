@@ -11,7 +11,7 @@ export default class customer extends React.Component{
       <div style={{minHeight:'100vh',background:'#f0f1f3'}}>
         <Header title={'客户管理'} back={true} search={false}/>
         <div className="customer-item">
-          <Link to="/">
+          <Link to="/electricityCompany/1">
             <div className="icon icon1"></div>
             <div className="title">电力用户信息</div>
             <i className="iconfont iconyou"></i>
@@ -19,7 +19,7 @@ export default class customer extends React.Component{
         </div>
         <div style={{height:'10px'}}></div>
         <div className="customer-item">
-          <Link to="/">
+          <Link to="/electricityCompany/2">
             <div className="icon"><i className="iconfont iconziyuan"></i></div>
             <div className="title">发电厂信息</div>
             <i className="iconfont iconyou"></i>
@@ -27,7 +27,7 @@ export default class customer extends React.Component{
         </div>
         <div style={{height:'10px'}}></div>
         <div className="customer-item">
-          <Link to="/">
+          <Link to="/electricityCompany/3">
             <div className="icon"><i className="iconfont iconziyuan1"></i></div>
             <div className="title">合作方信息</div>
             <i className="iconfont iconyou"></i>
@@ -35,7 +35,7 @@ export default class customer extends React.Component{
         </div>
         <div style={{height:'10px'}}></div>
         <div className="customer-item">
-          <Link to="/electricityCompany">
+          <Link to="/electricityCompany/4">
             <div className="icon"><i className="iconfont iconshoudiangongsi"></i></div>
             <div className="title">售电公司信息</div>
             <i className="iconfont iconyou"></i>

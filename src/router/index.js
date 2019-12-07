@@ -26,7 +26,8 @@ export default class ROUTER extends React.Component{
               <Route path="/contractManage" component={ContractManage}></Route>
               <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
               {/*type  1为公司公告  2为消息提醒  */}
-              <Route path="/electricityCompany" component={ElectricityCompany}></Route>
+              <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
+              {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
               <Route path="/customer" component={Customer}></Route>
               <Route path="/todolist" component={TodoList}></Route>
               <Route path="/todoDet" component={TodoDet}></Route>
