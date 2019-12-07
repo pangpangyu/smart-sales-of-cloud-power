@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel, Grid  } from 'antd-mobile';
-// import api from '../api/index';
-// import { baseUrl } from '../config/index';
+import api from '../api/index';
+import { baseImgUrl } from '../config/index';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
@@ -32,20 +32,15 @@ class Home extends React.Component{
   }
   componentDidMount(){
     const that = this
-    // api.findOneInfoByLocation().then(res => {
-    //   if(res.status === 0){
-		// 		that.setState({
-		// 			carouselList:res.data.displayImages
-		// 		})
-		// 	}
-    // })
-    let arr = [
-      {url:require('../assets/img/banner.png'),name:'banner'},
-      {url:require('../assets/img/banner.png'),name:'banner'},
-      {url:require('../assets/img/banner.png'),name:'banner'}
-    ]
-    that.setState({
-      carouselList:arr
+    api.findOneInfoByLocation({}).then(res => {
+      if(res.status === 0){
+				that.setState({
+					carouselList:res.data.displayImages
+				})
+			}
+    })
+    api.systemMessageListData({}).then(res => {
+      
     })
 	}
   render(){
@@ -68,9 +63,8 @@ class Home extends React.Component{
                 className="banner-item"
                 key={index} >
                   <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',}}>
-                    <img src={ item.url } alt={item.name} style={{width:"100%"}}/>
+                    <img src={ baseImgUrl + item.url } alt={item.name} style={{width:"100%"}}/>
                   </div>
-                {/* baseUrl +  */}
               </div>
             ))}
           </Carousel>
