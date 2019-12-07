@@ -1,15 +1,36 @@
 import React from 'react';
-import { List, Drawer } from 'antd-mobile';
+// import { List, Picker } from 'antd-mobile';
 /**
  * 年预计电量
  */
+
+const CustomChildren = props => (
+  <div
+    onClick={props.onClick}
+    style={{ backgroundColor: '#fff', paddingLeft: 15 }}
+  >
+    <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
+      <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
+      <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
+    </div>
+  </div>
+);
 
 export default class annualEstimatedPower extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       year: '2019',
-      pickerList: ['2019','2018','2017','2016'],
+      pickerList: [
+        {
+          label: '2013',
+          value: '2013',
+        },
+        {
+          label: '2014',
+          value: '2014',
+        },
+      ],
       open:false
     }
   }
