@@ -10,7 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #fff;
+  background: #fff !important;
 }
 div,ul,input{
   box-sizing:border-box;
@@ -23,6 +23,13 @@ code {
     monospace;
 }
 
+//主色
+@mainblack:#2b2a30;
+@maingray:#999;
+@mainblue:#288dfd;
+@borderline:#f7f7f7;
+@mainbggray:#f0f1f3;
+
 // 背景色
 .bg{
   position:fixed;
@@ -33,7 +40,7 @@ code {
   right:0;
 }
 .bg-gray{
-  background-color:#f0f1f3;
+  background-color:@mainbggray;
 }
 
 //搜索框
@@ -58,6 +65,63 @@ code {
     font-size:20px;
     color:#999;
   }
+}
+
+//模块标题
+.module-tit-wrap{
+  display: flex;
+  align-items: center;
+  margin:0 15px;
+  padding:20px 0;
+  background-color:#fff;
+  border-bottom:1px solid @borderline;
+  color:@mainblack;
+  .img-icon{
+    margin-right:5px;
+    width: 17px;
+  }
+  .tit{
+    font-size:15px;
+    color:@mainblack;
+    font-weight: bold;
+  }
+}
+
+//模块左右信息排版
+.module-list{
+  .item{
+    display: flex;
+    align-content: center;
+    margin:0 15px;
+    padding:20px 0;
+    font-size:14px;
+    border-bottom:1px solid @borderline;
+    .l{
+      color:@maingray;
+      
+    }
+    .r{
+      flex:1;
+      text-align: right;
+      color:@mainblack;
+    }
+  }
+}
+
+//模块间空格条
+.module-space{
+  height:10px;
+  background-color:@mainbggray;
+}
+
+//tab
+.am-tabs-default-bar-underline{
+  border:none !important;
+  transform:translate3d(0, -5px, 0) !important;
+  background:url('../img/img103.png') center no-repeat;
+  height:3px;
+  width: 20px;
+  
 }
 
 .header{

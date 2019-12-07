@@ -5,6 +5,7 @@ import App from '../App.js';
 import Index from '../view/index';
 import NewList from '../view/newList';
 import ContractManage from '../view/contractManage';
+import ContractDetail from '../view/contractDetail';
 import TodoList from '../view/todolist';
 import TodoDet from '../view/todoDet';
 import NewDetaile from '../view/newDetaile';
@@ -20,6 +21,7 @@ export default class ROUTER extends React.Component{
               <Route exact path="/" component={Index}></Route>
               <Route path="/newList" component={NewList}></Route>
               <Route path="/contractManage" component={ContractManage}></Route>
+              <Route path="/contractDetail" component={ContractDetail}></Route>
               <Route path="/newDetaile/:id" component={NewDetaile}></Route>
               <Route path="/todolist" component={TodoList}></Route>
               <Route path="/todoDet" component={TodoDet}></Route>

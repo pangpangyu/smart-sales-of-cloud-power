@@ -1,5 +1,4 @@
 // 合同管理
-@mainblack:#2b2a30;
 .contract-manage-wrap{
     .contract-manage-list{
         .item{
@@ -9,7 +8,7 @@
             .tit{
                 font-size:15px;
                 font-weight: bold;
-                color:#2b2a30;
+                color:@mainblack;
             }
             .mes{
                 margin-top:15px;
@@ -18,6 +17,59 @@
                     color:#999;
                 }
             }
+        }
+    }
+}
+
+//合同电量信息
+.contract-battery-list{
+    margin:0 15px;
+    .item{
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        text-align:center;
+        font-size:13px;
+        color:@mainblack;
+        border-bottom: 1px solid @borderline;
+        &.head{
+            color:@maingray;
+        }
+        .num{
+            width: 10%;
+        }
+        .info{
+            flex:1;
+            padding:0 10px;
+        }
+        .amount{
+            width: 15%;
+        }
+    }
+}
+
+//合同附件
+.contract-attachment-list{
+    margin:0 15px;
+    .item{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding:15px 0;
+        border-bottom:1px solid @borderline;
+        font-size:15px;
+        .l{
+            width: 110px;
+            color:@maingray;
+        }
+        .m{
+            padding:0 10px;
+            flex:1;
+            color:@mainblack;
+            text-align: center;
+        }
+        .r{
+            color:@mainblue;
         }
     }
 }

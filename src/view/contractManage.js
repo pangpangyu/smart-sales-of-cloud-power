@@ -19,7 +19,6 @@ class ContractManage extends React.Component{
                 },
             ],
         }
-        this.handleItem=this.handleItem.bind(this)
     }
 
     render(){
@@ -52,7 +51,7 @@ class ContractManage extends React.Component{
     }
 
     //
-    handleItem(){
+    handleItem = () =>{
         console.log(this)
     }
 }
