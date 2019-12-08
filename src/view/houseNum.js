@@ -1,10 +1,12 @@
 import React from 'react'
 import Header from '../components/header'
-import ContractAttachment from './contractAttachment';
+import HouseholdInfo from './householdInfo';
 import AccountManagement from './accountManagement';
 import AnnualEstimatedPower from './annualEstimatedPower';
 import PowerDetails from './powerDetails';
 import { Tabs, View } from 'antd-mobile';
+import { PickerView } from 'antd-mobile';
+import { Button } from 'antd-mobile';
 
 export default class Todolist extends React.Component {
     constructor(props) {
@@ -43,14 +45,54 @@ export default class Todolist extends React.Component {
         this.state = {
             tabs: tabs,
             title: title,
-            userList:[
-                { id:1, name:'张三', c:true, email:'Test01@163.com', tel:'13546789898', account:'XXZHANGSAN', birthday:'12月31日' },
-                { id:2, name:'李四', c:false, email:'Test01@163.com', tel:'13546789898', account:'XXZHANGSAN', birthday:'12月31日' }
+            userList: [
+                { id: 1, name: '张三', c: true, email: 'Test01@163.com', tel: '13546789898', account: 'XXZHANGSAN', birthday: '12月31日' },
+                { id: 2, name: '李四', c: false, email: 'Test01@163.com', tel: '13546789898', account: 'XXZHANGSAN', birthday: '12月31日' }
+            ],
+            value: null,
+            pickerList: [
+                {
+                    label: '2013',
+                    value: '2013',
+                },
+                {
+                    label: '2014',
+                    value: '2014',
+                },
+                {
+                    label: '2015',
+                    value: '2015',
+                },
+                {
+                    label: '2016',
+                    value: '2016',
+                },
+                {
+                    label: '2017',
+                    value: '2017',
+                },
+                {
+                    label: '2018',
+                    value: '2018',
+                },
+                {
+                    label: '2019',
+                    value: '2019',
+                },
             ]
         }
     }
-    componentDidMount(){
-        document.documentElement.scrollTop = document.body.scrollTop =0;
+    onChange = (value) => {
+        console.log(value);
+        this.setState({
+            value,
+        });
+    }
+    onScrollChange = (value) => {
+        console.log(value);
+    }
+    componentDidMount() {
+        document.documentElement.scrollTop = document.body.scrollTop = 0;
     }
     render() {
         return (
@@ -70,31 +112,44 @@ export default class Todolist extends React.Component {
                     </div>
                     <div className="module-space"></div>
                     <div className="cont">
-                        <Tabs
+                        {/* <Tabs
                             tabs={this.state.tabs}
                             swipeable="false"
                             useOnPan="false"
                             tabBarActiveTextColor="#288dfd"
                         >
                             <View>
-                                {/*  合同内容  */}
-                                <PowerDetails />
+                                <PowerDetails type={this.props.match.params.type} />
                             </View>
                             <View>
-                                {/*  附件信息  */}
-                                <ContractAttachment />
+                                <HouseholdInfo />
                             </View>
                             <View>
-                                {/*  账户管理  */}
-                                <AccountManagement userList={this.state.userList}/>
+                                <AccountManagement userList={this.state.userList} />
                             </View>
                             <View>
-                                {/*  年预计电量  */}
                                 <AnnualEstimatedPower />
                             </View>
-                        </Tabs>
+                        </Tabs> */}
                     </div>
                 </div>
+
+                {/* <div className="modal">
+                    <div className="pick_box">
+                        <PickerView
+                            onChange={this.onChange}
+                            onScrollChange={this.onScrollChange}
+                            value={this.state.value}
+                            data={this.state.pickerList}
+                            cascade={false}
+                        />
+                        <div className="module-space"></div>
+                        <div className="btns">
+                            <Button className="btn" type="primary">取消</Button>
+                            <Button className="btn btn1" type="primary">确定</Button>
+                        </div>
+                    </div>
+                </div> */}
             </div>
         )
     }
