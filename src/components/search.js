@@ -8,11 +8,18 @@ class Search extends React.Component {
         }
     }
 
+    onSubmit=(e)=>{
+        e.preventDefault();
+        this.props.onSubmit(e);
+    }
+
+
+
     render() {
         return (
             <div className="search-wrap">
                 <i className="iconfont iconsousuo"></i>
-                <form action="#" onSubmit={this.props.onSubmit} >
+                <form action="#" onSubmit={this.onSubmit} >
                     <input onInput={this.props.onInput}  type="search" placeholder={this.props.title} />
                 </form>
             </div>

@@ -60,22 +60,18 @@ class ContractManage extends React.Component {
     }
 
     handleSearchInput=e=>{
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({
             searchInput:e.target.value
         })
     }
     handleSearchSubmit=e=>{
-        console.log(this.state.searchInput);
+        //console.log(this.state.searchInput);
         this.setState({
             contractManageList:[]
         })
         this.GetContractList(1);
     }
-
-    
-
-
 
     render() {
         return (

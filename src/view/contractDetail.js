@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Header from '../components/header';
 import ContractAttachment from './contractAttachment';
 import ContractMes from './contractMes';
-import { Tabs,View } from 'antd-mobile';
+import { Tabs, View } from 'antd-mobile';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import api from '../api/index';
 
@@ -11,13 +11,13 @@ class ContractDetail extends React.Component {
         super(props)
         console.log(this.props.match.params)
         this.state = {
-            tabs:[
-                { title: '合同内容' },
-                { title: '附件信息' }
+            tabs: [
+                { id: 0, title: '合同内容' },
+                { id: 1, title: '附件信息' }
             ],
-            contractId:this.props.match.params.id,
-            contractDetail:[],
-
+            contractId: this.props.match.params.id,
+            contractDetail: [],
+            botBtnShow: true
         }
     }
 
@@ -29,68 +29,96 @@ class ContractDetail extends React.Component {
     }
 
     //售电合同详情
-    GetContractDetail(){
+    GetContractDetail() {
         const that = this
         let params = {
-            id:that.state.contractId,
-            //id:283,
+            id: that.state.contractId,
             templId: 0,
-
         };
-        api.GetContractDetail(params).then(res=>{
-            console.log("售电合同详情",res);
-            if(res.status===0){
-                that.setState(()=>{
-                    return({
-                        contractDetail:res.data
+        api.GetContractDetail(params).then(res => {
+            console.log("售电合同详情", res);
+            if (res.status === 0) {
+                that.setState(() => {
+                    return ({
+                        contractDetail: res.data
                     })
                 })
-            }else{
-                
+            } else {
+
             }
 
 
         })
     }
-    
+
 
     render() {
-        return (
-            <Fragment>
-                <Header title={'合同信息'} back={true} search={false}/>
-                 <Tabs 
-                    tabs={this.state.tabs} 
-                    swipeable="false"
-                    useOnPan="false"
-                    tabBarActiveTextColor="#288dfd"                    
-                >
-                <View>
-                    {/*  合同内容  */}
-                    <ContractMes 
-                      content={this.state.contractDetail}
-                      contractId={this.state.contractId}
-                    />
-                    
-                </View>
-                <View>
-                    {/*  附件信息  */}
-                    <ContractAttachment/>
-                </View>
-            </Tabs>
-            <div className="footer-btn-group-space"></div>
-            <div className="footer-btn-group">
-                <div className="btn-group">
-                    <Link to={`/contractReview/${this.state.contractId}`}>
-                        预览
-                    </Link>
-                    <Link to="">
-                        导出
-                    </Link>
+        let t =
+            <div >
+                <div className="footer-btn-group-space"></div>
+                <div className="footer-btn-group">
+                    <div className="btn-group">
+                        <Link to={`/contractReview/${this.state.contractId}`}>预览</Link>
+                        <Link to="">导出</Link>
+                    </div>
                 </div>
             </div>
-           
+        return (
+            <Fragment>
+                <Header title={'合同信息'} back={true} search={false} />
+                <Tabs
+                    tabs={this.state.tabs}
+                    swipeable="false"
+                    useOnPan="false"
+                    tabBarActiveTextColor="#288dfd"
+                    onChange={this.handleTabs}
+                >
+                    <View>
+                        {/*  合同内容  */}
+                        <ContractMes
+                            content={this.state.contractDetail}
+                            contractId={this.state.contractId}
+                        />
+
+                    </View>
+                    <View>
+                        {/*  附件信息  */}
+                        <ContractAttachment />
+                    </View>
+                </Tabs>
+
+                {this.state.botBtnShow ? t : ''}
+
+                {/* <div style={{display:this.state.botBtnShow?'block':'none'}}>
+                <div className="footer-btn-group-space"></div>
+                <div className="footer-btn-group">
+                    <div className="btn-group">
+                        <Link to={`/contractReview/${this.state.contractId}`}>
+                            预览
+                        </Link>
+                        <Link to="">
+                            导出
+                        </Link>
+                    </div>
+                </div>
+            </div> */}
+
             </Fragment>
         )
+    }
+
+    //
+    handleTabs = (val) => {
+        const that = this;
+        if (val.id == 0) {
+            that.setState({
+                botBtnShow: true
+            })
+        } else {
+            that.setState({
+                botBtnShow: false
+            })
+        }
     }
 }
 

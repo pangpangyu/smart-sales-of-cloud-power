@@ -357,7 +357,7 @@ class Survey extends React.Component {
     for(let i=0;i<31;i++){
       data.push({ name: '申报电量', type:'declare', title: (i+1)+'日', num: parseInt(Math.random() * 1000) })
       data.push({ name: '实时电量', type:'realTime', title: (i+1)+'日', num: parseInt(Math.random() * 1000) })
-      if(i%3===0){
+      if(i%4===0){
         originDates.push(i+1+'日')
       }
     }
