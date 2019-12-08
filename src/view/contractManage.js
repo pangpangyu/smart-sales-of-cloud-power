@@ -1,62 +1,113 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import Header from '../components/header';
 import Search from '../components/search';
+import NoData from '../components/noData';
 import { Link } from 'react-router-dom';
+import api from '../api/index';
+import { PullToRefresh } from 'antd-mobile';
 
-class ContractManage extends React.Component{
-    constructor(props){
+class ContractManage extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
-            contractManageList:[
-                {
-                    id:1,
-                    tit:'01信息技术公司2019补充协议',
-                    m1:'1000',
-                    m2:'2018-01-01~2019-12-30'
-                },
-                {
-                    id:2,
-                    tit:'01信息技术公司2019补充协议',
-                    m1:'1000',
-                    m2:'2018-01-01~2019-12-30'
-                },
-            ],
+            contractManageList: [],
+            isNoData:false,
+            isNoMore:false,
+            searchInput:"",
+            currentPage:1,
+            height:'600px',
+            prt:null,
+            refreshing: false,
+            down: false
+
         }
     }
 
-    render(){
-        return(
-           <Fragment>
-            <Header title={'售电合同'} back={true} search={false}/>
-            <Search title={'搜合同名称'}/>
-            <div className="contract-manage-wrap">
-               <div className="bg bg-gray"></div>
-               <ul className="contract-manage-list">
-                  {
-                   this.state.contractManageList.map((item,index)=>{
-                       return(
-                        <li className="item" key={index}>
-                            <Link to={`/contractDetail/${item.id}`}>
-                                <div className="tit">{item.tit}</div> 
-                                <div className="mes">
-                                    <span>签约电量：</span>{item.m1}兆瓦时
+    componentDidMount() {
+        const that = this;
+        document.documentElement.scrollTop = document.body.scrollTop = 0;
+        that.GetContractList(1);
+    }
+
+    GetContractList = (page) => {
+        const that = this
+        let params = { 
+            "userName":this.state.searchInput,
+            "dateType":0,
+            "currentPage":page,
+            "sizePrePage":10
+        }
+        api.GetContractList(params).then(res => {
+            console.log('售电合同列表:', res)
+            if (res.status === 0) {
+                if(page>res.data.currentPage){//这时候已经没有数据了
+                    console.log("没有更多数据了");
+                }else if(res.data.rows.length===0){
+                    that.setState({
+                        isNoData:true
+                    });
+                } else{
+                    that.setState({
+                        contractManageList: Object.assign([],that.state.contractManageList).concat(res.data.rows||[]),
+                        currentPage:page+1
+                    });
+                }         
+            }
+            that.setState({ refreshing: false });
+        })
+    }
+
+
+
+    render() {    
+        return (
+            <Fragment>
+                <Header title={'售电合同'} back={true} search={false} />
+                <Search title={'搜合同名称'} />           
+                <div className="contract-manage-wrap" >
+                    <div className="bg bg-gray"></div>
+                    {this.state.isNoData?<NoData/>:''}
+                    <PullToRefresh
+                        damping={60}
+                        ref={el => this.ptr = el}
+                        style={{display:this.state.isNoData?'none':'block'}}
+                        className="pulldown-box"
+                        indicator={this.state.down ? {} : { deactivate: '上拉可以刷新' }}
+                        direction={this.state.down ? 'down' : 'up'}
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => {
+                            this.setState({ refreshing: true});
+                            this.GetContractList(this.state.currentPage);
+                        }}
+                    >
+                        <ul className="contract-manage-list">
+                            {
+                                this.state.contractManageList.map((item, index) => {
+                                    return (
+                                        <li className="item" key={index}>
+                                            <Link to={`/contractDetail/${item.id}`}>
+                                                <div className="tit">{item.participantName}</div>
+                                                <div className="mes">
+                                                    <span>签约电量：</span>{item.contractPower}兆瓦时
                                 </div>
-                                <div className="mes">
-                                    <span>合同时间：</span>{item.m2}
-                                </div>
-                            </Link>
-                        </li>
-                        )
-                   })
-                }
-               </ul>
-           </div> 
-           </Fragment> 
+                                                <div className="mes">
+                                                    <span>合同时间：</span>{item.createDateTime}
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </PullToRefresh>
+
+                </div>
+            </Fragment>
         )
     }
 
     //
-    handleItem = () =>{
+    handleItem = () => {
         console.log(this)
     }
 }
