@@ -31,6 +31,7 @@ export default class Todolist extends React.Component {
                 { id: '2', title: '机组成本' },
                 { id: '3', title: '交易信息' }
             ]
+            search = false
         } else if (this.props.match.params.type === '3') {
             //合作方信息
             title = '合作方'
@@ -38,10 +39,12 @@ export default class Todolist extends React.Component {
                 { id: '1', title: '基本信息' },
                 { id: '2', title: '账号管理' }
             ]
+            search = false
         } else if (this.props.match.params.type === '4') {
             //售电公司信息
             title = '售电公司'
             tabs = []
+            search = false
         }
         this.state = {
             tabs: tabs,
@@ -82,7 +85,8 @@ export default class Todolist extends React.Component {
             id:this.props.match.params.id,
             powerUsersDetail:{},
             powerTrade:[],
-            powerUsers:[]
+            powerUsers:[],
+            search:search
             
         }
     }
@@ -93,6 +97,9 @@ export default class Todolist extends React.Component {
             that.getPowerTradeInfoTableData()
             that.getCompanyStaffTableData()
             that.getYearPowerTableData()
+        }else if(that.state.type === '3'){
+            that.getCompanyStaffTableData()
+            
         }
     }
     componentDidMount() {
@@ -119,7 +126,6 @@ export default class Todolist extends React.Component {
     }
     //户号信息
     getPowerTradeInfoTableData = () => {
-        const that = this
         let params = `?participantId=${getDataQuery('participantId')}`
         api.GetPowerUsersMemberInfo(params).then(res => {
             if(res.status === 0){
@@ -129,9 +135,8 @@ export default class Todolist extends React.Component {
             }
         })
     }
-    //账号管理
+    //电力用户账号管理
     getCompanyStaffTableData = () => {
-        const that = this
         let params = `?participantId=${getDataQuery('participantId')}`
         api.GetPowerUsersMemberManage(params).then(res => {
             if(res.status === 0){
@@ -143,7 +148,6 @@ export default class Todolist extends React.Component {
     }
     //年度预计电量
     getYearPowerTableData = () => {
-        const that = this
         let params = `?participantId=${getDataQuery('participantId')}`
         api.GetPowerYearEstimate(params).then(res => {
             if(res.status === 0){
@@ -197,7 +201,7 @@ export default class Todolist extends React.Component {
                             {this.state.active === '3' && this.state.type === '2' && <AnnualEstimatedPower type={this.state.type} />}
 
                             {this.state.active === '1' && this.state.type === '3' && <PowerDetails type={this.state.type} />}
-                            {this.state.active === '2' && this.state.type === '3' && <AccountManagement userList={this.state.userList} />}
+                            {this.state.active === '2' && this.state.type === '3' && (this.state.powerUsers.length === 0 ? <NoData /> : <AccountManagement userList={this.state.powerUsers} participantId={getDataQuery('participantId')} />)}
 
 
                             {this.state.type === '4' && <PowerDetails type={this.state.type} />}
