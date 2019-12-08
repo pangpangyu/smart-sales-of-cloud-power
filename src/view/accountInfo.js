@@ -1,15 +1,34 @@
 import React from 'react';
 import Header from '../components/header';
+import { getDataQuery } from '../utils/index'
+import api from '../api/index';
 /**
  * 账户信息
  */
 export default class AccountInfo extends React.Component{
   constructor(props){
     super(props)
+    console.log(getDataQuery('u'))
     this.state = {
-      userInfo : { id:2, name:'李四', c:false, email:'Test01@163.com', tel:'13546789898', account:'XXZHANGSAN', birthday:'12月31日' }
+      userInfo : {}
     }
   }
+  componentWillMount(){
+    this.getCompanyStaffTableData()
+  }
+  //账号管理
+  getCompanyStaffTableData = () => {
+    const that = this
+    let params = `?participantId=${getDataQuery('pid')}`
+    api.GetPowerUsersMemberManage(params).then(res => {
+        if(res.status === 0){
+            this.setState({
+              userInfo:res.data.rows[getDataQuery('u')]
+            })
+        }
+    })
+}
+
   render(){
     return (
       <div>
@@ -21,11 +40,11 @@ export default class AccountInfo extends React.Component{
           </div>
           <div className="item">
             <div className="l">手机号码</div>
-            <div className="r">{this.state.userInfo.tel}</div>
+            <div className="r">{this.state.userInfo.mobilePhone}</div>
           </div>
           <div className="item">
             <div className="l">邮箱</div>
-            <div className="r">{this.state.userInfo.email}</div>
+            <div className="r">{this.state.userInfo.mail}</div>
           </div>
           <div className="item">
             <div className="l">通讯地址</div>
@@ -33,7 +52,7 @@ export default class AccountInfo extends React.Component{
           </div>
           <div className="item">
             <div className="l">职务</div>
-            <div className="r">{this.state.userInfo.name}</div>
+            <div className="r">{this.state.userInfo.userRole}</div>
           </div>
           <div className="item">
             <div className="l">角色</div>
@@ -41,7 +60,7 @@ export default class AccountInfo extends React.Component{
           </div>
           <div className="item">
             <div className="l">是否常用联系人</div>
-            <div className="r">{this.state.userInfo.c ? '是':'否'}</div>
+            <div className="r">{this.state.userInfo.isContactPerson}</div>
           </div>
         </div>
       </div>

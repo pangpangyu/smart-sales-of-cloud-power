@@ -4,13 +4,14 @@ import HouseholdInfo from './householdInfo';
 import AccountManagement from './accountManagement';
 import AnnualEstimatedPower from './annualEstimatedPower';
 import PowerDetails from './powerDetails';
-import { Tabs, View } from 'antd-mobile';
-import { PickerView } from 'antd-mobile';
-import { Button } from 'antd-mobile';
+import api from '../api/index';
+import { getDataQuery } from '../utils/index'
+import NoData from '../components/noData';
 
 export default class Todolist extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props)
         let title = '公司信息'
         let search = false
         let tabs = [
@@ -45,10 +46,6 @@ export default class Todolist extends React.Component {
         this.state = {
             tabs: tabs,
             title: title,
-            userList: [
-                { id: 1, name: '张三', c: true, email: 'Test01@163.com', tel: '13546789898', account: 'XXZHANGSAN', birthday: '12月31日' },
-                { id: 2, name: '李四', c: false, email: 'Test01@163.com', tel: '13546789898', account: 'XXZHANGSAN', birthday: '12月31日' }
-            ],
             value: null,
             pickerList: [
                 {
@@ -81,12 +78,83 @@ export default class Todolist extends React.Component {
                 },
             ],
             active: '1',
-            type: this.props.match.params.type
+            type: this.props.match.params.type,
+            id:this.props.match.params.id,
+            powerUsersDetail:{},
+            powerTrade:[],
+            powerUsers:[]
+            
+        }
+    }
+    componentWillMount() {
+        const that = this
+        if (that.state.type === '1') {
+            that.getPowerUserDet()
+            that.getPowerTradeInfoTableData()
+            that.getCompanyStaffTableData()
+            that.getYearPowerTableData()
         }
     }
     componentDidMount() {
         document.documentElement.scrollTop = document.body.scrollTop = 0;
     }
+    //电力用户详情基本信息
+    getPowerUserDet = () => {
+        const that = this
+        let params = `?id=${this.state.id}`
+        api.GetPowerUsersDetail(params).then(res => {
+            if (res.status === 0) {
+                let powerUsersDetail = {}
+                powerUsersDetail.companyName = res.data.name.value || ''
+                powerUsersDetail.shortName = res.data.shortName.value || ''
+                powerUsersDetail.usedName = res.data.usedName.value || ''
+                //状态null
+                powerUsersDetail.marketTime = ''
+                powerUsersDetail.delistingTime = '' 
+                that.setState({
+                    powerUsersDetail:powerUsersDetail
+                })
+            }
+        })
+    }
+    //户号信息
+    getPowerTradeInfoTableData = () => {
+        const that = this
+        let params = `?participantId=${getDataQuery('participantId')}`
+        api.GetPowerUsersMemberInfo(params).then(res => {
+            if(res.status === 0){
+                this.setState({
+                    powerTrade:res.data.rows
+                })
+            }
+        })
+    }
+    //账号管理
+    getCompanyStaffTableData = () => {
+        const that = this
+        let params = `?participantId=${getDataQuery('participantId')}`
+        api.GetPowerUsersMemberManage(params).then(res => {
+            if(res.status === 0){
+                this.setState({
+                    powerUsers:res.data.rows
+                })
+            }
+        })
+    }
+    //年度预计电量
+    getYearPowerTableData = () => {
+        const that = this
+        let params = `?participantId=${getDataQuery('participantId')}`
+        api.GetPowerYearEstimate(params).then(res => {
+            if(res.status === 0){
+                this.setState({
+                    
+                })
+            }
+        })
+    }
+
+    
     render() {
         return (
             <div style={{ minHeight: '100vh', background: '#f0f1f3' }}>
@@ -119,9 +187,9 @@ export default class Todolist extends React.Component {
                             </div>
                         </div>
                         <div className="">
-                            {this.state.active === '1' && this.state.type === '1' && <PowerDetails type={this.state.type} />}
-                            {this.state.active === '2' && this.state.type === '1' && <HouseholdInfo />}
-                            {this.state.active === '3' && this.state.type === '1' && <AccountManagement userList={this.state.userList} />}
+                            {this.state.active === '1' && this.state.type === '1' && <PowerDetails type={this.state.type}/>}
+                            {this.state.active === '2' && this.state.type === '1' && (this.state.powerTrade.length === 0 ? <NoData />:<HouseholdInfo />)}
+                            {this.state.active === '3' && this.state.type === '1' && <AccountManagement userList={this.state.powerUsers} participantId={getDataQuery('participantId')} />}
                             {this.state.active === '4' && this.state.type === '1' && <AnnualEstimatedPower type={this.state.type} />}
 
                             {this.state.active === '1' && this.state.type === '2' && <PowerDetails type={this.state.type} />}
