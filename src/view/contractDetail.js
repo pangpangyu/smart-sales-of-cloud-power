@@ -68,8 +68,7 @@ class ContractDetail extends React.Component {
                 <Header title={'合同信息'} back={true} search={false} />
                 <Tabs
                     tabs={this.state.tabs}
-                    swipeable="false"
-                    useOnPan="false"
+                    swipeable={false}
                     tabBarActiveTextColor="#288dfd"
                     onChange={this.handleTabs}
                 >
