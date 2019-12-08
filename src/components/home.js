@@ -87,6 +87,15 @@ class Home extends React.Component{
                       </div>
                   </div>
                 ))}
+                {this.state.carouselList.map((item,index) => (
+                  <div 
+                    className="banner-item"
+                    key={index} >
+                      <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',height:this.state.imgHeight}}>
+                        <img src={ baseImgUrl + item.url } alt={item.name} style={{width:"100%"}}/>
+                      </div>
+                  </div>
+                ))}
               </Carousel>
           }
         </div>
