@@ -19,7 +19,7 @@ const api = {
   },
   //公司公告列表
   GetCompanyNoticeList(params){
-    return request.get('nuts/crud/find/models_nuts_WebPage',{params:params})
+    return request.post('nuts/crud/find/models_nuts_WebPage' , params)
   },
   //公司公告详情
   GetCompanyNoticeDetail(params){
@@ -27,7 +27,6 @@ const api = {
   },
   //待办事项列表
   GetScheduleList(params){
-    //{"rowNumber":0,"pageSize":5}
     return request.get('nuts/crud/processTask' + params)
   },
   //售电情况总览

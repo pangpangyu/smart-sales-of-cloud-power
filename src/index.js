@@ -2,14 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './router/index'
 import * as serviceWorker from './serviceWorker';
-import {
-  Provider,
-  KeepAlive,
-} from 'react-keep-alive';
+
 ReactDOM.render(
-  <Provider>
-    <Router />
-  </Provider>, 
+  <Router/>, 
   document.getElementById('root')
 );
 

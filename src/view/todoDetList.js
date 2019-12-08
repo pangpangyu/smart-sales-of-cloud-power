@@ -69,7 +69,7 @@ export default class Todolist extends React.Component {
                         </div>
                     </div>
                     <div className="f_btn">
-                        <Button className="btn" type="primary">关闭</Button>
+                        <Button className="btn" type="primary" onClick={()=> window.history.go(-1)}>关闭</Button>
                     </div>
                 </div>
             </div>
