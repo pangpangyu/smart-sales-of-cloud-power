@@ -1,5 +1,6 @@
 import React from 'react';
 // import { List, Picker } from 'antd-mobile';
+import { PickerView, Button } from 'antd-mobile';
 /**
  * 年预计电量
  */
@@ -16,11 +17,11 @@ const CustomChildren = props => (
   </div>
 );
 
-export default class annualEstimatedPower extends React.Component{
-  constructor(props){
+export default class annualEstimatedPower extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
-      year: '2019',
+      year: '',
       pickerList: [
         {
           label: '2013',
@@ -31,27 +32,28 @@ export default class annualEstimatedPower extends React.Component{
           value: '2014',
         },
       ],
-      open:false
+      value: ['2013'],
+      year: '2013',
+      open: false
     }
   }
-  openDrawer = () => {
+  onScrollChange = (value) => {
     this.setState({
-      open:true
+      value: value
     })
   }
-
-
-  render(){
-    return(
-      <div className="annualEstimatedPower">
-        <div className="chooes-year">
-          <div className="l">选择年份</div>
-          <div className="r" onClick={this.openDrawer}>
-            {this.state.year}<i className="iconfont iconxiala-copy" style={{fontSize:'10px',color:'#cccccc'}}></i>
-          </div>
-        </div>
-        <div className="power-totle" style={{textAlign:'center',fontSize:'11px',color:'#999999',padding:'30px 0',lineHeight:'18px'}}>
-          <p><span style={{fontSize:'16px',color:'#2b2a30',marginRight:'3px'}}>1300</span>兆瓦时</p>
+  getDate = () => {
+    const that = this
+    this.setState({
+      year: this.state.value[0],
+      open: false
+    })
+  }
+  powerUsersDet = () => {
+    return (
+      <div>
+        <div className="power-totle" style={{ textAlign: 'center', fontSize: '11px', color: '#999999', padding: '30px 0', lineHeight: '18px' }}>
+          <p><span style={{ fontSize: '16px', color: '#2b2a30', marginRight: '3px' }}>1300</span>兆瓦时</p>
           <p>电量合计</p>
         </div>
         <div className="m-list">
@@ -69,6 +71,100 @@ export default class annualEstimatedPower extends React.Component{
             <li><p className="p1">1月</p><p className="p2">102</p></li>
             <li><p className="p1">1月</p><p className="p2">102</p></li>
           </ul>
+          <div className="clear"></div>
+        </div>
+      </div>
+    )
+  }
+  electricityGenerationDet = () => {
+    return (
+      <div>
+        <div className="transactioninfo">
+          <div className="l">
+            <h3>时间</h3>
+            <ul>
+              <li>2019-01</li>
+              <li>2019-02</li>
+              <li>2019-03</li>
+              <li>2019-04</li>
+              <li>2019-05</li>
+            </ul>
+          </div>
+          <div className="r">
+            <div style={{overflowX:"auto"}}>
+              <div className="list">
+                <ul>
+                  <li>基数电量</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+              </div>
+              <div className="list">
+                <ul>
+                  <li>省内电量</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+              </div>
+              <div className="list">
+                <ul>
+                  <li>省外电量</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+              </div>
+              <div className="list">
+                <ul>
+                  <li>议价期期望</li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div className="annualEstimatedPower">
+        <div className="chooes-year">
+          <div className="l">选择年份</div>
+          <div className="r" onClick={() => this.setState({ open: true })}>
+            {this.state.year}<i className="iconfont iconxiala-copy" style={{ fontSize: '10px', color: '#cccccc' }}></i>
+          </div>
+        </div>
+        {this.props.type === '1' && this.powerUsersDet()}
+        {this.props.type === '2' && this.electricityGenerationDet()}
+        <div className={this.state.open ? 'modal on' : 'modal'}>
+          <div className="pick_box">
+            <PickerView
+              onChange={this.onChange}
+              onScrollChange={this.onScrollChange}
+              value={this.state.value}
+              data={this.state.pickerList}
+              cascade={false}
+            />
+            <div className="module-space"></div>
+            <div className="btns">
+              <Button className="btn" type="primary" onClick={() => this.setState({ open: false })}>取消</Button>
+              <Button className="btn btn1" type="primary" onClick={this.getDate}>确定</Button>
+            </div>
+          </div>
         </div>
       </div>
     )

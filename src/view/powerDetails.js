@@ -3,6 +3,7 @@ import ModuleTit from '../components/moduleTit';
 import img1 from '../assets/img/img203.png';
 import img2 from '../assets/img/img104.png';
 import img3 from '../assets/img/img204.png';
+import NoData from '../components/noData';
 
 /*
 客户管理-详情
@@ -15,6 +16,7 @@ class PowerDetails extends React.Component {
 
         }
     }
+    
 
     //电力用户详情
     powerUsersDet = () => {
@@ -121,7 +123,7 @@ class PowerDetails extends React.Component {
     }
     //发电公司详情
     electricityGenerationDet = () => {
-        return(
+        return (
             <div>
                 <div className="contract-mes">
                     <ModuleTit title="基本信息" imgurl={img1} >
@@ -400,10 +402,10 @@ class PowerDetails extends React.Component {
     render() {
         return (
             <Fragment>
-                { this.props.type === '1' && this.powerUsersDet() }
-                { this.props.type === '2' && this.electricityGenerationDet() }
-                { this.props.type === '3' && this.partnersDet() }
-                { this.props.type === '4' && this.sellingElectricityDet() }
+                {this.props.type === '1' && this.powerUsersDet()}
+                {this.props.type === '2' && this.electricityGenerationDet()}
+                {this.props.type === '3' && this.partnersDet()}
+                {this.props.type === '4' && this.sellingElectricityDet()}
             </Fragment>
         )
     }

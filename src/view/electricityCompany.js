@@ -3,9 +3,6 @@ import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import NoData from '../components/noData';
 import api from '../api/index';
-import {
-  KeepAlive
-} from 'react-keep-alive';
 /**
  * 售电公司
  */
@@ -94,7 +91,6 @@ export default class ElectricityCompany extends React.Component{
           item.name = item.conglomerate
           item.followUpPerson = item.contactPersonName
         })
-        console.log(res.data.rows)
         that.setState({
           companyList:res.data.rows,
           total:res.data.rowCount,
@@ -205,7 +201,7 @@ export default class ElectricityCompany extends React.Component{
             { this.state.companyList && this.state.companyList.map(item => {
                     return  <div key={item.id}>
                               <div className="electricityCompany-item">
-                                <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}`}>
+                                <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}?participantId=${item.participantId}`}>
                                   <div className="info">
                                     <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.name}</p>
                                     <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>

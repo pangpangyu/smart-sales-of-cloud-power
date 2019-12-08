@@ -8,7 +8,6 @@ export default class Todolist extends React.Component {
         super(props);
         this.state = {
             pageIndex:0,
-            noData:false,
             total:0,
             dataList:[],
             noData:false
