@@ -3,6 +3,7 @@ import Header from '../components/header';
 import ContractAttachment from './contractAttachment';
 import ContractMes from './contractMes';
 import { Tabs,View } from 'antd-mobile';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 import api from '../api/index';
 
 class ContractDetail extends React.Component {
@@ -69,12 +70,25 @@ class ContractDetail extends React.Component {
                       content={this.state.contractDetail}
                       contractId={this.state.contractId}
                     />
+                    
                 </View>
                 <View>
                     {/*  附件信息  */}
                     <ContractAttachment/>
                 </View>
             </Tabs>
+            <div className="footer-btn-group-space"></div>
+            <div className="footer-btn-group">
+                <div className="btn-group">
+                    <Link to={`/contractReview/${this.state.contractId}`}>
+                        预览
+                    </Link>
+                    <Link to="">
+                        导出
+                    </Link>
+                </div>
+            </div>
+           
             </Fragment>
         )
     }

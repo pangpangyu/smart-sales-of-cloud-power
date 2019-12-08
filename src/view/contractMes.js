@@ -2,52 +2,78 @@ import React, { Fragment } from 'react';
 import ModuleTit from '../components/moduleTit';
 import img1 from '../assets/img/img101.png';
 import img2 from '../assets/img/img104.png';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
+import { Picker } from 'antd-mobile';
 
 /*
 合同内容
-*/ 
+*/
 
 class ContractMes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             batteryList: [],
-            contractId:0,//合同id
-            contractMesAll:[],//所有信息
-            contractMes:[],//当前合同信息
-            curCompanyId:0,//当前企业id
-            curCompanyMes:[],//当前企业信息
-            curCompanyName:'',//当前企业名称
-            
+            contractId: 0,//合同id
+            contractMesAll: [],//所有信息
+            contractMes: [],//当前合同信息
+            curCompanyId: 0,//当前企业id
+            curCompanyMes: [],//当前企业信息
+            curCompanyName: '',//当前企业名称,
+
+            pickeroptions: [
+                {
+                    label: '电力直接协议1',
+                    value: '1',
+                },
+                {
+                    label: '电力直接协议2',
+                    value: '2',
+                },
+                {
+                    label: '电力直接协议3',
+                    value: '3',
+                },
+                {
+                    label: '电力直接协议4',
+                    value: '4',
+                },
+                {
+                    label: '电力直接协议5',
+                    value: '5',
+                },
+            ]
+
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        const that=this;
-        that.state.contractMesAll=nextProps.content;
-        that.state.contractMes=nextProps.content.powerUserContract.contract;
-        that.state.curCompanyId=that.state.contractMes.participant.id;
-        that.state.curCompanyMes=nextProps.content.powerUsersOptions.filter(item=>{
-            return item.id==that.state.curCompanyId;
+        const that = this;
+        that.state.contractMesAll = nextProps.content;
+        that.state.contractMes = nextProps.content.powerUserContract.contract;
+        that.state.curCompanyId = that.state.contractMes.participant.id;
+        that.state.curCompanyMes = nextProps.content.powerUsersOptions.filter(item => {
+            return item.id == that.state.curCompanyId;
         })
-        that.state.curCompanyName=that.state.curCompanyMes[0].text;
-        that.state.batteryList=nextProps.content.taoCanVariableList;
-        that.state.contractId=nextProps.contractId;
+        that.state.curCompanyName = that.state.curCompanyMes[0].text;
+        that.state.batteryList = nextProps.content.taoCanVariableList;
+        that.state.contractId = nextProps.contractId;
         //console.log('合同内容',that.state.contractMesAll)
         // console.log(nextProps.content.powerUsersOptions)
         // console.log(that.state.curCompanyId)
         // console.log(that.state.curCompanyMes)
         // console.log(that.state.curCompanyMes[0].text)
         //console.log(that.state.contractId)
-    }    
+    }
+
 
     render() {
         return (
             <Fragment>
                 <div className="contract-mes">
-                    <ModuleTit title="合同基本信息" imgurl={img1} > 
-                        <span className="moudle-tit-control">开发说明<i className="iconfont">&#xe822;</i></span>         
+                    <ModuleTit title="合同基本信息" imgurl={img1} >
+                        <Picker data={this.state.pickeroptions} cols={1} className="forss">
+                            <span className="moudle-tit-control">开发说明<i className="iconfont">&#xe822;</i></span>
+                        </Picker>
                     </ModuleTit>
                     <div className="module-list">
                         <ul>
@@ -97,19 +123,10 @@ class ContractMes extends React.Component {
                             }
 
                         </ul>
-                       
-                    </div>
-                    <div className="footer-btn-group">
-                        <div className="btn-group">
-                            <Link to={`/contractReview/${this.state.contractId}`}>
-                                预览
-                            </Link>
-                            <Link to="">
-                                导出
-                            </Link>
-                        </div>
                     </div>
                 </div>
+
+
             </Fragment>
         )
     }
