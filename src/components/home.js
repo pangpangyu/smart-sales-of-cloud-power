@@ -43,7 +43,7 @@ class Home extends React.Component{
     api.GetHomeCarouselList({}).then(res => {
       if(res.status === 0){
 				that.setState({
-					carouselList:res.data.displayImages
+					carouselList:[...res.data.displayImages,...res.data.displayImages]
 				})
 			}
     })
@@ -78,15 +78,6 @@ class Home extends React.Component{
                 afterChange={index => this.setState({ slideIndex: index })}
                 style={{minHeight:'180px'}}
               >
-                {this.state.carouselList.map((item,index) => (
-                  <div 
-                    className="banner-item"
-                    key={index} >
-                      <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',height:this.state.imgHeight}}>
-                        <img src={ baseImgUrl + item.url } alt={item.name} style={{width:"100%"}}/>
-                      </div>
-                  </div>
-                ))}
                 {this.state.carouselList.map((item,index) => (
                   <div 
                     className="banner-item"
