@@ -42,9 +42,15 @@ export default class ElectricityCompany extends React.Component{
     const that = this
     if(that.state.type === '1'){
       that.getPowerUserList()
+    }else if(that.state.type === '2'){
+      that.getElectricityGenerationList()
+    }else if(that.state.type === '3'){
+      that.getPartnersList()
+    }else if(that.state.type === '4'){
+      that.getPartnersList()
     }
   }
-  //获取电力用户
+  //获取电力用户数据
   getPowerUserList = () => {
     const that = this
     let params = {
@@ -70,6 +76,44 @@ export default class ElectricityCompany extends React.Component{
     }
     api.GetPowerUsersList(params).then(res => {
       if(res.status === 0){
+        that.setState({
+          companyList:res.data.rows,
+          total:res.data.rowCount,
+          noData: res.data.rowCount===0?true:false
+        })
+      }
+    })
+  }
+  //获取发电企业数据
+  getElectricityGenerationList = () => {
+    const that = this
+    let params = {"rowNumber":that.state.pageIndex,"pageSize":10,"conditions":[{"name":"name","operator":"%","value":"山"}]}
+    api.GetPartnersList(params).then(res => {
+      if(res.status === 0){
+        res.data.rows.map(item => {
+          item.name = item.conglomerate
+          item.followUpPerson = item.contactPersonName
+        })
+        console.log(res.data.rows)
+        that.setState({
+          companyList:res.data.rows,
+          total:res.data.rowCount,
+          noData: res.data.rowCount===0?true:false
+        })
+      }
+    })
+  }
+  //获取合作方数据
+  getPartnersList = () => {
+    const that = this
+    let params = {"rowNumber":that.state.pageIndex,"pageSize":10,"conditions":[{"name":"name","operator":"%","value":"山"}]}
+    api.GetPartnersList(params).then(res => {
+      if(res.status === 0){
+        res.data.rows.map(item => {
+          item.name = item.conglomerate
+          item.followUpPerson = item.contactPersonName
+        })
+        console.log(res.data.rows)
         that.setState({
           companyList:res.data.rows,
           total:res.data.rowCount,
