@@ -47,7 +47,7 @@ class ContractMes extends React.Component {
             <Fragment>
                 <div className="contract-mes">
                     <ModuleTit title="合同基本信息" imgurl={img1} > 
-                    111           
+                        <span className="moudle-tit-control">开发说明<i className="iconfont">&#xe822;</i></span>         
                     </ModuleTit>
                     <div className="module-list">
                         <ul>
