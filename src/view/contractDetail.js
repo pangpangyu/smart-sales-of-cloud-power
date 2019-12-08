@@ -31,8 +31,8 @@ class ContractDetail extends React.Component {
     GetContractDetail(){
         const that = this
         let params = {
-            //id:that.state.contractId,
-            id:283,
+            id:that.state.contractId,
+            //id:283,
             templId: 0,
 
         };

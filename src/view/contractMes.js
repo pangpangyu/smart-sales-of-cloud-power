@@ -12,20 +12,7 @@ class ContractMes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            batteryList: [
-                // {
-                //     name: '委托交易电量',
-                //     amount: 50,
-                // },
-                // {
-                //     name: '委托交易电量',
-                //     amount: 50,
-                // },
-                // {
-                //     name: '委托交易电量',
-                //     amount: 50,
-                // },
-            ],
+            batteryList: [],
             contractId:0,//合同id
             contractMesAll:[],//所有信息
             contractMes:[],//当前合同信息
@@ -47,12 +34,12 @@ class ContractMes extends React.Component {
         that.state.curCompanyName=that.state.curCompanyMes[0].text;
         that.state.batteryList=nextProps.content.taoCanVariableList;
         that.state.contractId=nextProps.contractId;
-        console.log('合同内容',that.state.contractMesAll)
+        //console.log('合同内容',that.state.contractMesAll)
         // console.log(nextProps.content.powerUsersOptions)
         // console.log(that.state.curCompanyId)
         // console.log(that.state.curCompanyMes)
         // console.log(that.state.curCompanyMes[0].text)
-        console.log(that.state.contractId)
+        //console.log(that.state.contractId)
     }    
 
     render() {
