@@ -1,14 +1,24 @@
 import React from 'react'
-import Header from '../components/header'
-import { Button } from 'antd-mobile';
+import Header from '../components/header';
+import api from '../api';
+import { Link } from 'react-router-dom';
 
 export default class Todolist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            id:this.props.match.params.id
         }
     }
+
+    componentDidMount(){
+
+    }
+
+    getDetailData = () => {
+        
+    }
+
     render() {
         return (
             <div className="page_bg">
@@ -27,8 +37,8 @@ export default class Todolist extends React.Component {
                         </div>
                     </div>
                     <div className="f_btn">
-                        <Button className="btn" type="primary">流程轨迹</Button>
-                        <Button className="btn" type="primary">流程图</Button>
+                        <Link to={`/todoDetList/${this.state.id}`}>流程轨迹</Link>
+                        <Link to={`/todoDet/${this.state.id}`}>流程图</Link>
                     </div>
                 </div>
             </div>

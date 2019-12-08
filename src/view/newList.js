@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import api from '../api/index';
+import noData from '../components/noData';
 import {
   KeepAlive
 } from 'react-keep-alive';
@@ -21,42 +22,30 @@ export default class NewList extends React.Component{
     this.state = {
       title:title,
       type:this.props.match.params.type || 0,
-      companyNewList:[
-        { id: 1,title:'山西电力市场合同电量转让交易公告山西电力市场合同电量转让交易公告', time:'8分钟前', isNew: true },
-        { id: 2,title:'山西电力市场合同电量转让交易公告', time:'20分钟前', isNew: true },
-        { id: 3,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
-        { id: 4,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
-        { id: 5,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
-        { id: 6,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
-        { id: 7,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false },
-        { id: 8,title:'山西电力市场合同电量转让交易公告', time:'2019-12-03', isNew: false }
-      ],
-      search:''
+      companyNewList:[],
+      total:0,
+      noData:false,
+      search:'',
+      pageIndex:0
     }
   }
 
   componentDidMount(){
     const that = this
-    
-    let params = {
-      "rowNumber": 0,
-      "pageSize": 5,
-      "conditions": [
-        {
-          "name": "",
-          "value": "",
-          "operator": ""
-        }
-      ],
-      "orders": [
-        {
-          "order": "",
-          "name": ""
-        }
-      ]
-    }
-    api.GetCompanyNoticeList(params).then(res => {
+    that.getNoticeList()
+  }
 
+  getNoticeList = () => {
+    const that = this
+    let params = {"rowNumber":that.state.pageIndex,"pageSize":5,"conditions":[{"name":"group.name","value":"CompanyAnnouncement","operator":"="}],"orders":[{"order":"down","name":"lastUpdateTime"}]}
+    api.GetCompanyNoticeList(params).then(res => {
+      if(res.status === 0){
+        that.setState({
+          companyNewList:res.data.rows,
+          total:res.data.rowCount,
+          noData:res.data.rowCount===0?true:false
+        })
+      }
     })
   }
 
@@ -75,7 +64,6 @@ export default class NewList extends React.Component{
     return (
       <div style={{background:'#fff'}}>
         <Header title={this.state.title} back={true} search={false}/>
-        <KeepAlive name="NewList">
         <div className="company-search-view">
           <div className="company-search">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
@@ -89,18 +77,18 @@ export default class NewList extends React.Component{
                           <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
                             <div className="info">
                               <div className="title">{item.title}</div>
-                              <div className="time">发布时间：{item.time}</div>
+                              <div className="time">发布时间：{item.lastUpdateTime}</div>
                             </div>
                             <div className="new">
-                              { item.isNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
+                              { item.isShowNew && <img src={require('../assets/img/img018.png')} style={{width:'26px',height:'auto'}} alt="new"/> }
                               <i className="iconfont iconyou"></i>
                             </div>
                           </Link>
                           <div style={{background:'#f0f1f3',height:'11px'}}></div>
                         </div>
             }) }
+            { this.state.noData && <noData /> }
         </div>
-        </KeepAlive>
       </div>
     )
   }

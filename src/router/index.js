@@ -18,35 +18,37 @@ import ElectricityCompany from '../view/electricityCompany';
 import Survey from '../view/survey';
 import Account from '../view/accountInfo';
 import ErrorPage from '../view/ErrorPage';
+import { Provider } from 'react-keep-alive';
 
 export default class ROUTER extends React.Component{
   render(){
     return (
       <Router>
         <Route>
-          <App>
-            <Switch>
-              <Route exact path="/" component={Index}></Route>
-              <Route path="/newList/:type" component={NewList}></Route>
-              <Route path="/survey" component={Survey}></Route>
-              <Route path="/contractManage" component={ContractManage}></Route>
-              <Route path="/contractDetail/:id" component={ContractDetail}></Route>
-              <Route path="/contractReview" component={ContractReview}></Route>
-              <Route path="/newDetaile/:id" component={NewDetaile}></Route>
-              <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
-              {/*type  1为公司公告  2为消息提醒  */}
-              <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
-              {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
-              <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
-              <Route path="/account/:id" component={Account}></Route>
-              <Route path="/customer" component={Customer}></Route>
-              <Route path="/todolist" component={TodoList}></Route>
-              <Route path="/todoDet" component={TodoDet}></Route>
-              <Route path="/todoDetLc" component={TodoDetLc}></Route>
-              <Route path="/todoDetList" component={TodoDetList}></Route>
-              <Route component={ErrorPage}></Route>
-            </Switch>
-          </App>
+          <Provider include="electricityCompany">
+            <App>
+              <Switch>
+                <Route exact path="/" component={Index}></Route>
+                <Route path="/newList/:type" component={NewList}></Route>
+                <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
+                <Route path="/survey" component={Survey}></Route>
+                <Route path="/contractManage" component={ContractManage}></Route>
+                <Route path="/contractDetail/:id" component={ContractDetail}></Route>
+                <Route path="/contractReview" component={ContractReview}></Route>
+                {/*type  1为公司公告  2为消息提醒  */}
+                <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
+                {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
+                <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
+                <Route path="/account/:id" component={Account}></Route>
+                <Route path="/customer" component={Customer}></Route>
+                <Route path="/todolist" component={TodoList}></Route>
+                <Route path="/todoDet/:id" component={TodoDet}></Route>
+                <Route path="/todoDetLc/:id" component={TodoDetLc}></Route>
+                <Route path="/todoDetList/:id" component={TodoDetList}></Route>
+                <Route component={ErrorPage}></Route>
+              </Switch>
+            </App>
+          </Provider>
         </Route>
       </Router>
     )

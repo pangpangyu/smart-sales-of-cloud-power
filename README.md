@@ -16,9 +16,7 @@ yarn build
 
 react-keep-alive here: https://github.com/StructureBuilder/react-keep-alive/blob/master/README.zh-CN.md
 
-首页          ---jl
-合同管理      ---gym
-消息提醒      ---zp
+
 
 
 
