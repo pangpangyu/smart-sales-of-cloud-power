@@ -421,24 +421,29 @@ class Survey extends React.Component {
   paintingChart4 = () => {
     //let data = this.state.data4
     let data = []
-    var originDates = ['1日','2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日']
+    // var originDates = ['1日','5日','10日','15日','20日','21日','22日','23日','24日','25日','26日','27日','28日','29日','30日','31日']
+    var originDates = []
     for(let i=0;i<31;i++){
       data.push({ name: '申报电量', type:'declare', title: (i+1)+'日', num: parseInt(Math.random() * 1000) })
       data.push({ name: '实时电量', type:'realTime', title: (i+1)+'日', num: parseInt(Math.random() * 1000) })
+      if(i%4===0){
+        originDates.push(i+1+'日')
+      }
     }
-    console.log(data)
+    // console.log(data)
+    console.log(originDates)
     const chart = new F2.Chart({
       id: 'myChart4',
       pixelRatio: window.devicePixelRatio,
       plugins:[ScrollBar,Pan]
     });
     chart.source(data, {
-      date: {
-        type: 'timeCat',
-        tickCount: 1,
+      title: {
+        // type: 'timeCat',
+        // tickCount: 1,
         values: originDates
       },
-      steps: {
+      num: {
         tickCount: 5
       }
     });
