@@ -65,9 +65,9 @@ class Home extends React.Component{
     return(
       <div>
         <Header title={'首页'} back={false} search={false}/>
-        <div className="banner" style={{height:'180px'}}>
+        <div className="banner" style={{height:'180px',color:'#fff'}}>
           {
-            this.state.carouselList && 
+            ( this.state.carouselList && this.state.carouselList.length ) && 
             <Carousel
                 cellSpacing={8}
                 slideWidth={0.8}
