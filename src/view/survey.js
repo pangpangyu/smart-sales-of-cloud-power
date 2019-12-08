@@ -3,7 +3,7 @@ import Header from '../components/header';
 import F2 from '@antv/f2/lib/index';
 import ScrollBar from '@antv/f2/lib/plugin/scroll-bar';
 import Pan from '@antv/f2/lib/interaction/pan';
-
+import _ from 'lodash';
 /**
  * 售电概况
  */
@@ -286,25 +286,33 @@ class Survey extends React.Component {
   }
   paintingChart3 = () => { 
     const legendItems = [
-      { name: '合同电量', marker: 'square', fill: '#288dfd', checked: true, textAlign: "center" }, 
+      { name: '合同电量', marker: 'square', fill: '#288dfd' }, 
       { name: '合同收益', marker: function marker(x, y, r, ctx) {
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = ctx.fillStyle;
-        ctx.moveTo(x - r - 3, y);
-        ctx.lineTo(x + r + 3, y);
-        ctx.stroke();
-        ctx.arc(x, y, r, 0, Math.PI * 2, false);
-        ctx.fill();
-      },
-      fill: '#f9a30c',
-      checked: true, 
-      textAlign: "center"
-    }];
-
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = ctx.fillStyle;
+          ctx.moveTo(x - r - 3, y);
+          ctx.lineTo(x + r + 3, y);
+          ctx.stroke();
+          ctx.arc(x, y, r, 0, Math.PI * 2, false);
+          ctx.fill();
+        },
+        fill: '#f9a30c'
+      }
+    ];
+    function findLegendItem(name) {
+      let index;
+      for (let i = 0; i < legendItems.length; i++) {
+        if (legendItems[i].name === name) {
+          index = i;
+          break;
+        }
+      }
+      return index;
+    }
     const chart = new F2.Chart({
       id: 'myChart3',
       pixelRatio: window.devicePixelRatio,
-      padding: [ 'auto', 'auto', 90, 'auto' ]
+      padding: [ 'auto', 'auto', 30, 'auto' ]
     });
 
     chart.source(this.state.data3, {
@@ -317,20 +325,81 @@ class Survey extends React.Component {
         alias: '合同收益'
       }
     });
-    chart.axis('avgScore', {
-      grid: null
-    });
-    chart.axis('name', {
-      label: {
-        rotate: Math.PI / 3,
-        textAlign: 'start',
-        textBaseline: 'middle'
-      }
-    });
+    // chart.axis('avgScore', {
+    //   grid: null
+    // });
+    // chart.axis('name', {
+    //   label: {
+    //     rotate: Math.PI / 3,
+    //     textAlign: 'start',
+    //     textBaseline: 'middle'
+    //   }
+    // });
 
+    // chart.legend({
+    //   custom: true,
+    //   items: legendItems
+    // });
     chart.legend({
       custom: true,
-      items: legendItems
+      items: legendItems,
+      onClick: function onClick(ev) {
+        const item = ev.clickedItem;
+        const name = item.get('name');
+        const checked = item.get('checked');
+        const children = item.get('children');
+        if (checked) {
+          const markerFill = children[0].attr('fill');
+          const textFill = children[1].attr('fill');
+          children[0].set('_originColor', markerFill); // 缓存 marker 原来的颜色
+          children[1].set('_originColor', textFill); // 缓存文本原来的颜色
+        }
+        const geoms = chart.get('geoms');
+        for (let i = 0; i < geoms.length; i++) {
+          const geom = geoms[i];
+    
+          if (geom.getYScale().alias === name) {
+            if (!checked) {
+              geom.show();
+              children[0].attr('fill', children[0].get('_originColor'));
+              children[1].attr('fill', children[1].get('_originColor'));
+            } else {
+              geom.hide();
+              children[0].attr('fill', '#bfbfbf'); // marker 置灰
+              children[1].attr('fill', '#bfbfbf'); // 文本置灰 置灰
+            }
+          }
+          item.set('checked', !checked);
+          legendItems[findLegendItem(name)].checked = !checked;
+        }
+      }
+    });
+    
+    // tooltip 和图例的联动
+    chart.tooltip({
+      showCrosshairs: true,
+      custom: true, // 自定义 tooltip 内容框
+      onChange: function onChange(obj) {
+        const legend = chart.get('legendController').legends.top[0];
+        const tooltipItems = obj.items;
+        const legendItems = legend.items;
+        const map = {};
+        legendItems.forEach(function(item) {
+          map[item.name] = _.clone(item);
+        });
+        tooltipItems.forEach(function(item) {
+          const name = item.name;
+          const value = item.value;
+          if (map[name]) {
+            map[name].value = value;
+          }
+        });
+        legend.setItems(_.values(map));
+      },
+      onHide: function onHide() {
+        const legend = chart.get('legendController').legends.top[0];
+        legend.setItems(legendItems);
+      }
     });
 
     chart.interval().position('name*score').color('#288dfd').style({
@@ -361,7 +430,6 @@ class Survey extends React.Component {
     const chart = new F2.Chart({
       id: 'myChart4',
       pixelRatio: window.devicePixelRatio,
-      // width:data.length * 18,
       plugins:[ScrollBar,Pan]
     });
     chart.source(data, {
@@ -375,7 +443,7 @@ class Survey extends React.Component {
       }
     });
     chart.tooltip(false);
-    chart.interval().position('title*num').color('name',['#288dfd','#f9a30c']).style({
+    chart.interval().position('title*num').color('name',['#288dfd','#f9a30c']).size('9').style({
       radius: [4,4,4,4]
     }).adjust({
       type: 'dodge',
@@ -428,7 +496,6 @@ class Survey extends React.Component {
   }
   
   render(){
-    
     return(
       <div className="survey-page" style={{minHeight:'100vh',background:'#f0f1f3'}}>
         <Header title={'售电概况'} back={true} search={false}/>

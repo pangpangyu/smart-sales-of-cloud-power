@@ -2,10 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import api from '../api/index';
-import noData from '../components/noData';
-import {
-  KeepAlive
-} from 'react-keep-alive';
+import NoData from '../components/noData';
 /**
  * 公司公告列表
  * 消息提醒列表
@@ -87,7 +84,7 @@ export default class NewList extends React.Component{
                           <div style={{background:'#f0f1f3',height:'11px'}}></div>
                         </div>
             }) }
-            { this.state.noData && <noData /> }
+            { this.state.noData && <NoData /> }
         </div>
       </div>
     )

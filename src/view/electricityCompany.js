@@ -3,9 +3,6 @@ import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import NoData from '../components/noData';
 import api from '../api/index';
-import {
-  KeepAlive
-} from 'react-keep-alive';
 /**
  * 售电公司
  */
@@ -94,7 +91,6 @@ export default class ElectricityCompany extends React.Component{
           item.name = item.conglomerate
           item.followUpPerson = item.contactPersonName
         })
-        console.log(res.data.rows)
         that.setState({
           companyList:res.data.rows,
           total:res.data.rowCount,
