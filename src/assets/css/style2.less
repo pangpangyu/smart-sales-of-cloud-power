@@ -239,3 +239,126 @@
         }
     }
 }
+.modal{
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    transition: all 200ms;
+    &.on{
+        top: 0;
+        transition: all 200ms;
+    }
+    .pick_box{
+        background: #fff;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        overflow: hidden;
+        .btns{
+            display: flex;
+            .btn{
+                flex: 1;
+                border-radius: 0;
+                font-size: 15px;
+                color: #a6bcd4;
+                height: 45px;
+                line-height: 45px;
+                background: #fff;
+                &::before{
+                    display: none;
+                }
+                &.btn1{
+                    background: #288dfd;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+.chagen_tab{
+    .change_tab_list{
+        border-bottom: 1px solid #f0f1f3;
+        ul{
+            display: flex;
+            li{
+                flex: 1;
+                text-align: center;
+                height: 35px;
+                line-height: 35px;
+                position: relative;
+                &::after{
+                    content: '';
+                    display: block;
+                    width: 20px;
+                    height: 3px;
+                    background: url(../img/img103.png) no-repeat center center;
+                    background-size: 100% 100%;
+                    position: absolute;
+                    bottom: 4px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    display: none;
+                }
+                &.active{
+                    color: #288dfd;
+                    &::after{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+.transactioninfo{
+    position: relative;
+    padding-left: 90px;
+    font-size: 0;
+    .l{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 90px;
+        h3{
+            font-size: 15px;
+            color: #999;
+            height: 39px;
+            line-height: 39px;
+            text-align: center;
+            border-bottom: 1px solid #eee; 
+        }
+        li{
+            font-size: 15px;
+            height: 39px;
+            line-height: 39px;
+            text-align: center;
+            color: #2b2a30;
+            border-bottom: 1px solid #eee; 
+        }
+    }
+    .r{
+        white-space: nowrap;
+        .list{
+            display: inline-block;
+            li{
+                font-size: 15px;
+                height: 39px;
+                line-height: 39px;
+                text-align: center;
+                color: #2b2a30;
+                padding: 0 10px;
+                border-bottom: 1px solid #eee;
+                &:first-child{
+                    color: #999;
+                }
+            }
+        }
+    }
+}

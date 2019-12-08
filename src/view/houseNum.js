@@ -14,10 +14,10 @@ export default class Todolist extends React.Component {
         let title = '公司信息'
         let search = false
         let tabs = [
-            { title: '基本信息' },
-            { title: '户号信息' },
-            { title: '账号管理' },
-            { title: '年预计电量' }
+            { id: '1', title: '基本信息' },
+            { id: '2', title: '户号信息' },
+            { id: '3', title: '账号管理' },
+            { id: '4', title: '年预计电量' }
         ]
         if (this.props.match.params.type === '1') {
             //电力用户信息
@@ -26,16 +26,16 @@ export default class Todolist extends React.Component {
             //发电厂信息
             title = '发电企业'
             tabs = [
-                { title: '基本资料' },
-                { title: '机组成本' },
-                { title: '交易信息' }
+                { id: '1', title: '基本资料' },
+                { id: '2', title: '机组成本' },
+                { id: '3', title: '交易信息' }
             ]
         } else if (this.props.match.params.type === '3') {
             //合作方信息
             title = '合作方'
             tabs = [
-                { title: '基本信息' },
-                { title: '账号管理' }
+                { id: '1', title: '基本信息' },
+                { id: '2', title: '账号管理' }
             ]
         } else if (this.props.match.params.type === '4') {
             //售电公司信息
@@ -79,17 +79,10 @@ export default class Todolist extends React.Component {
                     label: '2019',
                     value: '2019',
                 },
-            ]
+            ],
+            active: '1',
+            type: this.props.match.params.type
         }
-    }
-    onChange = (value) => {
-        console.log(value);
-        this.setState({
-            value,
-        });
-    }
-    onScrollChange = (value) => {
-        console.log(value);
     }
     componentDidMount() {
         document.documentElement.scrollTop = document.body.scrollTop = 0;
@@ -99,19 +92,49 @@ export default class Todolist extends React.Component {
             <div style={{ minHeight: '100vh', background: '#f0f1f3' }}>
                 <Header title={this.state.title} back={true} search={false}></Header>
                 <div className="housenum">
-                    <div className="power_user">
-                        <h3>信息技术有限公司</h3>
-                        <div className="list">
-                            <ul>
-                                <li><span>地址：</span>山西省太原市XXX区</li>
-                                <li><span>联系人：</span>张三</li>
-                                <li><span>联系手机：</span>13169779500</li>
-                            </ul>
-                            <div className="clear"></div>
+                    {(this.state.type === '1' || this.state.type === '2' || this.state.type === '3') &&
+                        <div>
+                            <div className="power_user">
+                                <h3>信息技术有限公司</h3>
+                                <div className="list">
+                                    <ul>
+                                        <li><span>地址：</span>山西省太原市XXX区</li>
+                                        <li><span>联系人：</span>张三</li>
+                                        <li><span>联系手机：</span>13169779500</li>
+                                    </ul>
+                                    <div className="clear"></div>
+                                </div>
+                            </div>
+                            <div className="module-space"></div>
                         </div>
-                    </div>
-                    <div className="module-space"></div>
+                    }
                     <div className="cont">
+                        <div className="chagen_tab">
+                            <div className="change_tab_list">
+                                <ul>
+                                    {this.state.tabs && this.state.tabs.map((item, index) => {
+                                        return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}</li>
+                                    })}
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="">
+                            {this.state.active === '1' && this.state.type === '1' && <PowerDetails type={this.state.type} />}
+                            {this.state.active === '2' && this.state.type === '1' && <HouseholdInfo />}
+                            {this.state.active === '3' && this.state.type === '1' && <AccountManagement userList={this.state.userList} />}
+                            {this.state.active === '4' && this.state.type === '1' && <AnnualEstimatedPower type={this.state.type} />}
+
+                            {this.state.active === '1' && this.state.type === '2' && <PowerDetails type={this.state.type} />}
+                            {this.state.active === '2' && this.state.type === '2' && <div></div>}
+                            {this.state.active === '3' && this.state.type === '2' && <AnnualEstimatedPower type={this.state.type} />}
+
+                            {this.state.active === '1' && this.state.type === '3' && <PowerDetails type={this.state.type} />}
+                            {this.state.active === '2' && this.state.type === '3' && <AccountManagement userList={this.state.userList} />}
+
+
+                            {this.state.type === '4' && <PowerDetails type={this.state.type} />}
+                        </div>
+
                         {/* <Tabs
                             tabs={this.state.tabs}
                             swipeable="false"
@@ -134,22 +157,7 @@ export default class Todolist extends React.Component {
                     </div>
                 </div>
 
-                {/* <div className="modal">
-                    <div className="pick_box">
-                        <PickerView
-                            onChange={this.onChange}
-                            onScrollChange={this.onScrollChange}
-                            value={this.state.value}
-                            data={this.state.pickerList}
-                            cascade={false}
-                        />
-                        <div className="module-space"></div>
-                        <div className="btns">
-                            <Button className="btn" type="primary">取消</Button>
-                            <Button className="btn btn1" type="primary">确定</Button>
-                        </div>
-                    </div>
-                </div> */}
+
             </div>
         )
     }
