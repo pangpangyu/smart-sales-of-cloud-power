@@ -88,8 +88,8 @@ export default class ElectricityCompany extends React.Component{
     api.GetPartnersList(params).then(res => {
       if(res.status === 0){
         res.data.rows.map(item => {
-          item.name = item.conglomerate
-          item.followUpPerson = item.contactPersonName
+          // item.name = item.conglomerate
+          item.followUpPerson = item.contactPerson
         })
         that.setState({
           companyList:res.data.rows,
@@ -106,10 +106,9 @@ export default class ElectricityCompany extends React.Component{
     api.GetPartnersList(params).then(res => {
       if(res.status === 0){
         res.data.rows.map(item => {
-          item.name = item.conglomerate
-          item.followUpPerson = item.contactPersonName
+          // item.name = item.conglomerate
+          item.followUpPerson = item.contactPerson
         })
-        console.log(res.data.rows)
         that.setState({
           companyList:res.data.rows,
           total:res.data.rowCount,

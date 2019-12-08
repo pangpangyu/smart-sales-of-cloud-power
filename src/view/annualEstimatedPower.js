@@ -151,6 +151,7 @@ export default class annualEstimatedPower extends React.Component {
         {this.props.type === '1' && this.powerUsersDet()}
         {this.props.type === '2' && this.electricityGenerationDet()}
         <div className={this.state.open ? 'modal on' : 'modal'}>
+          <div className="modal_bg" onClick={() => this.setState({ open: false })}></div>
           <div className="pick_box">
             <PickerView
               onChange={this.onChange}

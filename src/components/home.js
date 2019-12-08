@@ -43,7 +43,7 @@ class Home extends React.Component{
     api.GetHomeCarouselList({}).then(res => {
       if(res.status === 0){
 				that.setState({
-					carouselList:res.data.displayImages
+					carouselList:[...res.data.displayImages,...res.data.displayImages]
 				})
 			}
     })
