@@ -1,13 +1,18 @@
 import axios from 'axios'
+import { Toast } from 'antd-mobile';
 var request = axios.create({})
 
 request.defaults.baseURL = process.env.NODE_ENV === "production" ? "/api" : "/"
 request.defaults.timeout = 60000
 request.defaults.withCredentials = true
 request.defaults.crossDomain = true
-
+var loading = false
 request.interceptors.request.use(
   config => {
+    if(!loading){
+      Toast.loading('Loading...',0);
+      loading = true
+    }
     return config
   },
   error => {
@@ -18,6 +23,8 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   response => {
+    Toast.hide()
+    loading = false
     let data = response.data
     return data
   },
