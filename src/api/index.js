@@ -75,7 +75,8 @@ const api = {
   },
   //合作方客户列表
   GetPartnersList(params){
-    return request.post('/admin/company/crud/supplierlistData',params)
+    //return request.post('/admin/company/crud/supplierlistData',params)
+    return request.post('admin/getPartnerData',params)
   },
   //合作方客户详情
   GetPartnersUserDetail(params){
