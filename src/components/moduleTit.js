@@ -14,6 +14,7 @@ class ModuleTit extends React.Component {
                 <div className="module-tit-wrap">
                     <img src={this.props.imgurl} alt="" className="img-icon"/>
                     <span className="tit">{this.props.title}</span>
+                    {this.props.children}
                 </div>
             </Fragment>
         )

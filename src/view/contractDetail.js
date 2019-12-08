@@ -15,6 +15,7 @@ class ContractDetail extends React.Component {
                 { title: '附件信息' }
             ],
             contractId:this.props.match.params.id,
+            contractDetail:[],
 
         }
     }
@@ -30,11 +31,23 @@ class ContractDetail extends React.Component {
     GetContractDetail(){
         const that = this
         let params = {
-            id:that.state.contractId,
-            templId:0
+            //id:that.state.contractId,
+            id:283,
+            templId: 0,
+
         };
         api.GetContractDetail(params).then(res=>{
-            console.log("售电合同详情"+res)
+            console.log("售电合同详情",res);
+            if(res.status===0){
+                that.setState(()=>{
+                    return({
+                        contractDetail:res.data
+                    })
+                })
+            }else{
+                
+            }
+
 
         })
     }
@@ -52,7 +65,10 @@ class ContractDetail extends React.Component {
                 >
                 <View>
                     {/*  合同内容  */}
-                    <ContractMes/>
+                    <ContractMes 
+                      content={this.state.contractDetail}
+                      contractId={this.state.contractId}
+                    />
                 </View>
                 <View>
                     {/*  附件信息  */}

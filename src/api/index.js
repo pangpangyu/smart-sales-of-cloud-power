@@ -99,7 +99,7 @@ const api = {
   },
   //售电合同详情
   GetContractDetail(params){
-    return request.get('admin/contract/powerUserContractView'+params)
+    return request.get('admin/contract/powerUserContractView',{params:params})
   },
   //合同word导出
   GetContractDownloadWord(params){
