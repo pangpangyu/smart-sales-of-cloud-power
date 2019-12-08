@@ -3,7 +3,7 @@ import Header from '../components/header';
 import ContractAttachment from './contractAttachment';
 import ContractMes from './contractMes';
 import { Tabs,View } from 'antd-mobile';
-
+import api from '../api/index';
 
 class ContractDetail extends React.Component {
     constructor(props) {
@@ -13,9 +13,33 @@ class ContractDetail extends React.Component {
             tabs:[
                 { title: '合同内容' },
                 { title: '附件信息' }
-            ]
+            ],
+            contractId:this.props.match.params.id,
+
         }
     }
+
+    componentDidMount() {
+        const that = this;
+        document.documentElement.scrollTop = document.body.scrollTop = 0;
+        that.GetContractDetail();
+
+    }
+
+    //售电合同详情
+    GetContractDetail(){
+        const that = this
+        let params = {
+            id:that.state.contractId,
+            templId:0
+        };
+        api.GetContractDetail(params).then(res=>{
+            console.log("售电合同详情"+res)
+
+        })
+    }
+    
+
     render() {
         return (
             <Fragment>
