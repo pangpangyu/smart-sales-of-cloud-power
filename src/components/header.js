@@ -19,6 +19,7 @@ export default class Header extends React.Component{
           <p className="header-title">{ this.props.title || '' }</p>
           { this.props.back && (<div className="header-back" onClick={this.gotoback}><i className="iconfont iconfanhui"></i></div>)}
           { this.props.search && (<div className="header-search"><i className="iconfont iconsousuo"></i></div>)}
+          {this.props.children}
         </div>
         <div style={{height:'45px'}}></div>
       </div>
