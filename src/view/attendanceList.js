@@ -79,7 +79,7 @@ class AttendanceList extends React.Component {
                             <div className="item">
                                 <img className="img" src={require('../assets/img/img105.png')} alt=""/>
                                 <div>
-                                    <input class="self-radio" id="r1" type="radio" name="attedance" />
+                                    <input className="self-radio" id="r1" type="radio" name="attedance" />
                                     <label htmlFor="r1">
                                         <img className="img" src={require('../assets/img/img108.png')} alt=""/>
                                     </label>
