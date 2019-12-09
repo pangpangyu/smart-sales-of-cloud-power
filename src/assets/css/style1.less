@@ -1,211 +1,242 @@
 // 合同管理
-.contract-manage-wrap{
-    .contract-manage-list{
-        .item{
+.contract-manage-wrap {
+    .contract-manage-list {
+        .item {
             margin-bottom: 10px;
-            background-color:#fff;
-            padding:18px 15px;
-            .tit{
-                font-size:15px;
+            background-color: #fff;
+            padding: 18px 15px;
+
+            .tit {
+                font-size: 15px;
                 font-weight: bold;
-                color:@mainblack;
+                color: @mainblack;
             }
-            .mes{
-                color:@mainblack;
-                margin-top:15px;
-                font-size:12px;
-                span{
-                    color:#999;
+
+            .mes {
+                color: @mainblack;
+                margin-top: 15px;
+                font-size: 12px;
+
+                span {
+                    color: #999;
                 }
             }
         }
     }
 
-    .pulldown-box{
+    .pulldown-box {
         height: calc(100vh - 120px);
         overflow: auto;
-        ul{
+
+        ul {
             min-height: calc(100vh - 120px);
         }
     }
 }
 
 //合同电量信息
-.contract-battery-list{
-    margin:0 15px;
-    .item{
+.contract-battery-list {
+    margin: 0 15px;
+
+    .item {
         display: flex;
         align-content: center;
         justify-content: center;
-        text-align:center;
-        font-size:13px;
-        color:@mainblack;
+        text-align: center;
+        font-size: 13px;
+        color: @mainblack;
         border-bottom: 1px solid @borderline;
-        &.head{
-            color:@maingray;
+
+        &.head {
+            color: @maingray;
         }
-        .num{
+
+        .num {
             width: 10%;
         }
-        .info{
-            flex:1;
-            padding:0 10px;
+
+        .info {
+            flex: 1;
+            padding: 0 10px;
         }
-        .amount{
+
+        .amount {
             width: 15%;
         }
     }
 }
 
 //合同附件
-.contract-attachment-list{
-    margin:0 15px;
-    .item{
+.contract-attachment-list {
+    margin: 0 15px;
+
+    .item {
         display: flex;
         align-items: center;
         width: 100%;
-        padding:15px 0;
-        border-bottom:1px solid @borderline;
-        font-size:15px;
-        .l{
+        padding: 15px 0;
+        border-bottom: 1px solid @borderline;
+        font-size: 15px;
+
+        .l {
             width: 110px;
-            color:@maingray;
+            color: @maingray;
         }
-        .m{
-            padding:0 10px;
-            flex:1;
-            color:@mainblack;
+
+        .m {
+            padding: 0 10px;
+            flex: 1;
+            color: @mainblack;
             text-align: center;
         }
-        .r{
-            color:@mainblue;
+
+        .r {
+            color: @mainblue;
         }
     }
 }
 
 //合同预览
-.contract-review{
-    .head{
-        padding:20px 15px;
+.contract-review {
+    .head {
+        padding: 20px 15px;
         text-align: center;
-        .tit{
-            margin-bottom:10px;
-            font-size:17px;
-            color:@mainblack;
+
+        .tit {
+            margin-bottom: 10px;
+            font-size: 17px;
+            color: @mainblack;
         }
-        .tip{
-            color:@maingray;
-            font-size:12px;
-            color:#a6bcd4;
+
+        .tip {
+            color: @maingray;
+            font-size: 12px;
+            color: #a6bcd4;
         }
     }
-    .cont{
-        padding:15px;
-        font-size:15px;
+
+    .cont {
+        padding: 15px;
+        font-size: 15px;
         line-height: 28px;
-        color:@mainblack;
+        color: @mainblack;
     }
 }
 
-.moudle-tit-control{
-    color:@mainblue;
-    font-size:15px;
-    i{
-        margin-left:5px;
-        font-size:14px;
+.moudle-tit-control {
+    color: @mainblue;
+    font-size: 15px;
+
+    i {
+        margin-left: 5px;
+        font-size: 14px;
     }
 }
 
 //考勤管理
-.attendance-list{
-    .item{
+.attendance-list {
+    .item {
         position: relative;
-        padding:15px;
-        .tit{
-            padding-bottom:15px;
-            margin-bottom:10px;
-            font-size:15px;
+        padding: 15px;
+
+        .tit {
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 15px;
             font-weight: bold;
-            color:@mainblack;
-            border-bottom:1px solid @borderline;
+            color: @mainblack;
+            border-bottom: 1px solid @borderline;
         }
-        .mes{
+
+        .mes {
             display: flex;
-            color:@mainblack;
-            font-size:12px;
-            span{
-                line-height: 26px;;
+            color: @mainblack;
+            font-size: 12px;
+
+            span {
+                line-height: 26px;
+                ;
             }
-            .s1{
-                color:@maingray;
+
+            .s1 {
+                color: @maingray;
             }
-            .s2{
-                flex:1;
-                color:@mainblack;
+
+            .s2 {
+                flex: 1;
+                color: @mainblack;
             }
         }
-        .btn-statue{
+
+        .btn-statue {
             position: absolute;
-            top:70px;
-            right:15px;
-            background-image: linear-gradient(to right, #73b3fa , #2f90fd);
-            border:none;
+            top: 70px;
+            right: 15px;
+            background-image: linear-gradient(to right, #73b3fa, #2f90fd);
+            border: none;
             border-radius: 360px;
-            color:#fff;
-            font-size:12px;
-            height:30px;
+            color: #fff;
+            font-size: 12px;
+            height: 30px;
             line-height: 30px;
-            width:90px;
+            width: 90px;
         }
     }
 }
 
-.attedance-dialog{
-    margin:auto;
-    margin-top:20%;
+.attedance-dialog {
+    margin: auto;
+    margin-top: 20%;
     background-color: #fff;
     border-radius: 20px;
-    width:90%;
+    width: 90%;
     text-align: center;
-    .tit{
-        padding-top:20px;
-        color:@mainblack;
-        font-size:15px;
+
+    .tit {
+        padding-top: 20px;
+        color: @mainblack;
+        font-size: 15px;
         font-weight: bold;
     }
-    .cont{
-        padding:25px 15px;
+
+    .cont {
+        padding: 25px 15px;
         display: flex;
         justify-content: center;
-        .item{
-            flex:1;
+
+        .item {
+            flex: 1;
             text-align: center;
-            .img{
-                height:36px;
+
+            .img {
+                height: 36px;
             }
         }
     }
 }
 
-.btn-group{
-    height:44px;
+.btn-group {
+    height: 44px;
     line-height: 44px;
-    display:flex;
+    display: flex;
     border-radius: 20px;
-    button{
-        flex:1;
-        height:100%;
-        border:none;
-       
+
+    button {
+        flex: 1;
+        height: 100%;
+        border: none;
+
     }
-    .btn-cancel{
-        background-color:#fff;
-        color:@mainblack;
+
+    .btn-cancel {
+        background-color: #fff;
+        color: @mainblack;
         border-bottom-left-radius: 20px;
     }
-    .btn-sure{
-        background-color:@mainblue;
-        color:#fff;
+
+    .btn-sure {
+        background-color: @mainblue;
+        color: #fff;
         border-bottom-right-radius: 20px;
     }
 }
@@ -218,25 +249,42 @@
 //     font-size: 18px;
 //     width: 20px;
 //     height: 20px;
-    
+
 // }
 
-.self-radio{
-    position: relative;
-    .label-icon{
-        height: 24px;
+.self-radio { 
+    padding: 6px 0; 
+    label{
+        color:#999;
     }
-    .checked{
-        display: none;
-    }
-
-    input:checked~ .label-icon{
-        display: none;
-    }
-
-    input:checked~ .checked{
+    label::after {
+        content: "";
+        /*不换行空格*/
+        background-image: url("../img/img108.png");
+        background-size: 100% 100%;
         display: block;
+        margin: 6px auto;
+        font-size: 18px;
+        width: 20px;
+        height: 20px;
     }
 
-   
+    input {
+        display: none;
+    }
+
+    input:checked+label::after {
+        content: "";
+        /*不换行空格*/
+        background-image: url("../img/img109.png");
+        background-size: 100% 100%;
+        display: block;
+        margin: 6px auto;
+        font-size: 18px;
+        width: 20px;
+        height: 20px;
+    }
+
+
+
 }
