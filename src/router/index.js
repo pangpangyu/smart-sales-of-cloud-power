@@ -17,6 +17,7 @@ import Customer from '../view/customer';
 import ElectricityCompany from '../view/electricityCompany';
 import Survey from '../view/survey';
 import Account from '../view/accountInfo';
+import SettlementManage from '../view/settlementManage';
 import ErrorPage from '../view/ErrorPage';
 import { Provider } from 'react-keep-alive';
 
@@ -41,6 +42,7 @@ export default class ROUTER extends React.Component{
                 <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
                 <Route path="/account/:id" component={Account}></Route>
                 <Route path="/customer" component={Customer}></Route>
+                <Route path="/settlementManage" component={SettlementManage}></Route>
                 <Route path="/todolist" component={TodoList}></Route>
                 <Route path="/todoDet/:id" component={TodoDet}></Route>
                 <Route path="/todoDetLc/:id" component={TodoDetLc}></Route>
