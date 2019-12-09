@@ -11,7 +11,6 @@ import NoData from '../components/noData';
 export default class Todolist extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props)
         let title = '公司信息'
         let search = false
         let tabs = [
@@ -192,12 +191,12 @@ export default class Todolist extends React.Component {
                         </div>
                         <div className="">
                             {this.state.active === '1' && this.state.type === '1' && <PowerDetails type={this.state.type}/>}
-                            {this.state.active === '2' && this.state.type === '1' && (this.state.powerTrade.length === 0 ? <NoData />:<HouseholdInfo />)}
+                            {this.state.active === '2' && this.state.type === '1' && (this.state.powerTrade.length === 0 ? <NoData />:<HouseholdInfo type={this.state.type} />)}
                             {this.state.active === '3' && this.state.type === '1' && <AccountManagement userList={this.state.powerUsers} participantId={getDataQuery('participantId')} />}
-                            {this.state.active === '4' && this.state.type === '1' && <AnnualEstimatedPower type={this.state.type} />}
+                            {this.state.active === '4' && this.state.type === '1' && <AnnualEstimatedPower type={this.state.type} participantId={getDataQuery('participantId')} />}
 
                             {this.state.active === '1' && this.state.type === '2' && <PowerDetails type={this.state.type} />}
-                            {this.state.active === '2' && this.state.type === '2' && <div></div>}
+                            {this.state.active === '2' && this.state.type === '2' && <HouseholdInfo type={this.state.type} />}
                             {this.state.active === '3' && this.state.type === '2' && <AnnualEstimatedPower type={this.state.type} />}
 
                             {this.state.active === '1' && this.state.type === '3' && <PowerDetails type={this.state.type} />}
