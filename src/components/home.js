@@ -20,7 +20,7 @@ class Home extends React.Component{
         { id:1 ,name:'售电概况',url:require('../assets/img/img001.png'),link:'/survey' },
         { id:2 ,name:'客户管理',url:require('../assets/img/img002.png'),link:'/customer' },
         { id:3 ,name:'合同管理',url:require('../assets/img/img003.png'),link:'/contractManage' },
-        { id:4 ,name:'结算管理',url:require('../assets/img/img004.png'),link:'/' },
+        { id:4 ,name:'结算管理',url:require('../assets/img/img004.png'),link:'/settlementManage' },
         { id:5 ,name:'电量跟踪',url:require('../assets/img/img005.png'),link:'/' },
         { id:6 ,name:'经营分析',url:require('../assets/img/img006.png'),link:'/bsinessAnalysis' },
         { id:7 ,name:'考勤管理',url:require('../assets/img/img007.png'),link:'/attendanceList' },

@@ -393,10 +393,25 @@
             }
         }
     }
+    .tab_box{
+        margin-top: 10px;
+        .search-wrap{
+            padding: 15px 15px 0;
+            margin-bottom: -10px;
+        }
+    }
     .tab{
         margin-top: 10px;
         background: #fff;
         padding: 0 15px;
+        .tit{
+            line-height: 55px;
+            border-bottom: 1px solid #f0f1f3;
+            h3{
+                font-size: 16px;
+                font-weight: bold;
+            }
+        }
         .item{
             .list{
                 border-top: 1px solid #f0f1f3;
@@ -411,11 +426,18 @@
                         font-size: 15px;
                         vertical-align: middle;
                     }
-                    img{
+                    .iconfont{
+                        display: inline-block;
                         width: 17px;
                         height: 17px;
+                        line-height: 17px;
+                        text-align: center;
+                        border-radius: 17px;
+                        background: #a6bcd4;
+                        color: #fff;
                         vertical-align: middle;
                         margin-right: 3px;
+                        font-size: 9px;
                     }
                 }
                 ul{
@@ -430,6 +452,18 @@
                     }
                     &.active{
                         height: auto;
+                    }
+                    &.ul1{
+                        background: none;
+                        height: auto;
+                        li{
+                            &:nth-child(2n+1){
+                                width: 65%;
+                            }
+                            &:nth-child(2n){
+                                width: 35%;
+                            }
+                        }
                     }
                     li{
                         float: left;
