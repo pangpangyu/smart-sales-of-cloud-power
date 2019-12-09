@@ -245,21 +245,6 @@ export default class BsinessAnalysis extends React.Component{
         alias: '合同收益'
       }
     });
-    // chart.axis('avgScore', {
-    //   grid: null
-    // });
-    // chart.axis('name', {
-    //   label: {
-    //     rotate: Math.PI / 3,
-    //     textAlign: 'start',
-    //     textBaseline: 'middle'
-    //   }
-    // });
-
-    // chart.legend({
-    //   custom: true,
-    //   items: legendItems
-    // });
     chart.legend({
       custom: true,
       items: legendItems,
@@ -359,12 +344,25 @@ export default class BsinessAnalysis extends React.Component{
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="f2-map">
-          <div className="t"><i className="iconfont iconjiage"></i>购电成本分析</div>
+          <div className="t"><i className="iconfont iconjingyingfenxix"></i>偏差电量分析</div>
           <div className="f2-map-view">
             <canvas id="myChart3" width="345" height="220"></canvas>
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div className="f2-map">
+          <div className="t"><i className="iconfont iconjiage"></i>购电成本分析</div>
+          <div className="f2-map-view">
+            <canvas id="myChart4" width="345" height="220"></canvas>
+          </div>
+        </div>
+        <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div className="f2-map">
+          <div className="t"><i className="iconfont iconshouyi"></i>收益分析</div>
+          <div className="f2-map-view">
+            <canvas id="myChart5" width="345" height="220"></canvas>
+          </div>
+        </div>
       </div>
     )
   }
