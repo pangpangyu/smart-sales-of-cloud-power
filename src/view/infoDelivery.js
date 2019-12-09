@@ -29,7 +29,7 @@ export default class InfoDelivery extends React.Component{
         <div className="header">
           <p className="header-title">信息发布</p>
           <div className="header-back" onClick={this.gotoback}><i className="iconfont iconfanhui"></i></div>
-          <div className="header-search"><Link to="/"><i className="iconfont iconjia" style={{color:'#fff'}}></i></Link></div>
+          <div className="header-search"><Link to="/infoDeliveyAdd"><i className="iconfont iconjia" style={{color:'#fff',fontSize:'15px'}}></i></Link></div>
         </div>
         <div style={{height:'45px'}}></div>
         <div className="infoDelivey-search">
