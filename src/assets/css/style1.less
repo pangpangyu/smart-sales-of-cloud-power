@@ -117,3 +117,106 @@
 }
 
 //考勤管理
+.attendance-list{
+    .item{
+        position: relative;
+        padding:15px;
+        .tit{
+            padding-bottom:15px;
+            margin-bottom:10px;
+            font-size:15px;
+            font-weight: bold;
+            color:@mainblack;
+            border-bottom:1px solid @borderline;
+        }
+        .mes{
+            display: flex;
+            color:@mainblack;
+            font-size:12px;
+            span{
+                line-height: 26px;;
+            }
+            .s1{
+                color:@maingray;
+            }
+            .s2{
+                flex:1;
+                color:@mainblack;
+            }
+        }
+        .btn-statue{
+            position: absolute;
+            top:70px;
+            right:15px;
+            background-image: linear-gradient(to right, #73b3fa , #2f90fd);
+            border:none;
+            border-radius: 360px;
+            color:#fff;
+            font-size:12px;
+            height:30px;
+            line-height: 30px;
+            width:90px;
+        }
+    }
+}
+
+.attedance-dialog{
+    margin:auto;
+    margin-top:20%;
+    background-color: #fff;
+    border-radius: 20px;
+    width:90%;
+    text-align: center;
+    .tit{
+        padding-top:20px;
+        color:@mainblack;
+        font-size:15px;
+        font-weight: bold;
+    }
+    .cont{
+        padding:25px 15px;
+        display: flex;
+        justify-content: center;
+        .item{
+            flex:1;
+            text-align: center;
+            img{
+                height:36px;
+            }
+        }
+    }
+}
+
+.btn-group{
+    height:44px;
+    line-height: 44px;
+    display:flex;
+    border-radius: 20px;
+    button{
+        flex:1;
+        height:100%;
+        border:none;
+       
+    }
+    .btn-cancel{
+        background-color:#fff;
+        color:@mainblack;
+        border-bottom-left-radius: 20px;
+    }
+    .btn-sure{
+        background-color:@mainblue;
+        color:#fff;
+        border-bottom-right-radius: 20px;
+    }
+}
+
+
+input[type="radio"] + label::before {
+    content: url("../img/img108.png"); /*不换行空格*/
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    
+}
