@@ -72,16 +72,17 @@ class AttendanceList extends React.Component {
                     
                 </ul>
 
-                <div className="mask" style={{display:"none"}}>
+                <div className="mask" style={{display:'none'}} >
                     <div className="attedance-dialog">
                         <div className="tit">考勤管理</div>
                         <div className="cont">
                             <div className="item">
                                 <img className="img" src={require('../assets/img/img105.png')} alt=""/>
-                                <div>
-                                    <input class="self-radio" id="r1" type="radio" name="attedance" />
+                                <div class="self-radio">
                                     <label htmlFor="r1">
-                                        <img className="img" src={require('../assets/img/img108.png')} alt=""/>
+                                        <input  id="r1" type="radio" name="attedance" />
+                                        <img className="label-icon" src={require('../assets/img/img108.png')} alt=""/>
+                                        <img className="label-icon checked" src={require('../assets/img/img109.png')} alt=""/>
                                     </label>
                                 </div>
                             </div>
