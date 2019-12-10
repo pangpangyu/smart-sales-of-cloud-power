@@ -782,6 +782,9 @@ class Survey extends React.Component {
       if(i%4===0){
         originDates.push(i+1+'日')
       }
+      // if(i < 13){
+      //   originDates.push(i+1+'日')
+      // }
     }
     const chart = new F2.Chart({
       id: 'myChart4',
@@ -796,9 +799,18 @@ class Survey extends React.Component {
         tickCount: 5
       }
     });
-    chart.tooltip(false);
+    // chart.tooltip(false);
+    chart.tooltip({
+      alwaysShow: false,
+      showTitle: true,
+      showCrosshairs: true,
+      crosshairsStyle: {
+        stroke: 'rgba(0, 0, 0, 0.25)',
+        lineWidth: 2
+      },
+    })
     chart.interval().position('title*num').color('name',['#288dfd','#f9a30c']).size('9').style({
-      radius: [4,4,4,4]
+      radius: [3,3,3,3]
     }).adjust({
       type: 'dodge',
       marginRatio: 0.05 // 设置分组间柱子的间距
@@ -846,7 +858,7 @@ class Survey extends React.Component {
     chart.tooltip(false);
     chart.line().position('title*num').color('name',['#288dfd','#f9a30c']).size('1').adjust({
       type: 'dodge',
-      marginRatio: 0.05 // 设置分组间柱子的间距
+      marginRatio: 0 // 设置分组间柱子的间距
     });
     chart.scrollBar({
       mode: 'x',
