@@ -378,21 +378,22 @@
         }
     }
 }
-.settlement_manage{
-    padding-bottom: 20px;
-    .selection_date{
-        padding: 0 15px;
-        line-height: 43px;
-        background: #fff;
-        p{
-            span{
-                float: right;
-                padding-right: 15px;
-                background: url(../img/img207.png) no-repeat right center;
-                background-size: 11px 6px;
-            }
+.selection_date{
+    padding: 0 15px;
+    line-height: 43px;
+    background: #fff;
+    p{
+        span{
+            float: right;
+            padding-right: 15px;
+            background: url(../img/img207.png) no-repeat right center;
+            background-size: 11px 6px;
         }
     }
+}
+.settlement_manage{
+    padding-bottom: 20px;
+    
     .tab_box{
         margin-top: 10px;
         .search-wrap{
@@ -478,6 +479,310 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+.power_tracking{
+    .top{
+        border-bottom: 1px solid #eee;
+        .search-wrap{
+            padding-bottom: 0;
+        }
+    }
+    .tab{
+        .item{
+            margin-top: 10px;
+            padding: 20px 15px;
+            background: #fff;
+            &:first-child{
+                margin-top: 0;
+            }
+            h3{
+                font-size: 15px;
+                color: #2b2a30;
+            }
+            .list{
+                ul{
+                    li{
+                        float: left;
+                        width: 50%;
+                        margin-top: 15px;
+                        &:first-child{
+                            width: 100%;
+                            line-height: 30px;
+                        }
+                        p{
+                            font-size: 12px;
+                            color: #999;
+                            label{
+                                display: inline-block;
+                                width: 93px;
+                                border-radius: 30px;
+                                text-align: center;
+                                color: #fff;
+                                &.lb1{
+                                    background: -webkit-linear-gradient(left, #95c5fa, #3393fd); 
+                                }
+                                &.lb2{
+                                    background: -webkit-linear-gradient(left, #fdc86b, #f9a30c); 
+                                }
+                                &.lb3{
+                                    background: -webkit-linear-gradient(left, #fb818d, #fd0e25); 
+                                }
+                            }
+                            span{
+                                color: #2b2a30;
+                            }
+                        }
+                    }
+                    &::after{
+                        content: '';
+                        display: block;
+                        height: 0;
+                        clear: both;
+                    }
+                }
+            }
+        }
+    }
+}
+.actualpowerrecord{
+    .top{
+        padding: 20px 15px;
+        background: #fff;
+        text-align: center;
+        h3{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        p{
+            font-size: 11px;
+            color: #a6bcd4;
+            margin-top: 15px;
+        }
+    }
+    .tab{
+        .item{
+            margin-top: 10px;
+            padding: 0 15px 20px;
+            background: #fff;
+            .tit{
+                line-height: 54px;
+                border-bottom: 1px solid #eee;
+                h3{
+                    font-size: 15px;
+                    font{
+                        font-weight: bold;
+                        margin: 0 5px;
+                    }
+                    span{
+                        float: right;
+                        font-size: 11px;
+                        color: #a6bcd4;
+                    }
+                }
+            }
+            .list{
+                ul{
+                    li{
+                        margin-top: 15px;
+                        p{
+                            font-size: 12px;
+                            color: #2b2a30;
+                            span{
+                                color: #999;
+                            }
+                            a{
+                                color: #288dfd;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.spotDeclarationDetDay{
+    .top{
+        padding: 20px 15px;
+        background: #fff;
+        text-align: center;
+        h3{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        p{
+            font-size: 11px;
+            color: #a6bcd4;
+            margin-top: 15px;
+        }
+    }
+    .spot_declaration_power{
+        background: #fff;
+        margin-top: 10px;
+        padding: 20px 0 20px 15px;
+        h3{
+            text-align: center;
+            font-size: 12px;
+        }
+        .chart{
+            margin-top: 15px;
+            img{
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+    .spot_declaration_tab{
+        background: #fff;
+        margin-top: 10px;
+        padding: 20px 0;
+        h3{
+            text-align: right;
+            font-size: 11px;
+            color: #999;
+        }
+        .tab{
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            .l{
+                float: left;
+                margin-left: 15px;
+                width: 65px;
+                li{
+                    text-align: right;
+                    padding: 0;
+                    padding-right: 15px;
+                }
+            }
+            .r{
+                overflow: hidden;
+                .box{
+                    overflow-y: auto;
+                    white-space: nowrap;
+                    font-size: 0;
+                    .list{
+                        display: inline-block;
+                    }
+                }
+            }
+            ul{
+                li{
+                    text-align: center;
+                    height: 39px;
+                    line-height: 39px;
+                    border-bottom: 1px solid #eee;
+                    font-size: 15px;
+                    color: #999;
+                    padding: 0 13px;
+                    &:first-child{
+                        color: #2b2a30;
+                    }
+                }
+            }
+        }
+    }
+}
+.spotDeclarationDetMonth{
+    .top{
+        padding: 20px 15px;
+        background: #fff;
+        text-align: center;
+        h3{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        p{
+            font-size: 11px;
+            color: #a6bcd4;
+            margin-top: 15px;
+            line-height: 16px;
+        }
+    }
+    .chart_box{
+        background: #fff;
+        margin-top: 10px;
+        .charts{
+            border-top: 1px solid #eee;
+            padding: 20px 15px;
+            h3{
+                text-align: center;
+                font-size: 12px;
+                color: #2b2a30;
+            }
+            .chart{
+                margin-top: 15px;
+                img{
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .detMonth_tab{
+        background: #fff;
+        margin-top: 10px;
+        h3{
+            line-height: 42px;
+            border-bottom: 1px solid #eee;
+            padding: 0 15px;
+            text-align: right;
+            font-size: 11px;
+            color: #999;
+        }
+        .list{
+            padding: 0 15px 20px;
+            ul{
+                &::after{
+                    content: '';
+                    display: block;
+                    height: 0;
+                    clear: both;
+                }
+                li{
+                    float: left;
+                    width: 25%;
+                    text-align: center;
+                    margin-top: 30px;
+                    p{
+                        font-size: 11px;
+                        color: #2b2a30;
+                        height: 11px;
+                    }
+                    h4{
+                        background: #f0f1f3;
+                        font-size: 16px;
+                        line-height: 40px;
+                        height: 40px;
+                        color: #288dfd;
+                        margin-top: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+.power_tracking_det{
+    .top{
+        padding: 20px 15px;
+        background: #fff;
+        text-align: center;
+        h3{
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+    .cont{
+        margin-top: 10px;
+        background: #fff;
+        .module-list .item .r{
+            a{
+                display: block;
+                padding-right: 13px;
+                background: url(../img/img201.png) no-repeat right center;
+                background-size: 8px 13px;
+                color: #2b2a30;
             }
         }
     }

@@ -75,54 +75,53 @@ class AttendanceList extends React.Component {
                 </Header>
                 <Search title={'搜考勤类型、请假类型、事由、状态'} onInput={this.handleSearchInput} onSubmit={this.handleSearchSubmit}></Search>
 
-                <ul className="attendance-list">
-                    {
-                        this.state.attendanceList.map((item,index)=>{
-                            return(
-                                <Fragment key={index}>
-                                <li className="item" >
-                                    <Link to="">
-                                        <div className="tit">{item.name}</div>
-                                        <div className="mes">
-                                            <span className="s1">请假类型：</span>
-                                            <span className="s2">{item.kind}</span>
-                                        </div>
-                                        <div className="mes">
-                                            <span className="s1">请假时间：</span>
-                                            <span className="s2">{item.time}</span>
-                                        </div>
-                                        <div className="mes">
-                                            <span className="s1">请假事由：</span>
-                                            <span className="s2">{item.reason}</span>
-                                        </div>
-                                        <button className="btn-statue">{item.state}</button>
-                                    </Link>
-                                </li>
-                                <div className="module-space"></div>
-                                </Fragment>
-                            )
-                        })
+				<ul className="attendance-list">
+					{
+						this.state.attendanceList.map((item, index) => {
+							return (
+								<Fragment key={index}>
+									<li className="item" >
+										<Link to={`/attendanceAdd/${item.type}`}>
+											<div className="tit">{item.name}</div>
+											<div className="mes">
+												<span className="s1">请假类型：</span>
+												<span className="s2">{item.kind}</span>
+											</div>
+											<div className="mes">
+												<span className="s1">请假时间：</span>
+												<span className="s2">{item.time}</span>
+											</div>
+											<div className="mes">
+												<span className="s1">请假事由：</span>
+												<span className="s2">{item.reason}</span>
+											</div>
+											<button className="btn-statue">{item.state}</button>
+										</Link>
+									</li>
+									<div className="module-space"></div>
+								</Fragment>
+							)
+						})
                     }
-                    
-                </ul>
+                </ul>    
 
                 {this.state.addStatus ? mask : ''}
             </Fragment>
         )
     }
 
-    handleSearchInput=e=>{
-        // console.log(e.target.value);
-        this.setState({
-            searchInput:e.target.value
-        })
-    }
-    handleSearchSubmit=e=>{
-        //console.log(this.state.searchInput);
-        this.setState({
-            attendanceList:[]
-        })
-    }
+	handleSearchInput = e => {
+		// console.log(e.target.value);
+		this.setState({
+			searchInput: e.target.value
+		})
+	}
+	handleSearchSubmit = e => {
+		//console.log(this.state.searchInput);
+		this.setState({
+			attendanceList: []
+		})
+	}
 
     handleCheckChanged=e=>{
         console.log(e.target.value)

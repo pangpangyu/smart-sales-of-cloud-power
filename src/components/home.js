@@ -25,7 +25,7 @@ class Home extends React.Component{
         { id:6 ,name:'经营分析',url:require('../assets/img/img006.png'),link:'/bsinessAnalysis' },
         { id:7 ,name:'考勤管理',url:require('../assets/img/img007.png'),link:'/attendanceList' },
         { id:8 ,name:'信息发布',url:require('../assets/img/img008.png'),link:'/infoDelivey' },
-        { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/' },
+        { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/tradingCenter' },
         { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'/' },
         { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/todolist' },
         { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/newList/1' }
