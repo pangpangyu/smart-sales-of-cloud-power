@@ -284,7 +284,57 @@
         width: 20px;
         height: 20px;
     }
+}
 
+//
+.attendnce-add{
+    .item{
+        display: flex;
+        align-content: center;
+        margin:0 15px;
+        height:40px;
+        line-height: 40px;
+        font-size:14px;
+        border-bottom:1px solid @borderline;
+        .l{
+            color:@mainblack;
 
+        }
+        .r{
+            flex:1;
+            text-align: right;
+            input{
+                height:100%;
+                width: 100%;
+                color:@mainblack;
+                text-align: right;
+                border:none;
+            }
+            ::-webkit-input-placeholder{
+                color:#999;
+            }
+        }
 
+    }
+    .other{
+        padding:15px;
+        .tit{
+            font-size:14px;
+            color:@mainblack;
+            font-weight: bold;
+        }
+        .area-wrap{
+            width: 100%;
+            margin-top:15px;
+            padding:15px;
+            height:160px;
+            border:1px solid #eee;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea::-webkit-input-placeholder{
+            color:#999 !important;
+        }
+    }
+    
 }
