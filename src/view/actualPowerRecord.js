@@ -49,28 +49,13 @@ export default class Test extends React.Component{
         return (
             <div style={{ minHeight: '100vh', background: '#f0f1f3' }}>
                 <Header title='电量跟踪' back={true} search={false}></Header>
-                <div className="power_tracking">
+                <div className="actualpowerrecord">
                     <div className="top">
-                        <Search title={'搜客户名称'} onInput={this.handleSearchInput} onSubmit={this.handleSearchSubmit} />
-                        <div className="selection_date">
-                            <p>选择日期<span onClick={() => this.setState({ open: true })}>{this.state.year}</span></p>
-                        </div>
+                        <h3>山西太原XX公司</h3>
+                        <p>2019年11月的实际用电量最后统计为 1230 兆瓦时</p>
                     </div>
                     <div className="tab">
-                        {this.state.list && this.state.list.map(item => {
-                            return <div className="item" key={item.id}>
-                            <h3>{item.title}</h3>
-                            <div className="list">
-                                <ul>
-                                    <li><p>预警等级：<label className={(item.n1 === '一级预警' ? 'lb1':'') + ' ' + (item.n1 === '二级预警' ? 'lb2':'') + ' ' + (item.n1 === '三级预警' ? 'lb3':'') + ' ' + (item.n1 === '良好' ? 'lb1':'') }>{item.n1}</label></p></li>
-                                    <li><p>交易电量：<span>{item.n2}</span>兆瓦时</p></li>
-                                    <li><p>实际电量：<span>{item.n3}</span>兆瓦时</p></li>
-                                    <li><p>预测偏差：<span>{item.n4}</span>兆瓦时</p></li>
-                                    <li><p>偏差率：<span>{item.n5}%</span></p></li>
-                                </ul>
-                            </div>
-                        </div>
-                        })}
+                        
                     </div>
                 </div>
                 <div className={this.state.open ? 'modal on' : 'modal'}>

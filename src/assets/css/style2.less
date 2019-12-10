@@ -378,21 +378,22 @@
         }
     }
 }
-.settlement_manage{
-    padding-bottom: 20px;
-    .selection_date{
-        padding: 0 15px;
-        line-height: 43px;
-        background: #fff;
-        p{
-            span{
-                float: right;
-                padding-right: 15px;
-                background: url(../img/img207.png) no-repeat right center;
-                background-size: 11px 6px;
-            }
+.selection_date{
+    padding: 0 15px;
+    line-height: 43px;
+    background: #fff;
+    p{
+        span{
+            float: right;
+            padding-right: 15px;
+            background: url(../img/img207.png) no-repeat right center;
+            background-size: 11px 6px;
         }
     }
+}
+.settlement_manage{
+    padding-bottom: 20px;
+    
     .tab_box{
         margin-top: 10px;
         .search-wrap{
@@ -480,5 +481,76 @@
                 }
             }
         }
+    }
+}
+.power_tracking{
+    .top{
+        border-bottom: 1px solid #eee;
+        .search-wrap{
+            padding-bottom: 0;
+        }
+    }
+    .tab{
+        .item{
+            margin-top: 10px;
+            padding: 20px 15px;
+            background: #fff;
+            &:first-child{
+                margin-top: 0;
+            }
+            h3{
+                font-size: 15px;
+                color: #2b2a30;
+            }
+            .list{
+                ul{
+                    li{
+                        float: left;
+                        width: 50%;
+                        margin-top: 15px;
+                        &:first-child{
+                            width: 100%;
+                            line-height: 30px;
+                        }
+                        p{
+                            font-size: 12px;
+                            color: #999;
+                            label{
+                                display: inline-block;
+                                width: 93px;
+                                border-radius: 30px;
+                                text-align: center;
+                                color: #fff;
+                                &.lb1{
+                                    background: -webkit-linear-gradient(left, #95c5fa, #3393fd); 
+                                }
+                                &.lb2{
+                                    background: -webkit-linear-gradient(left, #fdc86b, #f9a30c); 
+                                }
+                                &.lb3{
+                                    background: -webkit-linear-gradient(left, #fb818d, #fd0e25); 
+                                }
+                            }
+                            span{
+                                color: #2b2a30;
+                            }
+                        }
+                    }
+                    &::after{
+                        content: '';
+                        display: block;
+                        height: 0;
+                        clear: both;
+                    }
+                }
+            }
+        }
+    }
+}
+.actualpowerrecord{
+    .top{
+        padding: 20px 15px;
+        background: #fff;
+        text-align: center;
     }
 }
