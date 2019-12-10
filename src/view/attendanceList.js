@@ -30,14 +30,48 @@ class AttendanceList extends React.Component {
                     state:'未提交'
                 },
             ],
+            addStatus:false,
         }
     }
 
     render() {
+        let mask=
+                <div className="mask">
+                    <div className="attedance-dialog">
+                        <div className="tit">考勤管理</div>
+                        <div className="cont">
+                            <div className="item">
+                                <img className="img" src={require('../assets/img/img105.png')} alt=""/>
+                                <div className="self-radio">
+                                    <input  id="r1" type="radio" value={"qjsq"}  name="attedance" onChange={this.handleCheckChanged} />
+                                    <label htmlFor="r1">请假申请</label>
+                                </div>
+                            </div>
+                            <div className="item">
+                                <img className="img" src={require('../assets/img/img106.png')} alt=""/>
+                                <div className="self-radio">
+                                    <input  id="r2" type="radio" value={"wcsq"} name="attedance" onChange={this.handleCheckChanged} />
+                                    <label htmlFor="r2">外出申请</label>
+                                </div>
+                            </div>
+                            <div className="item">
+                                <img className="img" src={require('../assets/img/img107.png')} alt=""/>
+                                <div className="self-radio">
+                                    <input  id="r3" type="radio" value={"jbsq"} name="attedance" onChange={this.handleCheckChanged} />
+                                    <label htmlFor="r3">加班申请</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="btn-group">
+                            <button onClick={this.handleCancel} className="btn-cancel">取消</button>
+                            <button className="btn-sure">确定</button>
+                        </div>
+                    </div>
+                </div>
         return (
             <Fragment>
 				<Header title={'考勤管理'} back={true}>
-                    <div className="head-add"><i className="iconfont iconadd"></i></div>
+                    <div onClick={this.handleAdd} className="head-add"><i className="iconfont iconadd"></i></div>
                 </Header>
                 <Search title={'搜考勤类型、请假类型、事由、状态'} onInput={this.handleSearchInput} onSubmit={this.handleSearchSubmit}></Search>
 
@@ -72,38 +106,7 @@ class AttendanceList extends React.Component {
                     
                 </ul>
 
-                <div className="mask"  >
-                    <div className="attedance-dialog">
-                        <div className="tit">考勤管理</div>
-                        <div className="cont">
-                            <div className="item">
-                                <img className="img" src={require('../assets/img/img105.png')} alt=""/>
-                                <div class="self-radio">
-                                    <input  id="r1" type="radio" value={"qjsq"}  name="attedance" onChange={this.handleCheckChanged} />
-                                    <label htmlFor="r1">请假申请</label>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <img className="img" src={require('../assets/img/img106.png')} alt=""/>
-                                <div class="self-radio">
-                                    <input  id="r2" type="radio" value={"wcsq"} name="attedance" onChange={this.handleCheckChanged} />
-                                    <label htmlFor="r2">外出申请</label>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <img className="img" src={require('../assets/img/img107.png')} alt=""/>
-                                <div class="self-radio">
-                                    <input  id="r3" type="radio" value={"jbsq"} name="attedance" onChange={this.handleCheckChanged} />
-                                    <label htmlFor="r3">加班申请</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="btn-group">
-                            <button className="btn-cancel">取消</button>
-                            <button className="btn-sure">确定</button>
-                        </div>
-                    </div>
-                </div>
+                {this.state.addStatus ? mask : ''}
             </Fragment>
         )
     }
@@ -123,6 +126,18 @@ class AttendanceList extends React.Component {
 
     handleCheckChanged=e=>{
         console.log(e.target.value)
+    }
+
+    handleAdd=e=>{
+        this.setState({
+            addStatus:true
+        })
+    }
+
+    handleCancel=e=>{
+        this.setState({
+            addStatus:false
+        })
     }
 }
 
