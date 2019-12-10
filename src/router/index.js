@@ -8,6 +8,7 @@ import ContractManage from '../view/contractManage';
 import ContractDetail from '../view/contractDetail';
 import ContractReview from '../view/contractReview';
 import AttendanceList from '../view/attendanceList';
+import AttendanceAdd from '../view/attendanceAdd';
 import TodoList from '../view/todolist';
 import TodoDet from '../view/todoDet';
 import TodoDetLc from '../view/todoDetLc';
@@ -48,6 +49,7 @@ export default class ROUTER extends React.Component{
                 <Route path="/contractDetail/:id" component={ContractDetail}></Route>
                 <Route path="/contractReview/:id" component={ContractReview}></Route>
                 <Route path="/attendanceList" component={AttendanceList}></Route>
+                <Route path="/attendanceAdd/:type" component={AttendanceAdd}></Route>
                 {/*type  1为公司公告  2为消息提醒  */}
                 <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
                 {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
