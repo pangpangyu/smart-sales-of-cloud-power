@@ -1,8 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import { PickerView, Button } from 'antd-mobile';
-import Item from 'antd-mobile/lib/popover/Item';
-import { runInThisContext } from 'vm';
+import { Link } from 'react-router-dom'
 
 export default class Test extends React.Component {
     constructor(props) {
@@ -58,16 +57,16 @@ export default class Test extends React.Component {
                         <h3>点击下方电量可查看明细（单位：兆瓦时）</h3>
                         <div className="list">
                             <ul>
-                                <li><p>1日</p><h4>102</h4></li>
-                                <li><p>2日</p><h4>102</h4></li>
-                                <li><p>3日</p><h4>102</h4></li>
-                                <li><p>14日</p><h4>102</h4></li>
-                                <li><p>15日</p><h4>102</h4></li>
-                                <li><p>16日</p><h4>102</h4></li>
-                                <li><p>17日</p><h4>102</h4></li>
-                                <li><p>25日</p><h4>102</h4></li>
-                                <li><p>26日</p><h4>102</h4></li>
-                                <li><p>27日</p><h4>102</h4></li>
+                                <li><p>1日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>2日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>3日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>14日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>15日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>16日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>17日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>25日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>26日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
+                                <li><p>27日</p><h4><Link to={`/SpotDeclarationDetDay`}>102</Link></h4></li>
                                 <li><p></p><h4></h4></li>
                                 <li><p></p><h4></h4></li>
                             </ul>

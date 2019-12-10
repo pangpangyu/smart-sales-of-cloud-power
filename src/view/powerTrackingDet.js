@@ -72,11 +72,11 @@ export default class Test extends React.Component {
                                     </li>
                                     <li className="item">
                                         <span className="l">实际用电量累计</span>
-                                        <span className="r"><Link to={'#'}>500兆瓦时</Link></span>
+                                        <span className="r"><Link to={`/actualPowerRecord`}>500兆瓦时</Link></span>
                                     </li>
                                     <li className="item">
                                         <span className="l">累计天数</span>
-                                        <span className="r"><Link to={'#'}>5120兆瓦时（截止10日）</Link></span>
+                                        <span className="r"><Link to={`/SpotDeclarationDetMonth`}>5120兆瓦时（截止10日）</Link></span>
                                     </li>
                                     <li className="item">
                                         <span className="l">剩余交易电量 </span>
