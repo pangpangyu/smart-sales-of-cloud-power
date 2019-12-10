@@ -146,6 +146,7 @@ export default class BsinessAnalysis extends React.Component{
     this.getChatMapData2()
     this.getChatMapData3()
     this.getChatMapData4()
+    this.paintingMap5()
   }
 
   getChatMapData1 = () => {
@@ -290,8 +291,6 @@ export default class BsinessAnalysis extends React.Component{
       custom: true,
       items: legendItems,
       onClick: function onClick(ev) {
-        console.log(ev)
-        debugger
         const item = ev.clickedItem;
         const name = item.get('name');
         const checked = item.get('checked');
@@ -369,6 +368,53 @@ export default class BsinessAnalysis extends React.Component{
   paintingMap4 =() => {
     const chart = new F2.Chart({
       id: 'myChart4',
+      pixelRatio: window.devicePixelRatio,
+      padding:['auto',0,'auto','auto']
+    });
+    chart.source(this.state.data4);
+    chart.tooltip({
+      custom: true, // 自定义 tooltip 内容框
+      onChange: function onChange(obj) {
+        const legend = chart.get('legendController').legends.top[0];
+        const tooltipItems = obj.items;
+        const legendItems = legend.items;
+        const map = {};
+        legendItems.forEach(function(item) {
+          map[item.name] = _.clone(item);
+        });
+        tooltipItems.forEach(function(item) {
+          const name = item.name;
+          const value = item.value;
+          if (map[name]) {
+            map[name].value = value;
+          }
+        });
+        legend.setItems(_.values(map));
+      },
+      onHide: function onHide() {
+        const legend = chart.get('legendController').legends.top[0];
+        legend.setItems(chart.getLegendItems().country);
+      }
+    });
+    
+    chart.interval()
+      .position('月份*value')
+      .color('name',['#288dfd','#f9a30c','#6dcfce','#ddc275']).style({
+        radius:[2,2,2,2]
+      })
+      .adjust({
+        type: 'dodge',
+        marginRatio: 0.05 // 设置分组间柱子的间距
+      });
+    chart.render();
+  }
+
+  getChatMapData5 = () => {
+    this.paintingMap4()
+  }
+  paintingMap5 =() => {
+    const chart = new F2.Chart({
+      id: 'myChart5',
       pixelRatio: window.devicePixelRatio,
       padding:['auto',0,'auto','auto']
     });
