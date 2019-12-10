@@ -100,6 +100,44 @@ export default class BsinessAnalysis extends React.Component{
         { name: '11月', score: 127, avgScore: 62.5, checked:false },
         { name: '12月', score: 127, avgScore: 62.5, checked:false }
       ],
+      data4: [
+        { name: '售电成本', 月份: '1月', value: 18.9 }, 
+        { name: '售电成本', 月份: '2月', value: 28.8 }, 
+        { name: '售电成本', 月份: '3月', value: 39.3 }, 
+        { name: '售电成本', 月份: '4月', value: 81.4 }, 
+        { name: '售电成本', 月份: '5月', value: 47 }, 
+        { name: '售电成本', 月份: '6月', value: 20.3 }, 
+        { name: '售电成本', 月份: '7月', value: 24 }, 
+        { name: '售电成本', 月份: '8月', value: 35.6 }, 
+        { name: '售电成本', 月份: '9月', value: 47 }, 
+        { name: '售电成本', 月份: '10月', value: 20.3 }, 
+        { name: '售电成本', 月份: '11月', value: 24 }, 
+        { name: '购电成本', 月份: '12月', value: 35.6 }, 
+        { name: '购电成本', 月份: '1月', value: 12.4 }, 
+        { name: '购电成本', 月份: '2月', value: 23.2 }, 
+        { name: '购电成本', 月份: '3月', value: 34.5 }, 
+        { name: '购电成本', 月份: '4月', value: 99.7 }, 
+        { name: '购电成本', 月份: '5月', value: 52.6 }, 
+        { name: '购电成本', 月份: '6月', value: 35.5 }, 
+        { name: '购电成本', 月份: '7月', value: 37.4 }, 
+        { name: '购电成本', 月份: '8月', value: 42.4 },
+        { name: '购电成本', 月份: '9月', value: 52.6 }, 
+        { name: '购电成本', 月份: '10月', value: 35.5 }, 
+        { name: '购电成本', 月份: '11月', value: 37.4 }, 
+        { name: '购电成本', 月份: '12月', value: 42.4 },
+        { name: '成本差', 月份: '1月', value: 18.9 }, 
+        { name: '成本差', 月份: '2月', value: 28.8 }, 
+        { name: '成本差', 月份: '3月', value: 39.3 }, 
+        { name: '成本差', 月份: '4月', value: 81.4 }, 
+        { name: '成本差', 月份: '5月', value: 47 }, 
+        { name: '成本差', 月份: '6月', value: 20.3 }, 
+        { name: '成本差', 月份: '7月', value: 24 }, 
+        { name: '成本差', 月份: '8月', value: 35.6 }, 
+        { name: '成本差', 月份: '9月', value: 47 }, 
+        { name: '成本差', 月份: '10月', value: 20.3 }, 
+        { name: '成本差', 月份: '11月', value: 24 }, 
+        { name: '成本差', 月份: '12月', value: 35.6 }
+      ],
     }
   }
 
@@ -107,6 +145,7 @@ export default class BsinessAnalysis extends React.Component{
     this.getChatMapData1()
     this.getChatMapData2()
     this.getChatMapData3()
+    this.getChatMapData4()
   }
 
   getChatMapData1 = () => {
@@ -115,7 +154,8 @@ export default class BsinessAnalysis extends React.Component{
   paintingMap1 = () => {
     const chart = new F2.Chart({
       id: 'myChart1',
-      pixelRatio: window.devicePixelRatio
+      pixelRatio: window.devicePixelRatio,
+      padding:['auto',0,'auto','auto']
     });
     chart.source(this.state.data1);
     chart.tooltip({
@@ -161,7 +201,8 @@ export default class BsinessAnalysis extends React.Component{
   paintingMap2 = () => {
     const chart = new F2.Chart({
       id: 'myChart2',
-      pixelRatio: window.devicePixelRatio
+      pixelRatio: window.devicePixelRatio,
+      padding:['auto',0,'auto','auto']
     });
     chart.source(this.state.data2);
     chart.tooltip({
@@ -249,6 +290,8 @@ export default class BsinessAnalysis extends React.Component{
       custom: true,
       items: legendItems,
       onClick: function onClick(ev) {
+        console.log(ev)
+        debugger
         const item = ev.clickedItem;
         const name = item.get('name');
         const checked = item.get('checked');
@@ -317,6 +360,53 @@ export default class BsinessAnalysis extends React.Component{
       stroke: '#f9a30c',
       lineWidth: 1
     });
+    chart.render();
+  }
+
+  getChatMapData4 = () => {
+    this.paintingMap4()
+  }
+  paintingMap4 =() => {
+    const chart = new F2.Chart({
+      id: 'myChart4',
+      pixelRatio: window.devicePixelRatio,
+      padding:['auto',0,'auto','auto']
+    });
+    chart.source(this.state.data4);
+    chart.tooltip({
+      custom: true, // 自定义 tooltip 内容框
+      onChange: function onChange(obj) {
+        const legend = chart.get('legendController').legends.top[0];
+        const tooltipItems = obj.items;
+        const legendItems = legend.items;
+        const map = {};
+        legendItems.forEach(function(item) {
+          map[item.name] = _.clone(item);
+        });
+        tooltipItems.forEach(function(item) {
+          const name = item.name;
+          const value = item.value;
+          if (map[name]) {
+            map[name].value = value;
+          }
+        });
+        legend.setItems(_.values(map));
+      },
+      onHide: function onHide() {
+        const legend = chart.get('legendController').legends.top[0];
+        legend.setItems(chart.getLegendItems().country);
+      }
+    });
+    
+    chart.interval()
+      .position('月份*value')
+      .color('name',['#288dfd','#f9a30c','#6dcfce','#ddc275']).style({
+        radius:[2,2,2,2]
+      })
+      .adjust({
+        type: 'dodge',
+        marginRatio: 0.05 // 设置分组间柱子的间距
+      });
     chart.render();
   }
 
