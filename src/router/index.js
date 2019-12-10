@@ -26,6 +26,7 @@ import BsinessAnalysis from '../view/businessAnalysis';
 import PowerTracking from '../view/powerTracking';
 import ActualPowerRecord from '../view/actualPowerRecord';
 import SpotDeclarationDetDay from '../view/spotDeclarationDetDay';
+import SpotDeclarationDetMonth from '../view/spotDeclarationDetMonth';
 import ErrorPage from '../view/ErrorPage';
 import { Provider } from 'react-keep-alive';
 
@@ -63,6 +64,7 @@ export default class ROUTER extends React.Component{
                 <Route path="/powerTracking" component={PowerTracking}></Route>
                 <Route path="/actualPowerRecord" component={ActualPowerRecord}></Route>
                 <Route path="/spotDeclarationDetDay" component={SpotDeclarationDetDay}></Route>
+                <Route path="/spotDeclarationDetMonth" component={SpotDeclarationDetMonth}></Route>
                 <Route component={ErrorPage}></Route>
               </Switch>
             </App>
