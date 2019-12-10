@@ -1,43 +1,74 @@
 import React from 'react'
 import Header from '../components/header'
-import { Link } from 'react-router-dom'
+import MidLongTermTrade from './midLongTermTrade'
+import { DatePickerView, Button } from 'antd-mobile';
+import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
 
 export default class Test extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pickerList: [
-                {
-                    label: 'xxx交易单元',
-                    value: 'xxx交易单元',
-                },
-                {
-                    label: 'xxx交易单元2',
-                    value: 'xxx交易单元2',
-                },
-            ],
             open: false,
-            value: null,
-            transactionUnit: '',
-            transactionUnit: 'xxx交易单元'
+            time: null,
+            year: '2019-08',
+            active:'1',
+            tabs: [
+                { id: '1', title: '中长期交易' },
+                { id: '2', title: '日前市场交易' },
+                { id: '3', title: '实时市场交易' }
+            ],
         }
-    }
-    onScrollChange = (value) => {
-        this.setState({
-            value: value
-        })
     }
     getDate = () => {
         const that = this
         this.setState({
-            transactionUnit: this.state.value[0],
+            // year: this.state.time,
             open: false
         })
     }
+    onChange = (value) => {
+        console.log(value);
+        this.setState({ 
+            time: value
+        });
+      };
     render() {
         return (
             <div style={{ minHeight: '100vh', background: '#f0f1f3' }}>
                 <Header title='交易中心公告' back={true} search={false}></Header>
+                <div className="trading_center">
+                    <div className="top">
+                        <div className="selection_date">
+                            <p>选择日期<span onClick={() => this.setState({ open: true })}>{this.state.year}</span></p>
+                        </div>
+                        <div className="chagen_tab">
+                            <div className="change_tab_list">
+                                <ul>
+                                    {this.state.tabs && this.state.tabs.map((item, index) => {
+                                        return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}</li>
+                                    })}
+                                </ul>
+                            </div>
+                        </div>
+                            {this.state.active === '1' && <MidLongTermTrade />}
+                    </div>
+                </div>
+                <div className={this.state.open ? 'modal on' : 'modal'}>
+                    <div className="modal_bg" onClick={() => this.setState({ open: false })}></div>
+                    <div className="pick_box">
+                        <DatePickerView
+                            mode="month"
+                            locale={enUs}
+                            value={this.state.time}
+                            onChange={this.onChange}
+                        />
+                        <div className="module-space"></div>
+                        <div className="btns">
+                            <Button className="btn" type="primary" onClick={() => this.setState({ open: false })}>取消</Button>
+                            <Button className="btn btn1" type="primary" onClick={this.getDate}>确定</Button>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
