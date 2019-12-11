@@ -30,6 +30,7 @@ import SpotDeclarationDetDay from '../view/spotDeclarationDetDay';
 import SpotDeclarationDetMonth from '../view/spotDeclarationDetMonth';
 import PowerTrackingDet from '../view/powerTrackingDet';
 import TradingCenter from '../view/tradingCenter';
+import MediumAndLongTermDet from '../view/mediumAndLongTermDet';
 import ErrorPage from '../view/ErrorPage';
 import { Provider } from 'react-keep-alive';
 
@@ -71,6 +72,7 @@ export default class ROUTER extends React.Component{
                 <Route path="/spotDeclarationDetMonth" component={SpotDeclarationDetMonth}></Route>
                 <Route path="/powerTrackingDet" component={PowerTrackingDet}></Route>
                 <Route path="/tradingCenter" component={TradingCenter}></Route>
+                <Route path="/mediumAndLongTermDet" component={MediumAndLongTermDet}></Route>
                 <Route component={ErrorPage}></Route>
               </Switch>
             </App>

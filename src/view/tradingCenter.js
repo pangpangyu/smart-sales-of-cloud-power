@@ -1,6 +1,8 @@
 import React from 'react'
 import Header from '../components/header'
 import MidLongTermTrade from './midLongTermTrade'
+import DayAheadMarket from './dayAheadMarket'
+import RealTimeMarket from './realTimeMarket'
 import { DatePickerView, Button } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
 
@@ -12,10 +14,11 @@ export default class Test extends React.Component {
             time: null,
             year: '2019-08',
             active:'1',
+            type:'1',
             tabs: [
-                { id: '1', title: '中长期交易' },
-                { id: '2', title: '日前市场交易' },
-                { id: '3', title: '实时市场交易' }
+                { id: '1', type:'1', title: '中长期交易' },
+                { id: '2', type:'2', title: '日前市场交易' },
+                { id: '3', type:'3', title: '实时市场交易' }
             ],
         }
     }
@@ -45,12 +48,14 @@ export default class Test extends React.Component {
                             <div className="change_tab_list">
                                 <ul>
                                     {this.state.tabs && this.state.tabs.map((item, index) => {
-                                        return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}</li>
+                                        return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id,type:item.type })}>{item.title}</li>
                                     })}
                                 </ul>
                             </div>
                         </div>
                             {this.state.active === '1' && <MidLongTermTrade />}
+                            {this.state.active === '2' && <DayAheadMarket />}
+                            {this.state.active === '3' && <RealTimeMarket />}
                     </div>
                 </div>
                 <div className={this.state.open ? 'modal on' : 'modal'}>

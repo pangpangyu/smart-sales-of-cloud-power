@@ -10,11 +10,17 @@ export default class Test extends React.Component {
                 { id: '1', title: '交易公告信息' },
                 { id: '2', title: '交易结果信息' }
             ],
-            zcqTabs:[
+            mediumAndLongTermTradeBulletin:[
                 {id:'1', title:'2019年年度双边电力直接交易有约束结果发布', n1:'年度双边交易', n2:'', n3:'2019年1月10日', n4:'2019年1月15日'},
                 {id:'2', title:'2019年年度双边电力直接交易有约束结果发布', n1:'年度双边交易', n2:'', n3:'2019年1月10日', n4:'2019年1月15日'},
                 {id:'3', title:'2019年年度双边电力直接交易有约束结果发布', n1:'年度双边交易', n2:'', n3:'2019年1月10日', n4:'2019年1月15日'},
                 {id:'4', title:'2019年年度双边电力直接交易有约束结果发布', n1:'年度双边交易', n2:'', n3:'2019年1月10日', n4:'2019年1月15日'},
+            ],
+            mediumAndLongTermResult:[
+                {id:'1', title:'2019年年度双边电力直接交易结果', n1:'年度双边交易', n2:'333.33元/兆瓦时', n3:'10', n4:'20000兆瓦时'},
+                {id:'2', title:'2019年年度双边电力直接交易结果', n1:'年度双边交易', n2:'333.33元/兆瓦时', n3:'10', n4:'20000兆瓦时'},
+                {id:'3', title:'2019年年度双边电力直接交易结果', n1:'年度双边交易', n2:'333.33元/兆瓦时', n3:'10', n4:'20000兆瓦时'},
+                {id:'4', title:'2019年年度双边电力直接交易结果', n1:'年度双边交易', n2:'333.33元/兆瓦时', n3:'10', n4:'20000兆瓦时'},
             ]
         }
     }
@@ -30,7 +36,8 @@ export default class Test extends React.Component {
                         </ul>
                     </div>
                 </div>
-                {this.state.active === '1' && <TradingCenterList zcqTabs={this.state.zcqTabs} />}
+                {this.state.active === '1' && <TradingCenterList type='1' active={this.state.active} mediumAndLongTermTradeBulletin={this.state.mediumAndLongTermTradeBulletin} />}
+                {this.state.active === '2' && <TradingCenterList type='1' active={this.state.active} mediumAndLongTermResult={this.state.mediumAndLongTermResult} />}
             </div>
         )
     }
