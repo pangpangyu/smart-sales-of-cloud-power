@@ -47,6 +47,7 @@ export default class ROUTER extends React.Component{
               <Switch>
                 <Route exact path="/" component={Index}></Route>
                 <Route path="/newList/:type" component={NewList}></Route>
+                {/*type  1为公司公告  2为消息提醒  */}
                 <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
                 <Route path="/survey" component={Survey}></Route>
                 <Route path="/contractManage" component={ContractManage}></Route>
@@ -54,7 +55,6 @@ export default class ROUTER extends React.Component{
                 <Route path="/contractReview/:id" component={ContractReview}></Route>
                 <Route path="/attendanceList" component={AttendanceList}></Route>
                 <Route path="/attendanceAdd/:type" component={AttendanceAdd}></Route>
-                {/*type  1为公司公告  2为消息提醒  */}
                 <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
                 {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
                 <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
