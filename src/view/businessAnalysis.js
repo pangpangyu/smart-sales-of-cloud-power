@@ -146,7 +146,7 @@ export default class BsinessAnalysis extends React.Component{
     this.getChatMapData2()
     this.getChatMapData3()
     this.getChatMapData4()
-    this.paintingMap5()
+    this.getChatMapData5()
   }
 
   getChatMapData1 = () => {
@@ -410,7 +410,7 @@ export default class BsinessAnalysis extends React.Component{
   }
 
   getChatMapData5 = () => {
-    this.paintingMap4()
+    this.paintingMap5()
   }
   paintingMap5 =() => {
     const chart = new F2.Chart({
