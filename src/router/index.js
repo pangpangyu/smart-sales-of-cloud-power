@@ -31,6 +31,9 @@ import SpotDeclarationDetMonth from '../view/spotDeclarationDetMonth';
 import PowerTrackingDet from '../view/powerTrackingDet';
 import TradingCenter from '../view/tradingCenter';
 import MediumAndLongTermDet from '../view/mediumAndLongTermDet';
+import UnifiedLoadRegulationDet from '../view/unifiedLoadRegulationDet';
+import ProvincialNetworkDet from '../view/provincialNetworkDet';
+import OutwardDeliveryPlanDet from '../view/outwardDeliveryPlanDet';
 import ErrorPage from '../view/ErrorPage';
 import { Provider } from 'react-keep-alive';
 
@@ -73,6 +76,9 @@ export default class ROUTER extends React.Component{
                 <Route path="/powerTrackingDet" component={PowerTrackingDet}></Route>
                 <Route path="/tradingCenter" component={TradingCenter}></Route>
                 <Route path="/mediumAndLongTermDet" component={MediumAndLongTermDet}></Route>
+                <Route path="/unifiedLoadRegulationDet" component={UnifiedLoadRegulationDet}></Route>
+                <Route path="/provincialNetworkDet" component={ProvincialNetworkDet}></Route>
+                <Route path="/outwardDeliveryPlanDet" component={OutwardDeliveryPlanDet}></Route>
                 <Route component={ErrorPage}></Route>
               </Switch>
             </App>

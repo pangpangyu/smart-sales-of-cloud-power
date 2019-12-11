@@ -7,13 +7,13 @@ export default class Test extends React.Component {
         this.state = {
             mediumAndLongTermTradeBulletin: this.props.mediumAndLongTermTradeBulletin,
             mediumAndLongTermResult: this.props.mediumAndLongTermResult,
-            unifiedLoadRegulation:this.props.unifiedLoadRegulation,
-            backupInfo:this.props.backupInfo,
-            maintenanceInfo:this.props.maintenanceInfo,
-            block:this.props.block,
-            FMMarket:this.props.FMMarket,
-            provincialNetwork:this.props.provincialNetwork,
-            outwardDeliveryPlan:this.props.outwardDeliveryPlan
+            unifiedLoadRegulation: this.props.unifiedLoadRegulation,
+            backupInfo: this.props.backupInfo,
+            maintenanceInfo: this.props.maintenanceInfo,
+            block: this.props.block,
+            FMMarket: this.props.FMMarket,
+            provincialNetwork: this.props.provincialNetwork,
+            outwardDeliveryPlan: this.props.outwardDeliveryPlan
         }
     }
     //中长期交易公告信息
@@ -67,7 +67,7 @@ export default class Test extends React.Component {
             <div className="tradingCenterList">
                 {this.state.unifiedLoadRegulation && this.state.unifiedLoadRegulation.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
+                        <Link to={`/unifiedLoadRegulationDet`}>
                             <div className="list">
                                 <ul>
                                     <li><p><span>时间：</span>{item.n1}</p></li>
@@ -88,15 +88,13 @@ export default class Test extends React.Component {
             <div className="tradingCenterList">
                 {this.state.backupInfo && this.state.backupInfo.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
-                            <div className="list">
-                                <ul>
-                                    <li><p><span>备用类型：</span>{item.n1}</p></li>
-                                    <li><p><span>预测：</span>{item.n2}</p></li>
-                                    <li><p><span>日期：</span>{item.n3}</p></li>
-                                </ul>
-                            </div>
-                        </Link>
+                        <div className="list">
+                            <ul>
+                                <li><p><span>备用类型：</span>{item.n1}</p></li>
+                                <li><p><span>预测：</span>{item.n2}</p></li>
+                                <li><p><span>日期：</span>{item.n3}</p></li>
+                            </ul>
+                        </div>
                     </div>
                 })
                 }
@@ -109,15 +107,13 @@ export default class Test extends React.Component {
             <div className="tradingCenterList">
                 {this.state.maintenanceInfo && this.state.maintenanceInfo.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
-                            <div className="list">
-                                <ul>
-                                    <li><p><span>元件名称：</span>{item.n1}</p></li>
-                                    <li><p><span>电压等级：</span>{item.n2}</p></li>
-                                    <li><p><span>日期：</span>{item.n3}</p></li>
-                                </ul>
-                            </div>
-                        </Link>
+                        <div className="list">
+                            <ul>
+                                <li><p><span>元件名称：</span>{item.n1}</p></li>
+                                <li><p><span>电压等级：</span>{item.n2}</p></li>
+                                <li><p><span>日期：</span>{item.n3}</p></li>
+                            </ul>
+                        </div>
                     </div>
                 })
                 }
@@ -130,16 +126,14 @@ export default class Test extends React.Component {
             <div className="tradingCenterList">
                 {this.state.block && this.state.block.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
-                            <h3>{item.title}</h3>
-                            <div className="list">
-                                <ul>
-                                    <li><p><span>正向极限：</span>{item.n1}</p></li>
-                                    <li><p><span>负向极限：</span>{item.n2}</p></li>
-                                    <li><p><span>周期：</span>{item.n3}</p></li>
-                                </ul>
-                            </div>
-                        </Link>
+                        <h3>{item.title}</h3>
+                        <div className="list">
+                            <ul>
+                                <li><p><span>正向极限：</span>{item.n1}</p></li>
+                                <li><p><span>负向极限：</span>{item.n2}</p></li>
+                                <li><p><span>周期：</span>{item.n3}</p></li>
+                            </ul>
+                        </div>
                     </div>
                 })}
             </div>
@@ -151,16 +145,14 @@ export default class Test extends React.Component {
             <div className="tradingCenterList fm_tradingCenterList">
                 {this.state.FMMarket && this.state.FMMarket.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
-                            <div className="list">
-                                <ul>
-                                    <li><p><span>日期：</span>{item.n1}</p></li>
-                                    <li><p><span>调频服务结算均价：</span>{item.n2}</p></li>
-                                    <li><p><span>可参与市场主体：</span>{item.n3}</p></li>
-                                    <li><p><span>调频市场申报价格范围：</span>{item.n4}</p></li>
-                                </ul>
-                            </div>
-                        </Link>
+                        <div className="list">
+                            <ul>
+                                <li><p><span>日期：</span>{item.n1}</p></li>
+                                <li><p><span>调频服务结算均价：</span>{item.n2}</p></li>
+                                <li><p><span>可参与市场主体：</span>{item.n3}</p></li>
+                                <li><p><span>调频市场申报价格范围：</span>{item.n4}</p></li>
+                            </ul>
+                        </div>
                     </div>
                 })
                 }
@@ -173,7 +165,7 @@ export default class Test extends React.Component {
             <div className="tradingCenterList">
                 {this.state.provincialNetwork && this.state.provincialNetwork.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
+                        <Link to={`/provincialNetworkDet`}>
                             <div className="list">
                                 <ul>
                                     <li><p><span>时间：</span>{item.n1}</p></li>
@@ -194,7 +186,7 @@ export default class Test extends React.Component {
             <div className="tradingCenterList">
                 {this.state.outwardDeliveryPlan && this.state.outwardDeliveryPlan.map(item => {
                     return <div className="item" key={item.id}>
-                        <Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
+                        <Link to={`/outwardDeliveryPlanDet`}>
                             <div className="list">
                                 <ul>
                                     <li><p><span>时间：</span>{item.n1}</p></li>
@@ -219,7 +211,7 @@ export default class Test extends React.Component {
                 {this.props.active === '2' && this.props.type === '2' && this.BackupInfo()}
                 {this.props.active === '3' && this.props.type === '2' && this.MaintenanceInfo()}
                 {this.props.active === '4' && this.props.type === '2' && this.Block()}
-                
+
                 {this.props.active === '1' && this.props.type === '3' && this.FMMarket()}
                 {this.props.active === '2' && this.props.type === '3' && this.ProvincialNetwork()}
                 {this.props.active === '3' && this.props.type === '3' && this.OutwardDeliveryPlan()}
