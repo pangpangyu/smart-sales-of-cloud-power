@@ -28,7 +28,7 @@ export default class NewList extends React.Component {
       tabs: [
         { id: 0, title: '已读' },
         { id: 1, title: '未读' }
-    ]
+      ]
     }
   }
 
@@ -62,6 +62,19 @@ export default class NewList extends React.Component {
     //搜索事件
   }
 
+  handleTabs = (val) => {
+    const that = this;
+    // if (val.id == 0) {
+    //   that.setState({
+    //     botBtnShow: true
+    //   })
+    // } else {
+    //   that.setState({
+    //     botBtnShow: false
+    //   })
+    // }
+  }
+
   render() {
     return (
       <div style={{ background: '#fff' }}>
@@ -73,7 +86,7 @@ export default class NewList extends React.Component {
           onChange={this.handleTabs}
         >
         </Tabs>}
-        
+
         <div className="company-search-view" style={{ position: 'initial' }}>
           <div className="company-search">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
