@@ -66,21 +66,22 @@ export default class NewList extends React.Component {
     return (
       <div style={{ background: '#fff' }}>
         <Header title={this.state.title} back={true} search={false} />
-        <Tabs
+        {this.state.type === '2' && <Tabs
           tabs={this.state.tabs}
           swipeable={false}
           tabBarActiveTextColor="#288dfd"
           onChange={this.handleTabs}
         >
-        </Tabs>
-        <div className="company-search-view company-search-view-news">
+        </Tabs>}
+        
+        <div className="company-search-view" style={{ position: 'initial' }}>
           <div className="company-search">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
               <input type="search" placeholder="搜公告标题、内容、介绍" onChange={(e) => this.getSearchData(e.target.value)} />
             </form>
           </div>
         </div>
-        <div className="company-new-list" style={{ paddingTop: '74px' }}>
+        <div className="company-new-list">
           {this.state.companyNewList.map(item => {
             return <div key={item.id} className="item">
               <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
