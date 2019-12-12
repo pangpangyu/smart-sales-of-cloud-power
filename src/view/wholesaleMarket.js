@@ -14,7 +14,9 @@ export default class Test extends React.Component {
                 { id: 5, title: '批发市场小计', n1: '1000', n2: '20', n3: '1000', n4: '1000', n5: '1000', n6: '1000', icon: 'iconjiage', check: false }
             ],
             open: false,
-            time: null,
+            time: new Date(),
+            month:'',
+            fullYear:'',
             year: '2019-08',
         }
     }
@@ -26,23 +28,25 @@ export default class Test extends React.Component {
         })
     }
     getDate = () => {
-        const that = this
         this.setState({
-            // year: this.state.time,
+             year: this.state.fullYear + '-' +this.state.month,
             open: false
         })
     }
     onChange = (value) => {
-        console.log(value);
+        let fullYear = new Date(value).getFullYear()
+        let month = new Date(value).getMonth() + 1
         this.setState({
-            time: value
+            month: month,
+            fullYear:fullYear,
+            time:value
         });
     };
     render() {
         return (
             <div className="settlement_manage">
                 <div className="selection_date">
-                    <p>选择日期<span onClick={() => this.setState({ open: true })}>2019-08</span></p>
+        <p>选择日期<span onClick={() => this.setState({ open: true })}>{this.state.year}</span></p>
                 </div>
                 {this.state.list && this.state.list.map((item, index) => {
                     return <div className="tab" key={item.id}>
