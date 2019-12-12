@@ -26,9 +26,10 @@ export default class NewList extends React.Component {
       search: '',
       pageIndex: 0,
       tabs: [
-        { id: 0, title: '已读消息(5)' },
-        { id: 1, title: '未读消息(5)' }
-      ]
+        { id: 1, title: '已读消息' },
+        { id: 2, title: '未读消息' }
+      ],
+      active:1
     }
   }
 
@@ -79,13 +80,15 @@ export default class NewList extends React.Component {
     return (
       <div style={{ background: '#fff' }}>
         <Header title={this.state.title} back={true} search={false} />
-        {this.state.type === '2' && <Tabs
-          tabs={this.state.tabs}
-          swipeable={false}
-          tabBarActiveTextColor="#288dfd"
-          onChange={this.handleTabs}
-        >
-        </Tabs>}
+        <div className="chagen_tab">
+          <div className="change_tab_list">
+            <ul>
+              {this.state.tabs && this.state.tabs.map((item, index) => {
+                return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}(5)</li>
+              })}
+            </ul>
+          </div>
+        </div>
 
         <div className="company-search-view" style={{ position: 'initial' }}>
           <div className="company-search">
