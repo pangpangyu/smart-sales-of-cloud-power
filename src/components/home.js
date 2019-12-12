@@ -107,7 +107,7 @@ class Home extends React.Component{
                   resetAutoplay={false}
                 >
                   {this.state.newList.map(item => (
-                    <div className="v-item" key={item.id}><Link to="/newList/1">{item.title}</Link></div>
+                    <div className="v-item" key={item.id}><Link to="/newList/2">{item.title}</Link></div>
                   ))}
                 </Carousel>
               </div>
