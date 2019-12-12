@@ -37,6 +37,8 @@ export default class ElectricityCompany extends React.Component{
       noData:false
     }
   }
+
+  
   componentWillMount(){
     const that = this
     if(that.state.type === '1'){
