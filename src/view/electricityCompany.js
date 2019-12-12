@@ -3,6 +3,8 @@ import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import NoData from '../components/noData';
 import api from '../api/index';
+import { KeepAlive } from 'react-keep-alive';
+
 /**
  * 售电公司
  */
@@ -35,7 +37,7 @@ export default class ElectricityCompany extends React.Component{
       noData:false
     }
   }
-  componentDidMount(){
+  componentWillMount(){
     const that = this
     if(that.state.type === '1'){
       that.getPowerUserList()
@@ -47,6 +49,18 @@ export default class ElectricityCompany extends React.Component{
       that.getPartnersList()
     }
   }
+  // componentDidMount(){
+  //   const that = this
+  //   if(that.state.type === '1'){
+  //     that.getPowerUserList()
+  //   }else if(that.state.type === '2'){
+  //     that.getElectricityGenerationList()
+  //   }else if(that.state.type === '3'){
+  //     that.getPartnersList()
+  //   }else if(that.state.type === '4'){
+  //     that.getPartnersList()
+  //   }
+  // }
   //获取电力用户数据
   getPowerUserList = () => {
     const that = this
@@ -189,7 +203,8 @@ export default class ElectricityCompany extends React.Component{
   }
   render(){
     return(
-      <div style={{minHeight:'100vh',background:'#f0f1f3'}} className="electricityCompany">
+      <KeepAlive name="ElectricityCompany">
+        <div style={{minHeight:'100vh',background:'#f0f1f3'}} className="electricityCompany">
           <Header title={this.state.title} back={true} search={this.state.search}/>
           
             { this.state.type === '1' && this.powerUsers() }
@@ -215,6 +230,7 @@ export default class ElectricityCompany extends React.Component{
             })} 
             { this.state.noData && <NoData /> }
       </div>
+      </KeepAlive>
     )
   }
 }

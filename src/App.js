@@ -1,6 +1,7 @@
 import React from 'react';
 import './assets/css/app.less';
 import { setCookies } from './utils/index';
+import { Provider } from 'react-keep-alive';
 
 class App extends React.Component{
   componentDidMount(){
@@ -8,9 +9,9 @@ class App extends React.Component{
   }
   render(){
     return (
-      <div>
+      <Provider>
         { this.props.children }
-      </div>
+      </Provider>
     )
   }
 }
