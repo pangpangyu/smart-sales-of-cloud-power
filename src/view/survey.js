@@ -80,7 +80,7 @@ class Survey extends React.Component {
   }
   //售电情况总览
   getTitleData = () => {
-    const that = this
+    //const that = this
     let params = {"electricQuantity":48178,"cusCount":12,"earnings":0.01,"year":2019,"contractNum":5}
     api.GetTabControlData(params).then(res => {
 
@@ -90,7 +90,7 @@ class Survey extends React.Component {
     this.paintingChart1()
   }
   paintingChart1 = () => {
-    const that = this
+    //const that = this
     const map = {
       '1月': '40%',
       '2月': '20%',
@@ -334,10 +334,10 @@ class Survey extends React.Component {
   paintingChart4 = () => {
     let data = []
     var originDates = []
-    const legendItems = [
-      { name: '申报电量', marker: 'square', fill: '#288dfd' }, 
-      { name: '实时电量', marker: 'square', fill: '#f9a30c' }
-    ];
+    // const legendItems = [
+    //   { name: '申报电量', marker: 'square', fill: '#288dfd' }, 
+    //   { name: '实时电量', marker: 'square', fill: '#f9a30c' }
+    // ];
     for(let i=0;i<31;i++){
       data.push({ name: '申报电量', type:'declare', title: (i+1)+'日', num: parseInt(Math.random() * 1000) })
       data.push({ name: '实时电量', type:'realTime', title: (i+1)+'日', num: parseInt(Math.random() * 1000) })
@@ -396,6 +396,7 @@ class Survey extends React.Component {
         legend.setItems(chart.getLegendItems().country);
       }
     })
+    chart.animate(false)
     chart.interval().position('title*num').color('name',['#288dfd','#f9a30c']).size('9').style({
       radius: [3,3,3,3]
     }).adjust({
