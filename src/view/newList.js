@@ -26,8 +26,8 @@ export default class NewList extends React.Component {
       search: '',
       pageIndex: 0,
       tabs: [
-        { id: 0, title: '已读' },
-        { id: 1, title: '未读' }
+        { id: 0, title: '已读消息(5)' },
+        { id: 1, title: '未读消息(5)' }
       ]
     }
   }
