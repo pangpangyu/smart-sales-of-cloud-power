@@ -130,7 +130,9 @@ export default class Test extends React.Component {
                 }
             ],
             open: false,
-            time: null,
+            time: new Date(),
+            month:'',
+            fullYear:'',
             year: '2019-08',
         }
     }
@@ -155,18 +157,20 @@ export default class Test extends React.Component {
         this.GetContractList(1);
     }
     getDate = () => {
-        const that = this
         this.setState({
-            // year: this.state.time,
+            year: this.state.fullYear + '-' +this.state.month,
             open: false
         })
     }
     onChange = (value) => {
-        console.log(value);
-        this.setState({ 
-            time: value
+        let fullYear = new Date(value).getFullYear()
+        let month = new Date(value).getMonth() + 1
+        this.setState({
+            month: month,
+            fullYear:fullYear,
+            time:value
         });
-      };
+    };
     render() {
         return (
             <div>
