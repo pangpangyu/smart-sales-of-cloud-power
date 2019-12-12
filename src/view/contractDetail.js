@@ -17,7 +17,8 @@ class ContractDetail extends React.Component {
             ],
             contractId: this.props.match.params.id,
             contractDetail: [],
-            botBtnShow: true
+            botBtnShow: true,
+            addStatus:false,
         }
     }
 
@@ -59,7 +60,33 @@ class ContractDetail extends React.Component {
                 <div className="footer-btn-group">
                     <div className="btn-group">
                         <Link to={`/contractReview/${this.state.contractId}`}>预览</Link>
-                        <Link to="">导出</Link>
+                        <Link onClick={this.handleAdd}>导出</Link>
+                    </div>
+                </div>
+            </div>
+            let mask=
+            <div className="mask">
+                <div className="attedance-dialog">
+                    <div className="tit">请选择导出格式</div>
+                    <div className="cont">
+                        <div className="item">
+                            <img className="img" src={require('../assets/img/img210.png')} alt=""/>
+                            <div className="self-radio">
+                                <input  id="r1" type="radio" value={"qjsq"}  name="attedance" onChange={this.handleCheckChanged} />
+                                <label htmlFor="r1">WORD</label>
+                            </div>
+                        </div>
+                        <div className="item">
+                            <img className="img" src={require('../assets/img/img211.png')} alt=""/>
+                            <div className="self-radio">
+                                <input  id="r2" type="radio" value={"wcsq"} name="attedance" onChange={this.handleCheckChanged} />
+                                <label htmlFor="r2">PDF</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="btn-group">
+                        <button onClick={this.handleCancel} className="btn-cancel">取消</button>
+                        <button className="btn-sure">确定</button>
                     </div>
                 </div>
             </div>
@@ -87,6 +114,7 @@ class ContractDetail extends React.Component {
                 </Tabs>
 
                 {this.state.botBtnShow ? t : ''}
+                {this.state.addStatus ? mask : ''}
 
                 {/* <div style={{display:this.state.botBtnShow?'block':'none'}}>
                 <div className="footer-btn-group-space"></div>
@@ -104,6 +132,21 @@ class ContractDetail extends React.Component {
 
             </Fragment>
         )
+    }
+    handleCheckChanged=e=>{
+        console.log(e.target.value)
+    }
+
+    handleAdd=e=>{
+        this.setState({
+            addStatus:true
+        })
+    }
+
+    handleCancel=e=>{
+        this.setState({
+            addStatus:false
+        })
     }
 
     //
