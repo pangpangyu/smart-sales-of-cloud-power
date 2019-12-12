@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import api from '../api/index';
+import NoData from '../components/noData';
 /**
  * 信息发布 
  * */
@@ -9,23 +11,67 @@ export default class InfoDelivery extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      list:[
-        { id:1,title:'山西地方电力xxx1有限公司', time:'8分钟前', state:1 },
-        { id:2,title:'山西地方电力xxx1有限公司', time:'8分钟前', state:2 },
-        { id:3,title:'山西地方电力xxx1有限公司', time:'8分钟前', state:3 },
-        { id:4,title:'山西地方电力xxx1有限公司', time:'8分钟前', state:2 },
-        { id:5,title:'山西地方电力xxx1有限公司', time:'8分钟前', state:4 }
-      ]
+      list:[],
+      pageIndex:0,
+      pageSize:10,
+      keyword:'',
+      total:10000,
+      isNotData: '1'
     }
+  }
+
+  componentDidMount(){
+    this.getListData()
+  }
+
+  getListData = () => {
+    const that = this
+    let params = {
+      "rowNumber":that.state.pageIndex,
+      "pageSize":that.state.pageSize,
+      "orders":[],
+      "conditions":[{"operator":"like","name":"keyword","value":that.state.keyword}]
+    }
+    api.GetInfoPublishData(params).then(res => {
+      if(res.status === 0){
+        let arr = that.state.list
+        if(that.state.pageIndex == 0){
+          arr = res.data.rows
+        }else{
+          arr = [...that.state.list,...res.data.rows]
+        }
+        that.setState({
+          list:arr,
+          total:res.data.rowCount,
+          isNotData: res.data.rowCount == 0 ? '0' : '1'
+        })
+      }
+    })
   }
 
   gotoback = () => {
     window.history.go(-1)
   }
 
+  handelChange = (e) => {
+    this.setState({
+      keyword:e.target.value
+    })
+  }
+
+  getSearchTxt = (e) => {
+    e.preventDefault();
+    //搜索事件
+    this.setState({
+      pageIndex:0
+    },() => {
+      this.getListData()
+    })
+  }
+
   render(){
     return(
-      <div className="infoDelivey" style={{minHeight:'100vh',background:'#f0f1f3'}}>
+      <div className="infoDelivey" style={{Height:'100vh',background:'#f0f1f3',overflowY:'scroll'}}>
         <div className="header">
           <p className="header-title">信息发布</p>
           <div className="header-back" onClick={this.gotoback}><i className="iconfont iconfanhui"></i></div>
@@ -34,26 +80,27 @@ export default class InfoDelivery extends React.Component{
         <div style={{height:'45px'}}></div>
         <div className="infoDelivey-search">
           <div className="search-input">
-            <input type="search" placeholder="搜公告标题、内容、介绍"/>
+            <form onSubmit={(e) => this.getSearchTxt(e)}>
+              <input type="search" onChange={this.handelChange} placeholder="搜公告标题、内容、介绍"/>
+            </form>
           </div>
         </div>
         <div className="infoDelivey-list">
-          { this.state.list && this.state.list.map(item => {
+          { this.state.list.length > 0 && this.state.list.map(item => {
             return  <div className="item" key={item.id}>
                       <Link to={`/InfoDeliveyDetail/${item.id}`}>
-                        <p style={{fontSize:'15px',color:'#2b2a30'}}>{item.title}</p>
-                        <p style={{fontSize:'12px',color:'#999999',padding:'14px 0'}}>发布时间：<span style={{color:'#2b2a30'}}>{item.time}</span></p>
+                        <p style={{fontSize:'15px',color:'#2b2a30'}}>{item.group}</p>
+                        <p style={{fontSize:'12px',color:'#999999',padding:'14px 0'}}>发布时间：<span style={{color:'#2b2a30'}}>{item.createTime}</span></p>
                         <p style={{fontSize:'12px',color:'#999999'}}>状态： 
                           <span className="btn">
-                            { item.state === 1 && '已发布' }
-                            { item.state === 2 && '草稿' }
-                            { item.state === 3 && '审核通过' }
-                            { item.state === 4 && '撤销发布' }
+                            { item.publishStatus }
                           </span>
                         </p>
                       </Link>
                     </div>
           })}
+          { this.state.isNotData === '0' && <NoData/> }
+          { (this.state.isNotData !== '0' && this.state.total === this.state.list.length) && <div style={{textAlign:"center",background:'#f0f1f3',lineHeight:'40px'}}>已全部加载</div> }
         </div>
       </div>
     )

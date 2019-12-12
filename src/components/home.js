@@ -12,7 +12,7 @@ class Home extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      imgHeight: 140,
+      imgHeight: 142,
       carouselList: [],
       newList:[],
       slideIndex:0,

@@ -4,6 +4,7 @@ import F2 from '@antv/f2/lib/index';
 import ScrollBar from '@antv/f2/lib/plugin/scroll-bar';
 import Pan from '@antv/f2/lib/interaction/pan';
 import _ from 'lodash';
+import api from '../api/index'
 /**
  * 售电概况
  */
@@ -70,13 +71,21 @@ class Survey extends React.Component {
 
   componentDidMount(){
     const that = this
+    that.getTitleData()
     that.getDataChart1()
     that.getDataChart2()
     that.getDataChart3()
     that.getDataChart4()
     that.getDataChart5()
   }
+  //售电情况总览
+  getTitleData = () => {
+    const that = this
+    let params = {"electricQuantity":48178,"cusCount":12,"earnings":0.01,"year":2019,"contractNum":5}
+    api.GetTabControlData(params).then(res => {
 
+    })
+  }
   getDataChart1 = () => {
     this.paintingChart1()
   }
