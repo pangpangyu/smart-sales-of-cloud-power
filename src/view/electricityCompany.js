@@ -201,36 +201,33 @@ export default class ElectricityCompany extends React.Component{
       </div>
     )
   }
+
   render(){
     return(
-      <KeepAlive name="ElectricityCompany">
-        <div style={{minHeight:'100vh',background:'#f0f1f3'}} className="electricityCompany">
-          <Header title={this.state.title} back={true} search={this.state.search}/>
-          
-            { this.state.type === '1' && this.powerUsers() }
-            { this.state.type === '2' && this.electricityGeneration() }
-            { this.state.type === '3' && this.partners() }
-            { this.state.type === '4' && this.sellingElectricity() }
-            
-            { this.state.companyList && this.state.companyList.map(item => {
-                    return  <div key={item.id}>
-                              <div className="electricityCompany-item">
-                                <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}?participantId=${item.participantId}`}>
-                                  <div className="info">
-                                    <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.name}</p>
-                                    <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                                  </div>
-                                  <div className="address">
-                                    { item.adminRegion }
-                                  </div>
-                                </Link>
-                              </div>
-                              <div style={{height:'10px',background:'#f0f1f3'}}></div>
-                            </div>
-            })} 
-            { this.state.noData && <NoData /> }
+      <div style={{minHeight:'100vh',background:'#f0f1f3'}} className="electricityCompany">
+        <Header title={this.state.title} back={true} search={this.state.search}/>
+          { this.state.type === '1' && this.powerUsers() }
+          { this.state.type === '2' && this.electricityGeneration() }
+          { this.state.type === '3' && this.partners() }
+          { this.state.type === '4' && this.sellingElectricity() }
+          { this.state.companyList && this.state.companyList.map(item => {
+            return  <div key={item.id}>
+                      <div className="electricityCompany-item">
+                        <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}?participantId=${item.participantId}`}>
+                          <div className="info">
+                            <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.name}</p>
+                            <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                          </div>
+                          <div className="address">
+                            { item.adminRegion }
+                          </div>
+                        </Link>
+                      </div>
+                      <div style={{height:'10px',background:'#f0f1f3'}}></div>
+                    </div>
+          })} 
+          { this.state.noData && <NoData /> }
       </div>
-      </KeepAlive>
     )
   }
 }
