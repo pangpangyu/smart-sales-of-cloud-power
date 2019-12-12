@@ -3,7 +3,7 @@ import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import NoData from '../components/noData';
 import api from '../api/index';
-import { KeepAlive } from 'react-keep-alive';
+// import { KeepAlive } from 'react-keep-alive';
 
 /**
  * 售电公司
