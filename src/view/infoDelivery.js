@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/index';
 import NoData from '../components/noData';
+import Scroll from 'react-bscroll';
+import 'react-bscroll/lib/react-scroll.css';
 /**
  * 信息发布 
  * */
@@ -16,12 +18,19 @@ export default class InfoDelivery extends React.Component{
       pageSize:10,
       keyword:'',
       total:10000,
-      isNotData: '1'
+      isNotData: '1',
+      isPullUpLoad:true
     }
   }
 
   componentDidMount(){
+    this.scrollObj = this.refs.scroll.getScrollObj()
     this.getListData()
+  }
+  componentWillUnmount () {
+    console.log('compomentWillUnmount')
+    console.log(this.timer)
+    clearTimeout(this.timer)
   }
 
   getListData = () => {
@@ -34,14 +43,8 @@ export default class InfoDelivery extends React.Component{
     }
     api.GetInfoPublishData(params).then(res => {
       if(res.status === 0){
-        let arr = that.state.list
-        if(that.state.pageIndex == 0){
-          arr = res.data.rows
-        }else{
-          arr = [...that.state.list,...res.data.rows]
-        }
         that.setState({
-          list:arr,
+          list:[...that.state.list,...res.data.rows],
           total:res.data.rowCount,
           isNotData: res.data.rowCount == 0 ? '0' : '1'
         })
@@ -69,39 +72,83 @@ export default class InfoDelivery extends React.Component{
     })
   }
 
+  loadMoreData = () => {
+    const that = this
+    let pageIndex = that.state.pageIndex + 1
+    return new Promise((resolve,reject) => {
+      if(pageIndex * that.state.pageSize <= that.state.total){
+        console.log(pageIndex)
+        this.timer = setTimeout(() => {
+          let params = {
+            "rowNumber":pageIndex,
+            "pageSize":that.state.pageSize,
+            "orders":[],
+            "conditions":[{"operator":"like","name":"keyword","value":that.state.keyword}]
+          }
+          api.GetInfoPublishData(params).then(res => {
+            if(res.status === 0){
+              that.setState({
+                list:[...that.state.list,...res.data.rows],
+                total:res.data.rowCount,
+                isNotData: res.data.rowCount == 0 ? '0' : '1',
+                pageIndex:pageIndex
+              })
+              resolve()
+            }else{
+              reject()
+            }
+          })
+        }, 10)
+      }else{
+        resolve()
+        this.setState({
+          isPullUpLoad: false,
+        })
+      }
+    })
+  }
+
   render(){
     return(
-      <div className="infoDelivey" style={{Height:'100vh',background:'#f0f1f3',overflowY:'scroll'}}>
+      // overflowY:'scroll'
+      <div className="infoDelivey" style={{Height:'100%',background:'#f0f1f3',overflow:'hidden'}}>
         <div className="header">
           <p className="header-title">信息发布</p>
           <div className="header-back" onClick={this.gotoback}><i className="iconfont iconfanhui"></i></div>
           <div className="header-search"><Link to="/infoDeliveyAdd"><i className="iconfont iconjia" style={{color:'#fff',fontSize:'15px'}}></i></Link></div>
         </div>
-        <div style={{height:'45px'}}></div>
-        <div className="infoDelivey-search">
-          <div className="search-input">
-            <form onSubmit={(e) => this.getSearchTxt(e)}>
-              <input type="search" onChange={this.handelChange} placeholder="搜公告标题、内容、介绍"/>
-            </form>
+        <Scroll 
+          ref='scroll'
+          pullUpLoad
+          pullUpLoadMoreData={this.loadMoreData}
+          isPullUpTipHide={ false }
+          bounce={false}>
+          <div style={{height:'45px'}}></div>
+          <div className="infoDelivey-search">
+            <div className="search-input">
+              <form onSubmit={(e) => this.getSearchTxt(e)}>
+                <input type="search" onChange={this.handelChange} placeholder="搜公告标题、内容、介绍"/>
+              </form>
+            </div>
           </div>
-        </div>
-        <div className="infoDelivey-list">
-          { this.state.list.length > 0 && this.state.list.map(item => {
-            return  <div className="item" key={item.id}>
-                      <Link to={`/InfoDeliveyDetail/${item.id}`}>
-                        <p style={{fontSize:'15px',color:'#2b2a30'}}>{item.group}</p>
-                        <p style={{fontSize:'12px',color:'#999999',padding:'14px 0'}}>发布时间：<span style={{color:'#2b2a30'}}>{item.createTime}</span></p>
-                        <p style={{fontSize:'12px',color:'#999999'}}>状态： 
-                          <span className="btn">
-                            { item.publishStatus }
-                          </span>
-                        </p>
-                      </Link>
-                    </div>
-          })}
-          { this.state.isNotData === '0' && <NoData/> }
-          { (this.state.isNotData !== '0' && this.state.total === this.state.list.length) && <div style={{textAlign:"center",background:'#f0f1f3',lineHeight:'40px'}}>已全部加载</div> }
-        </div>
+          <div className="infoDelivey-list">
+            { this.state.list.length > 0 && this.state.list.map((item,index) => {
+              return  <div className="item" key={index}>
+                        <Link to={`/InfoDeliveyDetail/${item.id}`}>
+                          <p style={{fontSize:'15px',color:'#2b2a30'}}>{item.group}</p>
+                          <p style={{fontSize:'12px',color:'#999999',padding:'14px 0'}}>发布时间：<span style={{color:'#2b2a30'}}>{item.createTime}</span></p>
+                          <p style={{fontSize:'12px',color:'#999999'}}>状态： 
+                            <span className="btn">
+                              { item.publishStatus }
+                            </span>
+                          </p>
+                        </Link>
+                      </div>
+            })}
+            { this.state.isNotData === '0' && <NoData/> }
+            {/* { (this.state.isNotData !== '0' && !this.state.isPullUpLoad) && <div style={{textAlign:"center",background:'#f0f1f3',lineHeight:'40px'}}>已全部加载</div> } */}
+          </div>
+        </Scroll>
       </div>
     )
   }
