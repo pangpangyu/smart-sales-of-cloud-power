@@ -101,42 +101,83 @@ export default class BsinessAnalysis extends React.Component{
         { name: '12月', score: 127, avgScore: 62.5, checked:false }
       ],
       data4: [
-        { name: '售电成本', 月份: '1月', value: 18.9 }, 
-        { name: '售电成本', 月份: '2月', value: 28.8 }, 
-        { name: '售电成本', 月份: '3月', value: 39.3 }, 
-        { name: '售电成本', 月份: '4月', value: 81.4 }, 
-        { name: '售电成本', 月份: '5月', value: 47 }, 
-        { name: '售电成本', 月份: '6月', value: 20.3 }, 
-        { name: '售电成本', 月份: '7月', value: 24 }, 
-        { name: '售电成本', 月份: '8月', value: 35.6 }, 
-        { name: '售电成本', 月份: '9月', value: 47 }, 
-        { name: '售电成本', 月份: '10月', value: 20.3 }, 
-        { name: '售电成本', 月份: '11月', value: 24 }, 
-        { name: '购电成本', 月份: '12月', value: 35.6 }, 
+        { name: '售电成本', 月份: '1月', value: 18.9}, 
+        { name: '售电成本', 月份: '2月', value: 28.8}, 
+        { name: '售电成本', 月份: '3月', value: 39.3}, 
+        { name: '售电成本', 月份: '4月', value: 81.4}, 
+        { name: '售电成本', 月份: '5月', value: 47}, 
+        { name: '售电成本', 月份: '6月', value: 20.3}, 
+        { name: '售电成本', 月份: '7月', value: 24}, 
+        { name: '售电成本', 月份: '8月', value: 35.6}, 
+        { name: '售电成本', 月份: '9月', value: 47}, 
+        { name: '售电成本', 月份: '10月', value: 20.3}, 
+        { name: '售电成本', 月份: '11月', value: 24}, 
+        { name: '售电成本', 月份: '12月', value: 35.6}, 
+
         { name: '购电成本', 月份: '1月', value: 12.4 }, 
         { name: '购电成本', 月份: '2月', value: 23.2 }, 
         { name: '购电成本', 月份: '3月', value: 34.5 }, 
         { name: '购电成本', 月份: '4月', value: 99.7 }, 
         { name: '购电成本', 月份: '5月', value: 52.6 }, 
         { name: '购电成本', 月份: '6月', value: 35.5 }, 
-        { name: '购电成本', 月份: '7月', value: 37.4 }, 
+        { name: '购电成本', 月份: '7月', value: 37.4}, 
         { name: '购电成本', 月份: '8月', value: 42.4 },
         { name: '购电成本', 月份: '9月', value: 52.6 }, 
         { name: '购电成本', 月份: '10月', value: 35.5 }, 
         { name: '购电成本', 月份: '11月', value: 37.4 }, 
-        { name: '购电成本', 月份: '12月', value: 42.4 },
+        { name: '购电成本', 月份: '12月', value: 42.4},
+
         { name: '成本差', 月份: '1月', value: 18.9 }, 
         { name: '成本差', 月份: '2月', value: 28.8 }, 
         { name: '成本差', 月份: '3月', value: 39.3 }, 
-        { name: '成本差', 月份: '4月', value: 81.4 }, 
+        { name: '成本差', 月份: '4月', value: 81.4}, 
         { name: '成本差', 月份: '5月', value: 47 }, 
         { name: '成本差', 月份: '6月', value: 20.3 }, 
         { name: '成本差', 月份: '7月', value: 24 }, 
         { name: '成本差', 月份: '8月', value: 35.6 }, 
         { name: '成本差', 月份: '9月', value: 47 }, 
         { name: '成本差', 月份: '10月', value: 20.3 }, 
-        { name: '成本差', 月份: '11月', value: 24 }, 
-        { name: '成本差', 月份: '12月', value: 35.6 }
+        { name: '成本差', 月份: '11月', value: 24}, 
+        { name: '成本差', 月份: '12月', value: 35.6 },
+
+        { name: '总收益', 月份: '1月', value: 18.9 }, 
+        { name: '总收益', 月份: '2月', value: 28.8 }, 
+        { name: '总收益', 月份: '3月', value: 39.3 }, 
+        { name: '总收益', 月份: '4月', value: 81.4}, 
+        { name: '总收益', 月份: '5月', value: 47 }, 
+        { name: '总收益', 月份: '6月', value: 20.3 }, 
+        { name: '总收益', 月份: '7月', value: 24 }, 
+        { name: '总收益', 月份: '8月', value: 35.6 }, 
+        { name: '总收益', 月份: '9月', value: 47 }, 
+        { name: '总收益', 月份: '10月', value: 20.3 }, 
+        { name: '总收益', 月份: '11月', value: 24}, 
+        { name: '总收益', 月份: '12月', value: 35.6 },
+
+        { name:'总收益环比（%）',月份: '1月',value1:10},
+        { name:'总收益环比（%）',月份: '2月',value1:20},
+        { name:'总收益环比（%）',月份: '3月',value1:30},
+        { name:'总收益环比（%）',月份: '4月',value1:40},
+        { name:'总收益环比（%）',月份: '5月',value1:50},
+        { name:'总收益环比（%）',月份: '6月',value1:60},
+        { name:'总收益环比（%）',月份: '7月',value1:70},
+        { name:'总收益环比（%）',月份: '8月',value1:80},
+        { name:'总收益环比（%）',月份: '9月',value1:90},
+        { name:'总收益环比（%）',月份: '10月',value1:100},
+        { name:'总收益环比（%）',月份: '11月',value1:110},
+        { name:'总收益环比（%）',月份: '12月',value1:120},
+
+        { name:'总收益同比（%）',月份: '1月',value1:120},
+        { name:'总收益同比（%）',月份: '2月',value1:110},
+        { name:'总收益同比（%）',月份: '3月',value1:100},
+        { name:'总收益同比（%）',月份: '4月',value1:90},
+        { name:'总收益同比（%）',月份: '5月',value1:80},
+        { name:'总收益同比（%）',月份: '6月',value1:70},
+        { name:'总收益同比（%）',月份: '7月',value1:60},
+        { name:'总收益同比（%）',月份: '8月',value1:50},
+        { name:'总收益同比（%）',月份: '9月',value1:40},
+        { name:'总收益同比（%）',月份: '10月',value1:30},
+        { name:'总收益同比（%）',月份: '11月',value1:20},
+        { name:'总收益同比（%）',月份: '12月',value1:10},
       ],
     }
   }
@@ -283,7 +324,6 @@ export default class BsinessAnalysis extends React.Component{
         alias: '合同电量'
       },
       avgScore: {
-        ticks: [ 0, 17, 33, 50, 67, 83, 100 ],
         alias: '合同收益'
       }
     });
@@ -416,7 +456,8 @@ export default class BsinessAnalysis extends React.Component{
     const chart = new F2.Chart({
       id: 'myChart5',
       pixelRatio: window.devicePixelRatio,
-      padding:['auto',0,'auto','auto']
+      padding:['auto',0,'auto','auto'],
+      syncY: true,
     });
     chart.source(this.state.data4);
     chart.tooltip({
@@ -431,7 +472,7 @@ export default class BsinessAnalysis extends React.Component{
         });
         tooltipItems.forEach(function(item) {
           const name = item.name;
-          const value = item.value;
+          const value = item.value === 'value1' ? (item.origin.value || item.origin.value1) : item.value;
           if (map[name]) {
             map[name].value = value;
           }
@@ -446,13 +487,20 @@ export default class BsinessAnalysis extends React.Component{
     
     chart.interval()
       .position('月份*value')
-      .color('name',['#288dfd','#f9a30c','#6dcfce','#ddc275']).style({
-        radius:[2,2,2,2]
+      .color('name',['#288dfd','#f9a30c','#6dcfce','#ddc275']).size(3).style({
+        radius:2
       })
       .adjust({
         type: 'dodge',
-        marginRatio: 0.05 // 设置分组间柱子的间距
+        marginRatio: 0 // 设置分组间柱子的间距
       });
+    chart.line().position('月份*value1').adjust('stack').color('name',name=>{
+      if(name==='总收益环比（%）'){
+        return '#000'
+      }else if(name==='总收益同比（%）'){
+        return '#f00'
+      }
+    });
     chart.render();
   }
 
@@ -496,7 +544,7 @@ export default class BsinessAnalysis extends React.Component{
         <div className="f2-map">
           <div className="t"><i className="iconfont iconshouyi"></i>收益分析</div>
           <div className="f2-map-view">
-            <canvas id="myChart5" width="345" height="220"></canvas>
+            <canvas id="myChart5" width="355" height="320"></canvas>
           </div>
         </div>
       </div>
