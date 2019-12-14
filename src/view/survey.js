@@ -583,7 +583,7 @@ class Survey extends React.Component {
 
   render() {
     return (
-      <div className="survey-page" style={{ minHeight: '100vh', background: '#f0f1f3' }}>
+      <div className="survey-page" style={{ minHeight: '100vh', background: '#f0f1f3',paddingBottom:'20px' }}>
         <Header title={'售电概况'} back={true} search={false} />
         <div className="top-totls">
           {this.state.total && this.state.total.map(item => {
@@ -600,9 +600,9 @@ class Survey extends React.Component {
           </div>
           <div className="chear-view">
             <div style={{ fontSize: '12px', color: '#2b2a30', margin: '20px 0 10px 0' }}>各月份合同数据</div>
-            <canvas id="myChart1" width="345" height="140"></canvas>
+            <div id="myChart1" style={{height:'140px'}}></div>
             <div style={{ fontSize: '12px', color: '#2b2a30', marginTop: '10px' }}>近三年合同数量</div>
-            <canvas id="myChart2" width="345" height="120"></canvas>
+            <div id="myChart2" style={{height:'120px'}}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
@@ -616,7 +616,7 @@ class Survey extends React.Component {
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
-          <div className="title" style={{ borderBottom: '1px solid #eeeeee' }}>
+          <div className="title" style={{ borderBottom: '1px solid #eeeeee',marginBottom:'10px' }}>
             <i className="iconfont icondianliang"></i>现货电量（2019年11月）
           </div>
           <div className="chear-view" style={{ paddingBottom: '10px' }}>
@@ -625,7 +625,7 @@ class Survey extends React.Component {
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
-          <div className="title" style={{ borderBottom: '1px solid #eeeeee' }}>
+          <div className="title" style={{ borderBottom: '1px solid #eeeeee',marginBottom:'10px'}}>
             <i className="iconfont iconshouyi"></i>现货价格（2019年）
           </div>
           <div className="chear-view">
