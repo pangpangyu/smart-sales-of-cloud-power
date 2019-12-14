@@ -194,13 +194,6 @@ class Survey extends React.Component {
   }
   paintingChart3 = () => {
     var myChart = echarts.init(document.getElementById('myChart3'));
-    // myChart.on('click', function (params) {
-    //   let index = parseInt(params.name)
-    //   option.legend.formatter = function (name) {
-    //     return name === '合同电量' ? '合同电量 ' + (data.data1[index - 1]) : '合同收益 ' + (data.data2[index - 1]);
-    //   }
-    //   myChart.setOption(option)
-    // });
     let data = {
       dataX: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
       data1: [5, 6, 8, 5, 4, 5, 8, 6, 5, 8, 4, 1],
@@ -218,15 +211,20 @@ class Survey extends React.Component {
         bottom: '10%',
         containLabel: true
       },
-      // tooltip: {},
       tooltip: {
         trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+          label: {
+            show: true,
+            color: '#000'
+          }
+        },
         formatter:function(params){
           var result = ''
           params.forEach(function (item) {
-            result += item.seriesName + "</br>" + item.marker + item.value
+            result += item.seriesName + ':' + item.value + "</br>"
           })
-          console.log(result)
           return result
         }
       },
@@ -360,16 +358,15 @@ class Survey extends React.Component {
         axisPointer: {
           type: 'shadow',
           label: {
-            show: true
+            show: true,
+            color: '#000'
           }
         }
       },
       calculable: true,
       legend: {
         data: ['申报电量', '实时电量'],
-        // itemGap: 5
         formatter:function (name) {
-          //return name === '申报电量' ? '申报电量 ' + (data.data1[index - 1]) : '实时电量 ' + (data.data2[index - 1]);
           return name;
         }
       },
@@ -488,7 +485,8 @@ class Survey extends React.Component {
         axisPointer: {
           type: 'shadow',
           label: {
-            show: true
+            show: true,
+            color: '#000'
           }
         }
       },
@@ -613,7 +611,7 @@ class Survey extends React.Component {
             <i className="iconfont iconjiage"></i>中长期合同收益（2019年）
           </div>
           <div className="chear-view">
-            <canvas id="myChart3" width="355" height="230"></canvas>
+            <div id="myChart3" style={{height:'230px'}}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
@@ -622,7 +620,7 @@ class Survey extends React.Component {
             <i className="iconfont icondianliang"></i>现货电量（2019年11月）
           </div>
           <div className="chear-view" style={{ paddingBottom: '10px' }}>
-            <canvas id="myChart4" width="345" height="230"></canvas>
+            <div id="myChart4" style={{height:'230px'}}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
@@ -631,7 +629,7 @@ class Survey extends React.Component {
             <i className="iconfont iconshouyi"></i>现货价格（2019年）
           </div>
           <div className="chear-view">
-            <canvas id="myChart5" width="345" height="230"></canvas>
+            <div id="myChart5" style={{height:'230px'}}></div>
           </div>
         </div>
       </div>
