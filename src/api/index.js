@@ -172,7 +172,7 @@ const api = {
   },
   //附件、图片上传
   UploadFile(params){
-    return request.get('nuts/file/upload')
+    return request.post('nuts/file/upload')
   },
   //消息状态
   getByEnum(params){

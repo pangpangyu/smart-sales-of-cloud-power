@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/header';
-import { PickerView, ImagePicker } from 'antd-mobile';
+import { PickerView, Toast } from 'antd-mobile';
+import api from '../api';
 /**
  * 信息发布-添加信息
  */
@@ -8,30 +9,120 @@ export default class InfoDeliveyAdd extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      season: [
-        { label: '春', value: '春' },
-        { label: '夏', value: '夏' }
-      ],
+      options: [],
       value:null,
       openModel:false,
       fileName:'请选择',
       fileName2:'请选择',
       multiple: false,
+      title:'',//标题
+      source: '',//来源
+      introduction:'',//介绍
+      content:'',//内容
+      txt:''
     }
   }
 
-  onChangeFile = (files, type, index) => {
-    console.log(files, type, index);
-    this.setState({
-      files,
-    });
+  componentDidMount(){
+    this.getInfoPublishDataDetail()
+  }
+
+  getInfoPublishDataDetail = () => {
+    const that = this
+    let params = '?id=undefined&type=create&_=1576403559824'
+    api.GetInfoPublishDataDetail(params).then(res => {
+      if(res.status === 0){
+        let arr = []
+        res.data.options.map(item => {
+          if(item.text){
+            arr.push({ label: item.text, value: item.value })
+          }
+        })
+        that.setState({
+          options:arr
+        })
+      }
+    })
   }
 
   onChange = (value) => {
-    console.log(value)
+    console.log(value[0])
+    let txt = this.state.options.filter(v => v.value === value[0])[0].label
     this.setState({
       value,
+      txt:txt
     });
+  }
+
+  setSaveEdit = () => {
+    const that = this
+    if(!that.state.title){
+      Toast.info('请填写标题', 2, null, false);
+      return
+    }
+    if(!that.state.value){
+      Toast.info('请选择发布位置', 2, null, false);
+      return
+    }
+    let params = {
+      title: this.state.title,
+      publishLocation: {
+        id: that.state.value[0]
+      },
+      content: this.state.content,
+      displayImage:{
+        id: 4907
+      },
+      newsResource: this.state.source,
+      introduction: this.state.introduction,
+      attachments:{
+        id: [4908]
+      },
+    }
+    console.log(params)
+    // api.SetSaveEdit(params).then(res => {
+
+    // })
+  }
+
+  handelChange1 = (e) => {
+    this.setState({
+      title:e.target.value
+    })
+  }
+
+  handelChange2 = (e) => {
+    this.setState({
+      source:e.target.value
+    })
+  }
+
+  handelChange3 = (e) => {
+    this.setState({
+      introduction:e.target.value
+    })
+  }
+
+  handelChange4 = (e) => {
+    this.setState({
+      content:e.target.value
+    })
+  }
+
+  handelChange5 = (e) => {
+    let file2 = document.querySelector('#input2').files[0];
+    let formData = new FormData()
+    formData.append('file',file)
+  }
+
+  handelChange6 = (e) => {
+    
+  }
+
+  savePickerView = () => {
+    this.setState({
+      openModel: !this.state.openModel
+    })
   }
 
   render(){
@@ -42,11 +133,11 @@ export default class InfoDeliveyAdd extends React.Component{
           <div className="view">
             <div className="item">
               <div className="l">标题</div>
-              <div className="r"><input type="text" placeholder="请输入"/></div>
+              <div className="r"><input type="text" onChange={this.handelChange1} placeholder="请输入"/></div>
             </div>
             <div className="item bgImg">
               <div className="l">发布位置</div>
-              <div className="r" onClick={ () => { this.setState({openModel:!this.state.openModel}) } }>公司公告</div>
+              <div className="r" onClick={ () => { this.setState({openModel:!this.state.openModel}) } }>{this.state.txt}</div>
             </div>
           </div>
           <div style={{height:'10px',background:'#f0f1f3'}}></div>
@@ -54,7 +145,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div className="item2">
               <div className="l">介绍</div>
               <div className="r">
-                <textarea placeholder="超过200个字请到管理后台编辑"></textarea>
+                <textarea onChange={this.handelChange3} placeholder="超过200个字请到管理后台编辑"></textarea>
               </div>
             </div>
           </div>
@@ -63,7 +154,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div className="item2">
               <div className="l">内容</div>
               <div className="r">
-                <textarea placeholder="超过200个字请到管理后台编辑"></textarea>
+                <textarea onChange={this.handelChange4} placeholder="超过200个字请到管理后台编辑"></textarea>
               </div>
             </div>
           </div>
@@ -71,26 +162,19 @@ export default class InfoDeliveyAdd extends React.Component{
           <div className="view">
             <div className="item">
               <div className="l">来源</div>
-              <div className="r"><input type="text" placeholder="请输入"/></div>
+              <div className="r"><input type="text" onChange={this.handelChange2} placeholder="请输入"/></div>
             </div>
             <div className="item bgImg">
               <div className="l">图片</div>
               <div className="r cl2">
-                {/* <ImagePicker
-                  files={this.state.files}
-                  onChange={this.onChangeFile}
-                  onImageClick={(index, fs) => console.log(index, fs)}
-                  selectable={this.state.files.length < 7}
-                  multiple={this.state.multiple}
-                /> */}
-                <input type="file" className="file"/>
+                <input type="file" id="file1" onChange={this.handelChange5} className="file"/>
                 { this.state.fileName }
               </div>
             </div>
             <div className="item bgImg">
               <div className="l">附件</div>
               <div className="r cl2">
-                <input type="file" className="file"/>
+                <input type="file" id="file2" onChange={this.handelChange6} className="file"/>
                 { this.state.fileName2 }
               </div>
             </div>
@@ -98,14 +182,14 @@ export default class InfoDeliveyAdd extends React.Component{
           <div style={{height:'10px',background:'#f0f1f3'}}></div>
           <div className="submit-btn">
             <button className="tj">提交审核</button>
-            <button>保存</button>
+            <button onClick={ this.setSaveEdit }>保存</button>
           </div>
         </div>
         <div className={this.state.openModel ? 'infoDelivey-model on':'infoDelivey-model'}>
           <div className="mode-view-mb" onClick={ (e) => { this.setState({openModel:!this.state.openModel}) } }></div>
           <div className="mode-view">
             <PickerView
-              data={this.state.season}
+              data={this.state.options}
               cascade={false}
               style={{height:'50px'}}
               onChange={this.onChange}
@@ -114,7 +198,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div style={{height:'8px',background:'#f0f1f3'}}></div>
             <div className="btn">
               <button onClick={ (e) => { this.setState({openModel:!this.state.openModel}) } }>取消</button>
-              <button className="ok">确定</button>
+              <button className="ok" onClick={ this.savePickerView }>确定</button>
             </div>
             <div style={{height:'8px',background:'#f0f1f3'}}></div>
             <div style={{height:'20px',background:'#fff'}}></div>
