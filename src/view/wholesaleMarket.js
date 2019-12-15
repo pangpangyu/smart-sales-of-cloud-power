@@ -32,6 +32,8 @@ export default class Test extends React.Component {
         this.setState({
              year: this.state.fullYear + '-' +this.state.month,
             open: false
+        }, () => {
+            this.getWholesaleMarket()
         })
     }
     onChange = (value) => {
@@ -53,7 +55,7 @@ export default class Test extends React.Component {
             rowNumber:0,
             pageSize:10,
             yearMon1:1,
-            yearMon:2019-11
+            yearMon:that.state.year
         }
         api.getWholesaleMarket(params).then(res => {
             if (res.status === 0) {
