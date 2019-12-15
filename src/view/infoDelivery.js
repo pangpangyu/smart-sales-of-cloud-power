@@ -122,7 +122,8 @@ export default class InfoDelivery extends React.Component{
           pullUpLoad
           pullUpLoadMoreData={this.loadMoreData}
           isPullUpTipHide={ false }
-          bounce={false}>
+          bounce={false}
+          click={true}>
           <div style={{height:'45px'}}></div>
           <div className="infoDelivey-search">
             <div className="search-input">
