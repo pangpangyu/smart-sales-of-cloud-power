@@ -88,7 +88,7 @@ const api = {
   },
   //售电公司客户列表
   GetSellingElectricityList(params){
-    return request.get('admin/market/advancedSearchListPowerCompany'+params)
+    return request.post('admin/market/advancedSearchListPowerCompany',params)
   },
   //售电公司客户详情
   GetSellingElectricityDetail(params){
