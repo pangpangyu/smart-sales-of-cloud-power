@@ -10,12 +10,11 @@ class Survey extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      total: [
-        { id: 1, num: '200', title: '合同总数', bg: '#3778f5', unit: '个' },
-        { id: 2, num: '25100', title: '合同电量', bg: '#288dfd', unit: '兆瓦时' },
-        { id: 3, num: '200', title: '合同收益', bg: '#3aaafb', unit: '万元' },
-        { id: 4, num: '2000', title: '合同总数', bg: '#4fcdfd', unit: '个' }
-      ],
+      year: 2019,
+      contractNum: 0,
+      cusCount: 0,
+      earnings: 0,
+      electricQuantity: 0,
     }
   }
 
@@ -33,7 +32,13 @@ class Survey extends React.Component {
     //const that = this
     let params = { "electricQuantity": 48178, "cusCount": 12, "earnings": 0.01, "year": 2019, "contractNum": 5 }
     api.GetTabControlData(params).then(res => {
-
+      this.setState({
+        contractNum: res.contractNum,
+        cusCount: res.cusCount,
+        earnings: res.earnings,
+        electricQuantity: res.electricQuantity,
+        year: res.year,
+      })
     })
   }
   getDataChart1 = () => {
@@ -220,7 +225,7 @@ class Survey extends React.Component {
             color: '#000'
           }
         },
-        formatter:function(params){
+        formatter: function (params) {
           var result = ''
           params.forEach(function (item) {
             result += item.seriesName + ':' + item.value + "</br>"
@@ -345,14 +350,14 @@ class Survey extends React.Component {
       "delta": [],
       "names": []
     }
-    for(let i=0;i<31;i++){
-      data.data1.push( parseInt(Math.random() * 100))
-      data.data2.push( parseInt(Math.random() * 200))
+    for (let i = 0; i < 31; i++) {
+      data.data1.push(parseInt(Math.random() * 100))
+      data.data2.push(parseInt(Math.random() * 200))
       data.delta.push(i)
-      data.names.push(i+1+'日')
+      data.names.push(i + 1 + '日')
     }
     let option = {
-      color:['#288dfd','#f9a30c'],
+      color: ['#288dfd', '#f9a30c'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -366,7 +371,7 @@ class Survey extends React.Component {
       calculable: true,
       legend: {
         data: ['申报电量', '实时电量'],
-        formatter:function (name) {
+        formatter: function (name) {
           return name;
         }
       },
@@ -430,8 +435,8 @@ class Survey extends React.Component {
           name: '申报电量',
           type: 'bar',
           data: data.data2,
-          barWidth:9,
-          barGap:0,
+          barWidth: 9,
+          barGap: 0,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -445,7 +450,7 @@ class Survey extends React.Component {
           name: '实时电量',
           type: 'bar',
           data: data.data1,
-          barWidth:9,
+          barWidth: 9,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -472,14 +477,14 @@ class Survey extends React.Component {
       "delta": [],
       "names": []
     }
-    for(let i=0;i<31;i++){
-      data.data1.push( parseInt(Math.random() * 100))
-      data.data2.push( parseInt(Math.random() * 200))
+    for (let i = 0; i < 31; i++) {
+      data.data1.push(parseInt(Math.random() * 100))
+      data.data2.push(parseInt(Math.random() * 200))
       data.delta.push(i)
-      data.names.push(i+1+'日')
+      data.names.push(i + 1 + '日')
     }
     let option = {
-      color:['#288dfd','#f9a30c'],
+      color: ['#288dfd', '#f9a30c'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -494,7 +499,7 @@ class Survey extends React.Component {
       legend: {
         data: ['日前均价', '实时均价'],
         // itemGap: 5
-        formatter:function (name) {
+        formatter: function (name) {
           //return name === '申报电量' ? '申报电量 ' + (data.data1[index - 1]) : '实时电量 ' + (data.data2[index - 1]);
           return name;
         }
@@ -559,8 +564,8 @@ class Survey extends React.Component {
           name: '日前均价',
           type: 'line',
           data: data.data2,
-          barWidth:9,
-          barGap:0,
+          barWidth: 9,
+          barGap: 0,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -583,15 +588,25 @@ class Survey extends React.Component {
 
   render() {
     return (
-      <div className="survey-page" style={{ minHeight: '100vh', background: '#f0f1f3',paddingBottom:'20px' }}>
+      <div className="survey-page" style={{ minHeight: '100vh', background: '#f0f1f3', paddingBottom: '20px' }}>
         <Header title={'售电概况'} back={true} search={false} />
         <div className="top-totls">
-          {this.state.total && this.state.total.map(item => {
-            return <div className="item" key={item.id} style={{ background: item.bg }}>
-              <p><span style={{ fontSize: '19px' }}>{item.num}</span>{item.unit}</p>
-              <p style={{ paddingTop: '10px' }}>{item.title}</p>
-            </div>
-          })}
+          <div className="item" style={{ background: '#3778f5' }}>
+            <p><span style={{ fontSize: '19px' }}>{this.state.contractNum}</span>个</p>
+            <p style={{ paddingTop: '10px' }}>合同总数</p>
+          </div>
+          <div className="item" style={{ background: '#288dfd' }}>
+            <p><span style={{ fontSize: '19px' }}>{this.state.electricQuantity}</span>兆瓦时</p>
+            <p style={{ paddingTop: '10px' }}>合同电量</p>
+          </div>
+          <div className="item" style={{ background: '#3aaafb' }}>
+            <p><span style={{ fontSize: '19px' }}>{this.state.earnings}</span>万元</p>
+            <p style={{ paddingTop: '10px' }}>合同收益</p>
+          </div>
+          <div className="item" style={{ background: '#4fcdfd' }}>
+            <p><span style={{ fontSize: '19px' }}>{this.state.cusCount}</span>个</p>
+            <p style={{ paddingTop: '10px' }}>客户总数</p>
+          </div>
         </div>
         <div style={{ height: '10px', color: '#f0f1f3' }}></div>
         <div className="charts-map">
@@ -600,9 +615,9 @@ class Survey extends React.Component {
           </div>
           <div className="chear-view">
             <div style={{ fontSize: '12px', color: '#2b2a30', margin: '20px 0 10px 0' }}>各月份合同数据</div>
-            <div id="myChart1" style={{height:'140px'}}></div>
+            <div id="myChart1" style={{ height: '140px' }}></div>
             <div style={{ fontSize: '12px', color: '#2b2a30', marginTop: '10px' }}>近三年合同数量</div>
-            <div id="myChart2" style={{height:'120px'}}></div>
+            <div id="myChart2" style={{ height: '120px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
@@ -611,25 +626,25 @@ class Survey extends React.Component {
             <i className="iconfont iconjiage"></i>中长期合同收益（2019年）
           </div>
           <div className="chear-view">
-            <div id="myChart3" style={{height:'230px'}}></div>
+            <div id="myChart3" style={{ height: '230px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
-          <div className="title" style={{ borderBottom: '1px solid #eeeeee',marginBottom:'10px' }}>
+          <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
             <i className="iconfont icondianliang"></i>现货电量（2019年11月）
           </div>
           <div className="chear-view" style={{ paddingBottom: '10px' }}>
-            <div id="myChart4" style={{height:'230px'}}></div>
+            <div id="myChart4" style={{ height: '230px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
-          <div className="title" style={{ borderBottom: '1px solid #eeeeee',marginBottom:'10px'}}>
+          <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
             <i className="iconfont iconshouyi"></i>现货价格（2019年）
           </div>
           <div className="chear-view">
-            <div id="myChart5" style={{height:'230px'}}></div>
+            <div id="myChart5" style={{ height: '230px' }}></div>
           </div>
         </div>
       </div>

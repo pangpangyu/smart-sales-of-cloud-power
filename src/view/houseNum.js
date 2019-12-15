@@ -95,9 +95,9 @@ export default class Todolist extends React.Component {
 			//that.getPowerUserDet()
 			// that.getPowerTradeInfoTableData()
 			// that.getCompanyStaffTableData()
-			that.getYearPowerTableData()
+			// that.getYearPowerTableData()
 		} else if (that.state.type === '3') {
-			that.getCompanyStaffTableData()
+			// that.getCompanyStaffTableData()
 
 		}
 	}
@@ -177,11 +177,11 @@ export default class Todolist extends React.Component {
 							{this.state.active === '3' && this.state.type === '1' && <AccountManagement id={getDataQuery('participantId')} />}
 							{this.state.active === '4' && this.state.type === '1' && <AnnualEstimatedPower type={this.state.type} participantId={getDataQuery('participantId')} />}
 
-							{this.state.active === '1' && this.state.type === '2' && <PowerDetails type={this.state.type} />}
+							{this.state.active === '1' && this.state.type === '2' && <PowerDetails type={this.state.type} id={this.state.id}  />}
 							{this.state.active === '2' && this.state.type === '2' && <HouseholdInfo type={this.state.type} />}
 							{this.state.active === '3' && this.state.type === '2' && <AnnualEstimatedPower type={this.state.type} />}
 
-							{this.state.active === '1' && this.state.type === '3' && <PowerDetails type={this.state.type} />}
+							{this.state.active === '1' && this.state.type === '3' && <PowerDetails type={this.state.type} id={this.state.id}  />}
 							{this.state.active === '2' && this.state.type === '3' && (this.state.powerUsers.length === 0 ? <NoData /> : <AccountManagement userList={this.state.powerUsers} participantId={getDataQuery('participantId')} />)}
 
 
