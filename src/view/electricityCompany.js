@@ -3,7 +3,8 @@ import Header from '../components/header';
 import { Link } from 'react-router-dom';
 import NoData from '../components/noData';
 import api from '../api/index';
-// import { KeepAlive } from 'react-keep-alive';
+import Scroll from 'react-bscroll';
+import 'react-bscroll/lib/react-scroll.css';
 
 /**
  * 售电公司
@@ -51,18 +52,6 @@ export default class ElectricityCompany extends React.Component{
       that.getPartnersList()
     }
   }
-  // componentDidMount(){
-  //   const that = this
-  //   if(that.state.type === '1'){
-  //     that.getPowerUserList()
-  //   }else if(that.state.type === '2'){
-  //     that.getElectricityGenerationList()
-  //   }else if(that.state.type === '3'){
-  //     that.getPartnersList()
-  //   }else if(that.state.type === '4'){
-  //     that.getPartnersList()
-  //   }
-  // }
   //获取电力用户数据
   getPowerUserList = () => {
     const that = this
@@ -100,12 +89,13 @@ export default class ElectricityCompany extends React.Component{
   //获取发电企业数据
   getElectricityGenerationList = () => {
     const that = this
-    let params = {"rowNumber":that.state.pageIndex,"pageSize":10,"conditions":[{"name":"name","operator":"%","value":"山"}]}
-    api.GetPartnersList(params).then(res => {
+    let params = {"rowNumber":that.state.pageIndex,"pageSize":10,"conditions":[{"name":"name","operator":"%","value":""}]}
+    api.GetPowerPlantList(params).then(res => {
       if(res.status === 0){
         res.data.rows.map(item => {
           // item.name = item.conglomerate
-          item.followUpPerson = item.contactPerson
+          item.followUpPerson = item.contactPersonName
+          //contactPersonName
         })
         that.setState({
           companyList:res.data.rows,
@@ -118,11 +108,10 @@ export default class ElectricityCompany extends React.Component{
   //获取合作方数据
   getPartnersList = () => {
     const that = this
-    let params = {"rowNumber":that.state.pageIndex,"pageSize":10,"conditions":[{"name":"name","operator":"%","value":"山"}]}
+    let params = {"rowNumber":that.state.pageIndex,"pageSize":10,"conditions":[{"name":"name","operator":"%","value":""}]}
     api.GetPartnersList(params).then(res => {
       if(res.status === 0){
         res.data.rows.map(item => {
-          // item.name = item.conglomerate
           item.followUpPerson = item.contactPerson
         })
         that.setState({
@@ -204,30 +193,43 @@ export default class ElectricityCompany extends React.Component{
     )
   }
 
+  loadMoreData = () => {
+    console.log(1)
+  }
+
   render(){
     return(
       <div style={{minHeight:'100vh',background:'#f0f1f3'}} className="electricityCompany">
         <Header title={this.state.title} back={true} search={this.state.search}/>
-          { this.state.type === '1' && this.powerUsers() }
-          { this.state.type === '2' && this.electricityGeneration() }
-          { this.state.type === '3' && this.partners() }
-          { this.state.type === '4' && this.sellingElectricity() }
-          { this.state.companyList && this.state.companyList.map(item => {
-            return  <div key={item.id}>
-                      <div className="electricityCompany-item">
-                        <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}?participantId=${item.participantId}`}>
-                          <div className="info">
-                            <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.name}</p>
-                            <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                          </div>
-                          <div className="address">
-                            { item.adminRegion }
-                          </div>
-                        </Link>
+          <Scroll 
+            ref='scroll'
+            pullUpLoad
+            pullUpLoadMoreData={this.loadMoreData}
+            isPullUpTipHide={ false }
+            bounce={false}
+            click={true}>
+            <div style={{height:'45px'}}></div>
+            { this.state.type === '1' && this.powerUsers() }
+            { this.state.type === '2' && this.electricityGeneration() }
+            { this.state.type === '3' && this.partners() }
+            { this.state.type === '4' && this.sellingElectricity() }
+            { this.state.companyList && this.state.companyList.map(item => {
+              return  <div key={item.id}>
+                        <div className="electricityCompany-item">
+                          <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}?participantId=${item.participantId}`}>
+                            <div className="info">
+                              <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.name}</p>
+                              <p style={{fontSize:'11px',color:'#94c0f4',paddingTop:'12px'}}><span style={{marginRight:'20px'}}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                            </div>
+                            <div className="address">
+                              { item.adminRegion }
+                            </div>
+                          </Link>
+                        </div>
+                        <div style={{height:'10px',background:'#f0f1f3'}}></div>
                       </div>
-                      <div style={{height:'10px',background:'#f0f1f3'}}></div>
-                    </div>
-          })} 
+            })} 
+          </Scroll>
           { this.state.noData && <NoData /> }
       </div>
     )

@@ -103,7 +103,8 @@ class ContractMes extends React.Component {
                             </li>
                         </ul>
                         <div className="module-space"></div>
-                        <ModuleTit title="合同电量信息" imgurl={img2} />
+                        {/* 合同电量信息 */}
+                        <ModuleTit title="合同条款关键信息" imgurl={img2} />
                         <ul className="contract-battery-list">
                             <li className="item head">
                                 <span className="num">序号</span>
