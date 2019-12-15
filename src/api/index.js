@@ -166,9 +166,9 @@ const api = {
   CencalpublishSubmit(params){
     return request.get('admin/system/cencalpublishSubmit'+params)
   },
-  //修改保存 ???
+  //修改保存
   SetSaveEdit(params){
-    return request.get('nuts/crud/save/models_system_InfoPublish')
+    return request.post('nuts/crud/save/models_system_InfoPublish',params)
   },
   //附件、图片上传
   UploadFile(params){
