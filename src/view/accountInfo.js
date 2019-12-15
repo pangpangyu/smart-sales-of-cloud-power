@@ -21,11 +21,11 @@ export default class AccountInfo extends React.Component{
     const that = this
     let params = `?participantId=${getDataQuery('pid')}`
     api.GetPowerUsersMemberManage(params).then(res => {
-        if(res.status === 0){
-            this.setState({
-              userInfo:res.data.rows[getDataQuery('u')]
-            })
-        }
+      if(res.status === 0){
+        this.setState({
+          userInfo:res.data.rows[getDataQuery('u')]
+        })
+      }
     })
 }
 

@@ -34,6 +34,7 @@ import MediumAndLongTermDet from '../view/mediumAndLongTermDet';
 import UnifiedLoadRegulationDet from '../view/unifiedLoadRegulationDet';
 import ProvincialNetworkDet from '../view/provincialNetworkDet';
 import OutwardDeliveryPlanDet from '../view/outwardDeliveryPlanDet';
+import ImaView from '../view/imgView';
 import ErrorPage from '../view/ErrorPage';
 import { Provider } from 'react-keep-alive';
 
@@ -79,6 +80,8 @@ export default class ROUTER extends React.Component{
                 <Route path="/unifiedLoadRegulationDet" component={UnifiedLoadRegulationDet}></Route>
                 <Route path="/provincialNetworkDet" component={ProvincialNetworkDet}></Route>
                 <Route path="/outwardDeliveryPlanDet" component={OutwardDeliveryPlanDet}></Route>
+                {/* 查看图片页面图片 */}
+                <Route path="/imaView" component={ImaView}></Route>
                 <Route component={ErrorPage}></Route>
               </Switch>
             </App>
