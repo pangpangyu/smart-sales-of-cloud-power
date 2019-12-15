@@ -9,10 +9,11 @@ import 'react-bscroll/lib/react-scroll.css';
  * 公司公告列表
  * 消息提醒列表
  */
-export default class NewList extends React.Component {
+class NewList extends React.Component {
   constructor(props) {
     super(props)
     let title = "消息"
+    console.log(props)
     if (this.props.match.params.type === '1') {
       title = '公司公告'
     } else if (this.props.match.params.type === '2') {
@@ -36,15 +37,61 @@ export default class NewList extends React.Component {
 
   componentDidMount() {
     const that = this
-    that.getNoticeList()
+    if (that.state.type === '1') {
+      that.getComapnyNotice()
+    } else {
+      //消息列表已读消息
+      that.getreadyNew()
+      //that.getUnreadNew()
+    }
   }
-
-  getNoticeList = () => {
-    const that = this
-    let params = { "rowNumber": that.state.pageIndex, "pageSize": 5, "conditions": [{ "name": "group.name", "value": "CompanyAnnouncement", "operator": "=" }], "orders": [{ "order": "down", "name": "lastUpdateTime" }] }
+  //消息列表已读消息
+  getreadyNew = () => {
+    let params = '?hasHandled=false'
+    api.getNewListPage(params).then(res => {
+      if (res.status === 0) {
+        this.setState({
+          companyNewList: res.data.rows,
+          total: res.data.rowCount,
+          noData: res.data.rowCount === 0 ? true : false
+        })
+      }
+    })
+  }
+  getUnreadNew = () => {
+    let params = '?hasHandled=true'
+    api.getNewListPage(params).then(res => {
+      if (res.status === 0) {
+        this.setState({
+          companyNewList: res.data.rows,
+          total: res.data.rowCount,
+          noData: res.data.rowCount === 0 ? true : false
+        })
+      }
+    })
+  }
+  //获取公司公告息列表
+  getComapnyNotice = () => {
+    let params = {
+      "rowNumber": this.state.pageIndex,
+      "pageSize": 10,
+      "conditions": [
+        {
+          "name": "group.name",
+          "value": "CompanyAnnouncement",
+          "operator": "="
+        }
+      ],
+      "orders": [
+        {
+          "order": "down",
+          "name": "lastUpdateTime"
+        }
+      ]
+    }
     api.GetCompanyNoticeList(params).then(res => {
       if (res.status === 0) {
-        that.setState({
+        this.setState({
           companyNewList: res.data.rows,
           total: res.data.rowCount,
           noData: res.data.rowCount === 0 ? true : false
@@ -88,7 +135,7 @@ export default class NewList extends React.Component {
           ref='scroll'
           pullUpLoad
           pullUpLoadMoreData={this.loadMoreData}
-          isPullUpTipHide={false}
+          isPullUpTipHide={this.state.pageIndex === 0}
           bounce={false}
           click={true}>
           <div style={{ height: '45px' }}></div>
@@ -128,7 +175,10 @@ export default class NewList extends React.Component {
             {this.state.noData && <NoData />}
           </div>
         </Scroll>
+
       </div>
     )
   }
 }
+
+export default NewList

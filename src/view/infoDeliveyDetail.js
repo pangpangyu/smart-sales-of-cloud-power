@@ -52,7 +52,7 @@ export default class InfoDeliveyDetail extends React.Component{
         <Header title={'信息详情'} back={true} search={false}/>
         <div className="infoDeliveyDetail-body">
           <div className="title">
-            <p className="t">{this.state.detail.title}</p>
+            <p className="t" style={{padding:'0 20px',lineHeight:'20px'}}>{this.state.detail.title}</p>
             <p className="time">发布时间：{this.state.detail.publishTime}</p>
           </div>
           <div style={{height:'10px',background:'#f0f1f3'}}></div>

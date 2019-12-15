@@ -4,7 +4,7 @@ import Router from './router/index'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <Router/>, 
+  <Router />,
   document.getElementById('root')
 );
 

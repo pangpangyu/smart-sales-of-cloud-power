@@ -12,8 +12,8 @@ export default class InfoDeliveyAdd extends React.Component{
       options: [],
       value:null,
       openModel:false,
-      fileName:'请选择',
-      fileName2:'请选择',
+      file1:{},
+      file2:{},
       multiple: false,
       title:'',//标题
       source: '',//来源
@@ -34,9 +34,9 @@ export default class InfoDeliveyAdd extends React.Component{
       if(res.status === 0){
         let arr = []
         res.data.options.map(item => {
-          if(item.text){
+          //if(item.text){
             arr.push({ label: item.text, value: item.value })
-          }
+          //}
         })
         that.setState({
           options:arr
@@ -70,19 +70,24 @@ export default class InfoDeliveyAdd extends React.Component{
         id: that.state.value[0]
       },
       content: this.state.content,
-      displayImage:{
-        id: 4907
-      },
       newsResource: this.state.source,
-      introduction: this.state.introduction,
-      attachments:{
-        id: [4908]
-      },
+      introduction: this.state.introduction
     }
-    console.log(params)
-    // api.SetSaveEdit(params).then(res => {
-
-    // })
+    if(that.state.file1.id){
+      params.displayImage = {
+        id:that.state.file1.id
+      }
+    }
+    if(that.state.file2.id){
+      params.attachments = {
+        id:[that.state.file2.id]
+      }
+    }
+    api.SetSaveEdit(params).then(res => {
+      if(res.status === 0){
+        Toast.info(res.message, 2, ()=>{window.history.go(-1)}, false);
+      }
+    })
   }
 
   handelChange1 = (e) => {
@@ -113,14 +118,22 @@ export default class InfoDeliveyAdd extends React.Component{
     let file = e.target.files[0]
     let formData = new FormData()
     formData.append('file',file)
-    console.log(formData)
     api.UploadFile(formData).then(res => {
-
+      this.setState({
+        file1:res.data
+      })
     })
   }
 
   handelChange6 = (e) => {
-    
+    let file = e.target.files[0]
+    let formData = new FormData()
+    formData.append('file',file)
+    api.UploadFile(formData).then(res => {
+      this.setState({
+        file2:res.data
+      })
+    })
   }
 
   savePickerView = () => {
@@ -172,14 +185,14 @@ export default class InfoDeliveyAdd extends React.Component{
               <div className="l">图片</div>
               <div className="r cl2">
                 <input type="file" id="file1" onChange={this.handelChange5} className="file"/>
-                { this.state.fileName }
+                { this.state.file1.name || '请选择' }
               </div>
             </div>
             <div className="item bgImg">
               <div className="l">附件</div>
               <div className="r cl2">
                 <input type="file" id="file2" onChange={this.handelChange6} className="file"/>
-                { this.state.fileName2 }
+                { this.state.file2.name || '请选择' }
               </div>
             </div>
           </div>

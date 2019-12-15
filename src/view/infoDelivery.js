@@ -27,11 +27,6 @@ export default class InfoDelivery extends React.Component{
     this.scrollObj = this.refs.scroll.getScrollObj()
     this.getListData()
   }
-  componentWillUnmount () {
-    console.log('compomentWillUnmount')
-    console.log(this.timer)
-    clearTimeout(this.timer)
-  }
 
   getListData = () => {
     const that = this
@@ -77,28 +72,25 @@ export default class InfoDelivery extends React.Component{
     let pageIndex = that.state.pageIndex + 1
     return new Promise((resolve,reject) => {
       if(pageIndex * that.state.pageSize <= that.state.total){
-        console.log(pageIndex)
-        this.timer = setTimeout(() => {
-          let params = {
-            "rowNumber":pageIndex,
-            "pageSize":that.state.pageSize,
-            "orders":[],
-            "conditions":[{"operator":"like","name":"keyword","value":that.state.keyword}]
+        let params = {
+          "rowNumber":pageIndex,
+          "pageSize":that.state.pageSize,
+          "orders":[],
+          "conditions":[{"operator":"like","name":"keyword","value":that.state.keyword}]
+        }
+        api.GetInfoPublishData(params).then(res => {
+          if(res.status === 0){
+            that.setState({
+              list:[...that.state.list,...res.data.rows],
+              total:res.data.rowCount,
+              isNotData: res.data.rowCount == 0 ? '0' : '1',
+              pageIndex:pageIndex
+            })
+            resolve()
+          }else{
+            reject()
           }
-          api.GetInfoPublishData(params).then(res => {
-            if(res.status === 0){
-              that.setState({
-                list:[...that.state.list,...res.data.rows],
-                total:res.data.rowCount,
-                isNotData: res.data.rowCount == 0 ? '0' : '1',
-                pageIndex:pageIndex
-              })
-              resolve()
-            }else{
-              reject()
-            }
-          })
-        }, 10)
+        })
       }else{
         resolve()
         this.setState({
@@ -121,7 +113,7 @@ export default class InfoDelivery extends React.Component{
           ref='scroll'
           pullUpLoad
           pullUpLoadMoreData={this.loadMoreData}
-          isPullUpTipHide={ false }
+          isPullUpTipHide={ this.state.pageIndex === 0 }
           bounce={false}
           click={true}>
           <div style={{height:'45px'}}></div>
@@ -136,7 +128,7 @@ export default class InfoDelivery extends React.Component{
             { this.state.list.length > 0 && this.state.list.map((item,index) => {
               return  <div className="item" key={index}>
                         <Link to={`/InfoDeliveyDetail/${item.id}`}>
-                          <p style={{fontSize:'15px',color:'#2b2a30'}}>{item.group}</p>
+                          <p style={{fontSize:'15px',color:'#2b2a30',lineHeight:'18px'}}>{item.title}</p>
                           <p style={{fontSize:'12px',color:'#999999',padding:'14px 0'}}>发布时间：<span style={{color:'#2b2a30'}}>{item.createTime}</span></p>
                           <p style={{fontSize:'12px',color:'#999999'}}>状态： 
                             <span className="btn">

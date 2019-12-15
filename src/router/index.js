@@ -36,56 +36,54 @@ import ProvincialNetworkDet from '../view/provincialNetworkDet';
 import OutwardDeliveryPlanDet from '../view/outwardDeliveryPlanDet';
 import ImaView from '../view/imgView';
 import ErrorPage from '../view/ErrorPage';
-import { Provider } from 'react-keep-alive';
 
-export default class ROUTER extends React.Component{
-  render(){
+
+export default class ROUTER extends React.Component {
+  render() {
     return (
       <Router>
         <Route>
-          <Provider include="electricityCompany">
-            <App>
-              <Switch>
-                <Route exact path="/" component={Index}></Route>
-                <Route path="/newList/:type" component={NewList}></Route>
-                {/*type  1为公司公告  2为消息提醒  */}
-                <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
-                <Route path="/survey" component={Survey}></Route>
-                <Route path="/contractManage" component={ContractManage}></Route>
-                <Route path="/contractDetail/:id" component={ContractDetail}></Route>
-                <Route path="/contractReview/:id" component={ContractReview}></Route>
-                <Route path="/attendanceList" component={AttendanceList}></Route>
-                <Route path="/attendanceAdd/:type" component={AttendanceAdd}></Route>
-                <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
-                {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
-                <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
-                <Route path="/account/:id" component={Account}></Route>
-                <Route path="/customer" component={Customer}></Route>
-                <Route path="/settlementManage" component={SettlementManage}></Route>
-                <Route path="/todolist" component={TodoList}></Route>
-                <Route path="/infoDelivey" component={InfoDelivey}></Route>
-                <Route path="/infoDeliveyDetail/:id" component={InfoDeliveyDetail}></Route>
-                <Route path="/infoDeliveyAdd" component={InfoDeliveyAdd}></Route>
-                <Route path="/bsinessAnalysis" component={BsinessAnalysis}></Route>
-                <Route path="/todoDet/:id" component={TodoDet}></Route>
-                <Route path="/todoDetLc/:id" component={TodoDetLc}></Route>
-                <Route path="/todoDetList/:id" component={TodoDetList}></Route>
-                <Route path="/powerTracking" component={PowerTracking}></Route>
-                <Route path="/actualPowerRecord" component={ActualPowerRecord}></Route>
-                <Route path="/spotDeclarationDetDay" component={SpotDeclarationDetDay}></Route>
-                <Route path="/spotDeclarationDetMonth" component={SpotDeclarationDetMonth}></Route>
-                <Route path="/powerTrackingDet" component={PowerTrackingDet}></Route>
-                <Route path="/tradingCenter" component={TradingCenter}></Route>
-                <Route path="/mediumAndLongTermDet" component={MediumAndLongTermDet}></Route>
-                <Route path="/unifiedLoadRegulationDet" component={UnifiedLoadRegulationDet}></Route>
-                <Route path="/provincialNetworkDet" component={ProvincialNetworkDet}></Route>
-                <Route path="/outwardDeliveryPlanDet" component={OutwardDeliveryPlanDet}></Route>
-                {/* 查看图片页面图片 */}
-                <Route path="/imaView" component={ImaView}></Route>
-                <Route component={ErrorPage}></Route>
-              </Switch>
-            </App>
-          </Provider>
+          <App>
+            <Switch>
+              <Route exact path="/" component={Index}></Route>
+              <Route path="/newList/:type" component={NewList}></Route>
+              {/*type  1为公司公告  2为消息提醒  */}
+              <Route path="/newDetaile/:type/:id" component={NewDetaile}></Route>
+              <Route path="/survey" component={Survey}></Route>
+              <Route path="/contractManage" component={ContractManage}></Route>
+              <Route path="/contractDetail/:id" component={ContractDetail}></Route>
+              <Route path="/contractReview/:id" component={ContractReview}></Route>
+              <Route path="/attendanceList" component={AttendanceList}></Route>
+              <Route path="/attendanceAdd/:type" component={AttendanceAdd}></Route>
+              <Route path="/electricityCompany/:type" component={ElectricityCompany}></Route>
+              {/*type  1为电力用户信息  2为发电厂信息  3为合作方信息  4为售电公司信息  */}
+              <Route path="/electricityCompanyDetail/:type/:id" component={HouserNum}></Route>
+              <Route path="/account/:id" component={Account}></Route>
+              <Route path="/customer" component={Customer}></Route>
+              <Route path="/settlementManage" component={SettlementManage}></Route>
+              <Route path="/todolist" component={TodoList}></Route>
+              <Route path="/infoDelivey" component={InfoDelivey}></Route>
+              <Route path="/infoDeliveyDetail/:id" component={InfoDeliveyDetail}></Route>
+              <Route path="/infoDeliveyAdd" component={InfoDeliveyAdd}></Route>
+              <Route path="/bsinessAnalysis" component={BsinessAnalysis}></Route>
+              <Route path="/todoDet/:id" component={TodoDet}></Route>
+              <Route path="/todoDetLc/:id" component={TodoDetLc}></Route>
+              <Route path="/todoDetList/:id" component={TodoDetList}></Route>
+              <Route path="/powerTracking" component={PowerTracking}></Route>
+              <Route path="/actualPowerRecord" component={ActualPowerRecord}></Route>
+              <Route path="/spotDeclarationDetDay" component={SpotDeclarationDetDay}></Route>
+              <Route path="/spotDeclarationDetMonth" component={SpotDeclarationDetMonth}></Route>
+              <Route path="/powerTrackingDet" component={PowerTrackingDet}></Route>
+              <Route path="/tradingCenter" component={TradingCenter}></Route>
+              <Route path="/mediumAndLongTermDet" component={MediumAndLongTermDet}></Route>
+              <Route path="/unifiedLoadRegulationDet" component={UnifiedLoadRegulationDet}></Route>
+              <Route path="/provincialNetworkDet" component={ProvincialNetworkDet}></Route>
+              <Route path="/outwardDeliveryPlanDet" component={OutwardDeliveryPlanDet}></Route>
+              {/* 查看图片页面图片 */}
+              <Route path="/imaView" component={ImaView}></Route>
+              <Route component={ErrorPage}></Route>
+            </Switch>
+          </App>
         </Route>
       </Router>
     )
