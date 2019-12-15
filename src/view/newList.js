@@ -9,10 +9,11 @@ import 'react-bscroll/lib/react-scroll.css';
  * 公司公告列表
  * 消息提醒列表
  */
-export default class NewList extends React.Component {
+class NewList extends React.Component {
   constructor(props) {
     super(props)
     let title = "消息"
+    console.log(props)
     if (this.props.match.params.type === '1') {
       title = '公司公告'
     } else if (this.props.match.params.type === '2') {
@@ -36,9 +37,9 @@ export default class NewList extends React.Component {
 
   componentDidMount() {
     const that = this
-    if(that.state.type === '1'){
+    if (that.state.type === '1') {
       that.getComapnyNotice()
-    }else{
+    } else {
       //消息列表已读消息
       that.getreadyNew()
       //that.getUnreadNew()
@@ -174,7 +175,10 @@ export default class NewList extends React.Component {
             {this.state.noData && <NoData />}
           </div>
         </Scroll>
+
       </div>
     )
   }
 }
+
+export default NewList
