@@ -21,6 +21,10 @@ const api = {
   GetCompanyNoticeList(params){
     return request.post('nuts/crud/find/models_nuts_WebPage' , params)
   },
+  //消息列表  hasHandled=false已读  hasHandled=true 未读
+  getNewListPage(params){
+    return request.get('nuts/crud/list/notHandled_systemMessage' + params)
+  },
   //公司公告详情
   GetCompanyNoticeDetail(params){
     return request.get('internalWeb/findContent' + params)
