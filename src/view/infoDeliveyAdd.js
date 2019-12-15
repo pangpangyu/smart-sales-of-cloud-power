@@ -110,9 +110,13 @@ export default class InfoDeliveyAdd extends React.Component{
   }
 
   handelChange5 = (e) => {
-    let file2 = document.querySelector('#input2').files[0];
+    let file = e.target.files[0]
     let formData = new FormData()
     formData.append('file',file)
+    console.log(formData)
+    api.UploadFile(formData).then(res => {
+
+    })
   }
 
   handelChange6 = (e) => {
