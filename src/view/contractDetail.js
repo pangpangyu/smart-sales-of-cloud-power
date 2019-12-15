@@ -18,7 +18,8 @@ class ContractDetail extends React.Component {
             contractId: this.props.match.params.id,
             contractDetail: [],
             botBtnShow: true,
-            addStatus:false,
+            addStatus: false,
+            docType: "doc",//文档类型 
         }
     }
 
@@ -26,6 +27,7 @@ class ContractDetail extends React.Component {
         const that = this;
         document.documentElement.scrollTop = document.body.scrollTop = 0;
         that.GetContractDetail();
+        // that.GetContractDownloadWord();
 
     }
 
@@ -37,7 +39,7 @@ class ContractDetail extends React.Component {
             templId: 0,
         };
         api.GetContractDetail(params).then(res => {
-            console.log("售电合同详情", res);
+            console.log("售电合同详情1", res);
             if (res.status === 0) {
                 that.setState(() => {
                     return ({
@@ -52,6 +54,77 @@ class ContractDetail extends React.Component {
         })
     }
 
+    //导出word pdf
+
+    //合同Pdf导出
+    GetContractDownloadPDF() {
+
+    }
+
+    handleCheckChanged = e => {
+        console.log(e.target.value)
+        this.setState({
+            docType: e.target.value
+        })
+    }
+
+    handleAdd = e => {
+        this.setState({
+            addStatus: true,
+            docType:"doc"
+        })
+
+    }
+
+    handleCancel = e => {
+        this.setState({
+            addStatus: false
+        })
+    }
+    handleOk = e => {
+        e.preventDefault()
+        const that = this
+        if (that.state.docType == "doc") {
+            console.log("isDoc")
+        } else if (that.state.docType == "pdf") {//pdf
+            console.log("isPdf")
+        }
+        //window.open("http://61.146.164.91:8000/nuts/crud/contract/wordTransForm?contractId=" += 300)
+        // let params = {
+        //     contractId: that.state.contractId,
+        // };
+        // api.GetContractDownloadWord(params).then(res => {
+        //     console.log("world", res);
+        //     if (res.status === 0) {
+        //         that.setState(() => {
+        //             return ({
+        //                 //contractDetail: res.data
+        //             })
+        //         })
+        //     } 
+        // })
+
+        // this.setState({
+        //     addStatus:false
+        // })
+    }
+
+
+
+    //
+    handleTabs = (val) => {
+        const that = this;
+        if (val.id == 0) {
+            that.setState({
+                botBtnShow: true
+            })
+        } else {
+            that.setState({
+                botBtnShow: false
+            })
+        }
+    }
+
 
     render() {
         let t =
@@ -64,29 +137,29 @@ class ContractDetail extends React.Component {
                     </div>
                 </div>
             </div>
-            let mask=
+        let mask =
             <div className="mask">
                 <div className="attedance-dialog">
                     <div className="tit">请选择导出格式</div>
                     <div className="cont">
                         <div className="item">
-                            <img className="img" src={require('../assets/img/img210.png')} alt=""/>
+                            <img className="img" src={require('../assets/img/img210.png')} alt="" />
                             <div className="self-radio">
-                                <input  id="r1" type="radio" value={"qjsq"}  name="attedance" onChange={this.handleCheckChanged} />
+                                <input id="r1" type="radio" value={"doc"} name="attedance" checked={this.state.docType=='doc'} onChange={this.handleCheckChanged} />
                                 <label htmlFor="r1">WORD</label>
                             </div>
                         </div>
                         <div className="item">
-                            <img className="img" src={require('../assets/img/img211.png')} alt=""/>
+                            <img className="img" src={require('../assets/img/img211.png')} alt="" />
                             <div className="self-radio">
-                                <input  id="r2" type="radio" value={"wcsq"} name="attedance" onChange={this.handleCheckChanged} />
+                                <input id="r2" type="radio" value={"pdf"} name="attedance" checked={this.state.docType=='pdf'} onChange={this.handleCheckChanged} />
                                 <label htmlFor="r2">PDF</label>
                             </div>
                         </div>
                     </div>
                     <div className="btn-group">
                         <button onClick={this.handleCancel} className="btn-cancel">取消</button>
-                        <button className="btn-sure">确定</button>
+                        <button className="btn-sure" onClick={this.handleOk}>确定</button>
                     </div>
                 </div>
             </div>
@@ -109,7 +182,10 @@ class ContractDetail extends React.Component {
                     </View>
                     <View>
                         {/*  附件信息  */}
-                        <ContractAttachment />
+                        <ContractAttachment 
+                            content={this.state.contractDetail}
+                            contractId={this.state.contractId}
+                        />
                     </View>
                 </Tabs>
 
@@ -133,35 +209,7 @@ class ContractDetail extends React.Component {
             </Fragment>
         )
     }
-    handleCheckChanged=e=>{
-        console.log(e.target.value)
-    }
 
-    handleAdd=e=>{
-        this.setState({
-            addStatus:true
-        })
-    }
-
-    handleCancel=e=>{
-        this.setState({
-            addStatus:false
-        })
-    }
-
-    //
-    handleTabs = (val) => {
-        const that = this;
-        if (val.id == 0) {
-            that.setState({
-                botBtnShow: true
-            })
-        } else {
-            that.setState({
-                botBtnShow: false
-            })
-        }
-    }
 }
 
 export default ContractDetail;

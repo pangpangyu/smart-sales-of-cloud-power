@@ -104,7 +104,7 @@ const api = {
   },
   //合同word导出
   GetContractDownloadWord(params){
-    return request.get('nuts/crud/contract/wordTransForm'+params)
+    return request.get('nuts/crud/contract/wordTransForm'+{params:params})
   },
   //合同Pdf导出
   GetContractDownloadPDF(params){

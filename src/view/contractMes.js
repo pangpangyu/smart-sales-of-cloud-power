@@ -71,9 +71,9 @@ class ContractMes extends React.Component {
             <Fragment>
                 <div className="contract-mes">
                     <ModuleTit title="合同基本信息" imgurl={img1} >
-                        <Picker data={this.state.pickeroptions} onChange={this.handlePick} cols={1} className="forss">
+                        {/* <Picker data={this.state.pickeroptions} onChange={this.handlePick} cols={1} className="forss">
                             <span className="moudle-tit-control">开发说明<i className="iconfont">&#xe822;</i></span>
-                        </Picker>
+                        </Picker> */}
                     </ModuleTit>
                     <div className="module-list">
                         <ul>
