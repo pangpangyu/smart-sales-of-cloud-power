@@ -1,6 +1,7 @@
 import React from 'react'
 import { DatePickerView, Button } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
+import api from '../api/index';
 
 export default class Test extends React.Component {
     constructor(props) {
@@ -42,6 +43,24 @@ export default class Test extends React.Component {
             time:value
         });
     };
+    componentWillMount(){
+        const that = this
+        that.getWholesaleMarket()
+    }
+    getWholesaleMarket = () => {
+        const that = this
+        let params = {
+            rowNumber:0,
+            pageSize:10,
+            yearMon1:1,
+            yearMon:2019-11
+        }
+        api.getWholesaleMarket(params).then(res => {
+            if (res.status === 0) {
+                
+            }
+        })
+    }
     render() {
         return (
             <div className="settlement_manage">

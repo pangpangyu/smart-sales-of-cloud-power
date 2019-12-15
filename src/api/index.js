@@ -206,6 +206,18 @@ const api = {
   GetBeginAndStopList(params){
     return request.get('/market/trade/start_stop/search'+params)
   },
+  //结算管理批发市场
+  getWholesaleMarket(params){
+    return request.post('/admin/settlement/listOfficialBill?type=0',params)
+  },
+  //结算管理零售市场
+  getRetailMarket(params){
+    return request.post('/admin/settlement/listOfficialBill?type=1',params)
+  },
+  //结算管理零售市场
+  getElectricitySaleCompany(params){
+    return request.get('/admin/settlement/listOfficialBill?type=2'+params)
+  },
 }
 
 export default api
