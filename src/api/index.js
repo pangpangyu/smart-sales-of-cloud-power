@@ -214,7 +214,7 @@ const api = {
   getRetailMarket(params){
     return request.post('/admin/settlement/listOfficialBill?type=1',params)
   },
-  //结算管理零售市场
+  //结算管理售电公司
   getElectricitySaleCompany(params){
     return request.get('/admin/settlement/listOfficialBill?type=2'+params)
   },
