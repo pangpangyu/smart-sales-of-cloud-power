@@ -45,31 +45,26 @@ export default class Todolist extends React.Component {
 				detail.adminBureau = res.data.adminBureau.value || '' //工商管理局
 				detail.adminRegion = res.data['adminRegion.id'].value ? res.data['adminRegion.id'].options.filter(v => v.value === res.data['adminRegion.id'].value)[0].text : '' //行政区域
 				detail.companyStat = res.data['companyStat'].value ? res.data['companyStat'].options.filter(v => v.value === res.data['companyStat'].value)[0].text : '' //状态
-				// detail.telephone = res.data.telephone.value || '' //电话
-				// detail.companyStat = res.data['companyStat'].value ? res.data['companyStat'].options.filter(v => v.value === res.data['companyStat'].value)[0].text : '' //状态
-				// detail.marketTime = res.data.marketTime.value || '' // 入市日期
-				// detail.delistingTime = res.data.delistingTime.value || '' //退市时间
-				// detail.address = res.data['adminRegion.id'].value ? res.data['adminRegion.id'].options.filter(v => v.value === res.data['adminRegion.id'].value)[0].text : '' //地理区域
-				// detail.businessLicense = res.data['businessLicense.id'].url || '' //营业执照
-				// detail.businessRegisterAddress = res.data.businessRegisterAddress.value || '' //企业注册地址
-				// detail.businessScope = res.data.businessScope.value || '' //业务范围
-				// detail.clientType = res.data['clientType.id'].value ? res.data['clientType.id'].options.filter(v => v.value === res.data['clientType.id'].value)[0].text : '' //用户类别
-				// detail.code = res.data.code.value //代码
-				// detail.depositAccountName = res.data.depositAccountName.value || '' //存款帐户名
-				// detail.depositBank = res.data.depositBank.value || '' //存款银行
-				// detail.electricityAddress = res.data['electricityType.id'].value ? res.data['electricityType.id'].options.filter(v => v.value === res.data['electricityType.id'].value)[0].text : '' //用电类别
-				// detail.enterpriseNature = res.data['enterpriseNature.id'].value ? res.data['enterpriseNature.id'].options.filter(v => v.value === res.data['enterpriseNature.id'].value)[0].text : '' //企业性质
-				// detail.establishTime = res.data.establishTime.value || '' //成立时间
-				// detail.fax = res.data.fax.value || '' //传真
-				// detail.id = res.data.id.value
-				// detail.income = res.data.income.value || '' //收入
-				// detail.industryCategory = res.data['industryCategory.id'].value ? res.data['industryCategory.id'].options.filter(v => v.value === res.data['industryCategory.id'].value)[0].text : '' || '' //工业类别
-				// detail.legalPersonName = res.data.legalPersonName.value || '' //法人姓名
-				// detail.legalRepresentative = res.data.legalRepresentative.value || '' //法定代表人
-				// detail.legalRepresentativeLink = res.data.legalRepresentativeLink.value || '' //法人代表联系方式
-				// detail.maxSupplyVoltage = res.data.maxSupplyVoltage.value || '' //最大供电电压
-				// detail.tradeType = res.data['tradeType.id'].value ? res.data['tradeType.id'].options.filter(v => v.value === res.data['tradeType.id'].value)[0].text : '' //交易类型
-				// detail.socialCreditNumber = res.data.socialCreditNumber.value || '' //统一社会信用代码
+				detail.conglomerate = res.data['conglomerate.id'].value ? res.data['conglomerate.id'].options.filter(v => v.value === res.data['conglomerate.id'].value)[0].text : ''//所属集团
+				detail.contactPersonMobile = res.data.contactPersonMobile.value //手机
+				detail.contactPersonName = res.data.contactPersonName.value || '' // 联系人
+				detail.depositAccountName = res.data.depositAccountName.value || '' //开户名称
+				detail.depositAccountNo = res.data.depositAccountNo.value //账号
+				detail.depositBank = res.data.depositBank.value || '' //开户银行
+				detail.dispatcher = res.data['dispatcher.id'].value ? res.data['dispatcher.id'].options.filter(v => v.value === res.data['dispatcher.id'].value)[0].text : ''//调度关系
+				detail.enterpriseLocation = res.data.enterpriseLocation.value || '' //详细地址
+				detail.enterpriseNature = res.data['enterpriseNature.id'].value ? res.data['enterpriseNature.id'].options.filter(v => v.value === res.data['enterpriseNature.id'].value)[0].text : '' //企业性质
+				detail.equityStr = res.data.equityStr.value //股权结构
+				detail.fax = res.data.fax.value || '' //传真
+				detail.legalPersonId = res.data.legalPersonId.value || '' //证件号
+				detail.legalPersonName = res.data.legalPersonName.value || '' //法人姓名
+				detail.name = res.data.name.value || '' //机组名称
+				detail.organizationCode = res.data.organizationCode.value//组织机构代码
+				detail.postalcode = res.data.postalcode.value || '' //邮政编码
+				detail.prefecturePowerGrid = res.data['prefecturePowerGrid.id'].value ? res.data['prefecturePowerGrid.id'].options.filter(v => v.value === res.data['prefecturePowerGrid.id'].value)[0].text : '' //所属地级电网公司
+				detail.provincialPowerGrid = res.data['provincialPowerGrid.id'].value ? res.data['provincialPowerGrid.id'].options.filter(v => v.value === res.data['provincialPowerGrid.id'].value)[0].text : '' //所属省级电网公司
+				detail.shortName = res.data.shortName.value//电厂简称
+				detail.telephone = res.data.telephone.value || '' //电话
 				that.setState({
 					detail: detail
 				})
@@ -87,43 +82,43 @@ export default class Todolist extends React.Component {
 						<ul>
 							<li className="item">
 								<span className="l">电厂名称</span>
-								<span className="r">信息技术有限公司</span>
+								<span className="r">{this.state.detail.name}</span>
 							</li>
 							<li className="item">
 								<span className="l">电厂简称</span>
-								<span className="r">公司</span>
+								<span className="r">{this.state.detail.shortName}</span>
 							</li>
 							<li className="item">
 								<span className="l">所属集团</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.conglomerate}</span>
 							</li>
 							<li className="item">
 								<span className="l">企业性质</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.enterpriseNature}</span>
 							</li>
 							<li className="item">
 								<span className="l">所属省级电网公司</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.provincialPowerGrid}</span>
 							</li>
 							<li className="item">
 								<span className="l">所属地级电网公司</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.prefecturePowerGrid}</span>
 							</li>
 							<li className="item">
 								<span className="l">调度关系</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.dispatcher}</span>
 							</li>
 							<li className="item">
 								<span className="l">状态</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.companyStat}</span>
 							</li>
 							<li className="item">
 								<span className="l">行政区域</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.adminRegion}</span>
 							</li>
 							<li className="item">
 								<span className="l">股权结构</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.equityStr}</span>
 							</li>
 						</ul>
 						<div className="module-space"></div>
@@ -131,27 +126,27 @@ export default class Todolist extends React.Component {
 						<ul>
 							<li className="item">
 								<span className="l">联系人</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.contactPersonName}</span>
 							</li>
 							<li className="item">
 								<span className="l">联系电话</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.telephone}</span>
 							</li>
 							<li className="item">
 								<span className="l">手机</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.contactPersonMobile}</span>
 							</li>
 							<li className="item">
 								<span className="l">传真</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.fax}</span>
 							</li>
 							<li className="item">
 								<span className="l">详细地址</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.enterpriseLocation}</span>
 							</li>
 							<li className="item">
 								<span className="l">邮政编码</span>
-								<span className="r"></span>
+								<span className="r">{this.state.detail.postalcode}</span>
 							</li>
 						</ul>
 					</div>
