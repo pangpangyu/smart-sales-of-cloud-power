@@ -236,14 +236,15 @@ export default class Todolist extends React.Component {
 		return (
 			<div className="contract-mes">
 				<div className="module-list">
-					<ul>
+					{this.state.HouseholdInfoList.length > 0 && <ul>
 						{this.state.HouseholdInfoList.map(item => {
 							return <li className="item" key={item.id}>
 								<span className="l">{item.marketChargeNumber}</span>
 								<span className="r"><label>{item.powerUnit}</label><label>{item.electricUnit}</label></span>
 							</li>
 						})}
-					</ul>
+					</ul>}
+					{ this.state.HouseholdInfoList.length === 0 && <NoData/> }
 				</div>
 			</div>
 		)
@@ -395,12 +396,12 @@ export default class Todolist extends React.Component {
 				<Header title='电力用户' back={true} search={false}></Header>
 				<div className="housenum">
 					<div className="power_user">
-						<h3>信息技术有限公司</h3>
+						<h3>{getDataQuery('companyName')}</h3>
 						<div className="list">
 							<ul>
-								<li><span>地址：</span>山西省太原市XXX区</li>
-								<li><span>联系人：</span>张三</li>
-								<li><span>联系手机：</span>13169779500</li>
+								<li><span>地址：</span>{getDataQuery('address')}</li>
+								<li><span>联系人：</span>{getDataQuery('user')}</li>
+								<li><span>联系手机：</span>{getDataQuery('tel')}</li>
 							</ul>
 							<div className="clear"></div>
 						</div>

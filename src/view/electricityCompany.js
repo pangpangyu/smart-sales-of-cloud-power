@@ -213,7 +213,7 @@ export default class ElectricityCompany extends React.Component {
         {this.state.companyList && this.state.companyList.map((item, index) => {
           return <div key={index}>
             <div className="electricityCompany-item">
-              <Link to={`/electricitySaleCompany?id=${item.id}`}>
+              <Link to={`/electricitySaleCompany?id=${item.id}&companyName=${item.name}&user=${item.followUpPerson}&tel=${item.contactPersonMobile}&address=${item.adminRegion}`}>
                 <div className="info">
                   <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
                   <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
@@ -244,7 +244,7 @@ export default class ElectricityCompany extends React.Component {
         {this.state.companyList && this.state.companyList.map((item, index) => {
           return <div key={index}>
             <div className="electricityCompany-item">
-              <Link to={`/powerGenerationEnterprise?id=${item.id}&participantId=${item.pid}`}>
+              <Link to={`/powerGenerationEnterprise?id=${item.id}&participantId=${item.pid}&companyName=${item.name}&user=${item.followUpPerson}&tel=${item.contactPersonMobile}&address=${item.adminRegion}`}>
                 <div className="info">
                   <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
                   <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
@@ -306,7 +306,7 @@ export default class ElectricityCompany extends React.Component {
         {this.state.companyList && this.state.companyList.map((item, index) => {
           return <div key={index}>
             <div className="electricityCompany-item">
-              <Link to={`/detailsPartners?id=${item.id}&participantId=${item.participantId}`}>
+              <Link to={`/detailsPartners?id=${item.id}&participantId=${item.participantId}&companyName=${item.name}&user=${item.followUpPerson}&tel=${item.contactPersonMobile}&address=${item.adminRegion}`}>
                 <div className="info">
                   <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
                   <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
@@ -337,7 +337,7 @@ export default class ElectricityCompany extends React.Component {
         {this.state.companyList && this.state.companyList.map((item, index) => {
           return <div key={index}>
             <div className="electricityCompany-item">
-              <Link to={`/powerUserDetails?id=${item.id}&participantId=${item.participantId}`}>
+              <Link to={`/powerUserDetails?id=${item.id}&participantId=${item.participantId}&companyName=${item.name}&user=${item.followUpPerson}&tel=${item.contactPersonMobile}&address=${item.adminRegion}`}>
                 <div className="info">
                   <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
                   <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
