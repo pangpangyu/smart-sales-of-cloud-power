@@ -71,11 +71,13 @@ const api = {
   },
   //机组成本
   GetPowerPlantCost(params){
-    return request.get('admin/company/crud/getPowerGeneratorTableData'+params)
+    //admin/company/crud/getPowerGeneratorTableData
+    return request.get('admin/company/crud/getUnitCostTableData'+params)
   },
   //交易信息
   GetPowerPlantTransactionInfo(params){
-    return request.get('admin/company/crud/getUnitCostTableData'+params)
+    //admin/company/crud/getUnitCostTableData
+    return request.get('admin/company/crud/getTradeInfoTableData'+params)
   },
   //合作方客户列表
   GetPartnersList(params){
