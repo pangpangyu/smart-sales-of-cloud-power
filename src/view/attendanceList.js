@@ -202,7 +202,7 @@ class AttendanceList extends React.Component {
                                 return (
                                     <Fragment key={index}>
                                         <li className="item" >
-                                            <Link to={`/attendanceAdd/${item.leaveCode}/${item.id}`}>
+                                            <Link to={`/attendanceAdd/${item.leaveType}/${item.id}/${item.status}`}>
                                                 <div className="tit">{item.systemUserName}</div>
                                                 <div className="mes">
                                                     <span className="s1">请假类型：</span>
