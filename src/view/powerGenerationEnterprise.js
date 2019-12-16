@@ -23,12 +23,18 @@ export default class Todolist extends React.Component {
 			id: `${getDataQuery('id')}`,
 			participantId: `${getDataQuery('participantId')}`,
 			isNotData: false,
-			detail:{}
+			detail: {},
+			powerPlantTransactionInfo: [],
+			notpowerPlantTransactionInfo: false,
+			powerPlantCost:[],
+			notPowerPlantCost:false
 		}
 	}
 	componentWillMount() {
 		const that = this
 		that.getPowerPlantDetail()
+		that.getPowerPlantCost()
+		that.getPowerPlantTransactionInfo()
 	}
 	componentDidMount() {
 		document.documentElement.scrollTop = document.body.scrollTop = 0;
@@ -40,7 +46,7 @@ export default class Todolist extends React.Component {
 		api.GetPowerPlantDetail(params).then(res => {
 			if (res.status === 0) {
 				let detail = {}
-				detail.province = res.data.address.value ? res.data.address.options.filter(v => v.value === res.data.address.value)[0].text : ''
+				//detail.province = res.data.address.value ? res.data.address.options.filter(v => v.value === res.data.address.value)[0].text : ''
 				detail.address = res.data['address.id'].value ? res.data['address.id'].options.filter(v => v.value === res.data['address.id'].value)[0].text : '' //通讯地址
 				detail.adminBureau = res.data.adminBureau.value || '' //工商管理局
 				detail.adminRegion = res.data['adminRegion.id'].value ? res.data['adminRegion.id'].options.filter(v => v.value === res.data['adminRegion.id'].value)[0].text : '' //行政区域
@@ -154,83 +160,113 @@ export default class Todolist extends React.Component {
 			</div>
 		)
 	}
+
+	//获取机组成本数据
+	getPowerPlantCost = () => {
+		let params = `?participantId=${this.state.participantId}`
+		api.GetPowerPlantCost(params).then(res => {
+			if(res){
+				if(res.status === 0){
+					this.setState({
+						powerPlantCost:res.data.rows,
+						notPowerPlantCost:res.data.rows.length === 0 ? true : false
+					})
+				}
+			}else{
+				this.setState({
+					notPowerPlantCost:true
+				})
+			}
+		})
+	}
 	//机组成本
 	unitCost = () => {
 		return (
 			<div className="module-list">
 				<ul>
-					<li className="item">
-						<span className="l">机组1</span>
-						<span className="r"><label>机组启动类型</label><label>启动时间</label></span>
-					</li>
-					<li className="item">
-						<span className="l">机组2</span>
-						<span className="r"><label>机组启动类型</label><label>启动时间</label></span>
-					</li>
+					{ !this.state.notPowerPlantCost && this.state.powerPlantCost.map((item,index) => {
+						return 	<li className="item" key={index}>
+											<span className="l">{item.generatorName}</span>
+					<span className="r"><label>{item.startType}</label><label>{item.startDate}</label></span>
+										</li>
+					}) }
+					{ this.state.notPowerPlantCost && <NoData/> }
 				</ul>
 			</div>
 		)
+	}
+
+	//获取机组交易信息数据
+	getPowerPlantTransactionInfo = () => {
+		let params = `?participantId=${this.state.participantId}`
+		api.GetPowerPlantTransactionInfo(params).then(res => {
+			if (res) {
+				if (res.status === 0) {
+					this.setState({
+						powerPlantTransactionInfo: res.data.rows,
+						notpowerPlantTransactionInfo: res.data.rows === 0 ? true : false
+					})
+				}
+			}else{
+				this.setState({
+					notpowerPlantTransactionInfo:true
+				})
+			}
+		})
 	}
 	//交易信息
 	transactionInformation = () => {
 		return (
 			<div>
-				<div className="transactioninfo">
-					<div className="l">
-						<h3>时间</h3>
-						<ul>
-							<li>2019-01</li>
-							<li>2019-02</li>
-							<li>2019-03</li>
-							<li>2019-04</li>
-							<li>2019-05</li>
-						</ul>
-					</div>
-					<div className="r">
-						<div style={{ overflowX: "auto" }}>
-							<div className="list">
-								<ul>
-									<li>基数电量</li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
-							</div>
-							<div className="list">
-								<ul>
-									<li>省内电量</li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
-							</div>
-							<div className="list">
-								<ul>
-									<li>省外电量</li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
-							</div>
-							<div className="list">
-								<ul>
-									<li>议价期期望</li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
+				{!this.state.notpowerPlantTransactionInfo && <div>
+					<div className="transactioninfo">
+						<div className="l">
+							<h3>时间</h3>
+							<ul>
+								{this.state.powerPlantTransactionInfo.map((item,index) => {
+									return <li key={index}>{item.dateTime}</li>
+								})}
+							</ul>
+						</div>
+						<div className="r">
+							<div style={{ overflowX: "auto" }}>
+								<div className="list">
+									<ul>
+										<li>基数电量</li>
+										{this.state.powerPlantTransactionInfo.map((item,index) => {
+											return <li key={index}>{item.baseEle}</li>
+										})}
+									</ul>
+								</div>
+								<div className="list">
+									<ul>
+										<li>省内电量</li>
+										{this.state.powerPlantTransactionInfo.map((item,index) => {
+											return <li key={index}>{item.inEle}</li>
+										})}
+									</ul>
+								</div>
+								<div className="list">
+									<ul>
+										<li>省外电量</li>
+										{this.state.powerPlantTransactionInfo.map((item,index) => {
+											return <li key={index}>{item.outEle}</li>
+										})}
+									</ul>
+								</div>
+								<div className="list">
+									<ul>
+										<li>议价期期望</li>
+										{this.state.powerPlantTransactionInfo.map((item,index) => {
+											return <li key={index}>{item.expectation}</li>
+										})}
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>}
+				{this.state.notpowerPlantTransactionInfo && <NoData/>}
 			</div>
 		)
 	}
