@@ -67,7 +67,7 @@ export default class Test extends React.Component {
         return (
             <div className="settlement_manage">
                 <div className="selection_date">
-        <p>选择日期<span onClick={() => this.setState({ open: true })}>{this.state.year}</span></p>
+                <p>选择日期<span onClick={() => this.setState({ open: true })}>{this.state.year}</span></p>
                 </div>
                 {this.state.list && this.state.list.map((item, index) => {
                     return <div className="tab" key={item.id}>
