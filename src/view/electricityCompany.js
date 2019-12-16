@@ -34,7 +34,7 @@ export default class ElectricityCompany extends React.Component {
       total: 0,
       noData: false,
       pageSize: 10,
-      keyword:''
+      keyword: ''
     }
   }
 
@@ -52,7 +52,7 @@ export default class ElectricityCompany extends React.Component {
     }
   }
   //获取电力用户数据
-  getPowerUserList = () => {
+  getPowerUserList = (resolve) => {
     const that = this
     let params = {
       "rowNumber": that.state.pageIndex,
@@ -82,11 +82,12 @@ export default class ElectricityCompany extends React.Component {
           total: res.data.rowCount,
           noData: res.data.rowCount === 0 ? true : false
         })
+        resolve && resolve()
       }
     })
   }
   //获取发电企业数据
-  getElectricityGenerationList = () => {
+  getElectricityGenerationList = (resolve) => {
     const that = this
     let params = { "rowNumber": that.state.pageIndex, "pageSize": 10, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
     api.GetPowerPlantList(params).then(res => {
@@ -101,11 +102,12 @@ export default class ElectricityCompany extends React.Component {
           total: res.data.rowCount,
           noData: res.data.rowCount === 0 ? true : false
         })
+        resolve && resolve()
       }
     })
   }
   //获取合作方数据
-  getPartnersList = () => {
+  getPartnersList = (resolve) => {
     const that = this
     let params = { "rowNumber": that.state.pageIndex, "pageSize": 10, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
     api.GetPartnersList(params).then(res => {
@@ -118,11 +120,12 @@ export default class ElectricityCompany extends React.Component {
           total: res.data.rowCount,
           noData: res.data.rowCount === 0 ? true : false
         })
+        resolve && resolve()
       }
     })
   }
   //获取售电公司客户列表数据
-  getSellingElectricityList = (fn) => {
+  getSellingElectricityList = (resolve) => {
     const that = this
     let params = { "rowNumber": this.state.pageIndex, "pageSize": 10, "conditions": [{ "operator": "%", "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone", "value": this.state.keyword }] }
     api.GetSellingElectricityList(params).then(res => {
@@ -135,7 +138,7 @@ export default class ElectricityCompany extends React.Component {
           total: res.data.rowCount,
           noData: res.data.rowCount === 0 ? true : false
         })
-        fn && fn()
+        resolve && resolve()
       }
     })
   }
@@ -162,14 +165,14 @@ export default class ElectricityCompany extends React.Component {
       }
     })
   }
-  
+
   getSearchTxt = (e) => {
     e.preventDefault();
     // 搜索事件
     this.setState({
-      pageIndex:0,
-      companyList:[]
-    },() => {
+      pageIndex: 0,
+      companyList: []
+    }, () => {
       if (this.state.type === '1') {
         this.getPowerUserList()
       } else if (this.state.type === '2') {
@@ -184,7 +187,7 @@ export default class ElectricityCompany extends React.Component {
 
   handelChange = (e) => {
     this.setState({
-      keyword:e.target.value
+      keyword: e.target.value
     })
   }
 
@@ -208,21 +211,21 @@ export default class ElectricityCompany extends React.Component {
           </div>
         </div>
         {this.state.companyList && this.state.companyList.map((item, index) => {
-            return <div key={index}>
-              <div className="electricityCompany-item">
-                <Link to={`/electricitySaleCompany?id=${item.id}`}>
-                  <div className="info">
-                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
-                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                  </div>
-                  <div className="address">
-                    {item.adminRegion}
-                  </div>
-                </Link>
-              </div>
-              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          return <div key={index}>
+            <div className="electricityCompany-item">
+              <Link to={`/electricitySaleCompany?id=${item.id}`}>
+                <div className="info">
+                  <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                  <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                </div>
+                <div className="address">
+                  {item.adminRegion}
+                </div>
+              </Link>
             </div>
-          })}
+            <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          </div>
+        })}
       </div>
     )
   }
@@ -239,23 +242,47 @@ export default class ElectricityCompany extends React.Component {
         </div>
         <div style={{ height: '10px' }}></div>
         {this.state.companyList && this.state.companyList.map((item, index) => {
-            return <div key={index}>
-              <div className="electricityCompany-item">
-                <Link to={`/powerGenerationEnterprise?id=${item.id}&participantId=${item.pid}`}>
-                  <div className="info">
-                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
-                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                  </div>
-                  <div className="address">
-                    {item.adminRegion}
-                  </div>
-                </Link>
-              </div>
-              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          return <div key={index}>
+            <div className="electricityCompany-item">
+              <Link to={`/powerGenerationEnterprise?id=${item.id}&participantId=${item.pid}`}>
+                <div className="info">
+                  <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                  <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                </div>
+                <div className="address">
+                  {item.adminRegion}
+                </div>
+              </Link>
             </div>
-          })}
+            <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          </div>
+        })}
       </div>
     )
+  }
+  getSearchData = (val) => {
+    this.setState({
+      keyword: val
+    })
+  }
+  getSearchTxt = (e) => {
+    e.preventDefault();
+    //搜索事件
+    const that = this
+    that.setState({
+      pageIndex:0,
+      companyList:[]
+    },()=>{
+      if (that.state.type === '1') {
+        that.getPowerUserList()
+      } else if (that.state.type === '2') {
+        that.getElectricityGenerationList()
+      } else if (that.state.type === '3') {
+        that.getPartnersList()
+      } else if (that.state.type === '4') {
+        that.getSellingElectricityList()
+      }
+    })
   }
   //合作方
   partners = () => {
@@ -271,25 +298,27 @@ export default class ElectricityCompany extends React.Component {
         <div style={{ height: '10px' }}></div>
         <div className="electricityCompany-search">
           <div className="search-input">
-            <input type="search" placeholder="搜客户名称" />
+            <form onSubmit={(e) => this.getSearchTxt(e)}>
+              <input type="search" placeholder="搜公告标题、内容、介绍" onChange={(e) => this.getSearchData(e.target.value)} />
+            </form>
           </div>
         </div>
         {this.state.companyList && this.state.companyList.map((item, index) => {
-            return <div key={index}>
-              <div className="electricityCompany-item">
-                <Link to={`/detailsPartners?id=${item.id}&participantId=${item.participantId}`}>
-                  <div className="info">
-                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
-                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                  </div>
-                  <div className="address">
-                    {item.adminRegion}
-                  </div>
-                </Link>
-              </div>
-              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          return <div key={index}>
+            <div className="electricityCompany-item">
+              <Link to={`/detailsPartners?id=${item.id}&participantId=${item.participantId}`}>
+                <div className="info">
+                  <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                  <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                </div>
+                <div className="address">
+                  {item.adminRegion}
+                </div>
+              </Link>
             </div>
-          })}
+            <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          </div>
+        })}
       </div>
     )
   }
@@ -306,21 +335,21 @@ export default class ElectricityCompany extends React.Component {
         </div>
         <div style={{ height: '10px' }}></div>
         {this.state.companyList && this.state.companyList.map((item, index) => {
-            return <div key={index}>
-              <div className="electricityCompany-item">
-                <Link to={`/powerUserDetails?id=${item.id}&participantId=${item.participantId}`}>
-                  <div className="info">
-                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
-                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                  </div>
-                  <div className="address">
-                    {item.adminRegion}
-                  </div>
-                </Link>
-              </div>
-              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          return <div key={index}>
+            <div className="electricityCompany-item">
+              <Link to={`/powerUserDetails?id=${item.id}&participantId=${item.participantId}`}>
+                <div className="info">
+                  <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                  <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                </div>
+                <div className="address">
+                  {item.adminRegion}
+                </div>
+              </Link>
             </div>
-          })}
+            <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+          </div>
+        })}
       </div>
     )
   }
@@ -333,7 +362,7 @@ export default class ElectricityCompany extends React.Component {
           ref='scroll'
           pullUpLoad
           pullUpLoadMoreData={this.loadMoreData}
-          isPullUpTipHide={false}
+          isPullUpTipHide={this.state.pageIndex === 0}
           bounce={false}
           click={true}>
           <div style={{ height: '45px' }}></div>
@@ -341,7 +370,7 @@ export default class ElectricityCompany extends React.Component {
           {this.state.type === '2' && this.electricityGeneration()}
           {this.state.type === '3' && this.partners()}
           {this.state.type === '4' && this.sellingElectricity()}
-          
+
         </Scroll>
         {this.state.noData && <NoData />}
       </div>
