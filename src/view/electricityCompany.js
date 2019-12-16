@@ -207,6 +207,22 @@ export default class ElectricityCompany extends React.Component {
             </form>
           </div>
         </div>
+        {this.state.companyList && this.state.companyList.map((item, index) => {
+            return <div key={index}>
+              <div className="electricityCompany-item">
+                <Link to={`/electricitySaleCompany?id=${item.id}`}>
+                  <div className="info">
+                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                  </div>
+                  <div className="address">
+                    {item.adminRegion}
+                  </div>
+                </Link>
+              </div>
+              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+            </div>
+          })}
       </div>
     )
   }
@@ -222,6 +238,22 @@ export default class ElectricityCompany extends React.Component {
           </div>
         </div>
         <div style={{ height: '10px' }}></div>
+        {this.state.companyList && this.state.companyList.map((item, index) => {
+            return <div key={index}>
+              <div className="electricityCompany-item">
+                <Link to={`/powerGenerationEnterprise?id=${item.id}&participantId=${item.pid}`}>
+                  <div className="info">
+                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                  </div>
+                  <div className="address">
+                    {item.adminRegion}
+                  </div>
+                </Link>
+              </div>
+              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+            </div>
+          })}
       </div>
     )
   }
@@ -242,6 +274,22 @@ export default class ElectricityCompany extends React.Component {
             <input type="search" placeholder="搜客户名称" />
           </div>
         </div>
+        {this.state.companyList && this.state.companyList.map((item, index) => {
+            return <div key={index}>
+              <div className="electricityCompany-item">
+                <Link to={`/detailsPartners?id=${item.id}&participantId=${item.participantId}`}>
+                  <div className="info">
+                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                  </div>
+                  <div className="address">
+                    {item.adminRegion}
+                  </div>
+                </Link>
+              </div>
+              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+            </div>
+          })}
       </div>
     )
   }
@@ -257,6 +305,22 @@ export default class ElectricityCompany extends React.Component {
           </div>
         </div>
         <div style={{ height: '10px' }}></div>
+        {this.state.companyList && this.state.companyList.map((item, index) => {
+            return <div key={index}>
+              <div className="electricityCompany-item">
+                <Link to={`/powerUserDetails?id=${item.id}&participantId=${item.participantId}`}>
+                  <div className="info">
+                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
+                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
+                  </div>
+                  <div className="address">
+                    {item.adminRegion}
+                  </div>
+                </Link>
+              </div>
+              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
+            </div>
+          })}
       </div>
     )
   }
@@ -277,22 +341,7 @@ export default class ElectricityCompany extends React.Component {
           {this.state.type === '2' && this.electricityGeneration()}
           {this.state.type === '3' && this.partners()}
           {this.state.type === '4' && this.sellingElectricity()}
-          {this.state.companyList && this.state.companyList.map((item, index) => {
-            return <div key={index}>
-              <div className="electricityCompany-item">
-                <Link to={`/electricityCompanyDetail/${this.state.type}/${item.id}?participantId=${item.participantId}`}>
-                  <div className="info">
-                    <p style={{ fontSize: '15px', color: '#2b2a30', lineHeight: '18px' }}>{item.name}</p>
-                    <p style={{ fontSize: '11px', color: '#94c0f4', paddingTop: '12px' }}><span style={{ marginRight: '20px' }}>{item.followUpPerson || '-'}</span>{item.contactPersonMobile}</p>
-                  </div>
-                  <div className="address">
-                    {item.adminRegion}
-                  </div>
-                </Link>
-              </div>
-              <div style={{ height: '10px', background: '#f0f1f3' }}></div>
-            </div>
-          })}
+          
         </Scroll>
         {this.state.noData && <NoData />}
       </div>

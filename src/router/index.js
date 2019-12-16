@@ -34,6 +34,10 @@ import MediumAndLongTermDet from '../view/mediumAndLongTermDet';
 import UnifiedLoadRegulationDet from '../view/unifiedLoadRegulationDet';
 import ProvincialNetworkDet from '../view/provincialNetworkDet';
 import OutwardDeliveryPlanDet from '../view/outwardDeliveryPlanDet';
+import PowerUserDetails from '../view/powerUserDetails';
+import PowerGenerationEnterprise from '../view/powerGenerationEnterprise';
+import DetailsPartners from '../view/detailsPartners';
+import ElectricitySaleCompany from '../view/electricitySaleCompany';
 import ImaView from '../view/imgView';
 import ErrorPage from '../view/ErrorPage';
 
@@ -79,6 +83,10 @@ export default class ROUTER extends React.Component {
               <Route path="/unifiedLoadRegulationDet" component={UnifiedLoadRegulationDet}></Route>
               <Route path="/provincialNetworkDet" component={ProvincialNetworkDet}></Route>
               <Route path="/outwardDeliveryPlanDet" component={OutwardDeliveryPlanDet}></Route>
+              <Route path="/powerUserDetails" component={PowerUserDetails}></Route>
+              <Route path="/powerGenerationEnterprise" component={PowerGenerationEnterprise}></Route>
+              <Route path="/detailsPartners" component={DetailsPartners}></Route>
+              <Route path="/electricitySaleCompany" component={ElectricitySaleCompany}></Route>
               {/* 查看图片页面图片 */}
               <Route path="/imaView" component={ImaView}></Route>
               <Route component={ErrorPage}></Route>
