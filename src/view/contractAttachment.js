@@ -39,7 +39,7 @@ class ContractAttachment extends React.Component {
                     url = this.state.contract.contractAttachedFile ? this.state.contract.contractAttachedFile.url : ''
                     break;
                 case 2://营业执照附件
-                    url = this.state.contractMesAll.businessLicense ? this.state.contractMesAll.businessLicense[0].url : ''
+                    url = this.state.contractMesAll.businessLicense ? (this.state.contractMesAll.businessLicense[0]&&this.state.contractMesAll.businessLicense[0].url)||'' : ''
                     break;
                 case 3://甲方授权委托书
                     url = this.state.contract.contractAttachedFile3 ? this.state.contract.contractAttachedFile3.url : ''
@@ -51,7 +51,7 @@ class ContractAttachment extends React.Component {
                     url = this.state.contract.openPermit ? this.state.contract.openPermit.url : ''
                     break;
                 case 6://其它附件
-                    url = this.state.contractMesAll.contractFileMetas ? this.state.contractMesAll.contractFileMetas[0].url : ''
+                    url = this.state.contractMesAll.contractFileMetas ? (this.state.contractMesAll.contractFileMetas[0]&&this.state.contractMesAll.contractFileMetas[0].url)||"" : ''
                     break;
                 default:
                     break;
@@ -60,7 +60,7 @@ class ContractAttachment extends React.Component {
             if(url){
                 window.open(url);
             }else{
-                Toast.info("暂无文件可查看")
+                Toast.info("暂无文件可查看");
             }
         }
     }
@@ -79,7 +79,7 @@ class ContractAttachment extends React.Component {
 
                         <li className="item">
                             <span className="l">营业执照附件</span>
-                            <span className="m">{this.state.contractMesAll.businessLicense ? this.state.contractMesAll.businessLicense[0].name : '--'}</span>
+                            <span className="m">{this.state.contractMesAll.businessLicense ? (this.state.contractMesAll.businessLicense[0]&&this.state.contractMesAll.businessLicense[0].name)||'--' : '--'}</span>
                             <span className="r" onClick={this.toSee(2)}>点击查看</span>
                         </li>
                         <li className="item">
@@ -99,7 +99,7 @@ class ContractAttachment extends React.Component {
                         </li>
                         <li className="item">
                             <span className="l">其它附件</span>
-                            <span className="m">{this.state.contractMesAll.contractFileMetas ? this.state.contractMesAll.contractFileMetas[0].name : '--'}</span>
+                            <span className="m">{this.state.contractMesAll.contractFileMetas ? (this.state.contractMesAll.contractFileMetas[0]&&this.state.contractMesAll.contractFileMetas[0].name)||'--' : '--'}</span>
                             <span className="r" onClick={this.toSee(6)}>点击查看</span>
                         </li>
 

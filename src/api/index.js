@@ -144,11 +144,11 @@ const api = {
   },
   //请假类型
   GetleaveTypeOptions(params){
-    return request.get('admin/attendance/getleaveTypeOptions'+params)
+    return request.get('admin/attendance/getleaveTypeOptions',params)
   },
   //请假审批状态
   GetAuditTypeOptions(params){
-    return request.get('admin/attendance/getAuditTypeOptions'+params)
+    return request.get('admin/attendance/getAuditTypeOptions',params)
   },
   //保存请假
   GetSaveLeave(params){

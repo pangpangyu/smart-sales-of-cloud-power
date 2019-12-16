@@ -15,40 +15,138 @@ class AttendanceList extends React.Component {
         super(props)
         this.state = {
             searchInput: '',
-            attendanceList: [
+            dataList: [
                 {
-                    type: 1,
-                    name: '请假',
-                    kind: '事假',
-                    time: '2019-01-01~2019-01-02',
-                    reason: '心情不好',
-                    state: '未提交'
-                },
-                {
-                    type: 1,
-                    name: '请假',
-                    kind: '事假',
-                    time: '2019-01-01~2019-01-02',
-                    reason: '不好心情不好心情不好心情不好心情不好',
-                    state: '未提交'
-                },
+                    createDateTime: "2019-12-06 10:18:22",
+                    creator: "APP测试",
+                    days: 1,
+                    department: "总经理办公室",
+                    endTime: "2019-12-29 00:00:00",
+                    hours: 0,
+                    id: 21,
+                    index: 1,
+                    leaveCode: "LV-LV-20191206-00002",
+                    leaveReason: "1111",
+                    leaveType: "事假",
+                    position: "总经理",
+                    startTime: "2019-12-28 00:00:00",
+                    status: "未提交",
+                    systemUserName: "APP测试",
+                    usercode: "111129",
+                }
             ],
             addStatus: false,
+
             pageIndex: 0,
-            total: 0,
-            noData: false,
             pageSize: 10,
+            total: 0,
+
+            isNoData: false,
         }
     }
 
     componentWillMount() {
+        const that = this;
+        document.documentElement.scrollTop = document.body.scrollTop = 0;
+        that.queryDataList(1)//考勤列表
+        that.GetAuditTypeOptions();//请假审批状态
+    } 
+
+    // 获取考勤列表
+    queryDataList = (page,loadmoreResolve) => {
         const that = this
-    }  
+        console.log('11',this.state.searchInput)
+        let params = {
+            "rowNumber": this.state.pageIndex,
+            "conditions":[{"name":"name","operator":"%","value":this.state.searchInput}],
+            "pageSize": 10
+        }
+        api.GetLeaveTableData(params).then(res => {
+            console.log('考勤列表:', res)
+            if (res.status === 0) {
+                that.setState(preState => {
+                    return ({
+                        dataList: [...preState.dataList, ...res.data.rows||[]],
+                        total: res.data.rowCount,
+                        isNoData: res.data.rowCount === 0 ? true : false,
+                        pageIndex: page + 1
+                    })
+                })
+                loadmoreResolve && loadmoreResolve();
+            }
+
+        })
+    }
+
+    // 搜索
+    handleSearchInput=e=>{
+        // console.log(e.target.value);
+        this.setState({
+            searchInput:e.target.value
+        })
+    }
+    handleSearchSubmit=e=>{
+        //console.log(this.state.searchInput);
+        this.setState({
+            dataList:[]
+        })
+        this.queryDataList(1);
+    }
+
+
 
   //加载下一页
   loadMoreData = () => {
+    return new Promise((resolve, reject) => {
+        if (this.state.dataList.length < this.state.total) {
+            this.queryDataList(this.state.pageIndex,resolve);
+        } else {
+          resolve()
+        }
+      })
 
   }
+
+
+    handleCheckChanged = e => {
+        console.log(e.target.value)
+    }
+
+    handleAdd = e => {
+        this.setState({
+            addStatus: true
+        })
+
+    }
+
+    handleCancel = e => {
+        this.setState({
+            addStatus: false
+        })
+
+    }
+    
+    //请假审批状态
+    GetAuditTypeOptions=()=>{
+        const that = this
+        let params = {}
+        api.GetAuditTypeOptions(params).then(res => {
+            console.log('请假审批状态:', res)
+            if (res.status === 0) {
+                // that.setState(preState => {
+                //     return ({
+                //         dataList: [...preState.dataList, ...res.data.rows||[]],
+                //         total: res.data.rowCount,
+                //         isNoData: res.data.rowCount === 0 ? true : false,
+                //         pageIndex: page + 1
+                //     })
+                // })
+            }
+
+        })
+    }
+
+    // 
     render() {
         let mask =
             <div className="mask">
@@ -58,7 +156,7 @@ class AttendanceList extends React.Component {
                         <div className="item">
                             <img className="img" src={require('../assets/img/img105.png')} alt="" />
                             <div className="self-radio">
-                                <input id="r1" type="radio" value={"qjsq"} name="attedance" onChange={this.handleCheckChanged} />
+                                <input id="r1" type="radio" value={"qjsq"} name="attedance"  onChange={this.handleCheckChanged} />
                                 <label htmlFor="r1">请假申请</label>
                             </div>
                         </div>
@@ -90,6 +188,7 @@ class AttendanceList extends React.Component {
                 </Header>
                 <Search title={'搜考勤类型、请假类型、事由、状态'} onInput={this.handleSearchInput} onSubmit={this.handleSearchSubmit}></Search>
                 <div className="scroll-wrap">
+                {this.state.isNoData ? <NoData /> :
                 <Scroll 
                     ref='scroll'
                     pullUpLoad
@@ -99,25 +198,25 @@ class AttendanceList extends React.Component {
                     click={true}>
                     <ul className="attendance-list">
                         {
-                            this.state.attendanceList.map((item, index) => {
+                            this.state.dataList.map((item, index) => {
                                 return (
                                     <Fragment key={index}>
                                         <li className="item" >
-                                            <Link to={`/attendanceAdd/${item.type}`}>
-                                                <div className="tit">{item.name}</div>
+                                            <Link to={`/attendanceAdd/${item.leaveCode}/${item.id}`}>
+                                                <div className="tit">{item.systemUserName}</div>
                                                 <div className="mes">
                                                     <span className="s1">请假类型：</span>
-                                                    <span className="s2">{item.kind}</span>
+                                                    <span className="s2">{item.leaveType}</span>
                                                 </div>
                                                 <div className="mes">
                                                     <span className="s1">请假时间：</span>
-                                                    <span className="s2">{item.time}</span>
+                                                    <span className="s2">{item.createDateTime}</span>
                                                 </div>
                                                 <div className="mes">
                                                     <span className="s1">请假事由：</span>
-                                                    <span className="s2">{item.reason}</span>
+                                                    <span className="s2">{item.leaveReason}</span>
                                                 </div>
-                                                <button className="btn-statue">{item.state}</button>
+                                                <button className="btn-statue">{item.status}</button>
                                             </Link>
                                         </li>
                                         <div className="module-space"></div>
@@ -126,7 +225,7 @@ class AttendanceList extends React.Component {
                             })
                         }
                     </ul>
-                </Scroll>
+                </Scroll>}
                 </div>
 
                 {this.state.addStatus ? mask : ''}
@@ -134,34 +233,6 @@ class AttendanceList extends React.Component {
         )
     }
 
-    handleSearchInput = e => {
-        // console.log(e.target.value);
-        this.setState({
-            searchInput: e.target.value
-        })
-    }
-    handleSearchSubmit = e => {
-        //console.log(this.state.searchInput);
-        this.setState({
-            attendanceList: []
-        })
-    }
-
-    handleCheckChanged = e => {
-        console.log(e.target.value)
-    }
-
-    handleAdd = e => {
-        this.setState({
-            addStatus: true
-        })
-    }
-
-    handleCancel = e => {
-        this.setState({
-            addStatus: false
-        })
-    }
 }
 
 export default AttendanceList;

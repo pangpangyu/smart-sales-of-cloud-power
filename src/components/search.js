@@ -17,7 +17,7 @@ class Search extends React.Component {
 
     render() {
         return (
-            <div className="search-wrap">
+            <div className="search-wrap" style={this.props.style}>
                 <i className="iconfont iconsousuo"></i>
                 <form action="#" onSubmit={this.onSubmit} >
                     <input onInput={this.props.onInput}  type="search" placeholder={this.props.title} />

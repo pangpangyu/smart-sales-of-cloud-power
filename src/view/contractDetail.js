@@ -133,7 +133,7 @@ class ContractDetail extends React.Component {
                 <div className="footer-btn-group">
                     <div className="btn-group">
                         <Link to={`/contractReview/${this.state.contractId}`}>预览</Link>
-                        <Link onClick={this.handleAdd}>导出</Link>
+                        <Link to='#' onClick={this.handleAdd}>导出</Link>
                     </div>
                 </div>
             </div>
