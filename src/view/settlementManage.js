@@ -195,6 +195,11 @@ export default class Test extends React.Component {
                         WholesaleMarketList: arr,
                         WholesaleMarketListTotal:arr2
                     })
+                }else{
+                    this.setState({
+                        WholesaleMarketList:res.data.rows,
+                        WholesaleMarketListTotal:{}
+                    })
                 }
             }
         })
@@ -228,12 +233,12 @@ export default class Test extends React.Component {
                             <div className="list">
                                 <h3><i className='iconfont iconjiage'></i><span>批发市场小计</span></h3>
                                 <ul className='active'>
-                                    <li><p>批发市场电费：<span>{this.state.WholesaleMarketListTotal.settleFee}</span>元</p></li>
-                                    <li><p>偏差考核电费：<span>{this.state.WholesaleMarketListTotal.devAssFee}</span>元</p></li>
-                                    <li><p>成交电量：<span>{this.state.WholesaleMarketListTotal.contractPower}</span>千千瓦时</p></li>
-                                    <li><p>结算电量：<span>{this.state.WholesaleMarketListTotal.realPower}</span>千千瓦时</p></li>
-                                    <li><p>成交均价：<span>{this.state.WholesaleMarketListTotal.contractPrice}</span>千千瓦时</p></li>
-                                    <li><p>偏差考核电量：<span>{this.state.WholesaleMarketListTotal.devAssPower}</span>千千瓦时</p></li>
+                                    <li><p>批发市场电费：<span>{this.state.WholesaleMarketListTotal.settleFee ? this.state.WholesaleMarketListTotal.settleFee : 0}</span>元</p></li>
+                                    <li><p>偏差考核电费：<span>{this.state.WholesaleMarketListTotal.devAssFee ? this.state.WholesaleMarketListTotal.devAssFee : 0}</span>元</p></li>
+                                    <li><p>成交电量：<span>{this.state.WholesaleMarketListTotal.contractPower ? this.state.WholesaleMarketListTotal.contractPower : 0}</span>千千瓦时</p></li>
+                                    <li><p>结算电量：<span>{this.state.WholesaleMarketListTotal.realPower ? this.state.WholesaleMarketListTotal.realPower : 0}</span>千千瓦时</p></li>
+                                    <li><p>成交均价：<span>{this.state.WholesaleMarketListTotal.contractPrice ? this.state.WholesaleMarketListTotal.contractPrice : 0}</span>千千瓦时</p></li>
+                                    <li><p>偏差考核电量：<span>{this.state.WholesaleMarketListTotal.devAssPower ? this.state.WholesaleMarketListTotal.devAssPower : 0}</span>千千瓦时</p></li>
                                 </ul>
                             </div>
                         </div>
