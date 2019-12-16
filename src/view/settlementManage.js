@@ -23,9 +23,9 @@ export default class Test extends React.Component {
             WholesaleMarketListTotal:{},
             WholesaleMarketOpen: false,
             WholesaleMarketTime: new Date(),
-            WholesaleMarketMonth: '',
-            WholesaleMarketFullYear: '',
-            WholesaleMarketYear: '2019-08',
+            WholesaleMarketMonth: (new Date().getMonth() + 1),
+            WholesaleMarketFullYear: new Date().getFullYear(),
+            WholesaleMarketYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
             retailMarketList: [
                 {
                     id: 1,
@@ -150,9 +150,9 @@ export default class Test extends React.Component {
             ],
             retailMarketOpen: false,
             retailMarketTime: new Date(),
-            retailMarketMonth: '',
-            retailMarketFullYear: '',
-            retailMarketYear: '2019-08',
+            retailMarketMonth: (new Date().getMonth() + 1),
+            retailMarketFullYear: new Date().getFullYear(),
+            retailMarketYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
             settlementElectricityList: [
                 { id: 1, title: '国网山西电力公司', n1: '1000', n2: '20', n3: '1000', icon: 'iconqiyejibenxinxi' },
                 { id: 2, title: '山西地方电力有限公司', n1: '1000', n2: '20', n3: '1000', icon: 'iconqiyejibenxinxi' },
@@ -160,9 +160,9 @@ export default class Test extends React.Component {
             ],
             settlementElectricityOpen: false,
             settlementElectricityTime: new Date(),
-            settlementElectricityMonth: '',
-            settlementElectricityFullYear: '',
-            settlementElectricityYear: '2019-08',
+            settlementElectricityMonth: (new Date().getMonth() + 1),
+            settlementElectricityFullYear: new Date().getFullYear(),
+            settlementElectricityYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
         }
     }
     componentWillMount() {
