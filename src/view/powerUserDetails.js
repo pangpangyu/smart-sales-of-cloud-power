@@ -38,18 +38,23 @@ export default class Todolist extends React.Component {
 	}
 	getDate = () => {
 		let obj = this.state.yearPowerData.filter(v => v.yearDate==this.state.fullYear)[0]
-		this.setState({
-			year: this.state.fullYear,
-			open: false,
-			yearPowerTab:this.handleYearPowerData(obj),
-			electricTotal:obj.total
-		})
+		if(obj){
+			this.setState({
+				year: this.state.fullYear,
+				open: false,
+				yearPowerTab:this.handleYearPowerData(obj),
+				electricTotal:obj.total
+			})
+		}else{
+			this.setState({
+				open: false
+			})
+		}
 	}
 	onChange = (value) => {
-		let fullYear = new Date(value).getFullYear()
-		let month = new Date(value).getMonth() + 1
+		console.log(value)
 		this.setState({
-			fullYear: fullYear,
+			fullYear: value[0],
 			time: value
 		});
 	};
