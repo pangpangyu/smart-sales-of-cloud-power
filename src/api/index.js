@@ -142,7 +142,7 @@ const api = {
   },
   //获取考勤部门信息
   GetDefaultPersonalInfo(params){
-    return request.get('admin/attendance/getDefaultPersonalInfo'+params)
+    return request.get('admin/attendance/getDefaultPersonalInfo',{params:params})
   },
   //请假类型
   GetleaveTypeOptions(params){

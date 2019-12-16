@@ -43,6 +43,9 @@ export default class AttendanceAdd extends React.Component {
     console.log(this.props.match.params)
     let title = '请假';
     this.state = {
+      leaveId:this.props.match.params.id,//
+      leaveTypeParams:this.props.match.params.leaveType,
+      status:this.props.match.params.status,
       title: title,
       dayopen: false,
       dayopen2: false,
@@ -55,7 +58,6 @@ export default class AttendanceAdd extends React.Component {
       leaveTypeLabel: "",
 
       leaveTypeOptions: [],//请假类型
-      leaveId:this.props.match.params.id,//
       isLock:false,
 
 
@@ -124,6 +126,7 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     document.documentElement.scrollTop = document.body.scrollTop = 0;
     that.GetleaveTypeOptions();//获取请假类型
+    that.GetDefaultPersonalInfo();//获取考勤部门信息
   }
 
 
@@ -145,6 +148,34 @@ export default class AttendanceAdd extends React.Component {
 
     })
   }
+
+  //获取考勤部门信息
+  GetDefaultPersonalInfo=()=>{
+    const that=this;
+    let params={
+      id:that.state.leaveId,
+      leaveType:that.state.leaveTypeParams
+    };
+    api.GetDefaultPersonalInfo(params).then(res => {
+      console.log('获取考勤部门信息:', res);
+      if (res.status === 0) {
+        let newform=that.state.form;
+        newform.qjNum=res.data.workDetailId;//单号
+        newform.leaveReason=res.data.leaveReason;//理由
+        newform.containDays=res.data.days;//天数
+        newform.startTime=res.data.startTime;//结束时间
+        newform.endTime=res.data.endTime;//结束时间
+        //类型
+        //状态
+        that.setState({
+          form:newform
+        })
+      }
+
+    })
+  }
+
+
   //保存请假
   GetSaveLeave = () => {
     const that = this;
