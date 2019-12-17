@@ -137,12 +137,7 @@ class AttendanceList extends React.Component {
         if(this.state.applyType==''){
             Toast.info("请选择");
         }else{
-            this.props.history.push({
-                pathname: "/attendanceAdd/",
-                state: {
-                 applyType:"11",
-                },
-            })
+            window.location.href="/attendanceAdd?applyType="+this.state.applyType
         }
     }
     

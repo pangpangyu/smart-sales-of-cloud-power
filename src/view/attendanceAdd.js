@@ -57,7 +57,7 @@ export default class AttendanceAdd extends React.Component {
       startDateTime: now,
       endDateTime: now,
       leaveType: "",
-      leaveTypeLabel: this.props.match.params.type,
+      leaveTypeLabel:`${getDataQuery('type')}`,
 
       leaveTypeOptions: [],//请假类型
       isLock:false,
@@ -76,10 +76,34 @@ export default class AttendanceAdd extends React.Component {
         type: "",
 
         qjNum:"",
-        status:""
+        status:"",
+        days:""
       }
     }
 
+  }
+
+  //重置数据
+  resetForm=()=>{
+
+    this.setState({
+      form:Object.assign({
+        departmentName: "",
+        positionName: "",
+        systemUserName: "",
+        startTime: null,
+        endTime: null,
+        containDays: "",
+        containHours: "",
+        leaveReason: "",
+        type: "",
+
+        qjNum:"",
+        status:"",
+        days:""
+      }),
+      leaveTypeLabel:""
+    })
   }
 
   //请假类型选择
@@ -128,7 +152,17 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     document.documentElement.scrollTop = document.body.scrollTop = 0;
     that.GetleaveTypeOptions();//获取请假类型
-    that.GetDefaultPersonalInfo();//获取考勤部门信息
+    if(that.state.leaveId!="null"){
+      that.GetDefaultPersonalInfo();//获取考勤部门信息
+    }
+
+    //请假申请
+    if(that.state.applyType=="qjsq"){
+      that.resetForm();
+      that.setState({
+        status:"申请"
+      })
+    }
   }
 
 
@@ -177,6 +211,7 @@ export default class AttendanceAdd extends React.Component {
         that.setState({
           form:newform
         })
+        
       }
 
     })
@@ -188,9 +223,12 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     let params = { 
       "metaFormData": { 
-        "userinfo.departmentName": that.state.form.departmentName, 
-        "userinfo.positionName":that.state.form.positionName, 
-        "userinfo.systemUserName": that.state.form.systemUserName, 
+        // "userinfo.departmentName": that.state.form.departmentName, 
+        // "userinfo.positionName":that.state.form.positionName, 
+        // "userinfo.systemUserName": that.state.form.systemUserName, 
+        "userinfo.departmentName": "总经理办公室", 
+        "userinfo.positionName":"总经理", 
+        "userinfo.systemUserName": "APP测试", 
         "startTime": that.state.form.startTime, 
         "endTime": that.state.form.endTime, 
         "days": that.state.form.days, 
@@ -386,7 +424,7 @@ export default class AttendanceAdd extends React.Component {
         </div>
 
         {this.state.status=="未提交"?footerBtn:''}
-        
+        {this.state.status=="申请"?footerBtn:''}
       </div>
     )
   }
