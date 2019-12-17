@@ -2,19 +2,36 @@ import React from 'react'
 import Header from '../components/header';
 import echarts from 'echarts';
 import api from '../api/index';
+import { PickerView } from 'antd-mobile';
 /**
  * 经营分析
  */
 
-export default class BsinessAnalysis extends React.Component{
-  constructor(props){
+export default class BsinessAnalysis extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
-      year:'2019'
+      year: '2019',
+      value:['2019'],
+      openPickerView:false,
+      yearList: [
+        {label:'2010',value:'2010'},
+        {label:'2011',value:'2011'},
+        {label:'2012',value:'2012'},
+        {label:'2013',value:'2013'},
+        {label:'2014',value:'2014'},
+        {label:'2015',value:'2015'},
+        {label:'2016',value:'2016'},
+        {label:'2017',value:'2017'},
+        {label:'2018',value:'2018'},
+        {label:'2019',value:'2019'},
+        {label:'2020',value:'2020'},
+        {label:'2021',value:'2021'}
+      ]
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getChatMapData1()
     //this.getChatMapData2()
     this.getChatMapData3()
@@ -24,12 +41,12 @@ export default class BsinessAnalysis extends React.Component{
 
   getChatMapData1 = () => {
     let params = {
-      year:this.state.year
+      year: this.state.year
     }
     let data = {
-      data1:[],
-      data2:[],
-      names:[]
+      data1: [],
+      data2: [],
+      names: []
     }
     let data2 = {
       "data1": [],
@@ -39,19 +56,19 @@ export default class BsinessAnalysis extends React.Component{
       "names": []
     }
     api.GetElecData(params).then(res => {
-      if(res.status === 0){
+      if (res.status === 0) {
         //图表1数据处理开始
         res.data.tradeCompareList[0].map(item => {
-          if(item !== '--' && item !== '0' && item !== 0){
+          if (item !== '--' && item !== '0' && item !== 0) {
             data.data2.push(item)
-          }else{
+          } else {
             data.data2.push(0)
           }
         })
         res.data.tradeCompareList[1].map(item => {
-          if(item !== '--' && item !== '0' && item !== 0){
+          if (item !== '--' && item !== '0' && item !== 0) {
             data.data1.push(item)
-          }else{
+          } else {
             data.data1.push(0)
           }
         })
@@ -63,9 +80,9 @@ export default class BsinessAnalysis extends React.Component{
         data2.data4 = res.data.tradeWayLists[3]
         data2.data5 = res.data.tradeWayLists[4]
         //图表2数据处理结束
-        for(let i=0;i<12;i++){
-          data.names.push(i+1+'月')
-          data2.names.push(i+1+'月')
+        for (let i = 0; i < 12; i++) {
+          data.names.push(i + 1 + '月')
+          data2.names.push(i + 1 + '月')
         }
         console.log(data2)
         this.paintingMap1(data)
@@ -76,7 +93,7 @@ export default class BsinessAnalysis extends React.Component{
   paintingMap1 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart1'));
     let option = {
-      color:['#288dfd','#f9a30c'],
+      color: ['#288dfd', '#f9a30c'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -97,7 +114,7 @@ export default class BsinessAnalysis extends React.Component{
       calculable: true,
       legend: {
         data: ['交易电量', '实际用电量'],
-        formatter:function (name) {
+        formatter: function (name) {
           return name;
         }
       },
@@ -146,8 +163,8 @@ export default class BsinessAnalysis extends React.Component{
           name: '交易电量',
           type: 'bar',
           data: data.data2,
-          barWidth:8,
-          barGap:0,
+          barWidth: 8,
+          barGap: 0,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -161,7 +178,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '实际用电量',
           type: 'bar',
           data: data.data1,
-          barWidth:8,
+          barWidth: 8,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -182,7 +199,7 @@ export default class BsinessAnalysis extends React.Component{
   paintingMap2 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart2'));
     let option = {
-      color:['#288dfd','#f9a30c','#6dcfce','#ddc275'],
+      color: ['#288dfd', '#f9a30c', '#6dcfce', '#ddc275'],
       grid: {
         top: '20%',
         left: '3%',
@@ -202,8 +219,8 @@ export default class BsinessAnalysis extends React.Component{
       },
       calculable: true,
       legend: {
-        data: ['年度双边', '年度撮合', '月度双边','月度撮合', '月度挂牌'],
-        formatter:function (name) {
+        data: ['年度双边', '年度撮合', '月度双边', '月度撮合', '月度挂牌'],
+        formatter: function (name) {
           return name;
         }
       },
@@ -259,8 +276,8 @@ export default class BsinessAnalysis extends React.Component{
           name: '年度双边',
           type: 'bar',
           data: data.data2,
-          barWidth:4,
-          barGap:0,
+          barWidth: 4,
+          barGap: 0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -274,7 +291,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '年度撮合',
           type: 'bar',
           data: data.data1,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -288,7 +305,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '月度双边',
           type: 'bar',
           data: data.data3,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -302,7 +319,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '月度撮合',
           type: 'bar',
           data: data.data4,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -316,7 +333,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '月度挂牌',
           type: 'bar',
           data: data.data5,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -334,7 +351,7 @@ export default class BsinessAnalysis extends React.Component{
 
   getChatMapData3 = () => {
     let params = {
-      year:this.state.year
+      year: this.state.year
     }
     let data = {
       dataX: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -343,16 +360,16 @@ export default class BsinessAnalysis extends React.Component{
     }
     api.GetSouDianCompanyAnalysis(params).then(res => {
       res.pictureData2.deviationPower.map(item => {
-        if(item){
+        if (item) {
           data.data2.push(item)
-        }else{
+        } else {
           data.data2.push(0)
         }
       })
       res.pictureData2.deviationRate.map(item => {
-        if(item){
+        if (item) {
           data.data1.push(item)
-        }else{
+        } else {
           data.data1.push(0)
         }
       })
@@ -382,7 +399,7 @@ export default class BsinessAnalysis extends React.Component{
             color: '#000'
           }
         },
-        formatter:function(params){
+        formatter: function (params) {
           var result = ''
           params.forEach(function (item) {
             result += item.seriesName + ':' + item.value + "</br>"
@@ -500,7 +517,7 @@ export default class BsinessAnalysis extends React.Component{
 
   getChatMapData4 = () => {
     let params = {
-      year:this.state.year
+      year: this.state.year
     }
     let data = {
       "data1": [],
@@ -511,21 +528,21 @@ export default class BsinessAnalysis extends React.Component{
       "names": []
     }
     api.GetBuyPowerCostAnalysis(params).then(res => {
-      data.data1 = res.data.costList[0] 
-      data.data2 = res.data.costList[1] 
-      data.data3 = res.data.costList[2] 
-      data.data4 = res.data.costList[3] 
-      data.data5 = res.data.costList[4] 
-      for(let i=0;i<12;i++){
-        data.names.push(i+1+'月')
+      data.data1 = res.data.costList[0]
+      data.data2 = res.data.costList[1]
+      data.data3 = res.data.costList[2]
+      data.data4 = res.data.costList[3]
+      data.data5 = res.data.costList[4]
+      for (let i = 0; i < 12; i++) {
+        data.names.push(i + 1 + '月')
       }
       this.paintingMap4(data)
     })
   }
-  paintingMap4 =(data) => {
+  paintingMap4 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart4'));
     let option = {
-      color:['#288dfd','#f9a30c','#6dcfce','#3594fd','#f9a40f'],
+      color: ['#288dfd', '#f9a30c', '#6dcfce', '#3594fd', '#f9a40f'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -538,8 +555,8 @@ export default class BsinessAnalysis extends React.Component{
       },
       calculable: true,
       legend: {
-        data: ['售电成本', '购电成本','成本差', '成本差环比（%）','成本差同比（%）'],
-        formatter:function (name) {
+        data: ['售电成本', '购电成本', '成本差', '成本差环比（%）', '成本差同比（%）'],
+        formatter: function (name) {
           return name;
         }
       },
@@ -595,8 +612,8 @@ export default class BsinessAnalysis extends React.Component{
           name: '售电成本',
           type: 'bar',
           data: data.data2,
-          barWidth:4,
-          barGap:0,
+          barWidth: 4,
+          barGap: 0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -610,7 +627,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '购电成本',
           type: 'bar',
           data: data.data1,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -624,7 +641,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '成本差',
           type: 'bar',
           data: data.data3,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -652,15 +669,8 @@ export default class BsinessAnalysis extends React.Component{
 
   getChatMapData5 = () => {
     let params = {
-      year:this.state.year
+      year: this.state.year
     }
-    api.GetRevenueAnalysis(params).then(res => {
-
-    })
-    this.paintingMap5()
-  }
-  paintingMap5 =() => {
-    var myChart = echarts.init(document.getElementById('myChart5'));
     let data = {
       "data1": [],
       "data2": [],
@@ -668,21 +678,38 @@ export default class BsinessAnalysis extends React.Component{
       "data4": [],
       "data5": [],
       "data6": [],
-      "delta": [],
       "names": []
     }
-    for(let i=0;i<12;i++){
-      data.data1.push( parseInt(Math.random() * 50))
-      data.data2.push( parseInt(Math.random() * 50))
-      data.data3.push( parseInt(Math.random() * 50))
-      data.data4.push( parseInt(Math.random() * 80))
-      data.data5.push( parseInt(Math.random() * 80))
-      data.data6.push( parseInt(Math.random() * 80))
-      data.delta.push(i)
-      data.names.push(i+1+'月')
-    }
+    api.GetRevenueAnalysis(params).then(res => {
+      data.data1 = res.pictureData1.buyPowerCostlist
+      data.data2 = res.pictureData1.salePowerCostlist
+      data.data3 = res.pictureData1.agencyFeelist
+      data.data4 = res.pictureData1.monthlyProfitlist
+      // data.data5 = res.pictureData1.monthOnMonth
+      res.pictureData1.monthOnMonth.map(item => {
+        if (item) {
+          data.data5.push(item)
+        } else {
+          data.data5.push(0)
+        }
+      })
+      res.pictureData1.yearOnYear.map(item => {
+        if (item) {
+          data.data6.push(item)
+        } else {
+          data.data6.push(0)
+        }
+      })
+      for (let i = 0; i < 12; i++) {
+        data.names.push(i + 1 + '月')
+      }
+      this.paintingMap5(data)
+    })
+  }
+  paintingMap5 = (data) => {
+    var myChart = echarts.init(document.getElementById('myChart5'));
     let option = {
-      color:['#288dfd','#f9a30c','#6dcfce','#ddc275','#288dfd','#f9a40f'],
+      color: ['#288dfd', '#f9a30c', '#6dcfce', '#ddc275', '#288dfd', '#f9a40f'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -695,8 +722,8 @@ export default class BsinessAnalysis extends React.Component{
       },
       calculable: true,
       legend: {
-        data: ['售电成本', '购电成本','转让代理费','总收益', '总收益环比（%）','总收益同比（%）'],
-        formatter:function (name) {
+        data: ['售电成本', '购电成本', '转让代理费', '总收益', '总收益环比（%）', '总收益同比（%）'],
+        formatter: function (name) {
           return name;
         }
       },
@@ -787,8 +814,8 @@ export default class BsinessAnalysis extends React.Component{
           name: '售电成本',
           type: 'bar',
           data: data.data2,
-          barWidth:4,
-          barGap:0,
+          barWidth: 4,
+          barGap: 0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -802,7 +829,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '购电成本',
           type: 'bar',
           data: data.data1,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -816,7 +843,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '转让代理费',
           type: 'bar',
           data: data.data3,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -830,7 +857,7 @@ export default class BsinessAnalysis extends React.Component{
           name: '总收益',
           type: 'bar',
           data: data.data4,
-          barWidth:4,
+          barWidth: 4,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -856,47 +883,83 @@ export default class BsinessAnalysis extends React.Component{
     myChart.setOption(option);
   }
 
-  render(){
-    return(
-      <div style={{minHeight:'100vh',background:'#fff'}} className="bsiness-analysis">
-        <Header title={'经营分析'} back={true}/>
+  onChange = (e) => {
+    console.log(e)
+    this.setState({
+      value:e
+    })
+  }
+
+  sure = () => {
+    if(this.state.value.length > 0){
+      console.log(this.state.value[0])
+      this.setState({
+        year:this.state.value[0],
+        openPickerView:false
+      },()=>{
+        this.getChatMapData1()
+        this.getChatMapData3()
+        this.getChatMapData4()
+        this.getChatMapData5()
+      })
+    }
+  }
+
+  render() {
+    return (
+      <div style={{ minHeight: '100vh', background: '#fff' }} className="bsiness-analysis">
+        <Header title={'经营分析'} back={true} />
         <div className="time-chooes">
           <div className="l">选择时间</div>
-          <div className="r">2019<i className="iconfont iconxiala1"></i></div>
+          <div className="r" onClick={() => this.setState({openPickerView:true})}>{this.state.year}<i className="iconfont iconxiala1"></i></div>
         </div>
-        <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont icondianliang"></i>电量对比分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont icondianliang"></i>电量对比分析</div>
           <div className="f2-map-view">
-            <div id="myChart1" style={{height:'240px'}}></div>
+            <div id="myChart1" style={{ height: '240px' }}></div>
           </div>
         </div>
-        <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconjiaoyizhongxin"></i>交易电量分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconjiaoyizhongxin"></i>交易电量分析</div>
           <div className="f2-map-view">
-            <div id="myChart2" style={{height:'320px'}}></div>
+            <div id="myChart2" style={{ height: '320px' }}></div>
           </div>
         </div>
-        <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconjingyingfenxix"></i>偏差电量分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconjingyingfenxix"></i>偏差电量分析</div>
           <div className="f2-map-view">
-            <div id="myChart3" style={{height:'320px'}}></div>
+            <div id="myChart3" style={{ height: '320px' }}></div>
           </div>
         </div>
-        <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconjiage"></i>购电成本分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconjiage"></i>购电成本分析</div>
           <div className="f2-map-view">
-            <div id="myChart4" style={{height:'320px'}}></div>
+            <div id="myChart4" style={{ height: '320px' }}></div>
           </div>
         </div>
-        <div style={{height:'10px',background:'#f0f1f3'}}></div>
+        <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconshouyi"></i>收益分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconshouyi"></i>收益分析</div>
           <div className="f2-map-view">
-            <div id="myChart5" style={{height:'320px'}}></div>
+            <div id="myChart5" style={{ height: '320px' }}></div>
+          </div>
+        </div>
+        <div className={this.state.openPickerView ? 'year-model on' : 'year-model'}>
+          <div className="year-model-view">
+            <PickerView
+              data={this.state.yearList}
+              cascade={false}
+              value={this.state.value}
+              onChange={this.onChange}
+            />
+            <div className="btn">
+              <button onClick={() => this.setState({openPickerView:false})}>取消</button>
+              <button onClick={this.sure}>确定</button>
+            </div>
           </div>
         </div>
       </div>

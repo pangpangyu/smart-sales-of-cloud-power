@@ -7,13 +7,13 @@ request.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-
 request.defaults.timeout = 60000
 request.defaults.withCredentials = true
 request.defaults.crossDomain = true
-var loading = false
+var loading = 1
 request.interceptors.request.use(
   config => {
-    if(!loading){
-      Toast.loading('Loading...',0);
-      loading = true
+    if(loading === 1){
+      Toast.loading('Loading...',0)
     }
+    loading++
     if(config.url === 'nuts/file/upload'){
       config.headers['Content-Type'] = 'multipart/form-data'
     }
@@ -27,8 +27,10 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   response => {
-    Toast.hide()
-    loading = false
+    loading--
+    if(loading === 1){
+      Toast.hide()
+    }
     let data = response.data
     return data
   },
