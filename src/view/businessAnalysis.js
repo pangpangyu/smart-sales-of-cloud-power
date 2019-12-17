@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/header';
 import echarts from 'echarts';
+import api from '../api/index';
 /**
  * 经营分析
  */
@@ -9,35 +10,71 @@ export default class BsinessAnalysis extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      
+      year:'2019'
     }
   }
 
   componentDidMount(){
     this.getChatMapData1()
-    this.getChatMapData2()
+    //this.getChatMapData2()
     this.getChatMapData3()
     this.getChatMapData4()
     this.getChatMapData5()
   }
 
   getChatMapData1 = () => {
-    this.paintingMap1()
-  }
-  paintingMap1 = () => {
-    var myChart = echarts.init(document.getElementById('myChart1'));
+    let params = {
+      year:this.state.year
+    }
     let data = {
+      data1:[],
+      data2:[],
+      names:[]
+    }
+    let data2 = {
       "data1": [],
       "data2": [],
-      "delta": [],
+      "data3": [],
+      "data4": [],
       "names": []
     }
-    for(let i=0;i<12;i++){
-      data.data1.push( parseInt(Math.random() * 100))
-      data.data2.push( parseInt(Math.random() * 200))
-      data.delta.push(i)
-      data.names.push(i+1+'月')
-    }
+    api.GetElecData(params).then(res => {
+      if(res.status === 0){
+        //图表1数据处理开始
+        res.data.tradeCompareList[0].map(item => {
+          if(item !== '--' && item !== '0' && item !== 0){
+            data.data2.push(item)
+          }else{
+            data.data2.push(0)
+          }
+        })
+        res.data.tradeCompareList[1].map(item => {
+          if(item !== '--' && item !== '0' && item !== 0){
+            data.data1.push(item)
+          }else{
+            data.data1.push(0)
+          }
+        })
+        //图表1数据处理结束
+        //图表2数据处理开始
+        data2.data1 = res.data.tradeWayLists[1]
+        data2.data2 = res.data.tradeWayLists[0]
+        data2.data3 = res.data.tradeWayLists[2]
+        data2.data4 = res.data.tradeWayLists[3]
+        data2.data5 = res.data.tradeWayLists[4]
+        //图表2数据处理结束
+        for(let i=0;i<12;i++){
+          data.names.push(i+1+'月')
+          data2.names.push(i+1+'月')
+        }
+        console.log(data2)
+        this.paintingMap1(data)
+        this.paintingMap2(data2)
+      }
+    })
+  }
+  paintingMap1 = (data) => {
+    var myChart = echarts.init(document.getElementById('myChart1'));
     let option = {
       color:['#288dfd','#f9a30c'],
       tooltip: {
@@ -50,19 +87,19 @@ export default class BsinessAnalysis extends React.Component{
           }
         }
       },
+      grid: {
+        top: '15%',
+        left: '5%',
+        right: '8%',
+        bottom: '10%',
+        containLabel: true
+      },
       calculable: true,
       legend: {
         data: ['交易电量', '实际用电量'],
         formatter:function (name) {
           return name;
         }
-      },
-      grid: {
-        top: '15%',
-        left: '5%',
-        right: '8%',
-        bottom: '3%',
-        containLabel: true
       },
       xAxis: [
         {
@@ -136,33 +173,23 @@ export default class BsinessAnalysis extends React.Component{
         }
       ]
     };
-
     myChart.setOption(option);
   }
 
   getChatMapData2 = () => {
     this.paintingMap2()
   }
-  paintingMap2 = () => {
+  paintingMap2 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart2'));
-    let data = {
-      "data1": [],
-      "data2": [],
-      "data3": [],
-      "data4": [],
-      "delta": [],
-      "names": []
-    }
-    for(let i=0;i<12;i++){
-      data.data1.push( parseInt(Math.random() * 100))
-      data.data2.push( parseInt(Math.random() * 200))
-      data.data3.push( parseInt(Math.random() * 50))
-      data.data4.push( parseInt(Math.random() * 80))
-      data.delta.push(i)
-      data.names.push(i+1+'月')
-    }
     let option = {
       color:['#288dfd','#f9a30c','#6dcfce','#ddc275'],
+      grid: {
+        top: '20%',
+        left: '3%',
+        right: '4%',
+        bottom: '10%',
+        containLabel: true
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -175,16 +202,16 @@ export default class BsinessAnalysis extends React.Component{
       },
       calculable: true,
       legend: {
-        data: ['年度双边', '月度双边','合同转让', '现货交易'],
+        data: ['年度双边', '年度撮合', '月度双边','月度撮合', '月度挂牌'],
         formatter:function (name) {
           return name;
         }
       },
       grid: {
-        top: '15%',
+        top: '24%',
         left: '5%',
         right: '8%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true
       },
       xAxis: [
@@ -244,7 +271,7 @@ export default class BsinessAnalysis extends React.Component{
           }
         },
         {
-          name: '月度双边',
+          name: '年度撮合',
           type: 'bar',
           data: data.data1,
           barWidth:4,
@@ -258,7 +285,7 @@ export default class BsinessAnalysis extends React.Component{
           }
         },
         {
-          name: '合同转让',
+          name: '月度双边',
           type: 'bar',
           data: data.data3,
           barWidth:4,
@@ -272,9 +299,23 @@ export default class BsinessAnalysis extends React.Component{
           }
         },
         {
-          name: '现货交易',
+          name: '月度撮合',
           type: 'bar',
           data: data.data4,
+          barWidth:4,
+          itemStyle: {
+            normal: {
+              barBorderRadius: 4
+            },
+            emphasis: {
+              barBorderRadius: 4
+            }
+          }
+        },
+        {
+          name: '月度挂牌',
+          type: 'bar',
+          data: data.data5,
           barWidth:4,
           itemStyle: {
             normal: {
@@ -292,6 +333,12 @@ export default class BsinessAnalysis extends React.Component{
   }
 
   getChatMapData3 = () => {
+    let params = {
+      year:this.state.year
+    }
+    api.GetSouDianCompanyAnalysis(params).then(res => {
+
+    })
     this.paintingMap3()
   }
   paintingMap3 = () => {
@@ -307,7 +354,7 @@ export default class BsinessAnalysis extends React.Component{
         data: ['偏差电量', '偏差率']
       },
       grid: {
-        top: '20%',
+        top: '10%',
         left: '3%',
         right: '4%',
         bottom: '10%',
@@ -435,6 +482,12 @@ export default class BsinessAnalysis extends React.Component{
   }
 
   getChatMapData4 = () => {
+    let params = {
+      year:this.state.year
+    }
+    api.GetBuyPowerCostAnalysis(params).then(res => {
+
+    })
     this.paintingMap4()
   }
   paintingMap4 =() => {
@@ -584,6 +637,12 @@ export default class BsinessAnalysis extends React.Component{
   }
 
   getChatMapData5 = () => {
+    let params = {
+      year:this.state.year
+    }
+    // api.GetRevenueAnalysis(params).then(res => {
+
+    // })
     this.paintingMap5()
   }
   paintingMap5 =() => {
@@ -793,35 +852,35 @@ export default class BsinessAnalysis extends React.Component{
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="f2-map">
-          <div className="t"><i className="iconfont icondianliang"></i>电量对比分析</div>
+          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont icondianliang"></i>电量对比分析</div>
           <div className="f2-map-view">
-            <div id="myChart1" style={{height:'220px'}}></div>
+            <div id="myChart1" style={{height:'240px'}}></div>
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="f2-map">
-          <div className="t"><i className="iconfont iconjiaoyizhongxin"></i>交易电量分析</div>
+          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconjiaoyizhongxin"></i>交易电量分析</div>
           <div className="f2-map-view">
-            <div id="myChart2" style={{height:'220px'}}></div>
+            <div id="myChart2" style={{height:'320px'}}></div>
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="f2-map">
-          <div className="t"><i className="iconfont iconjingyingfenxix"></i>偏差电量分析</div>
+          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconjingyingfenxix"></i>偏差电量分析</div>
           <div className="f2-map-view">
             <div id="myChart3" style={{height:'320px'}}></div>
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="f2-map">
-          <div className="t"><i className="iconfont iconjiage"></i>购电成本分析</div>
+          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconjiage"></i>购电成本分析</div>
           <div className="f2-map-view">
             <div id="myChart4" style={{height:'320px'}}></div>
           </div>
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div className="f2-map">
-          <div className="t"><i className="iconfont iconshouyi"></i>收益分析</div>
+          <div className="t" style={{marginBottom:'10px'}}><i className="iconfont iconshouyi"></i>收益分析</div>
           <div className="f2-map-view">
             <div id="myChart5" style={{height:'320px'}}></div>
           </div>

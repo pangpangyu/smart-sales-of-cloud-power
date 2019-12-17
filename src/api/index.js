@@ -128,6 +128,10 @@ const api = {
   GetElecData2(params){
     return request.post('admin/tradeElecAnalysis/getElecData',params)
   },
+  //偏差电量分心
+  GetSouDianCompanyAnalysis(params){
+    return request.post('admin/business/getSouDianCompanyAnalysis',params)
+  },
   //购电成本分析
   GetBuyPowerCostAnalysis(params){
     return request.post('admin/costAnalysis/getData',params)
