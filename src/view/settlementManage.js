@@ -355,22 +355,23 @@ export default class Test extends React.Component {
             rowNumber: 0,
             pageSize: 10,
             yearMon1: 1,
-            yearMon: this.state.retailMarketYear
+            yearMon: this.state.settlementElectricityYear
         }
         api.getElectricitySaleCompany(params).then(res => {
             if(res.status === 0){
                 if(res.data.rows.length > 0){
-                    let arr = []
-                    arr.push(res.data.rows)
-                    arr.icon = 'iconqiyejibenxinxi'
-                    let arr2 = arr.pop()
+                    let arr = res.data.rows
+                    arr.map(item => {
+                        item.icon = 'iconqiyejibenxinxi'
+                    })
+                    if(arr.length > 0){
+                        arr[arr.length - 1].icon = 'iconjiage'
+                    }
                     this.setState({
                         settlementElectricityList : arr,
-                        settlementElectricityListSum:arr2,
                         settlementElectricityIsNoData:false
                     })
                     console.log(this.state.settlementElectricityList)
-                    console.log(this.state.settlementElectricityListSum)
                 }else{
                     this.setState({
                         settlementElectricityList:res.data.rows,
@@ -391,16 +392,17 @@ export default class Test extends React.Component {
                     return <div className="tab" key={index}>
                         <div className="item">
                             <div className="list">
-                                <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.title}</span></h3>
+                                <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.companyName}</span></h3>
                                 <ul className="ul1">
-                                    <li><p>结算电量：<span>{item.n1}</span>千千瓦时</p></li>
-                                    <li><p>结算电费：<span>{item.n2}</span>元</p></li>
-                                    <li><p>偏差考核电费：<span>{item.n3}</span>元</p></li>
+                                    <li><p>结算电量：<span>{item.wholesaleBidPower}</span>千千瓦时</p></li>
+                                    <li><p>结算电费：<span>{item.totalFee}</span>元</p></li>
+                                    <li><p>偏差考核电费：<span>{item.assessFee}</span>元</p></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 })}
+                {this.state.settlementElectricityIsNoData && <div style={{background:'#fff'}}><NoData /></div>}
                 <div className={this.state.settlementElectricityOpen ? 'modal on' : 'modal'}>
                     <div className="modal_bg" onClick={() => this.setState({ settlementElectricityOpen: false })}></div>
                     <div className="pick_box">
@@ -424,6 +426,8 @@ export default class Test extends React.Component {
         this.setState({
             settlementElectricityYear: this.state.settlementElectricityFullYear + '-' + this.state.settlementElectricityMonth,
             settlementElectricityOpen: false
+        },() => {
+            this.getSettlementElectricityData()
         })
     }
     settlementElectricityOnChange = (value) => {
