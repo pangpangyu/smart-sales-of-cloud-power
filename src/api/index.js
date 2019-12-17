@@ -190,7 +190,7 @@ const api = {
   },
   //公告信息列表
   getNoticeList(params){
-    return request.post('/market/trade/notice/search',params)
+    return request.get('/market/trade/notice/search'+params)
   },
   //结果信息列表
   getResultList(params){
