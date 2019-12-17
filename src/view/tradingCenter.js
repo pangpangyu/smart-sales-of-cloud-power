@@ -43,7 +43,7 @@ export default class Test extends React.Component {
 	//中长期交易交易-结果信息列表
   getResultList = () => {
 		let params = `?rowNumber=0&pageSize=10`
-		api.getNoticeList(params).then(res => {
+		api.getResultList(params).then(res => {
 			this.setState({
 				resultList:res.data.rows
 			})
