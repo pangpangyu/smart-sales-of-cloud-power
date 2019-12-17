@@ -3,6 +3,7 @@ import Header from '../components/header';
 import { DatePickerView, PickerView, Button, Toast } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
 import api from '../api/index';
+import { getDataQuery } from '../utils/index';
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
@@ -24,7 +25,7 @@ function formatDate(date) {
   const pad = n => n < 10 ? `0${n}` : n;
   const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
   const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-  return `${dateStr} ${timeStr}`;
+  return `${dateStr} ${timeStr}:00`;
 }
 
 function getListItem(list, key, value) {
@@ -40,12 +41,13 @@ export default class AttendanceAdd extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log(this.props.match.params)
+    console.log(`${getDataQuery('applyType')}`)
     let title = '请假';
     this.state = {
-      leaveId:this.props.match.params.id,//
-      leaveTypeParams:this.props.match.params.leaveType,
-      status:this.props.match.params.status,
+      leaveTypeParams:`${getDataQuery('type')}`,
+      status:`${getDataQuery('status')}`,
+      leaveId:`${getDataQuery('id')}`,
+      applyType:`${getDataQuery('applyType')}`,
       title: title,
       dayopen: false,
       dayopen2: false,
@@ -55,11 +57,11 @@ export default class AttendanceAdd extends React.Component {
       startDateTime: now,
       endDateTime: now,
       leaveType: "",
-      leaveTypeLabel: "",
+      leaveTypeLabel: this.props.match.params.type,
 
       leaveTypeOptions: [],//请假类型
       isLock:false,
-
+      isSave:false,
 
 
       form: {
@@ -162,11 +164,16 @@ export default class AttendanceAdd extends React.Component {
         let newform=that.state.form;
         newform.qjNum=res.data.workDetailId;//单号
         newform.leaveReason=res.data.leaveReason;//理由
-        newform.containDays=res.data.days;//天数
+        newform.days=res.data.days;//天数
         newform.startTime=res.data.startTime;//结束时间
         newform.endTime=res.data.endTime;//结束时间
         //类型
         //状态
+        newform.departmentName=res.data.departmentName;
+        newform.positionName=res.data.positionName;
+        newform.systemUserName=res.data.systemUserName;
+
+
         that.setState({
           form:newform
         })
@@ -179,10 +186,35 @@ export default class AttendanceAdd extends React.Component {
   //保存请假
   GetSaveLeave = () => {
     const that = this;
-    let params = { "metaFormData": { "userinfo.departmentName": "总经理办公室", "userinfo.positionName": "总经理", "userinfo.systemUserName": "APP测试", "startTime": "2019-12-03 00:00:00", "endTime": "2020-01-02 00:00:00", "containDays": "0", "containHours": "0", "days": "30", "hours": "0", "creator": "APP测试", "createDateTime1": "2019-12-3 21:51:58", "id": "", "userinfo.id": "64", "leaveReason": "测试", "leaveType": "0", "attachedFile1": [] }, "type": "0", "id": "" }
+    let params = { 
+      "metaFormData": { 
+        "userinfo.departmentName": that.state.form.departmentName, 
+        "userinfo.positionName":that.state.form.positionName, 
+        "userinfo.systemUserName": that.state.form.systemUserName, 
+        "startTime": that.state.form.startTime, 
+        "endTime": that.state.form.endTime, 
+        "days": that.state.form.days, 
+        "containDays": '', 
+        "containHours": "0", 
+        "hours": "0", 
+        "creator": "", 
+        "createDateTime1": "", 
+        "id": "", 
+        "userinfo.id": "", 
+        "leaveReason": "", 
+        "leaveType": 0, 
+        "attachedFile1": [] 
+      }, 
+      "type": "0",
+	    "id": ""
+      
+    }
+    console.log(params)
     api.GetSaveLeave(params).then(res => {
       console.log('保存请假:', res);
       if (res.status === 0) {
+        Toast.info(res.message);
+      }else{
         Toast.info(res.message);
       }
 
@@ -192,7 +224,7 @@ export default class AttendanceAdd extends React.Component {
   //提交请假
   GetSubmitLeave=()=>{
     const that=this;
-    that.state.isLock=true;
+    //that.state.isLock=true;
     //Toast.loading('正在提交');
     let params={
       id:that.state.leaveId,//传入的id
@@ -204,21 +236,44 @@ export default class AttendanceAdd extends React.Component {
       }else{
         Toast.info("提交失败");
       }
-      that.state.isLock=false;
+      //that.state.isLock=false;
     })
 
   }
 
+  //保存
+  handleSave=()=>{
+    const that=this;
+    that.setState({
+      isSave:true
+    })
+    that.GetSaveLeave();
+  }
+
   //提交审核
   handleSubmit=()=>{
-
-    this.GetSubmitLeave();
+    const that=this;
+    if(that.state.isSave){
+      that.GetSubmitLeave();
+    }else{
+      Toast.info("请先保存");
+    }
   }
 
 
 
 
   render() {
+    let footerBtn=
+        <div>
+          <div className="footer-btn-group-space"></div>
+          <div className="footer-btn-group">
+            <div className="btn-group">
+              <button onClick={this.handleSubmit}>提交审核</button>
+              <button onClick={this.handleSave} className="btn-white">保存</button>
+            </div>
+          </div>
+        </div>
     return (
       <div>
         <Header title={this.state.title} back={true}></Header>
@@ -260,7 +315,7 @@ export default class AttendanceAdd extends React.Component {
               天数
               </div>
             <div className="r">
-              <input value={this.state.form.containDays} placeholder="请输入"  onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{containDays:e.target.value})}))}} />
+              <input value={this.state.form.days} placeholder="请输入"  onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{days:e.target.value})}))}} />
             </div>
           </div>
           <div className="item">
@@ -268,7 +323,8 @@ export default class AttendanceAdd extends React.Component {
               状态
               </div>
             <div className="r">
-              <input value={this.state.form.status} placeholder="请输入" onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{status:e.target.value})}))}}  />
+              {/* <input value={this.state.form.status} placeholder="请输入" onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{status:e.target.value})}))}}  /> */}
+              {this.state.status}
             </div>
           </div>
           <div className="module-space"></div>
@@ -329,15 +385,8 @@ export default class AttendanceAdd extends React.Component {
           </div>
         </div>
 
-        <div >
-          <div className="footer-btn-group-space"></div>
-          <div className="footer-btn-group">
-            <div className="btn-group">
-              {/* <button onClick={this.handleSubmit}>提交审核</button> */}
-              <button className="">保存</button>
-            </div>
-          </div>
-        </div>
+        {this.state.status=="未提交"?footerBtn:''}
+        
       </div>
     )
   }
