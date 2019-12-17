@@ -884,7 +884,6 @@ export default class BsinessAnalysis extends React.Component {
   }
 
   onChange = (e) => {
-    console.log(e)
     this.setState({
       value:e
     })

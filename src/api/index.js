@@ -194,7 +194,7 @@ const api = {
   },
   //结果信息列表
   getResultList(params){
-    return request.get('market/trade/result/search'+params)
+    return request.get('/market/trade/result/search'+params)
   },
   //结果信息详情
   getResultDetail(params){

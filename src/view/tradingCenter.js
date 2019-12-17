@@ -23,16 +23,30 @@ export default class Test extends React.Component {
 				{ id: '2', type: '2', title: '日前市场交易' },
 				{ id: '3', type: '3', title: '实时市场交易' }
 			],
+			noticeList:[],
+			resultList:[]
 		}
 	}
 	componentWillMount(){
 		this.getNoticeList()
+		this.getResultList()
 	}
 	//中长期交易交易-公告信息列表
 	getNoticeList = () => {
 		let params = `?rowNumber=0&pageSize=10`
 		api.getNoticeList(params).then(res => {
-
+			this.setState({
+				noticeList:res.data.rows
+			})
+		})
+	}
+	//中长期交易交易-结果信息列表
+  getResultList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.getNoticeList(params).then(res => {
+			this.setState({
+				resultList:res.data.rows
+			})
 		})
 	}
 	getDate = () => {
@@ -69,7 +83,7 @@ export default class Test extends React.Component {
 								</ul>
 							</div>
 						</div>
-						{this.state.active === '1' && <MidLongTermTrade />}
+						{this.state.active === '1' && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
 						{this.state.active === '2' && <DayAheadMarket />}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
