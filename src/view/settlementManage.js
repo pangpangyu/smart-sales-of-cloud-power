@@ -148,6 +148,8 @@ export default class Test extends React.Component {
                     ]
                 }
             ],
+            retailMarketOrdinaryList:[],//结算管理零售市场普通列表
+            retailMarketAkeyList:[],//结算管理零售市场重点列表
             retailMarketOpen: false,
             retailMarketTime: new Date(),
             retailMarketMonth: (new Date().getMonth() + 1),
@@ -394,9 +396,16 @@ export default class Test extends React.Component {
     //结算管理售电公司数据
     getSettlementElectricityData = () => {
         const that = this
-        api.getElectricitySaleCompany().then(res => {
+        let params ={
+            rowNumber: 0,
+            pageSize: 10,
+            yearMon1: 1,
+            yearMon: this.state.retailMarketYear
+        }
+        api.getElectricitySaleCompany(params).then(res => {
             if (res.status === 0) {
-                
+                let retailMarketOrdinaryList =[]
+
             }
         })
     }

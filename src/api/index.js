@@ -225,8 +225,8 @@ const api = {
     return request.post('/admin/settlement/listOfficialBill?type=1',params)
   },
   //结算管理售电公司
-  getElectricitySaleCompany(){
-    return request.get('/admin/settlement/listOfficialBill?type=2')
+  getElectricitySaleCompany(params){
+    return request.post('/admin/settlement/listOfficialBill?type=2',params)
   },
   //待办事项流程类型
   getmodelsNutsWorkflowProcessTask(params){
