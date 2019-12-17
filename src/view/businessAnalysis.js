@@ -336,18 +336,31 @@ export default class BsinessAnalysis extends React.Component{
     let params = {
       year:this.state.year
     }
-    api.GetSouDianCompanyAnalysis(params).then(res => {
-
-    })
-    this.paintingMap3()
-  }
-  paintingMap3 = () => {
-    var myChart = echarts.init(document.getElementById('myChart3'));
     let data = {
       dataX: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-      data1: [50, 60, -80, 50, 40, -50, 80, 60, 50, 80, 40, 10],
-      data2: [50, 60, -80, 50, 40, -50, 80, 60, 50, 80, 40, 10],
+      data1: [],
+      data2: [],
     }
+    api.GetSouDianCompanyAnalysis(params).then(res => {
+      res.pictureData2.deviationPower.map(item => {
+        if(item){
+          data.data2.push(item)
+        }else{
+          data.data2.push(0)
+        }
+      })
+      res.pictureData2.deviationRate.map(item => {
+        if(item){
+          data.data1.push(item)
+        }else{
+          data.data1.push(0)
+        }
+      })
+      this.paintingMap3(data)
+    })
+  }
+  paintingMap3 = (data) => {
+    var myChart = echarts.init(document.getElementById('myChart3'));
     let option = {
       color: ['#288dfd', '#f9a30c'],
       legend: {
@@ -423,6 +436,8 @@ export default class BsinessAnalysis extends React.Component{
           type: 'value',
           scale: true,
           boundaryGap: data.dataX,
+          max: 500,
+          min: -500,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -440,6 +455,8 @@ export default class BsinessAnalysis extends React.Component{
           type: 'value',
           scale: true,
           boundaryGap: data.dataX,
+          max: 10000,
+          min: -10000,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -485,31 +502,28 @@ export default class BsinessAnalysis extends React.Component{
     let params = {
       year:this.state.year
     }
-    api.GetBuyPowerCostAnalysis(params).then(res => {
-
-    })
-    this.paintingMap4()
-  }
-  paintingMap4 =() => {
-    var myChart = echarts.init(document.getElementById('myChart4'));
     let data = {
       "data1": [],
       "data2": [],
       "data3": [],
       "data4": [],
       "data5": [],
-      "delta": [],
       "names": []
     }
-    for(let i=0;i<12;i++){
-      data.data1.push( parseInt(Math.random() * 50))
-      data.data2.push( parseInt(Math.random() * 50))
-      data.data3.push( parseInt(Math.random() * 50))
-      data.data4.push( parseInt(Math.random() * 80))
-      data.data5.push( parseInt(Math.random() * 80))
-      data.delta.push(i)
-      data.names.push(i+1+'月')
-    }
+    api.GetBuyPowerCostAnalysis(params).then(res => {
+      data.data1 = res.data.costList[0] 
+      data.data2 = res.data.costList[1] 
+      data.data3 = res.data.costList[2] 
+      data.data4 = res.data.costList[3] 
+      data.data5 = res.data.costList[4] 
+      for(let i=0;i<12;i++){
+        data.names.push(i+1+'月')
+      }
+      this.paintingMap4(data)
+    })
+  }
+  paintingMap4 =(data) => {
+    var myChart = echarts.init(document.getElementById('myChart4'));
     let option = {
       color:['#288dfd','#f9a30c','#6dcfce','#3594fd','#f9a40f'],
       tooltip: {
@@ -640,9 +654,9 @@ export default class BsinessAnalysis extends React.Component{
     let params = {
       year:this.state.year
     }
-    // api.GetRevenueAnalysis(params).then(res => {
+    api.GetRevenueAnalysis(params).then(res => {
 
-    // })
+    })
     this.paintingMap5()
   }
   paintingMap5 =() => {
