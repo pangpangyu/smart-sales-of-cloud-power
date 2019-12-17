@@ -5,6 +5,7 @@ import NoData from '../components/noData';
 import api from '../api/index';
 import Scroll from 'react-bscroll';
 import 'react-bscroll/lib/react-scroll.css';
+import { PickerView, Button } from 'antd-mobile';
 
 /**
  * 售电公司
@@ -13,18 +14,23 @@ export default class ElectricityCompany extends React.Component {
   constructor(props) {
     super(props)
     let title = '公司信息'
+    let searchShow = false
     if (this.props.match.params.type === '1') {
       //电力用户信息
       title = '电力用户'
+      searchShow = true
     } else if (this.props.match.params.type === '2') {
       //发电厂信息
       title = '发电企业'
+      searchShow = true
     } else if (this.props.match.params.type === '3') {
       //合作方信息
       title = '合作方'
+      searchShow = false
     } else if (this.props.match.params.type === '4') {
       //售电公司信息
       title = '售电公司'
+      searchShow = false
     }
     this.state = {
       title: title,
@@ -34,13 +40,23 @@ export default class ElectricityCompany extends React.Component {
       total: 0,
       noData: false,
       pageSize: 10,
-      keyword: ''
+      keyword: '',
+      transactionList: [],//交易类型列表
+      transactionValue: '',
+      transactionOpen: false,//交易类型选择器
+      geographicalAreaList: [],//地理区域列表
+      geographicalAreaListChildren: [],
+      geographicalAreaValue: '',
+      geographicalAreaOpen: false,//地理区域选择器
+      searchShow: searchShow,
+      searchDrop: false
     }
   }
 
 
   componentWillMount() {
     const that = this
+    that.getPowerUserAdvancedSearchOptions()
     if (that.state.type === '1') {
       that.getPowerUserList()
     } else if (that.state.type === '2') {
@@ -51,6 +67,42 @@ export default class ElectricityCompany extends React.Component {
       that.getSellingElectricityList()
     }
   }
+  //获取交易类型、地理区域
+  getPowerUserAdvancedSearchOptions = () => {
+    const that = this
+    api.GetPowerUserAdvancedSearchOptions().then(res => {
+      if (res.status === 0) {
+        let transactionList = []
+        res.data.tradeType.options.map(item => {
+          transactionList.push({ label: item.text, value: item.value })
+        })
+        let geographicalAreaList = []
+        let geographicalAreaListChildren = []
+        res.data.areaRegion.options.map(item => {
+          if (item.children) {
+            item.children.map(citem => {
+              geographicalAreaListChildren.push({ label: citem.text, value: citem.id })
+            })
+          }else{
+            geographicalAreaListChildren = []
+          }
+          geographicalAreaList.push({ label: item.text, value: item.id, children: geographicalAreaListChildren })
+        })
+        that.setState({
+          transactionList: transactionList,
+          geographicalAreaList: geographicalAreaList
+        })
+        console.log(this.state.geographicalAreaList)
+      }
+    })
+  }
+  //获取交易类型
+  transactionOnChange = (value) => {
+    console.log(value)
+    this.setState({
+      transactionValue: value
+    });
+  };
   //获取电力用户数据
   getPowerUserList = (resolve) => {
     const that = this
@@ -270,9 +322,9 @@ export default class ElectricityCompany extends React.Component {
     //搜索事件
     const that = this
     that.setState({
-      pageIndex:0,
-      companyList:[]
-    },()=>{
+      pageIndex: 0,
+      companyList: []
+    }, () => {
       if (that.state.type === '1') {
         that.getPowerUserList()
       } else if (that.state.type === '2') {
@@ -357,7 +409,39 @@ export default class ElectricityCompany extends React.Component {
   render() {
     return (
       <div style={{ minHeight: '100vh', background: '#f0f1f3' }} className="electricityCompany">
-        <Header title={this.state.title} back={true} search={false} />
+        <Header title={this.state.title} back={true} >
+          <div className={this.state.searchShow ? 'header-search' : 'header-search none'} onClick={() => this.setState({ searchDrop: !this.state.searchDrop })}><i className="iconfont iconsousuo"></i></div>
+          <div className={this.state.searchDrop ? 'h_drop' : 'h_drop none'}>
+            <div className="list">
+              <div className="l">
+                <p>企业名称</p>
+              </div>
+              <div className="r">
+                <input type="text"></input>
+              </div>
+            </div>
+            <div className="list">
+              <div className="l">
+                <p>交易类型</p>
+              </div>
+              <div className="r">
+                <span onClick={() => this.setState({ transactionOpen: true })}>请选择</span>
+              </div>
+            </div>
+            <div className="list">
+              <div className="l">
+                <p>地理区域</p>
+              </div>
+              <div className="r">
+                <span>请选择</span>
+              </div>
+            </div>
+            <div className="btns">
+              <Button className="btn btn1" type="primary" onClick={() => this.setState({ searchDrop: false })}>取消</Button>
+              <Button className="btn" type="primary">确定</Button>
+            </div>
+          </div>
+        </Header>
         <Scroll
           ref='scroll'
           pullUpLoad
@@ -373,6 +457,23 @@ export default class ElectricityCompany extends React.Component {
 
         </Scroll>
         {this.state.noData && <NoData />}
+
+        <div className={this.state.transactionOpen ? 'modal on' : 'modal'}>
+          <div className="modal_bg" onClick={() => this.setState({ transactionOpen: false })}></div>
+          <div className="pick_box">
+            <PickerView
+              data={this.state.transactionList}
+              onChange={this.transactionOnChange}
+              cascade={false}
+              value={this.state.transactionValue}
+            />
+            <div className="module-space"></div>
+            <div className="btns">
+              <Button className="btn" type="primary" onClick={() => this.setState({ transactionOpen: false })}>取消</Button>
+              <Button className="btn btn1" type="primary">确定</Button>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

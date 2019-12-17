@@ -128,6 +128,10 @@ const api = {
   GetElecData2(params){
     return request.post('admin/tradeElecAnalysis/getElecData',params)
   },
+  //偏差电量分心
+  GetSouDianCompanyAnalysis(params){
+    return request.post('admin/business/getSouDianCompanyAnalysis',params)
+  },
   //购电成本分析
   GetBuyPowerCostAnalysis(params){
     return request.post('admin/costAnalysis/getData',params)
@@ -186,11 +190,11 @@ const api = {
   },
   //公告信息列表
   getNoticeList(params){
-    return request.post('/market/trade/notice/search',params)
+    return request.get('/market/trade/notice/search'+params)
   },
   //结果信息列表
   getResultList(params){
-    return request.get('market/trade/result/search'+params)
+    return request.get('/market/trade/result/search'+params)
   },
   //结果信息详情
   getResultDetail(params){
@@ -222,7 +226,11 @@ const api = {
   },
   //结算管理售电公司
   getElectricitySaleCompany(params){
-    return request.get('/admin/settlement/listOfficialBill?type=2'+params)
+    return request.post('/admin/settlement/listOfficialBill?type=2',params)
+  },
+  //待办事项流程类型
+  getmodelsNutsWorkflowProcessTask(params){
+    return request.get('/nuts/crud/audit/models_nuts_workflow_ProcessTask'+params)
   },
 }
 
