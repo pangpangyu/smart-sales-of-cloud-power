@@ -26,130 +26,11 @@ export default class Test extends React.Component {
             WholesaleMarketMonth: (new Date().getMonth() + 1),
             WholesaleMarketFullYear: new Date().getFullYear(),
             WholesaleMarketYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
-            retailMarketList: [
-                {
-                    id: 1,
-                    title: '重点交易',
-                    list: [
-                        {
-                            id: 1,
-                            title: '山西xxx1公司',
-                            icon: 'iconqiyejibenxinxi',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        },
-                        {
-                            id: 2,
-                            title: '山西xxx1公司',
-                            icon: 'iconqiyejibenxinxi',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        },
-                        {
-                            id: 3,
-                            title: '山西xxx1公司',
-                            icon: 'iconjiage',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        }
-                    ]
-                },
-                {
-                    id: 1,
-                    title: '普通交易',
-                    list: [
-                        {
-                            id: 1,
-                            title: '山西xxx1公司',
-                            icon: 'iconqiyejibenxinxi',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        }
-                    ]
-                },
-                {
-                    id: 1,
-                    title: '重点2交易',
-                    list: [
-                        {
-                            id: 1,
-                            title: '山西xxx1公司',
-                            icon: 'iconqiyejibenxinxi',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        },
-                        {
-                            id: 2,
-                            title: '山西xxx1公司',
-                            icon: 'iconqiyejibenxinxi',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        },
-                        {
-                            id: 3,
-                            title: '山西xxx1公司',
-                            icon: 'iconjiage',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        }
-                    ]
-                },
-                {
-                    id: 1,
-                    title: '普通交易',
-                    list: [
-                        {
-                            id: 1,
-                            title: '山西xxx1公司',
-                            icon: 'iconqiyejibenxinxi',
-                            check: false,
-                            n1: '1000',
-                            n2: '20',
-                            n3: '1000',
-                            n4: '1000',
-                            n5: '1000',
-                            n6: '10'
-                        }
-                    ]
-                }
-            ],
-            retailMarketOrdinaryList:[],//结算管理零售市场普通列表
-            retailMarketAkeyList:[],//结算管理零售市场重点列表
+            retailMarketList: [],
+            retailMarketOrdinaryList: [],//结算管理零售市场普通列表
+            retailMarketOrdinaryListSum: {},//结算管理零售市场普通列表合计
+            retailMarketAkeyList: [],//结算管理零售市场重点列表
+            retailMarketAkeyListSum: {},//结算管理零售市场重点列表合计
             retailMarketOpen: false,
             retailMarketTime: new Date(),
             retailMarketMonth: (new Date().getMonth() + 1),
@@ -160,11 +41,14 @@ export default class Test extends React.Component {
                 { id: 2, title: '山西地方电力有限公司', n1: '1000', n2: '20', n3: '1000', icon: 'iconqiyejibenxinxi' },
                 { id: 3, title: '合计', n1: '1000', n2: '20', n3: '1000', icon: 'iconjiage' }
             ],
+            settlementElectricityListSum:{},
             settlementElectricityOpen: false,
             settlementElectricityTime: new Date(),
             settlementElectricityMonth: (new Date().getMonth() + 1),
             settlementElectricityFullYear: new Date().getFullYear(),
             settlementElectricityYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+            retailMarketListIsNoData: false,
+            settlementElectricityIsNoData: false,
         }
     }
     componentWillMount() {
@@ -290,14 +174,54 @@ export default class Test extends React.Component {
     getRetailMarketData = () => {
         const that = this
         let params = {
-            rowNumber:0,
-            pageSize:10,
-            yearMon1:1,
-            yearMon:that.state.retailMarketYear
+            rowNumber: 0,
+            pageSize: 10,
+            yearMon1: 1,
+            yearMon: that.state.retailMarketYear
         }
         api.getRetailMarket(params).then(res => {
             if (res.status === 0) {
-                
+                if (res.data.rows.length > 0) {
+                    let retailMarketOrdinaryList = []
+                    let retailMarketAkeyList = []
+                    let retailMarketOrdinaryListSum = {}
+                    let retailMarketAkeyListSum = {}
+                    let retailMarketList = []
+                    res.data.rows.map(item => {
+                        if (item.type === '普通') {
+                            retailMarketOrdinaryList.push({ item })
+                        }
+                        if (item.type === '重点') {
+                            retailMarketAkeyList.push({ item })
+                        }
+                    })
+                    retailMarketOrdinaryListSum = retailMarketOrdinaryList.pop()
+                    retailMarketOrdinaryList.icon = 'iconqiyejibenxinxi'
+                    retailMarketOrdinaryListSum.icon = 'iconjiage'
+                    retailMarketAkeyListSum = retailMarketAkeyList.pop()
+                    retailMarketAkeyList.icon = 'iconqiyejibenxinxi'
+                    retailMarketAkeyListSum.icon = 'iconjiage'
+                    retailMarketList.push({ title: '重点交易', list: retailMarketAkeyList }, { title: '普通交易', list: retailMarketOrdinaryList })
+                    this.setState({
+                        retailMarketOrdinaryList: retailMarketOrdinaryList,
+                        retailMarketAkeyList: retailMarketAkeyList,
+                        retailMarketOrdinaryListSum: retailMarketOrdinaryListSum,
+                        retailMarketAkeyListSum: retailMarketAkeyListSum,
+                        retailMarketList: retailMarketList,
+                        retailMarketListIsNoData:false
+                    })
+                } else {
+                    let retailMarketOrdinaryListSum = []
+                    let retailMarketAkeyListSum = []
+                    retailMarketOrdinaryListSum.icon = 'iconjiage'
+                    retailMarketAkeyListSum.icon = 'iconjiage'
+                    this.setState({
+                        retailMarketList:res.data.rows,
+                        retailMarketOrdinaryListSum:retailMarketOrdinaryListSum,
+                        retailMarketAkeyListSum:retailMarketAkeyListSum,
+                        retailMarketListIsNoData:true
+                    })
+                }
             }
         })
     }
@@ -319,20 +243,49 @@ export default class Test extends React.Component {
                                 <div className="item">
                                     {item.list.map((v, k) => {
                                         return <div className="list" key={k}>
-                                            <h3><i className={['iconfont ', v.icon].join('')}></i><span>{v.title}</span></h3>
+                                            <h3><i className={['iconfont ', item.list.icon].join('')}></i><span>{v.item.customerName}</span></h3>
                                             <ul className={v.check ? 'active' : ''} onClick={() => this.retailMarketChgCheck(index, k)}>
-                                                <li><p>零售市场电费：<span>{v.n1}</span>元</p></li>
-                                                <li><p>承担偏差电费：<span>{v.n2}</span>元</p></li>
-                                                <li><p>电量计划：<span>{v.n3}</span>千千瓦时</p></li>
-                                                <li><p>实际用电量：<span>{v.n4}</span>千千瓦时</p></li>
-                                                <li><p>直接交易电量：<span>{v.n5}</span>千千瓦时</p></li>
-                                                <li><p>协议电价：<span>{v.n6}</span>元/千千瓦时</p></li>
+                                                <li><p>零售市场电费：<span>{v.item.userSettlementFee}</span>元</p></li>
+                                                <li><p>承担偏差电费：<span>{v.item.devAssFee}</span>元</p></li>
+                                                <li><p>电量计划：<span>{v.item.planPower}</span>千千瓦时</p></li>
+                                                <li><p>实际用电量：<span>{v.item.realElectricity}</span>千千瓦时</p></li>
+                                                <li><p>直接交易电量：<span>{v.item.userSettlementPower}</span>千千瓦时</p></li>
+                                                <li><p>协议电价：<span>{v.item.contractPrice}</span>元/千千瓦时</p></li>
                                             </ul>
                                         </div>
                                     })}
+                                    {item.title === '重点交易' &&
+                                        <div className="list">
+                                            <h3><i className={['iconfont ', this.state.retailMarketAkeyListSum.icon].join('')}></i><span>重点交易小计</span></h3>
+                                            <ul className='active'>
+                                                <li><p>零售市场电费：<span>{this.state.retailMarketAkeyListSum.item.userSettlementFee}</span>元</p></li>
+                                                <li><p>承担偏差电费：<span>{this.state.retailMarketAkeyListSum.item.devAssFee}</span>元</p></li>
+                                                <li><p>电量计划：<span>{this.state.retailMarketAkeyListSum.item.planPower}</span>千千瓦时</p></li>
+                                                <li><p>实际用电量：<span>{this.state.retailMarketAkeyListSum.item.realElectricity}</span>千千瓦时</p></li>
+                                                <li><p>直接交易电量：<span>{this.state.retailMarketAkeyListSum.item.userSettlementPower}</span>千千瓦时</p></li>
+                                                <li><p>协议电价：<span>{this.state.retailMarketAkeyListSum.item.contractPrice}</span>元/千千瓦时</p></li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    {item.title === '普通交易' &&
+                                        <div className="list">
+                                            <h3><i className={['iconfont ', this.state.retailMarketOrdinaryListSum.icon].join('')}></i><span>普通交易小计</span></h3>
+                                            <ul className='active'>
+                                                <li><p>零售市场电费：<span>{this.state.retailMarketOrdinaryListSum.item.userSettlementFee}</span>元</p></li>
+                                                <li><p>承担偏差电费：<span>{this.state.retailMarketOrdinaryListSum.item.devAssFee}</span>元</p></li>
+                                                <li><p>电量计划：<span>{this.state.retailMarketOrdinaryListSum.item.planPower}</span>千千瓦时</p></li>
+                                                <li><p>实际用电量：<span>{this.state.retailMarketOrdinaryListSum.item.realElectricity}</span>千千瓦时</p></li>
+                                                <li><p>直接交易电量：<span>{this.state.retailMarketOrdinaryListSum.item.userSettlementPower}</span>千千瓦时</p></li>
+                                                <li><p>协议电价：<span>{this.state.retailMarketOrdinaryListSum.item.contractPrice}</span>元/千千瓦时</p></li>
+                                            </ul>
+                                        </div>
+                                    }
                                 </div>
+
                             </div>
                         })}
+                        
+                        {this.state.retailMarketListIsNoData && <div style={{background:'#fff'}}><NoData /></div>}
                     </div>
                 </div>
                 <div className={this.state.retailMarketOpen ? 'modal on' : 'modal'}>
@@ -380,6 +333,8 @@ export default class Test extends React.Component {
         this.setState({
             retailMarketYear: this.state.retailMarketFullYear + '-' + this.state.retailMarketMonth,
             retailMarketOpen: false
+        },() => {
+            this.getRetailMarketData()
         })
     }
     //零售市场获取修改后日期
@@ -396,16 +351,32 @@ export default class Test extends React.Component {
     //结算管理售电公司数据
     getSettlementElectricityData = () => {
         const that = this
-        let params ={
+        let params = {
             rowNumber: 0,
             pageSize: 10,
             yearMon1: 1,
             yearMon: this.state.retailMarketYear
         }
         api.getElectricitySaleCompany(params).then(res => {
-            if (res.status === 0) {
-                let retailMarketOrdinaryList =[]
-
+            if(res.status === 0){
+                if(res.data.rows.length > 0){
+                    let arr = []
+                    arr.push(res.data.rows)
+                    arr.icon = 'iconqiyejibenxinxi'
+                    let arr2 = arr.pop()
+                    this.setState({
+                        settlementElectricityList : arr,
+                        settlementElectricityListSum:arr2,
+                        settlementElectricityIsNoData:false
+                    })
+                    console.log(this.state.settlementElectricityList)
+                    console.log(this.state.settlementElectricityListSum)
+                }else{
+                    this.setState({
+                        settlementElectricityList:res.data.rows,
+                        settlementElectricityIsNoData:true
+                    })
+                }
             }
         })
     }
@@ -417,7 +388,7 @@ export default class Test extends React.Component {
                     <p>选择日期<span onClick={() => this.setState({ settlementElectricityOpen: true })}>{this.state.settlementElectricityYear}</span></p>
                 </div>
                 {this.state.settlementElectricityList && this.state.settlementElectricityList.map((item, index) => {
-                    return <div className="tab" key={item.id}>
+                    return <div className="tab" key={index}>
                         <div className="item">
                             <div className="list">
                                 <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.title}</span></h3>
