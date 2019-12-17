@@ -20,7 +20,7 @@ export default class Test extends React.Component {
             ],
             active: '1',
             WholesaleMarketList: [],
-            WholesaleMarketListTotal:{},
+            WholesaleMarketListTotal: {},
             WholesaleMarketOpen: false,
             WholesaleMarketTime: new Date(),
             WholesaleMarketMonth: (new Date().getMonth() + 1),
@@ -168,6 +168,8 @@ export default class Test extends React.Component {
     componentWillMount() {
         const that = this
         that.getWholesaleMarket()
+        that.getRetailMarketData()
+        that.getSettlementElectricityData()
     }
     //批发市场列表收起展开
     WholesaleMarketChgCheck(e) {
@@ -193,12 +195,12 @@ export default class Test extends React.Component {
                     let arr2 = arr.pop()
                     this.setState({
                         WholesaleMarketList: arr,
-                        WholesaleMarketListTotal:arr2
+                        WholesaleMarketListTotal: arr2
                     })
-                }else{
+                } else {
                     this.setState({
-                        WholesaleMarketList:res.data.rows,
-                        WholesaleMarketListTotal:{}
+                        WholesaleMarketList: res.data.rows,
+                        WholesaleMarketListTotal: {}
                     })
                 }
             }
@@ -229,20 +231,20 @@ export default class Test extends React.Component {
                     </div>
                 })}
                 <div className="tab">
-                        <div className="item">
-                            <div className="list">
-                                <h3><i className='iconfont iconjiage'></i><span>批发市场小计</span></h3>
-                                <ul className='active'>
-                                    <li><p>批发市场电费：<span>{this.state.WholesaleMarketListTotal.settleFee ? this.state.WholesaleMarketListTotal.settleFee : 0}</span>元</p></li>
-                                    <li><p>偏差考核电费：<span>{this.state.WholesaleMarketListTotal.devAssFee ? this.state.WholesaleMarketListTotal.devAssFee : 0}</span>元</p></li>
-                                    <li><p>成交电量：<span>{this.state.WholesaleMarketListTotal.contractPower ? this.state.WholesaleMarketListTotal.contractPower : 0}</span>千千瓦时</p></li>
-                                    <li><p>结算电量：<span>{this.state.WholesaleMarketListTotal.realPower ? this.state.WholesaleMarketListTotal.realPower : 0}</span>千千瓦时</p></li>
-                                    <li><p>成交均价：<span>{this.state.WholesaleMarketListTotal.contractPrice ? this.state.WholesaleMarketListTotal.contractPrice : 0}</span>千千瓦时</p></li>
-                                    <li><p>偏差考核电量：<span>{this.state.WholesaleMarketListTotal.devAssPower ? this.state.WholesaleMarketListTotal.devAssPower : 0}</span>千千瓦时</p></li>
-                                </ul>
-                            </div>
+                    <div className="item">
+                        <div className="list">
+                            <h3><i className='iconfont iconjiage'></i><span>批发市场小计</span></h3>
+                            <ul className='active'>
+                                <li><p>批发市场电费：<span>{this.state.WholesaleMarketListTotal.settleFee ? this.state.WholesaleMarketListTotal.settleFee : 0}</span>元</p></li>
+                                <li><p>偏差考核电费：<span>{this.state.WholesaleMarketListTotal.devAssFee ? this.state.WholesaleMarketListTotal.devAssFee : 0}</span>元</p></li>
+                                <li><p>成交电量：<span>{this.state.WholesaleMarketListTotal.contractPower ? this.state.WholesaleMarketListTotal.contractPower : 0}</span>千千瓦时</p></li>
+                                <li><p>结算电量：<span>{this.state.WholesaleMarketListTotal.realPower ? this.state.WholesaleMarketListTotal.realPower : 0}</span>千千瓦时</p></li>
+                                <li><p>成交均价：<span>{this.state.WholesaleMarketListTotal.contractPrice ? this.state.WholesaleMarketListTotal.contractPrice : 0}</span>千千瓦时</p></li>
+                                <li><p>偏差考核电量：<span>{this.state.WholesaleMarketListTotal.devAssPower ? this.state.WholesaleMarketListTotal.devAssPower : 0}</span>千千瓦时</p></li>
+                            </ul>
                         </div>
                     </div>
+                </div>
                 <div className={this.state.WholesaleMarketOpen ? 'modal on' : 'modal'}>
                     <div className="modal_bg" onClick={() => this.setState({ WholesaleMarketOpen: false })}></div>
                     <div className="pick_box">
@@ -282,6 +284,21 @@ export default class Test extends React.Component {
         });
     };
 
+    //结算管理零售市场数据
+    getRetailMarketData = () => {
+        const that = this
+        let params = {
+            rowNumber:0,
+            pageSize:10,
+            yearMon1:1,
+            yearMon:that.state.retailMarketYear
+        }
+        api.getRetailMarket(params).then(res => {
+            if (res.status === 0) {
+                
+            }
+        })
+    }
     //结算管理零售市场
     retailMarket = () => {
         return (
@@ -374,6 +391,15 @@ export default class Test extends React.Component {
         });
     };
 
+    //结算管理售电公司数据
+    getSettlementElectricityData = () => {
+        const that = this
+        api.getElectricitySaleCompany().then(res => {
+            if (res.status === 0) {
+                
+            }
+        })
+    }
     //结算管理售电公司
     settlementElectricity = () => {
         return (

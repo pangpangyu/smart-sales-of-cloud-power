@@ -221,8 +221,8 @@ const api = {
     return request.post('/admin/settlement/listOfficialBill?type=1',params)
   },
   //结算管理售电公司
-  getElectricitySaleCompany(params){
-    return request.get('/admin/settlement/listOfficialBill?type=2'+params)
+  getElectricitySaleCompany(){
+    return request.get('/admin/settlement/listOfficialBill?type=2')
   },
 }
 
