@@ -83,6 +83,8 @@ export default class ElectricityCompany extends React.Component {
             item.children.map(citem => {
               geographicalAreaListChildren.push({ label: citem.text, value: citem.id })
             })
+          }else{
+            geographicalAreaListChildren = []
           }
           geographicalAreaList.push({ label: item.text, value: item.id, children: geographicalAreaListChildren })
         })

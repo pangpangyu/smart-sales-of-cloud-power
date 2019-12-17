@@ -12,12 +12,19 @@ export default class Todolist extends React.Component {
         }
     }
 
+    componentWillMount(){
+        const that = this
+        that.getDetailData()
+    }
     componentDidMount(){
 
     }
 
     getDetailData = () => {
+        let params = `?id=2182514`
+      api.getmodelsNutsWorkflowProcessTask(params).then(res => {
         
+      })   
     }
 
     render() {

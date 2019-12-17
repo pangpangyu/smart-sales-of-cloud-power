@@ -224,6 +224,10 @@ const api = {
   getElectricitySaleCompany(){
     return request.get('/admin/settlement/listOfficialBill?type=2')
   },
+  //待办事项流程类型
+  getmodelsNutsWorkflowProcessTask(params){
+    return request.get('/nuts/crud/audit/models_nuts_workflow_ProcessTask'+params)
+  },
 }
 
 export default api
