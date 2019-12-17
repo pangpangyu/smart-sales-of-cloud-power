@@ -2,10 +2,12 @@ import React, { Fragment } from 'react';
 import Header from '../components/header';
 import Search from '../components/search';
 import { Link } from 'react-router-dom';
+import { Toast } from 'antd-mobile';
 import NoData from '../components/noData';
 import api from '../api/index';
 import Scroll from 'react-bscroll';
 import 'react-bscroll/lib/react-scroll.css';
+
 
 /*
 考勤管理
@@ -36,6 +38,7 @@ class AttendanceList extends React.Component {
                 }
             ],
             addStatus: false,
+            applyType:'',
 
             pageIndex: 0,
             pageSize: 10,
@@ -110,6 +113,9 @@ class AttendanceList extends React.Component {
 
     handleCheckChanged = e => {
         console.log(e.target.value)
+        this.setState({
+            applyType:e.target.value
+        })
     }
 
     handleAdd = e => {
@@ -118,12 +124,26 @@ class AttendanceList extends React.Component {
         })
 
     }
-
+    //申请取消
     handleCancel = e => {
         this.setState({
             addStatus: false
         })
 
+    }
+
+    //申请确定
+    handleOk=e=>{
+        if(this.state.applyType==''){
+            Toast.info("请选择");
+        }else{
+            this.props.history.push({
+                pathname: "/attendanceAdd/",
+                state: {
+                 applyType:"11",
+                },
+            })
+        }
     }
     
     //请假审批状态
@@ -177,7 +197,7 @@ class AttendanceList extends React.Component {
                     </div>
                     <div className="btn-group">
                         <button onClick={this.handleCancel} className="btn-cancel">取消</button>
-                        <button className="btn-sure">确定</button>
+                        <button onClick={this.handleOk} className="btn-sure">确定</button>
                     </div>
                 </div>
             </div>
@@ -202,7 +222,7 @@ class AttendanceList extends React.Component {
                                 return (
                                     <Fragment key={index}>
                                         <li className="item" >
-                                            <Link to={`/attendanceAdd/${item.leaveType}/${item.id}/${item.status}`}>
+                                            <Link to={`/attendanceAdd?type=${item.leaveType}&id=${item.id}&status=${item.status}`}>
                                                 <div className="tit">{item.systemUserName}</div>
                                                 <div className="mes">
                                                     <span className="s1">请假类型：</span>
