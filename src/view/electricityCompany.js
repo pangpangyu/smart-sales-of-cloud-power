@@ -103,6 +103,12 @@ export default class ElectricityCompany extends React.Component {
       transactionValue: value
     });
   };
+  geographicalAreaOnChange = (value) => {
+    console.log(value)
+    this.setState({
+      geographicalAreaValue: value
+    });
+  };
   //获取电力用户数据
   getPowerUserList = (resolve) => {
     const that = this
@@ -433,7 +439,7 @@ export default class ElectricityCompany extends React.Component {
                 <p>地理区域</p>
               </div>
               <div className="r">
-                <span>请选择</span>
+                <span onClick={() => this.setState({ geographicalAreaOpen: true })}>请选择</span>
               </div>
             </div>
             <div className="btns">
@@ -457,7 +463,7 @@ export default class ElectricityCompany extends React.Component {
 
         </Scroll>
         {this.state.noData && <NoData />}
-
+        {/* 交易类型选择 */}
         <div className={this.state.transactionOpen ? 'modal on' : 'modal'}>
           <div className="modal_bg" onClick={() => this.setState({ transactionOpen: false })}></div>
           <div className="pick_box">
@@ -470,6 +476,23 @@ export default class ElectricityCompany extends React.Component {
             <div className="module-space"></div>
             <div className="btns">
               <Button className="btn" type="primary" onClick={() => this.setState({ transactionOpen: false })}>取消</Button>
+              <Button className="btn btn1" type="primary">确定</Button>
+            </div>
+          </div>
+        </div>
+        {/* 地理区域选择 */}
+        <div className={this.state.geographicalAreaOpen ? 'modal on' : 'modal'}>
+          <div className="modal_bg" onClick={() => this.setState({ geographicalAreaOpen: false })}></div>
+          <div className="pick_box">
+            <PickerView
+              data={this.state.geographicalAreaList}
+              onChange={this.geographicalAreaOnChange}
+              cols='2'
+              value={this.state.geographicalAreaValue}
+            />
+            <div className="module-space"></div>
+            <div className="btns">
+              <Button className="btn" type="primary" onClick={() => this.setState({ geographicalAreaOpen: false })}>取消</Button>
               <Button className="btn btn1" type="primary">确定</Button>
             </div>
           </div>

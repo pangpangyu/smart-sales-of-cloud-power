@@ -30,6 +30,9 @@ export default class Test extends React.Component {
 	componentWillMount(){
 		this.getNoticeList()
 		this.getResultList()
+		this.getBackupList()
+		this.getSubstationList()
+		this.getBlackList()
 	}
 	//中长期交易交易-公告信息列表
 	getNoticeList = () => {
@@ -46,6 +49,33 @@ export default class Test extends React.Component {
 		api.getResultList(params).then(res => {
 			this.setState({
 				resultList:res.data.rows
+			})
+		})
+	}
+	//日前交易市场备用信息
+	getBackupList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.GetBackupList(params).then(res => {
+			this.setState({
+				
+			})
+		})
+	}
+	//日前交易市场输变电检修信息
+	getSubstationList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.GetSubstationList(params).then(res => {
+			this.setState({
+				
+			})
+		})
+	}
+	//日前交易市场阻塞
+	getBlackList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.GetBlackList(params).then(res => {
+			this.setState({
+				
 			})
 		})
 	}
