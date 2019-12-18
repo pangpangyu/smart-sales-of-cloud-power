@@ -42,14 +42,18 @@ export default class ElectricityCompany extends React.Component {
       pageSize: 10,
       keyword: '',
       transactionList: [],//交易类型列表
-      transactionValue: '',
+      transactionValue: [],
       transactionOpen: false,//交易类型选择器
+      transactionName: '请选择',
       geographicalAreaList: [],//地理区域列表
       geographicalAreaListChildren: [],
-      geographicalAreaValue: '',
+      geographicalAreaValue: [],
+      geographicalAreaId: '',
       geographicalAreaOpen: false,//地理区域选择器
       searchShow: searchShow,
-      searchDrop: false
+      searchDrop: false,
+      enterpriseName: '',
+      areaName: '请选择',
     }
   }
 
@@ -77,13 +81,13 @@ export default class ElectricityCompany extends React.Component {
           transactionList.push({ label: item.text, value: item.value })
         })
         let geographicalAreaList = []
-        let geographicalAreaListChildren = []
         res.data.areaRegion.options.map(item => {
+          let geographicalAreaListChildren = []
           if (item.children) {
             item.children.map(citem => {
               geographicalAreaListChildren.push({ label: citem.text, value: citem.id })
             })
-          }else{
+          } else {
             geographicalAreaListChildren = []
           }
           geographicalAreaList.push({ label: item.text, value: item.id, children: geographicalAreaListChildren })
@@ -96,49 +100,115 @@ export default class ElectricityCompany extends React.Component {
       }
     })
   }
+  //获取企业名称
+  getEnterpriseName = (val) => {
+    this.setState({
+      enterpriseName: val
+    })
+  }
   //获取交易类型
   transactionOnChange = (value) => {
     console.log(value)
-    this.setState({
-      transactionValue: value
-    });
+    if (value.length > 0) {
+      this.setState({
+        transactionValue: value
+      });
+    }
   };
+  transactionType = () => {
+    if (this.state.transactionValue.length > 0) {
+      let arr = this.state.transactionList.filter(item => item.value === this.state.transactionValue[0])
+      let txt = arr[0].label
+      this.setState({
+        transactionName: txt,
+        transactionOpen: false
+      })
+    }
+  }
+  //获取地理区域id
   geographicalAreaOnChange = (value) => {
-    console.log(value)
+    let num = value[value.length - 1]
     this.setState({
+      geographicalAreaId: num,
       geographicalAreaValue: value
     });
   };
+  getAreaName = () => {
+    if (this.state.geographicalAreaValue.length > 0) {
+      let arr = this.state.geographicalAreaList.filter(item => item.value === this.state.geographicalAreaValue[0])
+      let arr2 = arr[0].children.filter(item => item.value === this.state.geographicalAreaValue[1])
+      let txt = arr[0].label + '-' + arr2[0].label
+      this.setState({
+        areaName: txt,
+        geographicalAreaOpen: false
+      })
+    }
+  }
+  getUserList = () => {
+    this.setState({
+      pageIndex: 0,
+      companyList: [],
+      searchDrop: false
+    }, () => {
+      this.getPowerUserList()
+    })
+
+  }
   //获取电力用户数据
   getPowerUserList = (resolve) => {
     const that = this
     let params = {
       "rowNumber": that.state.pageIndex,
       "pageSize": 10,
-      "conditions": [
-        {
-          "operator": "",
-          "name": "",
-          "value": ""
-        },
-        {
-          "operator": "",
-          "name": "",
-          "value": ""
-        },
-        {
-          "operator": "",
-          "name": "",
-          "value": ""
-        }
-      ]
+      "conditions": []
+      // "conditions": [
+      //   {
+      //     "operator": "%",
+      //     "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone",
+      //     "value": this.state.enterpriseName
+      //   },
+      //   {
+      //     "operator": "=",
+      //     "name": "adminRegion.id",
+      //     "value": this.state.geographicalAreaId 
+      //   },
+      //   {
+      //     "operator": "=",
+      //     "name": "electricityType.id",
+      //     "value": this.state.transactionValue
+      //   }
+      // ]
+    }
+    if (this.state.enterpriseName) {
+      let obj = {
+        "operator": "%",
+        "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone",
+        "value": this.state.enterpriseName
+      }
+      params.conditions.push(obj)
+    }
+    if (this.state.geographicalAreaId) {
+      let obj = {
+        "operator": "=",
+        "name": "adminRegion.id",
+        "value": this.state.geographicalAreaId
+      }
+      params.conditions.push(obj)
+    }
+    if (this.state.transactionValue.length > 0) {
+      let obj = {
+        "operator": "=",
+        "name": "electricityType.id",
+        "value": this.state.transactionValue[0]
+      }
+      params.conditions.push(obj)
     }
     api.GetPowerUsersList(params).then(res => {
       if (res.status === 0) {
         that.setState({
           companyList: [...this.state.companyList, ...res.data.rows],
           total: res.data.rowCount,
-          noData: res.data.rowCount === 0 ? true : false
+          noData: res.data.rowCount === "0" ? true : false
         })
         resolve && resolve()
       }
@@ -423,7 +493,7 @@ export default class ElectricityCompany extends React.Component {
                 <p>企业名称</p>
               </div>
               <div className="r">
-                <input type="text"></input>
+                <input type="text" onChange={(e) => this.getEnterpriseName(e.target.value)} />
               </div>
             </div>
             <div className="list">
@@ -431,7 +501,7 @@ export default class ElectricityCompany extends React.Component {
                 <p>交易类型</p>
               </div>
               <div className="r">
-                <span onClick={() => this.setState({ transactionOpen: true })}>请选择</span>
+                <span onClick={() => this.setState({ transactionOpen: true })}>{this.state.transactionName}</span>
               </div>
             </div>
             <div className="list">
@@ -439,12 +509,12 @@ export default class ElectricityCompany extends React.Component {
                 <p>地理区域</p>
               </div>
               <div className="r">
-                <span onClick={() => this.setState({ geographicalAreaOpen: true })}>请选择</span>
+                <span onClick={() => this.setState({ geographicalAreaOpen: true })}>{this.state.areaName}</span>
               </div>
             </div>
             <div className="btns">
               <Button className="btn btn1" type="primary" onClick={() => this.setState({ searchDrop: false })}>取消</Button>
-              <Button className="btn" type="primary">确定</Button>
+              <Button className="btn" type="primary" onClick={this.getUserList}>确定</Button>
             </div>
           </div>
         </Header>
@@ -462,7 +532,7 @@ export default class ElectricityCompany extends React.Component {
           {this.state.type === '4' && this.sellingElectricity()}
 
         </Scroll>
-        {this.state.noData && <NoData />}
+        {this.state.noData && <div style={{paddingTop:'100px'}}><NoData /></div>}
         {/* 交易类型选择 */}
         <div className={this.state.transactionOpen ? 'modal on' : 'modal'}>
           <div className="modal_bg" onClick={() => this.setState({ transactionOpen: false })}></div>
@@ -476,7 +546,7 @@ export default class ElectricityCompany extends React.Component {
             <div className="module-space"></div>
             <div className="btns">
               <Button className="btn" type="primary" onClick={() => this.setState({ transactionOpen: false })}>取消</Button>
-              <Button className="btn btn1" type="primary">确定</Button>
+              <Button className="btn btn1" type="primary" onClick={this.transactionType}>确定</Button>
             </div>
           </div>
         </div>
@@ -493,7 +563,7 @@ export default class ElectricityCompany extends React.Component {
             <div className="module-space"></div>
             <div className="btns">
               <Button className="btn" type="primary" onClick={() => this.setState({ geographicalAreaOpen: false })}>取消</Button>
-              <Button className="btn btn1" type="primary">确定</Button>
+              <Button className="btn btn1" type="primary" onClick={this.getAreaName}>确定</Button>
             </div>
           </div>
         </div>
