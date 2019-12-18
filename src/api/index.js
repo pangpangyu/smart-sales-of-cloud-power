@@ -290,6 +290,14 @@ const api = {
   getmodelsNutsWorkflowProcessTask(params) {
     return request.get('/nuts/crud/audit/models_nuts_workflow_ProcessTask' + params)
   },
+  //信息发布1
+  CheckInfoPublishStatus(params){
+    return request.post('/admin/system/checkInfoPublishStatus' , params)
+  },
+  //信息发布2
+  UpdateInfoPublishStatus(params){
+    return request.post('/admin/system/updateInfoPublishStatus' , params)
+  }
 }
 
 export default api

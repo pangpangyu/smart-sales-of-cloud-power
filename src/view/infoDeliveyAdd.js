@@ -141,7 +141,6 @@ export default class InfoDeliveyAdd extends React.Component{
       openModel: !this.state.openModel
     })
   }
-
   render(){
     return(
       <div style={{minHeight:'100vh',background:'#fff',paddingBottom:'45px'}}>
@@ -198,8 +197,8 @@ export default class InfoDeliveyAdd extends React.Component{
           </div>
           <div style={{height:'10px',background:'#f0f1f3'}}></div>
           <div className="submit-btn">
-            <button className="tj">提交审核</button>
-            <button onClick={ this.setSaveEdit }>保存</button>
+            {/* <button className="tj">提交审核</button> */}
+            <button className="tj" onClick={ this.setSaveEdit }>保存</button>
           </div>
         </div>
         <div className={this.state.openModel ? 'infoDelivey-model on':'infoDelivey-model'}>
