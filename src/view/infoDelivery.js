@@ -57,11 +57,12 @@ export default class InfoDelivery extends React.Component{
     })
   }
 
+  //搜索事件
   getSearchTxt = (e) => {
     e.preventDefault();
-    //搜索事件
     this.setState({
-      pageIndex:0
+      pageIndex:0,
+      list:[]
     },() => {
       this.getListData()
     })
