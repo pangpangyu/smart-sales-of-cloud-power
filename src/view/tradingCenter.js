@@ -24,7 +24,10 @@ export default class Test extends React.Component {
 				{ id: '3', type: '3', title: '实时市场交易' }
 			],
 			noticeList:[],
-			resultList:[]
+			resultList:[],
+			backupList:[],
+			substationList:[],
+			blackList:[]
 		}
 	}
 	componentWillMount(){
@@ -57,7 +60,7 @@ export default class Test extends React.Component {
 		let params = `?rowNumber=0&pageSize=10`
 		api.GetBackupList(params).then(res => {
 			this.setState({
-				
+				backupList:res.data.rows
 			})
 		})
 	}
@@ -66,7 +69,7 @@ export default class Test extends React.Component {
 		let params = `?rowNumber=0&pageSize=10`
 		api.GetSubstationList(params).then(res => {
 			this.setState({
-				
+				substationList:res.data.rows
 			})
 		})
 	}
@@ -75,7 +78,7 @@ export default class Test extends React.Component {
 		let params = `?rowNumber=0&pageSize=10`
 		api.GetBlackList(params).then(res => {
 			this.setState({
-				
+				blackList:res.data.rows
 			})
 		})
 	}
@@ -114,7 +117,7 @@ export default class Test extends React.Component {
 							</div>
 						</div>
 						{this.state.active === '1' && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
-						{this.state.active === '2' && <DayAheadMarket />}
+						{this.state.active === '2' && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} blackList={this.state.blackList}/>}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
 				</div>

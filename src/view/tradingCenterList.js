@@ -68,7 +68,7 @@ export default class Test extends React.Component {
 	UnifiedLoadRegulation = () => {
 		return (
 			<div className="tradingCenterList">
-				{this.state.unifiedLoadRegulation && this.state.unifiedLoadRegulation.map(item => {
+				{this.state.unifiedLoadRegulation.length > 0 && this.state.unifiedLoadRegulation.map(item => {
 					return <div className="item" key={item.id}>
 						<Link to={`/unifiedLoadRegulationDet`}>
 							<div className="list">
@@ -82,6 +82,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
+				{this.state.unifiedLoadRegulation.length == 0 && <NoData/>}
 			</div >
 		)
 	}
@@ -89,7 +90,7 @@ export default class Test extends React.Component {
 	BackupInfo = () => {
 		return (
 			<div className="tradingCenterList">
-				{this.state.backupInfo && this.state.backupInfo.map(item => {
+				{this.state.backupInfo.length > 0 && this.state.backupInfo.map(item => {
 					return <div className="item" key={item.id}>
 						<div className="list">
 							<ul>
@@ -99,8 +100,8 @@ export default class Test extends React.Component {
 							</ul>
 						</div>
 					</div>
-				})
-				}
+				})}
+				{this.state.backupInfo.length === 0 && <NoData/>}
 			</div >
 		)
 	}
@@ -108,7 +109,7 @@ export default class Test extends React.Component {
 	MaintenanceInfo = () => {
 		return (
 			<div className="tradingCenterList">
-				{this.state.maintenanceInfo && this.state.maintenanceInfo.map(item => {
+				{this.state.maintenanceInfo.length > 0 && this.state.maintenanceInfo.map(item => {
 					return <div className="item" key={item.id}>
 						<div className="list">
 							<ul>
@@ -120,6 +121,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
+				{this.state.maintenanceInfo.length === 0 && <NoData/>}
 			</div >
 		)
 	}
@@ -139,6 +141,7 @@ export default class Test extends React.Component {
 						</div>
 					</div>
 				})}
+				{ this.state.block.length === 0 && <NoData/> }
 			</div>
 		)
 	}
@@ -146,7 +149,7 @@ export default class Test extends React.Component {
 	FMMarket = () => {
 		return (
 			<div className="tradingCenterList fm_tradingCenterList">
-				{this.state.FMMarket && this.state.FMMarket.map(item => {
+				{this.state.FMMarket.length > 0 && this.state.FMMarket.map(item => {
 					return <div className="item" key={item.id}>
 						<div className="list">
 							<ul>
@@ -159,6 +162,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
+				{ this.state.FMMarket.length === 0 && <NoData/> }
 			</div >
 		)
 	}
@@ -166,7 +170,7 @@ export default class Test extends React.Component {
 	ProvincialNetwork = () => {
 		return (
 			<div className="tradingCenterList">
-				{this.state.provincialNetwork && this.state.provincialNetwork.map(item => {
+				{this.state.provincialNetwork.length > 0 && this.state.provincialNetwork.map(item => {
 					return <div className="item" key={item.id}>
 						<Link to={`/provincialNetworkDet`}>
 							<div className="list">
@@ -180,6 +184,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
+				{ this.state.provincialNetwork.length === 0 && <NoData/> }
 			</div >
 		)
 	}
@@ -187,7 +192,7 @@ export default class Test extends React.Component {
 	OutwardDeliveryPlan = () => {
 		return (
 			<div className="tradingCenterList">
-				{this.state.outwardDeliveryPlan && this.state.outwardDeliveryPlan.map(item => {
+				{this.state.outwardDeliveryPlan.length > 0 && this.state.outwardDeliveryPlan.map(item => {
 					return <div className="item" key={item.id}>
 						<Link to={`/outwardDeliveryPlanDet`}>
 							<div className="list">
@@ -201,6 +206,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
+				{ this.state.outwardDeliveryPlan.length === 0 && <NoData/> }
 			</div >
 		)
 	}
