@@ -11,7 +11,7 @@ var loading = 1
 request.interceptors.request.use(
   config => {
     if(loading === 1){
-      Toast.loading('Loading...',0)
+      Toast.loading('正在加载',0)
     }
     loading++
     if(config.url === 'nuts/file/upload'){

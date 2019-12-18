@@ -152,6 +152,17 @@ const api = {
   GetleaveTypeOptions(params){
     return request.get('admin/attendance/getleaveTypeOptions',params)
   },
+
+   //加班类型
+   GetOvertimeTypeOptions(params){
+    return request.get('admin/attendance/getOvertimeTypeOptions',params)
+  },
+
+   //外出类型
+   GetEgressTypeOptions(params){
+    return request.get('admin/attendance/getEgressTypeOptions',params)
+  },
+
   //请假审批状态
   GetAuditTypeOptions(params){
     return request.get('admin/attendance/getAuditTypeOptions',params)

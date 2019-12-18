@@ -48,6 +48,7 @@ export default class AttendanceAdd extends React.Component {
       status:`${getDataQuery('status')}`,
       leaveId:`${getDataQuery('id')}`,
       applyType:`${getDataQuery('applyType')}`,
+      addStatus:`${getDataQuery('addStatus')}`,//1-新增
       title: title,
       dayopen: false,
       dayopen2: false,
@@ -151,13 +152,33 @@ export default class AttendanceAdd extends React.Component {
   componentWillMount() {
     const that = this;
     document.documentElement.scrollTop = document.body.scrollTop = 0;
-    that.GetleaveTypeOptions();//获取请假类型
+    if(that.state.applyType=="qjsq"){
+      that.GetleaveTypeOptions();//获取请假类型
+      that.setState({
+        title:"请假"
+      })
+    }
+
+    if(that.state.applyType=="wcsq"){
+      that.GetEgressTypeOptions();//获取外出类型
+      that.setState({
+        title:"外出"
+      })
+    }
+
+    if(that.state.applyType=="jbsq"){
+      that.GetOvertimeTypeOptions();//获取加班类型
+      that.setState({
+        title:"加班"
+      })
+    }
+
     if(that.state.leaveId!="null"){
       that.GetDefaultPersonalInfo();//获取考勤部门信息
     }
 
-    //请假申请
-    if(that.state.applyType=="qjsq"){
+    //新增申请
+    if(that.state.addStatus==1){
       that.resetForm();
       that.setState({
         status:"申请"
@@ -181,7 +202,42 @@ export default class AttendanceAdd extends React.Component {
           leaveTypeOptions: options
         })
       }
+    })
+  }
 
+  //获取加班类型
+  GetOvertimeTypeOptions=()=>{
+    const that = this;
+    let params = {}
+    api.GetOvertimeTypeOptions(params).then(res => {
+      console.log('加班类型:', res);
+      let rawData = res.data || [];
+      let options = rawData.map((option) => {
+        return { label: option.text, value: option.value }
+      })
+      if (res.status === 0) {
+        that.setState({
+          leaveTypeOptions: options
+        })
+      }
+    })
+  }
+
+  //外出类型
+  GetEgressTypeOptions=()=>{
+    const that = this;
+    let params = {}
+    api.GetEgressTypeOptions(params).then(res => {
+      console.log('外出类型:', res);
+      let rawData = res.data || [];
+      let options = rawData.map((option) => {
+        return { label: option.text, value: option.value }
+      })
+      if (res.status === 0) {
+        that.setState({
+          leaveTypeOptions: options
+        })
+      }
     })
   }
 
@@ -252,6 +308,11 @@ export default class AttendanceAdd extends React.Component {
       console.log('保存请假:', res);
       if (res.status === 0) {
         Toast.info(res.message);
+        if(that.state.addStatus==1){//新增申请时
+           setTimeout(function(){
+              window.history.go(-1)
+           },1000)
+        }
       }else{
         Toast.info(res.message);
       }
@@ -259,11 +320,9 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //提交请假
+  //提交审核
   GetSubmitLeave=()=>{
     const that=this;
-    //that.state.isLock=true;
-    //Toast.loading('正在提交');
     let params={
       id:that.state.leaveId,//传入的id
     };
@@ -274,7 +333,6 @@ export default class AttendanceAdd extends React.Component {
       }else{
         Toast.info("提交失败");
       }
-      //that.state.isLock=false;
     })
 
   }
@@ -291,14 +349,16 @@ export default class AttendanceAdd extends React.Component {
   //提交审核
   handleSubmit=()=>{
     const that=this;
+    Toast.info("正在提交");
     if(that.state.isSave){
       that.GetSubmitLeave();
+      // if(that.state.addStatus==1){//新增申请时
+      //   window.history.go(-1)
+      // }
     }else{
       Toast.info("请先保存");
     }
   }
-
-
 
 
   render() {
@@ -312,18 +372,22 @@ export default class AttendanceAdd extends React.Component {
             </div>
           </div>
         </div>
+    let itemDanhao=
+        <div className="item">
+          <div className="l">
+            请假单号
+            </div>
+          <div className="r">
+            {/* <input value={this.state.form.qjNum} placeholder="请输入" onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{qjNum:e.target.value})}))}} /> */}
+            {this.state.form.qjNum}
+          </div>
+        </div>
     return (
       <div>
         <Header title={this.state.title} back={true}></Header>
         <div className="attendnce-add">
-          <div className="item">
-            <div className="l">
-              请假单号
-              </div>
-            <div className="r">
-              <input value={this.state.form.qjNum} placeholder="请输入" onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{qjNum:e.target.value})}))}} />
-            </div>
-          </div>
+          {/* 新增时，不显示请假单号 */}
+          {this.state.addStatus!=1?itemDanhao:''}
           <div className="item">
             <div className="l">
               请假类型
@@ -353,7 +417,8 @@ export default class AttendanceAdd extends React.Component {
               天数
               </div>
             <div className="r">
-              <input value={this.state.form.days} placeholder="请输入"  onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{days:e.target.value})}))}} />
+              {/* <input value={this.state.form.days} placeholder="请输入"  onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{days:e.target.value})}))}} /> */}
+              {this.state.form.days}
             </div>
           </div>
           <div className="item">

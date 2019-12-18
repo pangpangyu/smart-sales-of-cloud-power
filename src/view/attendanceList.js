@@ -137,27 +137,10 @@ class AttendanceList extends React.Component {
         if(this.state.applyType==''){
             Toast.info("请选择");
         }else{
-            window.location.href="/attendanceAdd?applyType="+this.state.applyType
+            window.location.href="/attendanceAdd?applyType="+this.state.applyType+"&addStatus=1" // addStatus=1 设为新增标识
         }
     }
-    
-    //请假审批状态
-    GetAuditTypeOptions=()=>{
-        const that = this
-        let params = {}
-        api.GetAuditTypeOptions(params).then(res => {
-            console.log('请假审批状态:', res)
-            if (res.status === 0) {
-                // that.setState(preState => {
-                //     return ({
-                //         dataList: [...preState.dataList, ...res.data.rows||[]],
-                //         total: res.data.rowCount,
-                //         isNoData: res.data.rowCount === 0 ? true : false,
-                //         pageIndex: page + 1
-                //     })
-                // })
-            }
-
+		
 	//请假审批状态
 	GetAuditTypeOptions = () => {
 		const that = this
