@@ -15,7 +15,7 @@ export default class InfoDelivery extends React.Component{
     this.state = {
       list:[],
       pageIndex:0,
-      pageSize:10,
+      pageSize:1000,
       keyword:'',
       total:10000,
       isNotData: '1',

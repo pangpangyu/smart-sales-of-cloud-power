@@ -51,9 +51,9 @@ export default class Test extends React.Component {
                     </div>
                 </div>
                 {this.state.active === '1' && <TradingCenterList type='2' active={this.state.active} unifiedLoadRegulation={this.state.unifiedLoadRegulation} />}
-                {this.state.active === '2' && <TradingCenterList type='2' active={this.state.active} backupInfo={this.state.backupInfo} />}
-                {this.state.active === '3' && <TradingCenterList type='2' active={this.state.active} maintenanceInfo={this.state.maintenanceInfo} />}
-                {this.state.active === '4' && <TradingCenterList type='2' active={this.state.active} block={this.state.block} />}
+                {this.state.active === '2' && <TradingCenterList type='2' active={this.state.active} backupInfo={this.props.backupList} />}
+                {this.state.active === '3' && <TradingCenterList type='2' active={this.state.active} maintenanceInfo={this.props.substationList} />}
+                {this.state.active === '4' && <TradingCenterList type='2' active={this.state.active} block={this.props.blackList} />}
             </div>
         )
     }

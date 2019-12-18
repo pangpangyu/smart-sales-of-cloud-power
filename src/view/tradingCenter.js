@@ -24,12 +24,18 @@ export default class Test extends React.Component {
 				{ id: '3', type: '3', title: '实时市场交易' }
 			],
 			noticeList:[],
-			resultList:[]
+			resultList:[],
+			backupList:[],
+			substationList:[],
+			blackList:[]
 		}
 	}
 	componentWillMount(){
 		this.getNoticeList()
 		this.getResultList()
+		this.getBackupList()
+		this.getSubstationList()
+		this.getBlackList()
 	}
 	//中长期交易交易-公告信息列表
 	getNoticeList = () => {
@@ -46,6 +52,33 @@ export default class Test extends React.Component {
 		api.getResultList(params).then(res => {
 			this.setState({
 				resultList:res.data.rows
+			})
+		})
+	}
+	//日前交易市场备用信息
+	getBackupList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.GetBackupList(params).then(res => {
+			this.setState({
+				backupList:res.data.rows
+			})
+		})
+	}
+	//日前交易市场输变电检修信息
+	getSubstationList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.GetSubstationList(params).then(res => {
+			this.setState({
+				substationList:res.data.rows
+			})
+		})
+	}
+	//日前交易市场阻塞
+	getBlackList = () => {
+		let params = `?rowNumber=0&pageSize=10`
+		api.GetBlackList(params).then(res => {
+			this.setState({
+				blackList:res.data.rows
 			})
 		})
 	}
@@ -84,7 +117,7 @@ export default class Test extends React.Component {
 							</div>
 						</div>
 						{this.state.active === '1' && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
-						{this.state.active === '2' && <DayAheadMarket />}
+						{this.state.active === '2' && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} blackList={this.state.blackList}/>}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
 				</div>
