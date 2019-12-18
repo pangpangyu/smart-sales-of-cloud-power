@@ -175,6 +175,53 @@ const api = {
   GetSubmitLeave(params) {
     return request.post('admin/attendance/submitSign', params)
   },
+
+  //获取外出管理列表
+  GetvOvertimeTableData(params) {
+    return request.post('admin/attendance/getvOvertimeTableData', params)
+  },
+
+  //获取外出信息详细
+  GetDefaultEgressInfo(params) {
+    return request.get('admin/attendance/getDefaultEgressInfo', { params: params })
+  },
+  //保存外出
+  OneEgressSave(params) {
+    return request.post('admin/attendance/oneEgressSave', params)
+  },
+
+  //提交外出
+  EgressSubmitSign(params) {
+    return request.post('admin/attendance/egressSubmitSign', params)
+  },
+
+  //获取加班管理列表
+  GetOvertimeInfoTableData(params) {
+    return request.get('admin/attendance/getOvertimeInfoTableData', { params: params })
+  },
+
+  //获取加班信息详细
+  GetDefaultOvertimeInfo(params) {
+    return request.get('admin/attendance/getDefaultOvertimeInfo', { params: params })
+  },
+
+  //加班结算方式
+  GetSettlementTypeOptions(params) {
+    return request.get('admin/attendance/getSettlementTypeOptions', { params: params })
+  },
+
+   //保存加班
+   OneOvertimeSave(params) {
+    return request.post('admin/attendance/oneOvertimeSave', params)
+  },
+
+  //提交加班
+  OvertimeSubmitSign(params) {
+    return request.post('admin/attendance/overtimeSubmitSign', params)
+  },
+
+
+
   //信息列表
   GetInfoPublishData(params) {
     return request.post('admin/getInfoPublishData', params)
