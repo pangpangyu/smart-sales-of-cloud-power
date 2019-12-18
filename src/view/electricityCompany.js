@@ -22,7 +22,7 @@ export default class ElectricityCompany extends React.Component {
     } else if (this.props.match.params.type === '2') {
       //发电厂信息
       title = '发电企业'
-      searchShow = true
+      searchShow = false
     } else if (this.props.match.params.type === '3') {
       //合作方信息
       title = '合作方'
@@ -54,6 +54,7 @@ export default class ElectricityCompany extends React.Component {
       searchDrop: false,
       enterpriseName: '',
       areaName: '请选择',
+      hzfList: [],
     }
   }
 
@@ -96,7 +97,6 @@ export default class ElectricityCompany extends React.Component {
           transactionList: transactionList,
           geographicalAreaList: geographicalAreaList
         })
-        console.log(this.state.geographicalAreaList)
       }
     })
   }
@@ -108,7 +108,6 @@ export default class ElectricityCompany extends React.Component {
   }
   //获取交易类型
   transactionOnChange = (value) => {
-    console.log(value)
     if (value.length > 0) {
       this.setState({
         transactionValue: value
@@ -245,6 +244,7 @@ export default class ElectricityCompany extends React.Component {
         })
         that.setState({
           companyList: [...this.state.companyList, ...res.data.rows],
+          hzfList: [...this.state.companyList, ...res.data.rows],
           total: res.data.rowCount,
           noData: res.data.rowCount === 0 ? true : false
         })
@@ -306,7 +306,17 @@ export default class ElectricityCompany extends React.Component {
       } else if (this.state.type === '2') {
         this.getElectricityGenerationList()
       } else if (this.state.type === '3') {
-        this.getPartnersList()
+        //this.getPartnersList()
+        let arr = this.state.hzfList.filter(item => item.name.indexOf(this.state.keyword) > -1)
+        if (arr.length > 0) {
+          this.setState({
+            companyList: arr
+          })
+        } else {
+          this.setState({
+            noData: true
+          })
+        }
       } else if (this.state.type === '4') {
         this.getSellingElectricityList()
       }
@@ -369,6 +379,13 @@ export default class ElectricityCompany extends React.Component {
           </div>
         </div>
         <div style={{ height: '10px' }}></div>
+        <div className="electricityCompany-search">
+          <div className="search-input">
+            <form onSubmit={(e) => this.getSearchTxt(e)}>
+              <input type="search" placeholder="搜公告标题、内容、介绍" onChange={(e) => this.getSearchData(e.target.value)} />
+            </form>
+          </div>
+        </div>
         {this.state.companyList && this.state.companyList.map((item, index) => {
           return <div key={index}>
             <div className="electricityCompany-item">
@@ -393,25 +410,25 @@ export default class ElectricityCompany extends React.Component {
       keyword: val
     })
   }
-  getSearchTxt = (e) => {
-    e.preventDefault();
-    //搜索事件
-    const that = this
-    that.setState({
-      pageIndex: 0,
-      companyList: []
-    }, () => {
-      if (that.state.type === '1') {
-        that.getPowerUserList()
-      } else if (that.state.type === '2') {
-        that.getElectricityGenerationList()
-      } else if (that.state.type === '3') {
-        that.getPartnersList()
-      } else if (that.state.type === '4') {
-        that.getSellingElectricityList()
-      }
-    })
-  }
+  // getSearchTxt = (e) => {
+  //   e.preventDefault();
+  //   //搜索事件
+  //   const that = this
+  //   that.setState({
+  //     pageIndex: 0,
+  //     companyList: []
+  //   }, () => {
+  //     if (that.state.type === '1') {
+  //       that.getPowerUserList()
+  //     } else if (that.state.type === '2') {
+  //       that.getElectricityGenerationList()
+  //     } else if (that.state.type === '3') {
+  //       that.getPartnersList()
+  //     } else if (that.state.type === '4') {
+  //       that.getSellingElectricityList()
+  //     }
+  //   })
+  // }
   //合作方
   partners = () => {
     return (
@@ -532,7 +549,7 @@ export default class ElectricityCompany extends React.Component {
           {this.state.type === '4' && this.sellingElectricity()}
 
         </Scroll>
-        {this.state.noData && <div style={{paddingTop:'100px'}}><NoData /></div>}
+        {this.state.noData && <div style={{ paddingTop: '200px' }}><NoData /></div>}
         {/* 交易类型选择 */}
         <div className={this.state.transactionOpen ? 'modal on' : 'modal'}>
           <div className="modal_bg" onClick={() => this.setState({ transactionOpen: false })}></div>
