@@ -61,9 +61,12 @@ export default class AttendanceAdd extends React.Component {
       startDateTime: now,
       endDateTime: now,
       leaveType: "",
+      jsType:"",
       leaveTypeLabel:`${getDataQuery('type')}`,
+      jsTypeLabel:'',
 
       leaveTypeOptions: [],//请假类型
+      settlementOptions:[],//加班结算方式
       isLock:false,
       isSave:false,
 
@@ -128,6 +131,26 @@ export default class AttendanceAdd extends React.Component {
     });
   }
 
+
+  //请假类型选择
+  onChangeJStype = (val) => {
+    console.log(val[0]);
+    this.setState({
+      jsType: val
+    })
+  }
+
+
+  getType2 = () => {
+    var typeVal = (this.state.jsType && this.state.jsType[0]) || "0"
+    console.log(typeVal);
+    this.setState({
+      jsopen: false,
+      jsTypeLabel: getListItem(this.state.settlementOptions, 'value', typeVal || "0")[0].label,
+      form: Object.assign({}, this.state.form, { type: typeVal })
+    });
+  }
+
   getDate = (type) => {
     const that = this;
     this.getTimeDiff();
@@ -155,6 +178,7 @@ export default class AttendanceAdd extends React.Component {
 
   componentWillMount() {
     const that = this;
+    that.GetSettlementTypeOptions()
     document.documentElement.scrollTop = document.body.scrollTop = 0;
     if(that.state.applyType=="qjsq"){
       that.GetleaveTypeOptions();//获取请假类型
@@ -172,13 +196,23 @@ export default class AttendanceAdd extends React.Component {
 
     if(that.state.applyType=="jbsq"){
       that.GetOvertimeTypeOptions();//获取加班类型
+      that.GetSettlementTypeOptions();//加班结算方式
       that.setState({
         title:"加班"
       })
     }
 
+    //获取详细信息
     if(that.state.leaveId!="null"){
-      that.GetDefaultPersonalInfo();//获取考勤部门信息
+      if(that.state.applyType=="qjsq"){
+        that.GetDefaultPersonalInfo();//获取考勤部门信息
+      }
+      if(that.state.applyType=="wcsq"){
+        that.GetDefaultEgressInfo();//获取考勤部门信息
+      }
+      if(that.state.applyType=="jbsq"){
+        that.GetDefaultPersonalInfo();//获取考勤部门信息
+      }
     }
 
     //新增申请
@@ -226,6 +260,26 @@ export default class AttendanceAdd extends React.Component {
       }
     })
   }
+
+  //加班结算方式
+  GetSettlementTypeOptions=()=>{
+    const that = this;
+    let params = {}
+    api.GetSettlementTypeOptions(params).then(res => {
+      console.log('加班结算方式:', res);
+      let rawData = res.data || [];
+      let options = rawData.map((option) => {
+        return { label: option.text, value: option.value }
+      })
+      if (res.status === 0) {
+        that.setState({
+          settlementOptions: options
+        })
+      }
+    })
+  }
+
+
 
   //外出类型
   GetEgressTypeOptions=()=>{
@@ -277,15 +331,75 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
+  //获取外出信息详细
+  GetDefaultEgressInfo=()=>{
+    const that=this;
+    let params={
+      //id:that.state.leaveId,
+      id:9,
+    };
+    api.GetDefaultEgressInfo(params).then(res => {
+      console.log('获取外出信息详细:', res);
+      if (res.status === 0) {
+        // let newform=that.state.form;
+        // // newform.qjNum=res.data.workDetailId;//单号
+        // newform.leaveReason=res.data.leaveReason;//理由
+        // newform.days=res.data.days;//天数
+        // newform.startTime=res.data.startTime;//结束时间
+        // newform.endTime=res.data.endTime;//结束时间
+        // //类型
+        // //状态
+        // newform.departmentName=res.data.departmentName;
+        // newform.positionName=res.data.positionName;
+        // newform.systemUserName=res.data.systemUserName;
+
+
+        // that.setState({
+        //   form:newform
+        // })
+        
+      }
+
+    })
+  }
+
+  //获取加班信息详细
+  GetDefaultOvertimeInfo=()=>{
+    const that=this;
+    let params={
+      //id:that.state.leaveId,
+      id:9,
+    };
+    api.GetDefaultOvertimeInfo(params).then(res => {
+      console.log('获取加班信息详细:', res);
+      if (res.status === 0) {
+        // let newform=that.state.form;
+        // // newform.qjNum=res.data.workDetailId;//单号
+        // newform.leaveReason=res.data.leaveReason;//理由
+        // newform.days=res.data.days;//天数
+        // newform.startTime=res.data.startTime;//结束时间
+        // newform.endTime=res.data.endTime;//结束时间
+        // //类型
+        // //状态
+        // newform.departmentName=res.data.departmentName;
+        // newform.positionName=res.data.positionName;
+        // newform.systemUserName=res.data.systemUserName;
+
+
+        // that.setState({
+        //   form:newform
+        // })
+        
+      }
+
+    })
+  }
 
   //保存请假
   GetSaveLeave = () => {
     const that = this;
     let params = { 
       "metaFormData": { 
-        // "userinfo.departmentName": that.state.form.departmentName, 
-        // "userinfo.positionName":that.state.form.positionName, 
-        // "userinfo.systemUserName": that.state.form.systemUserName, 
         "userinfo.departmentName": "总经理办公室", 
         "userinfo.positionName":"总经理", 
         "userinfo.systemUserName": "APP测试", 
@@ -299,7 +413,7 @@ export default class AttendanceAdd extends React.Component {
         "createDateTime1": "", 
         "id": "", 
         "userinfo.id": "", 
-        "leaveReason": "", 
+        "leaveReason": that.state.form.leaveReason, 
         "leaveType": 0, 
         "attachedFile1": [] 
       }, 
@@ -324,7 +438,7 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //提交审核
+  //提交请假审核
   GetSubmitLeave=()=>{
     const that=this;
     let params={
@@ -341,13 +455,122 @@ export default class AttendanceAdd extends React.Component {
 
   }
 
+  //保存外出
+  OneEgressSave=()=>{
+    const that=this;
+    let params={
+      "metaFormData": {
+        "startTime": that.state.form.startTime, 
+        "endTime": that.state.form.endTime, 
+        "days": that.state.form.days, 
+        "containDays": "",
+        "containHours": "",
+        "hours": "0",
+        "egressAddress": "s's",
+        "creator": "APP测试",
+        "createDateTime1": "",
+        "id": "",
+        "egressReason": that.state.form.leaveReason,
+        "egressType": "1",
+        "attachedFile1": []
+      },
+      "type": "add",
+      "id": "",
+      "ids1": [],
+      "egressId": "undefined"
+    };
+    api.OneEgressSave(params).then(res => {
+      console.log('保存外出:', res);
+      if (res.status === 0) {
+        Toast.info(res.message);
+      }else{
+        Toast.info(res.message);
+      }
+
+    })
+  }
+
+  //提交外出审核
+  EgressSubmitSign=()=>{
+    const that=this;
+    let params={
+      //id:that.state.leaveId,//传入的id
+      id:12
+    };
+    api.GetSubmitLeave(params).then(res=>{
+      console.log('提交外出审核',res)
+      if(res.status === 0){
+        Toast.info("提交成功");       
+      }else{
+        Toast.info("提交失败");
+      }
+    })
+  }
+
+  //保存加班
+  OneOvertimeSave=()=>{
+    const that=this;
+    let params={
+      "metaFormData": {
+        "creator": "APP测试",
+        "createDateTime1": "2019-12-18 21:01:22",
+        "id": "",
+        "overtimeReason": "搜索",
+        "attachedFile1": []
+      },
+      "type": "add",
+      "id": 0,
+      "ids1": [15],
+      "overtimeId": "undefined"
+    };
+    api.OneOvertimeSave(params).then(res => {
+      console.log('保存加班:', res);
+      if (res.status === 0) {
+        Toast.info(res.message);
+      }else{
+        Toast.info(res.message);
+      }
+
+    })
+  }
+
+  //提交加班审核
+  OvertimeSubmitSign=()=>{
+    const that=this;
+    let params={
+      //id:that.state.leaveId,//传入的id
+      id:12
+    };
+    api.OvertimeSubmitSign(params).then(res=>{
+      console.log('提交加班审核',res)
+      if(res.status === 0){
+        Toast.info("提交成功");       
+      }else{
+        Toast.info("提交失败");
+      }
+    })
+  }
+
+
   //保存
   handleSave=()=>{
     const that=this;
     that.setState({
       isSave:true
     })
-    that.GetSaveLeave();
+
+    if(that.state.applyType=="qjsq"){//请假
+      that.GetSaveLeave();
+    }
+
+    if(that.state.applyType=="wcsq"){//外出
+      that.OneEgressSave();
+    }
+
+    if(that.state.applyType=="jbsq"){//加班
+      that.OneOvertimeSave();
+    }
+    
   }
 
   //提交审核
@@ -355,10 +578,18 @@ export default class AttendanceAdd extends React.Component {
     const that=this;
     Toast.info("正在提交");
     if(that.state.isSave){
-      that.GetSubmitLeave();
-      // if(that.state.addStatus==1){//新增申请时
-      //   window.history.go(-1)
-      // }
+      if(that.state.applyType=="qjsq"){//请假
+        that.GetSubmitLeave();
+      }
+  
+      if(that.state.applyType=="wcsq"){//外出
+        that.EgressSubmitSign();
+      }
+  
+      if(that.state.applyType=="jbsq"){//加班
+        that.OvertimeSubmitSign();
+      }
+
     }else{
       Toast.info("请先保存");
     }
@@ -442,6 +673,15 @@ export default class AttendanceAdd extends React.Component {
             {this.state.leaveCode}
           </div>
         </div>
+    let jiesuanType=
+          <div className="item">
+          <div className="l">
+            结算类型
+            </div>
+          <div className="r gray">
+            <span onClick={() => this.setState({ jsopen: true })}>{this.state.jsTypeLabel || '请选择'}<i className="iconfont iconyou"></i></span>
+          </div>
+        </div>
     return (
       <div>
         <Header title={this.state.title} back={true}></Header>
@@ -477,11 +717,13 @@ export default class AttendanceAdd extends React.Component {
               天数
               </div>
             <div className="r">
-              {/* <input value={this.state.form.days} placeholder="请输入"  onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{days:e.target.value})}))}} /> */}
               {/* {this.state.form.days} */}
               {this.getTimeDiff()}
             </div>
           </div>
+
+          {this.state.applyType=="jbsq"?jiesuanType:''}
+          
           <div className="item">
             <div className="l">
               状态
@@ -545,6 +787,24 @@ export default class AttendanceAdd extends React.Component {
             <div className="btns">
               <Button className="btn" type="primary" onClick={() => this.setState({ qjopen: false })}>取消</Button>
               <Button className="btn btn1" type="primary" onClick={this.getType}>确定</Button>
+            </div>
+          </div>
+        </div>
+
+        {/* 加班结算*/}
+        <div className={this.state.jsopen ? 'modal on' : 'modal'}>
+          <div className="modal_bg" onClick={() => this.setState({ qjopen: false })}></div>
+          <div className="pick_box">
+            <PickerView
+              data={this.state.settlementOptions}
+              value={this.state.jsType}
+              cascade={false}
+              onChange={this.onChangeJStype}
+            />
+            <div className="module-space"></div>
+            <div className="btns">
+              <Button className="btn" type="primary" onClick={() => this.setState({ qjopen: false })}>取消</Button>
+              <Button className="btn btn1" type="primary" onClick={this.getType2}>确定</Button>
             </div>
           </div>
         </div>

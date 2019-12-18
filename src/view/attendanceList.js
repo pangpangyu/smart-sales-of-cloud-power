@@ -52,6 +52,8 @@ class AttendanceList extends React.Component {
 		const that = this;
 		document.documentElement.scrollTop = document.body.scrollTop = 0;
 		that.queryDataList(1)//考勤列表
+		that.GetvOvertimeTableData(1)//外出列表
+		that.GetOvertimeInfoTableData(1)//加班列表
 		that.GetAuditTypeOptions();//请假审批状态
 	}
 
@@ -80,6 +82,63 @@ class AttendanceList extends React.Component {
 
 		})
 	}
+
+	// 获取外出管理列表
+	GetvOvertimeTableData = (page, loadmoreResolve) => {
+		const that = this
+		let params={
+			"rowNumber": this.state.pageIndex,
+			"pageSize": 10,
+			"conditions": [{
+				"name": "name",
+				"operator": "%",
+				"value": this.state.searchInput
+			}],
+			"random": 0
+		}
+		api.GetvOvertimeTableData(params).then(res => {
+			console.log('外出管理列表:', res)
+			if (res.status === 0) {
+				that.setState(preState => {
+					return ({
+						dataList: [...preState.dataList, ...res.data.rows || []],
+						total: res.data.rowCount,
+						isNoData: res.data.rowCount === 0 ? true : false,
+						pageIndex: page + 1
+					})
+				})
+				loadmoreResolve && loadmoreResolve();
+			}
+
+		})
+	}
+
+	// 获取加班管理列表
+	GetOvertimeInfoTableData = (page, loadmoreResolve) => {
+		const that = this
+		console.log('11', this.state.searchInput)
+		let params = {
+			"rowNumber": this.state.pageIndex,
+			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
+			"pageSize": 10
+		}
+		api.GetLeaveTableData(params).then(res => {
+			console.log('获取加班管理列表:', res)
+			if (res.status === 0) {
+				that.setState(preState => {
+					return ({
+						dataList: [...preState.dataList, ...res.data.rows || []],
+						total: res.data.rowCount,
+						isNoData: res.data.rowCount === 0 ? true : false,
+						pageIndex: page + 1
+					})
+				})
+				loadmoreResolve && loadmoreResolve();
+			}
+
+		})
+	}
+
 
 	// 搜索
 	handleSearchInput = e => {
