@@ -141,42 +141,6 @@ export default class InfoDeliveyAdd extends React.Component{
       openModel: !this.state.openModel
     })
   }
-  //
-  sendForm = () => {
-    const that = this
-    if(!that.state.title){
-      Toast.info('请填写标题', 2, null, false);
-      return
-    }
-    if(!that.state.value){
-      Toast.info('请选择发布位置', 2, null, false);
-      return
-    }
-    let params = {
-      title: this.state.title,
-      publishLocation: {
-        id: that.state.value[0]
-      },
-      content: this.state.content,
-      newsResource: this.state.source,
-      introduction: this.state.introduction
-    }
-    if(that.state.file1.id){
-      params.displayImage = {
-        id:that.state.file1.id
-      }
-    }
-    if(that.state.file2.id){
-      params.attachments = {
-        id:[that.state.file2.id]
-      }
-    }
-    api.CheckInfoPublishStatus(params).then(res => {
-      if(res.status === 0){
-        //Toast.info(res.message, 2, ()=>{window.history.go(-1)}, false);
-      }
-    })
-  }
   render(){
     return(
       <div style={{minHeight:'100vh',background:'#fff',paddingBottom:'45px'}}>
@@ -233,8 +197,8 @@ export default class InfoDeliveyAdd extends React.Component{
           </div>
           <div style={{height:'10px',background:'#f0f1f3'}}></div>
           <div className="submit-btn">
-            <button className="tj" onClick={ this.sendForm }>提交审核</button>
-            <button onClick={ this.setSaveEdit }>保存</button>
+            {/* <button className="tj">提交审核</button> */}
+            <button className="tj" onClick={ this.setSaveEdit }>保存</button>
           </div>
         </div>
         <div className={this.state.openModel ? 'infoDelivey-model on':'infoDelivey-model'}>

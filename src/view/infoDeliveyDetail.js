@@ -38,7 +38,7 @@ export default class InfoDeliveyDetail extends React.Component{
       { text: '确定', onPress: () => {
         let params = `?id=${that.state.id}`
         api.CencalpublishSubmit(params).then(res => {
-          if(res.state === 0){
+          if(res.status === 0){
             that.getDetail()
           }
         })
@@ -54,7 +54,7 @@ export default class InfoDeliveyDetail extends React.Component{
           ids: [parseInt(this.state.id)],
           status:'publish'
         }
-        api.UpdateInfoPublishStatus(params).then(res => {
+        api.CheckInfoPublishStatus(params).then(res => {
           if(res.state === 0){
             
           }
