@@ -28,6 +28,8 @@ function formatDate(date) {
   return `${dateStr} ${timeStr}:00`;
 }
 
+
+
 function getListItem(list, key, value) {
   return list.filter(item => {
     return item[key] === value;
@@ -47,6 +49,7 @@ export default class AttendanceAdd extends React.Component {
       leaveTypeParams:`${getDataQuery('type')}`,
       status:`${getDataQuery('status')}`,
       leaveId:`${getDataQuery('id')}`,
+      leaveCode:`${getDataQuery('leaveCode')}`,
       applyType:`${getDataQuery('applyType')}`,
       addStatus:`${getDataQuery('addStatus')}`,//1-新增
       title: title,
@@ -126,7 +129,8 @@ export default class AttendanceAdd extends React.Component {
   }
 
   getDate = (type) => {
-    const that = this
+    const that = this;
+    this.getTimeDiff();
     if (type == "start") {
       this.setState({
         dayopen: false,
@@ -252,7 +256,7 @@ export default class AttendanceAdd extends React.Component {
       console.log('获取考勤部门信息:', res);
       if (res.status === 0) {
         let newform=that.state.form;
-        newform.qjNum=res.data.workDetailId;//单号
+        // newform.qjNum=res.data.workDetailId;//单号
         newform.leaveReason=res.data.leaveReason;//理由
         newform.days=res.data.days;//天数
         newform.startTime=res.data.startTime;//结束时间
@@ -360,6 +364,63 @@ export default class AttendanceAdd extends React.Component {
     }
   }
 
+  getTimeDiff=()=>{
+    let begin=this.state.form.startTime;
+    let end=this.state.form.endTime;
+
+    if(!begin||!end){
+      return "0天"
+    }
+
+    if(begin>end){//交换时间
+      var tempTime=this.state.startDateTime;
+      this.setState({
+        form:Object.assign({},this.state.form,{startTime:end,endTime:begin}),
+        startDateTime:this.state.endDateTime,
+        endDateTime:tempTime
+      })
+      return "开始时间不能大于结束时间";
+    }
+
+    begin = new Date(begin);
+    end = new Date(end);
+    
+
+    //时间相差毫秒数
+    let span = end.getTime() - begin.getTime();
+    // console.info(span);//36290000
+    //计算相差天数
+    let result = '';
+    // let days = Math.floor(span / (24 * 3600 * 1000));
+    // result += days + '天';
+    //相差小时数
+    // let leave1 = span % (24 * 3600 * 1000);
+    // let hours = Math.floor(leave1 / (3600 * 1000))
+    // result += hours + '小时';
+    //相差分钟
+    // var leave2 = leave1 % (3600 * 1000)
+    // var minutes = Math.floor(leave2 / (60 * 1000));
+    // result += minutes + '分钟';
+    // //相差秒
+    // var level3 = leave2 % (60 * 1000)
+    // var seconds = Math.round(level3 / 1000);
+    // result += seconds + '秒';
+    // console.info(result); 
+
+    let days = span / (24 * 3600 * 1000);
+    days=days.toFixed(0) 
+    result += days+ '天';
+
+    // 保存计算天数到表单
+    if(this.state.form.days!==days){
+      this.setState({
+        form:Object.assign({},this.state.form,{days:days})
+      })
+      return "";
+    }    
+    return result;
+  }
+
 
   render() {
     let footerBtn=
@@ -378,8 +439,7 @@ export default class AttendanceAdd extends React.Component {
             请假单号
             </div>
           <div className="r">
-            {/* <input value={this.state.form.qjNum} placeholder="请输入" onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{qjNum:e.target.value})}))}} /> */}
-            {this.state.form.qjNum}
+            {this.state.leaveCode}
           </div>
         </div>
     return (
@@ -418,7 +478,8 @@ export default class AttendanceAdd extends React.Component {
               </div>
             <div className="r">
               {/* <input value={this.state.form.days} placeholder="请输入"  onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{days:e.target.value})}))}} /> */}
-              {this.state.form.days}
+              {/* {this.state.form.days} */}
+              {this.getTimeDiff()}
             </div>
           </div>
           <div className="item">
