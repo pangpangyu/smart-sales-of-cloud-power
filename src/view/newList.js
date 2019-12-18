@@ -76,7 +76,7 @@ class NewList extends React.Component {
   getComapnyNotice = () => {
     let params = {
       "rowNumber": this.state.pageIndex,
-      "pageSize": 10,
+      "pageSize": 1000,
       "conditions": [
         {
           "name": "group.name",
@@ -120,8 +120,8 @@ class NewList extends React.Component {
   }
   loadMoreData = () => {
     return new Promise((resolve, reject) => {
-      let pageIndex = this.state.pageIndex + 1
-
+      //let pageIndex = this.state.pageIndex + 1
+      resolve()
     })
   }
 
