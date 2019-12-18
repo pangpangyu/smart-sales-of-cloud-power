@@ -33,7 +33,7 @@ export default class InfoDeliveyDetail extends React.Component{
 
   revokeRelease = () => {
     const that = this
-    alert('撤销发布', '确定撤销发布???', [
+    alert('撤销发布', '确定撤销发布?', [
       { text: '取消', onPress: () => console.log('cancel') },
       { text: '确定', onPress: () => {
         let params = `?id=${that.state.id}`
@@ -46,6 +46,26 @@ export default class InfoDeliveyDetail extends React.Component{
     ])
   }
 
+  gotoRelease = () => {
+    alert('提交审核', '确定提交审核?', [
+      { text: '取消', onPress: () => console.log('cancel') },
+      { text: '确定', onPress: () => {
+        let params = {
+          ids: [parseInt(this.state.id)],
+          status:'publish'
+        }
+        api.UpdateInfoPublishStatus(params).then(res => {
+          if(res.state === 0){
+            
+          }
+        })
+      }},
+    ])
+  }
+
+  gotoEdit = () => {
+    window.location.href = `/infoDeliveyAdd?id=${this.state.id}`
+  }
   render(){
     return(
       <div className="infoDeliveyDetail" style={{paddingBottom:'45px'}}>
@@ -58,9 +78,9 @@ export default class InfoDeliveyDetail extends React.Component{
           <div style={{height:'10px',background:'#f0f1f3'}}></div>
           <div className="txt" dangerouslySetInnerHTML = {{ __html: this.state.detail.content }}></div>
         </div>
-        { this.state.detail.status === 'PUBLISH' && <div className="btn" onClick={this.revokeRelease}>撤销发布</div> }
-        { this.state.detail.status === 'CENCAL' && <div className="btn">已撤销发布</div> }
-        { this.state.detail.status === 'DRAFT' && <div className="btn">草稿</div> }
+        { this.state.detail.status === 'PUBLISH' && <div className="btn"><div className="b" onClick={this.revokeRelease}>撤销发布</div></div> }
+        { this.state.detail.status === 'CENCAL' && <div className="btn"><div className="b"  onClick={this.gotoRelease}>已撤销发布-重新发布</div></div> }
+        { this.state.detail.status === 'DRAFT' && <div className="btn"><div className="b"  onClick={this.gotoRelease}>提交审核</div><div className="b last"  onClick={this.gotoEdit}>编辑</div></div> }
       </div>
     )
   }
