@@ -355,8 +355,8 @@ export default class BsinessAnalysis extends React.Component {
     }
     let data = {
       dataX: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-      data1: [],
       data2: [],
+      data1: [],
     }
     api.GetSouDianCompanyAnalysis(params).then(res => {
       res.pictureData2.deviationPower.map(item => {
@@ -379,7 +379,7 @@ export default class BsinessAnalysis extends React.Component {
   paintingMap3 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart3'));
     let option = {
-      color: ['#288dfd', '#f9a30c'],
+      color: ['#f9a30c','#288dfd'],
       legend: {
         data: ['偏差电量', '偏差率']
       },
@@ -453,8 +453,8 @@ export default class BsinessAnalysis extends React.Component {
           type: 'value',
           scale: true,
           boundaryGap: data.dataX,
-          max: 500,
-          min: -500,
+          max: 10000,
+          min: -10000,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -472,8 +472,8 @@ export default class BsinessAnalysis extends React.Component {
           type: 'value',
           scale: true,
           boundaryGap: data.dataX,
-          max: 10000,
-          min: -10000,
+          max: 500,
+          min: -500,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -490,12 +490,17 @@ export default class BsinessAnalysis extends React.Component {
       ],
       series: [
         {
-          name: '偏差电量',
-          type: 'bar',
+          name: '偏差率',
+          type: 'line',
           xAxisIndex: 1,
           yAxisIndex: 1,
-          data: data.data2,
+          data: data.data1,
+        },
+        {
+          name: '偏差电量',
+          type: 'bar',
           barWidth: 10,
+          data: data.data2,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -504,11 +509,6 @@ export default class BsinessAnalysis extends React.Component {
               barBorderRadius: 10
             }
           }
-        },
-        {
-          name: '偏差率',
-          type: 'line',
-          data: data.data1
         }
       ]
     };
@@ -603,6 +603,25 @@ export default class BsinessAnalysis extends React.Component {
                 a = +a;
                 return isFinite(a) ? echarts.format.addCommas(+a / 1000) : '';
               }
+            }
+          }
+        },
+        {
+          type: 'value',
+          scale: true,
+          boundaryGap: data.dataX,
+          max: 100,
+          min: -100,
+          axisLine: {
+            lineStyle: {
+              type: 'solid',
+              color: '#eeeeee',
+              width: '1'
+            }
+          },
+          axisLabel: {
+            textStyle: {
+              color: '#666666',//坐标值得具体的颜色
             }
           }
         }
