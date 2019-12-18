@@ -32,7 +32,7 @@ class ContractManage extends React.Component {
             "userName": this.state.searchInput,
             "dateType": 0,
             "currentPage": page,
-            "sizePrePage": 10
+            "sizePrePage": 1000
         }
         api.GetContractList(params).then(res => {
             console.log('售电合同列表:', res)
