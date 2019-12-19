@@ -52,6 +52,7 @@ export default class AttendanceAdd extends React.Component {
       leaveCode:`${getDataQuery('leaveCode')}`,
       applyType:`${getDataQuery('applyType')}`,
       addStatus:`${getDataQuery('addStatus')}`,//1-新增
+      editType:`${getDataQuery('editType')}`,
       title: title,
       dayopen: false,
       dayopen2: false,
@@ -204,14 +205,14 @@ export default class AttendanceAdd extends React.Component {
 
     //获取详细信息
     if(that.state.leaveId!="null"){
-      if(that.state.applyType=="qjsq"){
+      if(that.state.editType=="qjedit"){
         that.GetDefaultPersonalInfo();//获取考勤部门信息
       }
-      if(that.state.applyType=="wcsq"){
-        that.GetDefaultEgressInfo();//获取考勤部门信息
+      if(that.state.editType=="wcedit"){
+        that.GetDefaultEgressInfo();//获取外出部门信息
       }
-      if(that.state.applyType=="jbsq"){
-        that.GetDefaultPersonalInfo();//获取考勤部门信息
+      if(that.state.editType=="jbedit"){
+        that.GetDefaultPersonalInfo();//获取加班部门信息
       }
     }
 

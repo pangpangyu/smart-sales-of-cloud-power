@@ -3,6 +3,7 @@ import Header from '../components/header';
 import Search from '../components/search';
 import { Link } from 'react-router-dom';
 import { Toast } from 'antd-mobile';
+import { Tabs, View } from 'antd-mobile';
 import NoData from '../components/noData';
 import api from '../api/index';
 import Scroll from 'react-bscroll';
@@ -17,26 +18,9 @@ class AttendanceList extends React.Component {
 		super(props)
 		this.state = {
 			searchInput: '',
-			dataList: [
-				{
-					createDateTime: "2019-12-06 10:18:22",
-					creator: "APP测试",
-					days: 1,
-					department: "总经理办公室",
-					endTime: "2019-12-29 00:00:00",
-					hours: 0,
-					id: 21,
-					index: 1,
-					leaveCode: "LV-LV-20191206-00002",
-					leaveReason: "1111",
-					leaveType: "事假",
-					position: "总经理",
-					startTime: "2019-12-28 00:00:00",
-					status: "未提交",
-					systemUserName: "APP测试",
-					usercode: "111129",
-				}
-			],
+			dataList: [],
+			dataListwc: [],
+			dataListjb: [],
 			addStatus: false,
 			applyType: '',
 
@@ -45,6 +29,12 @@ class AttendanceList extends React.Component {
 			total: 0,
 
 			isNoData: false,
+			tabs: [
+				{ id: 0, title: '请假' },
+				{ id: 1, title: '外出' },
+				{ id: 2, title: '加班' },
+			],
+			showLeaveType: 0,//考勤类型 对应tab id
 		}
 	}
 
@@ -52,9 +42,31 @@ class AttendanceList extends React.Component {
 		const that = this;
 		document.documentElement.scrollTop = document.body.scrollTop = 0;
 		that.queryDataList(1)//考勤列表
-		that.GetvOvertimeTableData(1)//外出列表
-		that.GetOvertimeInfoTableData(1)//加班列表
-		that.GetAuditTypeOptions();//请假审批状态
+		// that.GetvOvertimeTableData(1)//外出列表
+		// that.GetOvertimeInfoTableData(1)//加班列表
+		// that.GetAuditTypeOptions();//请假审批状态
+	}
+
+	//
+	handleTabs = (val) => {
+		const that = this;
+		console.log(val)
+		that.setState(preState => {
+			return ({
+				showLeaveType: val.id,
+			})
+
+		})
+
+		if (val.title == "请假") {
+			that.queryDataList(1)//考勤列表
+		}
+		if (val.title == "外出") {
+			that.GetOvertimeInfoTableData(1)//外出列表
+		}
+		if (val.title == "加班") {
+			that.GetvOvertimeTableData(1)//加班列表
+		}
 	}
 
 	// 获取考勤列表
@@ -83,10 +95,10 @@ class AttendanceList extends React.Component {
 		})
 	}
 
-	// 获取外出管理列表
+	// 获取加班管理列表
 	GetvOvertimeTableData = (page, loadmoreResolve) => {
 		const that = this
-		let params={
+		let params = {
 			"rowNumber": this.state.pageIndex,
 			"pageSize": 10,
 			"conditions": [{
@@ -97,11 +109,11 @@ class AttendanceList extends React.Component {
 			"random": 0
 		}
 		api.GetvOvertimeTableData(params).then(res => {
-			console.log('外出管理列表:', res)
+			console.log('加班管理列表:', res)
 			if (res.status === 0) {
 				that.setState(preState => {
 					return ({
-						dataList: [...preState.dataList, ...res.data.rows || []],
+						dataListjb: [...preState.dataListjb, ...res.data.rows || []],
 						total: res.data.rowCount,
 						isNoData: res.data.rowCount === 0 ? true : false,
 						pageIndex: page + 1
@@ -111,9 +123,10 @@ class AttendanceList extends React.Component {
 			}
 
 		})
+
 	}
 
-	// 获取加班管理列表
+	// 获取外出管理列表
 	GetOvertimeInfoTableData = (page, loadmoreResolve) => {
 		const that = this
 		console.log('11', this.state.searchInput)
@@ -122,12 +135,12 @@ class AttendanceList extends React.Component {
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
 			"pageSize": 10
 		}
-		api.GetLeaveTableData(params).then(res => {
-			console.log('获取加班管理列表:', res)
+		api.GetOvertimeInfoTableData(params).then(res => {
+			console.log('获取外出管理列表:', res)
 			if (res.status === 0) {
 				that.setState(preState => {
 					return ({
-						dataList: [...preState.dataList, ...res.data.rows || []],
+						dataListwc: [...preState.dataListwc, ...res.data.rows || []],
 						total: res.data.rowCount,
 						isNoData: res.data.rowCount === 0 ? true : false,
 						pageIndex: page + 1
@@ -191,15 +204,15 @@ class AttendanceList extends React.Component {
 
 	}
 
-    //申请确定
-    handleOk=e=>{
-        if(this.state.applyType==''){
-            Toast.info("请选择");
-        }else{
-            window.location.href="/attendanceAdd?applyType="+this.state.applyType+"&addStatus=1" // addStatus=1 设为新增标识
-        }
-    }
-		
+	//申请确定
+	handleOk = e => {
+		if (this.state.applyType == '') {
+			Toast.info("请选择");
+		} else {
+			window.location.href = "/attendanceAdd?applyType=" + this.state.applyType + "&addStatus=1" // addStatus=1 设为新增标识
+		}
+	}
+
 	//请假审批状态
 	GetAuditTypeOptions = () => {
 		const that = this
@@ -255,6 +268,97 @@ class AttendanceList extends React.Component {
 					</div>
 				</div>
 			</div>
+		let qingjia =
+			<ul className="attendance-list">
+				{
+					this.state.dataList.map((item, index) => {
+						return (
+							<Fragment key={index}>
+								<li className="item" >
+									<Link to={`/attendanceAdd?type=${item.leaveType}&id=${item.id}&status=${item.status}&leaveCode=${item.leaveCode}&editType=qjedit`}>
+										<div className="tit">{item.systemUserName}</div>
+										<div className="mes">
+											<span className="s1">请假类型：</span>
+											<span className="s2">{item.leaveType}</span>
+										</div>
+										<div className="mes">
+											<span className="s1">请假时间：</span>
+											<span className="s2">{item.startTime}</span>
+										</div>
+										<div className="mes">
+											<span className="s1">请假事由：</span>
+											<span className="s2">{item.leaveReason}</span>
+										</div>
+										<button className="btn-statue">{item.status}</button>
+									</Link>
+								</li>
+								<div className="module-space"></div>
+							</Fragment>
+						)
+					})
+				}
+			</ul>
+		let waichu =
+			<ul className="attendance-list">
+				{
+					this.state.dataListwc.map((item, index) => {
+						return (
+							<Fragment key={index}>
+								<li className="item" >
+									<Link to={`/attendanceAdd?type=${item.leaveType}&id=${item.id}&status=${item.status}&leaveCode=${item.leaveCode}&editType=wcedit`}>
+										<div className="tit">{item.systemUserName}</div>
+										<div className="mes">
+											<span className="s1">外出类型：</span>
+											<span className="s2">{item.leaveType}</span>
+										</div>
+										<div className="mes">
+											<span className="s1">外出时间：</span>
+											<span className="s2">{item.startTime}</span>
+										</div>
+										<div className="mes">
+											<span className="s1">外出事由：</span>
+											<span className="s2">{item.leaveReason}</span>
+										</div>
+										<button className="btn-statue">{item.status}</button>
+									</Link>
+								</li>
+								<div className="module-space"></div>
+							</Fragment>
+						)
+					})
+				}
+			</ul>
+
+		let jiaban =
+			<ul className="attendance-list">
+				{
+					this.state.dataListjb.map((item, index) => {
+						return (
+							<Fragment key={index}>
+								<li className="item" >
+									<Link to={`/attendanceAdd?type=${item.overtimeType}&id=${item.id}&status=${item.status}&leaveCode=${item.overtimeCode}&editType=jbedit`}>
+										<div className="tit">{item.systemUserName}</div>
+										<div className="mes">
+											<span className="s1">加班类型：</span>
+											<span className="s2">{item.overtimeType}</span>
+										</div>
+										<div className="mes">
+											<span className="s1">加班时间：</span>
+											<span className="s2">{item.startTime}</span>
+										</div>
+										<div className="mes">
+											<span className="s1">加班事由：</span>
+											<span className="s2">{item.overtimeReason}</span>
+										</div>
+										<button className="btn-statue">{item.status}</button>
+									</Link>
+								</li>
+								<div className="module-space"></div>
+							</Fragment>
+						)
+					})
+				}
+			</ul>
 		return (
 			<Fragment>
 				<Header title={'考勤管理'} back={true}>
@@ -262,6 +366,13 @@ class AttendanceList extends React.Component {
 				</Header>
 				<Search title={'搜考勤类型、请假类型、事由、状态'} onInput={this.handleSearchInput} onSubmit={this.handleSearchSubmit}></Search>
 				<div className="scroll-wrap">
+					<Tabs
+						tabs={this.state.tabs}
+						swipeable={false}
+						tabBarActiveTextColor="#288dfd"
+						onChange={this.handleTabs}
+					>
+					</Tabs>
 					{this.state.isNoData ? <NoData /> :
 						<Scroll
 							ref='scroll'
@@ -270,35 +381,11 @@ class AttendanceList extends React.Component {
 							isPullUpTipHide={false}
 							bounce={false}
 							click={true}>
-							<ul className="attendance-list">
-								{
-									this.state.dataList.map((item, index) => {
-										return (
-											<Fragment key={index}>
-												<li className="item" >
-													<Link to={`/attendanceAdd?type=${item.leaveType}&id=${item.id}&status=${item.status}&leaveCode=${item.leaveCode}`}>
-														<div className="tit">{item.systemUserName}</div>
-														<div className="mes">
-															<span className="s1">请假类型：</span>
-															<span className="s2">{item.leaveType}</span>
-														</div>
-														<div className="mes">
-															<span className="s1">请假时间：</span>
-															<span className="s2">{item.createDateTime}</span>
-														</div>
-														<div className="mes">
-															<span className="s1">请假事由：</span>
-															<span className="s2">{item.leaveReason}</span>
-														</div>
-														<button className="btn-statue">{item.status}</button>
-													</Link>
-												</li>
-												<div className="module-space"></div>
-											</Fragment>
-										)
-									})
-								}
-							</ul>
+
+
+							{this.state.showLeaveType == 0 ? qingjia : ''}
+							{this.state.showLeaveType == 1 ? waichu : ''}
+							{this.state.showLeaveType == 2 ? jiaban : ''}
 						</Scroll>}
 				</div>
 
