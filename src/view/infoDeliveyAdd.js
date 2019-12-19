@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import { PickerView, Toast } from 'antd-mobile';
 import api from '../api';
+import { getDataQuery } from '../utils/index'
 /**
  * 信息发布-添加信息
  */
@@ -19,12 +20,35 @@ export default class InfoDeliveyAdd extends React.Component{
       source: '',//来源
       introduction:'',//介绍
       content:'',//内容
-      txt:''
+      txt:'',
+      id:getDataQuery('id') || 0
     }
   }
 
   componentDidMount(){
     this.getInfoPublishDataDetail()
+    if(this.state.id !== 0){
+      this.getDetail()
+    }
+  }
+
+  getDetail = () => {
+    const that = this
+    let params = `?id=${this.state.id}`
+    api.GetInfoPublishDataDetail(params).then(res => {
+      if (res.status === 0) {
+        that.setState({
+          title:res.data.title,
+          content:res.data.content,
+          introduction:res.data.introduction,
+          source:res.data.newsResource,
+          value:[res.data.publishLocation],
+          file2:res.data.attachments.length > 0 ? res.data.attachments[0] : {},
+          file1:res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
+          txt:res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
+        })
+      }
+    })
   }
 
   getInfoPublishDataDetail = () => {
@@ -186,7 +210,7 @@ export default class InfoDeliveyAdd extends React.Component{
           <div className="view">
             <div className="item">
               <div className="l">标题</div>
-              <div className="r"><input type="text" onChange={this.handelChange1} placeholder="请输入"/></div>
+              <div className="r"><input type="text" value={this.state.title} onChange={this.handelChange1} placeholder="请输入"/></div>
             </div>
             <div className="item bgImg">
               <div className="l">发布位置</div>
@@ -198,7 +222,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div className="item2">
               <div className="l">介绍</div>
               <div className="r">
-                <textarea onChange={this.handelChange3} placeholder="超过200个字请到管理后台编辑"></textarea>
+                <textarea onChange={this.handelChange3} value={this.state.introduction} placeholder="超过200个字请到管理后台编辑"></textarea>
               </div>
             </div>
           </div>
@@ -207,7 +231,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div className="item2">
               <div className="l">内容</div>
               <div className="r">
-                <textarea onChange={this.handelChange4} placeholder="超过200个字请到管理后台编辑"></textarea>
+                <textarea onChange={this.handelChange4} value={this.state.content} placeholder="超过200个字请到管理后台编辑"></textarea>
               </div>
             </div>
           </div>
@@ -215,7 +239,7 @@ export default class InfoDeliveyAdd extends React.Component{
           <div className="view">
             <div className="item">
               <div className="l">来源</div>
-              <div className="r"><input type="text" onChange={this.handelChange2} placeholder="请输入"/></div>
+              <div className="r"><input type="text" value={this.state.source} onChange={this.handelChange2} placeholder="请输入"/></div>
             </div>
             <div className="item bgImg">
               <div className="l">图片</div>
