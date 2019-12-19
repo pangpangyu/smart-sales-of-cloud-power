@@ -410,25 +410,6 @@ export default class ElectricityCompany extends React.Component {
       keyword: val
     })
   }
-  // getSearchTxt = (e) => {
-  //   e.preventDefault();
-  //   //搜索事件
-  //   const that = this
-  //   that.setState({
-  //     pageIndex: 0,
-  //     companyList: []
-  //   }, () => {
-  //     if (that.state.type === '1') {
-  //       that.getPowerUserList()
-  //     } else if (that.state.type === '2') {
-  //       that.getElectricityGenerationList()
-  //     } else if (that.state.type === '3') {
-  //       that.getPartnersList()
-  //     } else if (that.state.type === '4') {
-  //       that.getSellingElectricityList()
-  //     }
-  //   })
-  // }
   //合作方
   partners = () => {
     return (
