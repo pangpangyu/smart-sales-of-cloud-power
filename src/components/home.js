@@ -26,7 +26,7 @@ class Home extends React.Component{
         { id:7 ,name:'考勤管理',url:require('../assets/img/img007.png'),link:'/attendanceList' },
         { id:8 ,name:'信息发布',url:require('../assets/img/img008.png'),link:'/infoDelivey' },
         { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/tradingCenter' },
-        { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'/' },
+        { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'xiaohui://schemas.onecloud.cn/im/conversation' },
         { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/todolist' },
         { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/newList/1' }
       ]
@@ -60,6 +60,9 @@ class Home extends React.Component{
     })
   }
 
+  gotoxiaohui = () => {
+    window.location.href = 'xiaohui://schemas.onecloud.cn/im/conversation'
+  }
 
   render(){
     return(
@@ -107,7 +110,9 @@ class Home extends React.Component{
                   resetAutoplay={false}
                 >
                   {this.state.newList.map(item => (
-                    <div className="v-item" key={item.id}><Link to="/newList/2">{item.title}</Link></div>
+                    <div className="v-item" key={item.id}>
+                      <Link to="/newList/2">{item.title}</Link>
+                    </div>
                   ))}
                 </Carousel>
               </div>
@@ -120,12 +125,16 @@ class Home extends React.Component{
           hasLine={false}
           renderItem={item => (
             <div style={{padding:'5px 0'}}>
-              <Link to={item.link}>
-                <img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
+              { item.link !== '' && <Link to={item.link}>
+                                      <img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
+                                      <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
+                                        <span>{item.name}</span>
+                                      </div>
+                                    </Link> }
+              { item.link === '' && <a href="javascript:void(0);" onClick={this.gotoxiaohui}><img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
                 <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
                   <span>{item.name}</span>
-                </div>
-              </Link>
+                </div></a>}
             </div>
           )}
         />
