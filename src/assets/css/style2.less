@@ -935,11 +935,16 @@
             font-size: 15px;
             height: 44px;
             line-height: 44px;
+            background: #288dfd;
             &.btn1{
-                background: #eee;
+                background: #fff;
                 color: #a6bcd4;
+                border-top: 2px solid #f9f9f9;
                 &::before{
-                    border-color: #eee;
+                    display: none;
+                }
+                &:active{
+                    background: #eee;
                 }
             }
         }
