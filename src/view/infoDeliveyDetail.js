@@ -89,9 +89,10 @@ export default class InfoDeliveyDetail extends React.Component {
           </form> */}
         </div>
         {this.state.detail.status === 'PUBLISH' && <div className="btn"><div className="b" onClick={this.revokeRelease}>撤销发布</div></div>}
-        {this.state.detail.status === 'CENCAL' && <div className="btn"><div className="b" onClick={this.gotoRelease}>已撤销发布-重新发布</div></div>}
-        {this.state.detail.status === 'DRAFT' && <div className="btn"><div className="b" onClick={this.gotoRelease}>提交审核</div><div className="b last" onClick={this.gotoEdit}>编辑</div></div>}
-
+        {this.state.detail.status === 'CENCAL' && <div className="btn"><div className="b">已撤销发布</div></div>}
+        {this.state.detail.status === 'DRAFT' && <div className="btn"><div className="b" onClick={this.gotoEdit}>编辑</div></div>}
+        {this.state.detail.status === 'AUDITING' && <div className="btn"><div className="b">审核中</div></div>}
+        
       </div>
     )
   }

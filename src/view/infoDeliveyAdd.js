@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import { PickerView, Toast } from 'antd-mobile';
 import api from '../api';
+import { getDataQuery } from '../utils/index'
 /**
  * 信息发布-添加信息
  */
@@ -19,30 +20,97 @@ export default class InfoDeliveyAdd extends React.Component{
       source: '',//来源
       introduction:'',//介绍
       content:'',//内容
-      txt:''
+      txt:'',
+      id:getDataQuery('id') || 0
     }
   }
 
   componentDidMount(){
     this.getInfoPublishDataDetail()
+    //if(this.state.id !== 0){
+      //this.getDetail()
+      //this.checkInfoPublishStatus()
+    //}
   }
 
-  getInfoPublishDataDetail = () => {
+  checkInfoPublishStatus = () => {
+    // let params = `?ids=${this.state.id}&status=publish`
+    let params = {
+      ids:[this.state.id],
+      status:'publish'
+    }
+    api.CheckInfoPublishStatus(params).then(res => {
+
+    })
+  }
+
+  getDetail = () => {
     const that = this
-    let params = '?id=undefined&type=create&_=1576403559824'
+    console.log(this.state.id)
+    let params = `?id=${this.state.id === '0' ? '' : this.state.id}`
     api.GetInfoPublishDataDetail(params).then(res => {
-      if(res.status === 0){
+      if (res.status === 0) {
         let arr = []
         res.data.options.map(item => {
-          //if(item.text){
-            arr.push({ label: item.text, value: item.value })
-          //}
+          arr.push({ label: item.text, value: item.value })
         })
         that.setState({
           options:arr
         })
+        that.setState({
+          options:arr,
+          title:res.data.title,
+          content:res.data.content,
+          introduction:res.data.introduction,
+          source:res.data.newsResource,
+          value:[res.data.publishLocation],
+          file2:res.data.attachments.length > 0 ? res.data.attachments[0] : {},
+          file1:res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
+          txt:res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
+        })
       }
     })
+  }
+
+  getInfoPublishDataDetail = () => {
+    const that = this
+    console.log(this.state.id)
+    let params = `?id=${this.state.id === 0 ? '' : this.state.id}`
+    api.GetInfoPublishDataDetail(params).then(res => {
+      if (res.status === 0) {
+        let arr = []
+        res.data.options.map(item => {
+          arr.push({ label: item.text, value: item.value })
+        })
+        that.setState({
+          options:arr
+        })
+        that.setState({
+          options:arr,
+          title:res.data.title,
+          content:res.data.content,
+          introduction:res.data.introduction,
+          source:res.data.newsResource,
+          value:[res.data.publishLocation],
+          file2:res.data.attachments.length > 0 ? res.data.attachments[0] : {},
+          file1:res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
+          txt:res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
+        })
+      }
+    })
+    // const that = this
+    // let params = `?id=${this.state.id}&type=${this.state.id === 0 ? 'create':'modify'}`
+    // api.GetInfoPublishDataDetail(params).then(res => {
+    //   if(res.status === 0){
+    //     let arr = []
+    //     res.data.options.map(item => {
+    //       arr.push({ label: item.text, value: item.value })
+    //     })
+    //     that.setState({
+    //       options:arr
+    //     })
+    //   }
+    // })
   }
 
   onChange = (value) => {
@@ -141,6 +209,43 @@ export default class InfoDeliveyAdd extends React.Component{
       openModel: !this.state.openModel
     })
   }
+
+  saveAndSubmit = () => {
+    const that = this
+    if(!that.state.title){
+      Toast.info('请填写标题', 2, null, false);
+      return
+    }
+    if(!that.state.value){
+      Toast.info('请选择发布位置', 2, null, false);
+      return
+    }
+    let params = {
+      title: this.state.title,
+      publishLocation: {
+        id: that.state.value[0]
+      },
+      content: this.state.content,
+      newsResource: this.state.source,
+      introduction: this.state.introduction
+    }
+    if(that.state.file1.id){
+      params.displayImage = {
+        id:that.state.file1.id
+      }
+    }
+    if(that.state.file2.id){
+      params.attachments = {
+        id:[that.state.file2.id]
+      }
+    }
+    api.saveAndSubmit(params).then(res => {
+      if(res.status === 0){
+        Toast.info(res.message, 2, ()=>{window.history.go(-1)}, false);
+      }
+    })
+  }
+
   render(){
     return(
       <div style={{minHeight:'100vh',background:'#fff',paddingBottom:'45px'}}>
@@ -149,7 +254,7 @@ export default class InfoDeliveyAdd extends React.Component{
           <div className="view">
             <div className="item">
               <div className="l">标题</div>
-              <div className="r"><input type="text" onChange={this.handelChange1} placeholder="请输入"/></div>
+              <div className="r"><input type="text" value={this.state.title} onChange={this.handelChange1} placeholder="请输入"/></div>
             </div>
             <div className="item bgImg">
               <div className="l">发布位置</div>
@@ -161,7 +266,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div className="item2">
               <div className="l">介绍</div>
               <div className="r">
-                <textarea onChange={this.handelChange3} placeholder="超过200个字请到管理后台编辑"></textarea>
+                <textarea onChange={this.handelChange3} value={this.state.introduction} placeholder="超过200个字请到管理后台编辑"></textarea>
               </div>
             </div>
           </div>
@@ -170,7 +275,7 @@ export default class InfoDeliveyAdd extends React.Component{
             <div className="item2">
               <div className="l">内容</div>
               <div className="r">
-                <textarea onChange={this.handelChange4} placeholder="超过200个字请到管理后台编辑"></textarea>
+                <textarea onChange={this.handelChange4} value={this.state.content} placeholder="超过200个字请到管理后台编辑"></textarea>
               </div>
             </div>
           </div>
@@ -178,7 +283,7 @@ export default class InfoDeliveyAdd extends React.Component{
           <div className="view">
             <div className="item">
               <div className="l">来源</div>
-              <div className="r"><input type="text" onChange={this.handelChange2} placeholder="请输入"/></div>
+              <div className="r"><input type="text" value={this.state.source} onChange={this.handelChange2} placeholder="请输入"/></div>
             </div>
             <div className="item bgImg">
               <div className="l">图片</div>
@@ -197,8 +302,8 @@ export default class InfoDeliveyAdd extends React.Component{
           </div>
           <div style={{height:'10px',background:'#f0f1f3'}}></div>
           <div className="submit-btn">
-            {/* <button className="tj">提交审核</button> */}
-            <button className="tj" onClick={ this.setSaveEdit }>保存</button>
+            <button className="tj" onClick={this.saveAndSubmit}>提交审核</button>
+            <button onClick={ this.setSaveEdit }>保存</button>
           </div>
         </div>
         <div className={this.state.openModel ? 'infoDelivey-model on':'infoDelivey-model'}>

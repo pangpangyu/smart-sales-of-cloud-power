@@ -36,6 +36,7 @@ request.interceptors.response.use(
   },
   error => {
     console.log(error)
+    loading = 1
     Toast.hide()
     Toast.info('系统异常，请联系开发人员',3)
     return Promise.reject(error)

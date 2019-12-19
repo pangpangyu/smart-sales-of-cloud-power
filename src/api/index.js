@@ -302,13 +302,17 @@ const api = {
   getmodelsNutsWorkflowProcessTask(params) {
     return request.get('/nuts/crud/audit/models_nuts_workflow_ProcessTask' + params)
   },
-  //信息发布1
+  //信息发布是否需要审核
   CheckInfoPublishStatus(params){
     return request.post('/admin/system/checkInfoPublishStatus' , params)
   },
   //信息发布2
   UpdateInfoPublishStatus(params){
     return request.post('/admin/system/updateInfoPublishStatus' , params)
+  },
+  //信息发布  --- 这个
+  saveAndSubmit(params){
+    return request.post('/admin/system/saveAndSubmit?isAudit=true' , params)
   }
 }
 
