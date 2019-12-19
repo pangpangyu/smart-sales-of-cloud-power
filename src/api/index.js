@@ -197,7 +197,7 @@ const api = {
 
   //获取加班管理列表
   GetOvertimeInfoTableData(params) {
-    return request.get('admin/attendance/getOvertimeInfoTableData', { params: params })
+    return request.post('admin/attendance/getOvertimeInfoTableData', params)
   },
 
   //获取加班信息详细
