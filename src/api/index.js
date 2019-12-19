@@ -177,14 +177,21 @@ const api = {
   },
 
   //获取外出管理列表
-  GetvOvertimeTableData(params) {
-    return request.post('admin/attendance/getvOvertimeTableData', params)
+  GetvEgressTableData(params) {
+    return request.post('admin/attendance/getvEgressTableData', params)
   },
 
-  //获取外出信息详细
+  //获取外出信息详细1
   GetDefaultEgressInfo(params) {
     return request.get('admin/attendance/getDefaultEgressInfo', { params: params })
   },
+
+   //获取外出信息详细2
+  GetEgressUserTableData(params) {
+    return request.post('admin/attendance/getEgressUserTableData',params)
+  },
+
+
   //保存外出
   OneEgressSave(params) {
     return request.post('admin/attendance/oneEgressSave', params)
@@ -200,9 +207,14 @@ const api = {
     return request.post('admin/attendance/getOvertimeInfoTableData', params)
   },
 
-  //获取加班信息详细
+  //获取加班信息详细1
   GetDefaultOvertimeInfo(params) {
     return request.get('admin/attendance/getDefaultOvertimeInfo', { params: params })
+  },
+
+   //获取外出管理列表
+   GetvOvertimeTableData(params) {
+    return request.post('admin/attendance/getvOvertimeTableData', params)
   },
 
   //加班结算方式

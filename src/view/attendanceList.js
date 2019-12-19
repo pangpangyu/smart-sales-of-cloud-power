@@ -62,7 +62,7 @@ class AttendanceList extends React.Component {
 			that.queryDataList(1)//考勤列表
 		}
 		if (val.title == "外出") {
-			that.GetOvertimeInfoTableData(1)//外出列表
+			that.GetvEgressTableData(1)//外出列表
 		}
 		if (val.title == "加班") {
 			that.GetvOvertimeTableData(1)//加班列表
@@ -76,7 +76,7 @@ class AttendanceList extends React.Component {
 		let params = {
 			"rowNumber": this.state.pageIndex,
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
-			"pageSize": 10
+			"pageSize": 1000
 		}
 		api.GetLeaveTableData(params).then(res => {
 			console.log('考勤列表:', res)
@@ -100,7 +100,7 @@ class AttendanceList extends React.Component {
 		const that = this
 		let params = {
 			"rowNumber": this.state.pageIndex,
-			"pageSize": 10,
+			"pageSize": 1000,
 			"conditions": [{
 				"name": "name",
 				"operator": "%",
@@ -127,15 +127,15 @@ class AttendanceList extends React.Component {
 	}
 
 	// 获取外出管理列表
-	GetOvertimeInfoTableData = (page, loadmoreResolve) => {
+	GetvEgressTableData = (page, loadmoreResolve) => {
 		const that = this
 		console.log('11', this.state.searchInput)
 		let params = {
 			"rowNumber": this.state.pageIndex,
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
-			"pageSize": 10
+			"pageSize": 1000
 		}
-		api.GetOvertimeInfoTableData(params).then(res => {
+		api.GetvEgressTableData(params).then(res => {
 			console.log('获取外出管理列表:', res)
 			if (res.status === 0) {
 				that.setState(preState => {
@@ -305,11 +305,11 @@ class AttendanceList extends React.Component {
 						return (
 							<Fragment key={index}>
 								<li className="item" >
-									<Link to={`/attendanceAdd?type=${item.leaveType}&id=${item.id}&status=${item.status}&leaveCode=${item.leaveCode}&editType=wcedit`}>
+									<Link to={`/attendanceAdd?type=${item.egressType}&id=${item.id}&status=${item.status}&leaveCode=${item.egressCode}&editType=wcedit`}>
 										<div className="tit">{item.systemUserName}</div>
 										<div className="mes">
 											<span className="s1">外出类型：</span>
-											<span className="s2">{item.leaveType}</span>
+											<span className="s2">{item.egressType}</span>
 										</div>
 										<div className="mes">
 											<span className="s1">外出时间：</span>
@@ -317,7 +317,7 @@ class AttendanceList extends React.Component {
 										</div>
 										<div className="mes">
 											<span className="s1">外出事由：</span>
-											<span className="s2">{item.leaveReason}</span>
+											<span className="s2">{item.egressReason}</span>
 										</div>
 										<button className="btn-statue">{item.status}</button>
 									</Link>

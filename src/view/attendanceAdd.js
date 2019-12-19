@@ -64,13 +64,13 @@ export default class AttendanceAdd extends React.Component {
       leaveType: "",
       jsType:"",
       leaveTypeLabel:`${getDataQuery('type')}`,
-      jsTypeLabel:'',
+      jsTypeLabel:'',//加班结算类型
 
       leaveTypeOptions: [],//请假类型
       settlementOptions:[],//加班结算方式
+     
       isLock:false,
       isSave:false,
-
 
       form: {
         departmentName: "",
@@ -85,7 +85,7 @@ export default class AttendanceAdd extends React.Component {
 
         qjNum:"",
         status:"",
-        days:""
+        days:"",
       }
     }
 
@@ -179,7 +179,6 @@ export default class AttendanceAdd extends React.Component {
 
   componentWillMount() {
     const that = this;
-    that.GetSettlementTypeOptions()
     document.documentElement.scrollTop = document.body.scrollTop = 0;
     if(that.state.applyType=="qjsq"){
       that.GetleaveTypeOptions();//获取请假类型
@@ -207,12 +206,28 @@ export default class AttendanceAdd extends React.Component {
     if(that.state.leaveId!="null"){
       if(that.state.editType=="qjedit"){
         that.GetDefaultPersonalInfo();//获取考勤部门信息
+        that.GetleaveTypeOptions();//获取请假类型
+        that.setState({
+          title:"请假"
+        })
       }
       if(that.state.editType=="wcedit"){
-        that.GetDefaultEgressInfo();//获取外出部门信息
+        that.GetDefaultEgressInfo();//获取外出部门信息1
+        that.GetEgressUserTableData();//获取外出部门信息2
+        that.GetEgressTypeOptions();//获取外出类型
+        that.setState({
+          title:"外出"
+        })
+
       }
       if(that.state.editType=="jbedit"){
-        that.GetDefaultPersonalInfo();//获取加班部门信息
+        that.GetDefaultOvertimeInfo();//获取加班部门信息1
+        that.GetOvertimeInfoTableData();//获取加班部门信息2
+        that.GetOvertimeTypeOptions();//获取加班类型
+        that.GetSettlementTypeOptions();//加班结算方式
+        that.setState({
+          title:"加班"
+        })
       }
     }
 
@@ -332,7 +347,7 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //获取外出信息详细
+  //获取外出信息详细1
   GetDefaultEgressInfo=()=>{
     const that=this;
     let params={
@@ -364,15 +379,16 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //获取加班信息详细
-  GetDefaultOvertimeInfo=()=>{
+  //获取外出信息详细2
+  GetEgressUserTableData=()=>{
     const that=this;
     let params={
-      //id:that.state.leaveId,
-      id:9,
+      "rowNumber":0,
+      "pageSize":10,
+      "ids1":[9]
     };
-    api.GetDefaultOvertimeInfo(params).then(res => {
-      console.log('获取加班信息详细:', res);
+    api.GetEgressUserTableData(params).then(res => {
+      console.log('获取外出信息详细2:', res);
       if (res.status === 0) {
         // let newform=that.state.form;
         // // newform.qjNum=res.data.workDetailId;//单号
@@ -390,6 +406,63 @@ export default class AttendanceAdd extends React.Component {
         // that.setState({
         //   form:newform
         // })
+        
+      }
+
+    })
+  }
+
+
+  //获取加班信息详细1
+  GetDefaultOvertimeInfo=()=>{
+    const that=this;
+    let params={
+      //id:that.state.leaveId,
+      id:9,
+    };
+    api.GetDefaultOvertimeInfo(params).then(res => {
+      console.log('获取加班信息详细1:', res);
+      if (res.status === 0) {
+        let newform=that.state.form;
+        // // newform.qjNum=res.data.workDetailId;//单号
+        newform.leaveReason=res.data.overtimeReason;//理由
+        // newform.days=res.data.days;//天数
+        // newform.startTime=res.data.startTime;//结束时间
+        // newform.endTime=res.data.endTime;//结束时间
+        // //类型
+        // //状态
+        // newform.departmentName=res.data.departmentName;
+        // newform.positionName=res.data.positionName;
+        // newform.systemUserName=res.data.systemUserName;
+
+
+        that.setState({
+          form:newform
+        })
+        
+      }
+
+    })
+  }
+
+  //获取加班信息详细2 
+  GetOvertimeInfoTableData=()=>{
+    const that=this;
+    let params={
+      "rowNumber": 0,
+      "pageSize": 10,
+      "ids1": [9],
+      "overtimeId": "11"
+    };
+    api.GetOvertimeInfoTableData(params).then(res => {
+      console.log('获取加班信息详细2:', res);
+      if (res.status === 0) {
+        let newform=that.state.form;
+        newform.startTime=res.data.rows[0].startTime;//结束时间
+        newform.endTime=res.data.rows[0].endTime;//结束时间
+        that.setState({
+          jsTypeLabel:res.data.rows[0].settlementWayType
+        })
         
       }
 
@@ -516,7 +589,7 @@ export default class AttendanceAdd extends React.Component {
         "creator": "APP测试",
         "createDateTime1": "2019-12-18 21:01:22",
         "id": "",
-        "overtimeReason": "搜索",
+        "overtimeReason": that.state.form.leaveReason,
         "attachedFile1": []
       },
       "type": "add",
@@ -668,7 +741,7 @@ export default class AttendanceAdd extends React.Component {
     let itemDanhao=
         <div className="item">
           <div className="l">
-            请假单号
+            {this.state.title}单号
             </div>
           <div className="r">
             {this.state.leaveCode}
@@ -691,7 +764,7 @@ export default class AttendanceAdd extends React.Component {
           {this.state.addStatus!=1?itemDanhao:''}
           <div className="item">
             <div className="l">
-              请假类型
+            {this.state.title}类型
               </div>
             <div className="r gray">
               <span onClick={() => this.setState({ qjopen: true })}>{this.state.leaveTypeLabel || '请选择'}<i className="iconfont iconyou"></i></span>
@@ -724,7 +797,7 @@ export default class AttendanceAdd extends React.Component {
           </div>
 
           {this.state.applyType=="jbsq"?jiesuanType:''}
-          
+          {this.state.editType=="jbedit"?jiesuanType:''}
           <div className="item">
             <div className="l">
               状态
@@ -736,7 +809,7 @@ export default class AttendanceAdd extends React.Component {
           </div>
           <div className="module-space"></div>
           <div className="other">
-            <div className="tit">请假事由</div>
+            <div className="tit">{this.state.title}事由</div>
             <div>
               <textarea value={this.state.form.leaveReason} placeholder="" className="area-wrap" onChange={(e)=>{this.setState(this.setState({form:Object.assign({},this.state.form,{leaveReason:e.target.value})}))}} ></textarea>
             </div>
@@ -804,7 +877,7 @@ export default class AttendanceAdd extends React.Component {
             />
             <div className="module-space"></div>
             <div className="btns">
-              <Button className="btn" type="primary" onClick={() => this.setState({ qjopen: false })}>取消</Button>
+              <Button className="btn" type="primary" onClick={() => this.setState({ jsopen: false })}>取消</Button>
               <Button className="btn btn1" type="primary" onClick={this.getType2}>确定</Button>
             </div>
           </div>
