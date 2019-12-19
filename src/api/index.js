@@ -297,6 +297,10 @@ const api = {
   //信息发布2
   UpdateInfoPublishStatus(params){
     return request.post('/admin/system/updateInfoPublishStatus' , params)
+  },
+  //信息发布  --- 这个
+  saveAndSubmit(params){
+    return request.post('/admin/system/saveAndSubmit?isAudit=true' , params)
   }
 }
 
