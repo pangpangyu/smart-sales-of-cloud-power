@@ -27,17 +27,38 @@ export default class InfoDeliveyAdd extends React.Component{
 
   componentDidMount(){
     this.getInfoPublishDataDetail()
-    if(this.state.id !== 0){
-      this.getDetail()
+    //if(this.state.id !== 0){
+      //this.getDetail()
+      //this.checkInfoPublishStatus()
+    //}
+  }
+
+  checkInfoPublishStatus = () => {
+    // let params = `?ids=${this.state.id}&status=publish`
+    let params = {
+      ids:[this.state.id],
+      status:'publish'
     }
+    api.CheckInfoPublishStatus(params).then(res => {
+
+    })
   }
 
   getDetail = () => {
     const that = this
-    let params = `?id=${this.state.id}`
+    console.log(this.state.id)
+    let params = `?id=${this.state.id === '0' ? '' : this.state.id}`
     api.GetInfoPublishDataDetail(params).then(res => {
       if (res.status === 0) {
+        let arr = []
+        res.data.options.map(item => {
+          arr.push({ label: item.text, value: item.value })
+        })
         that.setState({
+          options:arr
+        })
+        that.setState({
+          options:arr,
           title:res.data.title,
           content:res.data.content,
           introduction:res.data.introduction,
@@ -53,20 +74,43 @@ export default class InfoDeliveyAdd extends React.Component{
 
   getInfoPublishDataDetail = () => {
     const that = this
-    let params = '?id=undefined&type=create&_=1576403559824'
+    console.log(this.state.id)
+    let params = `?id=${this.state.id === 0 ? '' : this.state.id}`
     api.GetInfoPublishDataDetail(params).then(res => {
-      if(res.status === 0){
+      if (res.status === 0) {
         let arr = []
         res.data.options.map(item => {
-          //if(item.text){
-            arr.push({ label: item.text, value: item.value })
-          //}
+          arr.push({ label: item.text, value: item.value })
         })
         that.setState({
           options:arr
         })
+        that.setState({
+          options:arr,
+          title:res.data.title,
+          content:res.data.content,
+          introduction:res.data.introduction,
+          source:res.data.newsResource,
+          value:[res.data.publishLocation],
+          file2:res.data.attachments.length > 0 ? res.data.attachments[0] : {},
+          file1:res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
+          txt:res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
+        })
       }
     })
+    // const that = this
+    // let params = `?id=${this.state.id}&type=${this.state.id === 0 ? 'create':'modify'}`
+    // api.GetInfoPublishDataDetail(params).then(res => {
+    //   if(res.status === 0){
+    //     let arr = []
+    //     res.data.options.map(item => {
+    //       arr.push({ label: item.text, value: item.value })
+    //     })
+    //     that.setState({
+    //       options:arr
+    //     })
+    //   }
+    // })
   }
 
   onChange = (value) => {
