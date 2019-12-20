@@ -159,7 +159,7 @@ export default class AttendanceAdd extends React.Component {
 
   getDate = (type) => {
     const that = this;
-    this.getTimeDiff();
+    // this.getTimeDiff();
     if (type == "start") {
       this.setState({
         dayopen: false,
@@ -667,12 +667,16 @@ export default class AttendanceAdd extends React.Component {
       return "开始时间不能大于结束时间";
     }
 
-    begin = new Date(begin);
-    end = new Date(end);
+    // alert( new Date('2019/12/24 21:53:00'))
+    begin = new Date(begin.replace(/-/g,'/'));
+    end = new Date(end.replace(/-/g,'/'));
+
+
     
 
     //时间相差毫秒数
     let span = end.getTime() - begin.getTime();
+    
     // console.info(span);//36290000
     //计算相差天数
     let result = '';
