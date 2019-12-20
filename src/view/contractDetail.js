@@ -84,11 +84,11 @@ class ContractDetail extends React.Component {
 	handleOk = e => {
 		e.preventDefault()
 		const that = this
-		if (that.state.docType == "doc") {
+		if (that.state.docType === "doc") {
 			console.log("isDoc")
 			let url = `${baseUrl}/nuts/crud/contract/wordTransForm?contractId=${this.state.contractId}`
 			window.open(url)
-		} else if (that.state.docType == "pdf") {//pdf
+		} else if (that.state.docType === "pdf") {//pdf
 			console.log("isPdf")
 			let url = `${baseUrl}/nuts/crud/contract/PdfTransform?contractId=${this.state.contractId}`
 			window.open(url)
@@ -118,7 +118,7 @@ class ContractDetail extends React.Component {
 	//
 	handleTabs = (val) => {
 		const that = this;
-		if (val.id == 0) {
+		if (val.id === 0) {
 			that.setState({
 				botBtnShow: true
 			})
@@ -149,14 +149,14 @@ class ContractDetail extends React.Component {
 						<div className="item">
 							<img className="img" src={require('../assets/img/img210.png')} alt="" />
 							<div className="self-radio">
-								<input id="r1" type="radio" value={"doc"} name="attedance" checked={this.state.docType == 'doc'} onChange={this.handleCheckChanged} />
+								<input id="r1" type="radio" value={"doc"} name="attedance" checked={this.state.docType === 'doc'} onChange={this.handleCheckChanged} />
 								<label htmlFor="r1">WORD</label>
 							</div>
 						</div>
 						<div className="item">
 							<img className="img" src={require('../assets/img/img211.png')} alt="" />
 							<div className="self-radio">
-								<input id="r2" type="radio" value={"pdf"} name="attedance" checked={this.state.docType == 'pdf'} onChange={this.handleCheckChanged} />
+								<input id="r2" type="radio" value={"pdf"} name="attedance" checked={this.state.docType === 'pdf'} onChange={this.handleCheckChanged} />
 								<label htmlFor="r2">PDF</label>
 							</div>
 						</div>

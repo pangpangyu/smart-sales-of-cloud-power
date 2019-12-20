@@ -5,7 +5,6 @@ import img1 from '../assets/img/img203.png';
 import img2 from '../assets/img/img104.png';
 import { Link } from 'react-router-dom';
 import { PickerView, Button } from 'antd-mobile';
-import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
 import api from '../api/index';
 import { getDataQuery } from '../utils/index';
 import { baseImgUrl } from '../config/index';

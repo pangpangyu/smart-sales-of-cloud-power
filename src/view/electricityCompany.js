@@ -80,6 +80,7 @@ export default class ElectricityCompany extends React.Component {
         let transactionList = []
         res.data.tradeType.options.map(item => {
           transactionList.push({ label: item.text, value: item.value })
+          return item.id
         })
         let geographicalAreaList = []
         res.data.areaRegion.options.map(item => {
@@ -87,11 +88,13 @@ export default class ElectricityCompany extends React.Component {
           if (item.children) {
             item.children.map(citem => {
               geographicalAreaListChildren.push({ label: citem.text, value: citem.id })
+              return citem.id
             })
           } else {
             geographicalAreaListChildren = []
           }
           geographicalAreaList.push({ label: item.text, value: item.id, children: geographicalAreaListChildren })
+          return item.id
         })
         that.setState({
           transactionList: transactionList,

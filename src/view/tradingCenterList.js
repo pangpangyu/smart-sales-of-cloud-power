@@ -5,6 +5,7 @@ import NoData from '../components/noData';
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log(props)
 		this.state = {
 			mediumAndLongTermTradeBulletin: this.props.mediumAndLongTermTradeBulletin,
 			mediumAndLongTermResult: this.props.mediumAndLongTermResult,
@@ -82,7 +83,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
-				{this.state.unifiedLoadRegulation.length == 0 && <NoData/>}
+				{this.state.unifiedLoadRegulation.length === 0 && <NoData/>}
 			</div >
 		)
 	}
@@ -101,7 +102,7 @@ export default class Test extends React.Component {
 						</div>
 					</div>
 				})}
-				{this.state.backupInfo.length === 0 && <NoData/>}
+				{this.state.backupInfo.length === 0 && <div style={{background:'#fff'}}><NoData/></div>}
 			</div >
 		)
 	}
@@ -121,7 +122,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
-				{this.state.maintenanceInfo.length === 0 && <NoData/>}
+				{this.state.maintenanceInfo.length === 0 && <div style={{background:'#fff'}}><NoData/></div>}
 			</div >
 		)
 	}
@@ -141,7 +142,7 @@ export default class Test extends React.Component {
 						</div>
 					</div>
 				})}
-				{ this.state.block.length === 0 && <NoData/> }
+				{ this.state.block.length === 0 && <div style={{background:'#fff'}}><NoData/></div> }
 			</div>
 		)
 	}
@@ -162,7 +163,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
-				{ this.state.FMMarket.length === 0 && <NoData/> }
+				{ this.state.FMMarket.length === 0 && <div style={{background:'#fff'}}><NoData/></div> }
 			</div >
 		)
 	}
@@ -184,7 +185,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
-				{ this.state.provincialNetwork.length === 0 && <NoData/> }
+				{ this.state.provincialNetwork.length === 0 && <div style={{background:'#fff'}}><NoData/></div> }
 			</div >
 		)
 	}
@@ -206,7 +207,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
-				{ this.state.outwardDeliveryPlan.length === 0 && <NoData/> }
+				{ this.state.outwardDeliveryPlan.length === 0 && <div style={{background:'#fff'}}><NoData/></div> }
 			</div >
 		)
 	}

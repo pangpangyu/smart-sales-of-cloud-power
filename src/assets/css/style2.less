@@ -310,6 +310,7 @@
                 height: 35px;
                 line-height: 35px;
                 position: relative;
+                font-size: 12px;
                 &::after{
                     content: '';
                     display: block;
@@ -931,11 +932,15 @@
         display: flex;
         .btn{
             flex: 1;
+            color: #fff;
             border-radius: 0;
             font-size: 15px;
             height: 44px;
             line-height: 44px;
             background: #288dfd;
+            &:active{
+                background: #55a3fa;
+            }
             &.btn1{
                 background: #fff;
                 color: #a6bcd4;

@@ -3,7 +3,7 @@ import Header from '../components/header';
 import Search from '../components/search';
 import { Link } from 'react-router-dom';
 import { Toast } from 'antd-mobile';
-import { Tabs, View } from 'antd-mobile';
+import { Tabs } from 'antd-mobile';
 import NoData from '../components/noData';
 import api from '../api/index';
 import Scroll from 'react-bscroll';
@@ -55,13 +55,13 @@ class AttendanceList extends React.Component {
 
 		})
 
-		if (val.title == "请假") {
+		if (val.title === "请假") {
 			that.queryDataList(1)//考勤列表
 		}
-		if (val.title == "外出") {
+		if (val.title === "外出") {
 			that.GetvEgressTableData(1)//外出列表
 		}
-		if (val.title == "加班") {
+		if (val.title === "加班") {
 			that.GetvOvertimeTableData(1)//加班列表
 		}
 	}
@@ -222,7 +222,7 @@ class AttendanceList extends React.Component {
 
 	//申请确定
 	handleOk = e => {
-		if (this.state.applyType == '') {
+		if (this.state.applyType === '') {
 			Toast.info("请选择");
 		} else {
 			window.location.href = "/attendanceAdd?applyType=" + this.state.applyType + "&addStatus=1" // addStatus=1 设为新增标识
@@ -391,9 +391,9 @@ class AttendanceList extends React.Component {
 							click={true}>
 
 
-							{this.state.showLeaveType == 0 ? qingjia : ''}
-							{this.state.showLeaveType == 1 ? waichu : ''}
-							{this.state.showLeaveType == 2 ? jiaban : ''}
+							{this.state.showLeaveType === 0 ? qingjia : ''}
+							{this.state.showLeaveType === 1 ? waichu : ''}
+							{this.state.showLeaveType === 2 ? jiaban : ''}
 						</Scroll>}
 				</div>
 
