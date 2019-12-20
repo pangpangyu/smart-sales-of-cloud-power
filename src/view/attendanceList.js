@@ -42,9 +42,6 @@ class AttendanceList extends React.Component {
 		const that = this;
 		document.documentElement.scrollTop = document.body.scrollTop = 0;
 		that.queryDataList(1)//考勤列表
-		// that.GetvOvertimeTableData(1)//外出列表
-		// that.GetOvertimeInfoTableData(1)//加班列表
-		// that.GetAuditTypeOptions();//请假审批状态
 	}
 
 	//
@@ -74,7 +71,8 @@ class AttendanceList extends React.Component {
 		const that = this
 		console.log('11', this.state.searchInput)
 		let params = {
-			"rowNumber": this.state.pageIndex,
+			// "rowNumber": this.state.pageIndex,
+			"rowNumber":1,
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
 			"pageSize": 1000
 		}
@@ -99,7 +97,8 @@ class AttendanceList extends React.Component {
 	GetvOvertimeTableData = (page, loadmoreResolve) => {
 		const that = this
 		let params = {
-			"rowNumber": this.state.pageIndex,
+			//"rowNumber": this.state.pageIndex,
+			"rowNumber": 1,
 			"pageSize": 1000,
 			"conditions": [{
 				"name": "name",
@@ -129,24 +128,28 @@ class AttendanceList extends React.Component {
 	// 获取外出管理列表
 	GetvEgressTableData = (page, loadmoreResolve) => {
 		const that = this
-		console.log('11', this.state.searchInput)
 		let params = {
-			"rowNumber": this.state.pageIndex,
+			//"rowNumber": this.state.pageIndex,
+			"rowNumber":1,
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
 			"pageSize": 1000
 		}
 		api.GetvEgressTableData(params).then(res => {
 			console.log('获取外出管理列表:', res)
 			if (res.status === 0) {
-				that.setState(preState => {
-					return ({
-						dataListwc: [...preState.dataListwc, ...res.data.rows || []],
-						total: res.data.rowCount,
-						isNoData: res.data.rowCount === 0 ? true : false,
-						pageIndex: page + 1
+				if(res.data){
+					that.setState(preState => {
+						return ({
+							dataListwc: [...preState.dataListwc, ...res.data.rows || []],
+							total: res.data.rowCount,
+							isNoData: res.data.rowCount === 0 ? true : false,
+							pageIndex: page + 1
+						})
 					})
-				})
-				loadmoreResolve && loadmoreResolve();
+					loadmoreResolve && loadmoreResolve();
+				}
+				
+				
 			}
 
 		})
@@ -155,17 +158,30 @@ class AttendanceList extends React.Component {
 
 	// 搜索
 	handleSearchInput = e => {
-		// console.log(e.target.value);
 		this.setState({
 			searchInput: e.target.value
 		})
 	}
 	handleSearchSubmit = e => {
-		//console.log(this.state.searchInput);
-		this.setState({
-			dataList: []
+		const that=this;
+		that.setState({
+			dataList: [],
+			dataListwc: [],
+			dataListjb: [],
+			pageIndex: 0,
+			pageSize: 10,
+			total: 0,
 		})
-		this.queryDataList(1);
+		if(that.state.showLeaveType==0){//请假
+			that.queryDataList(1);
+		}
+		if(that.state.showLeaveType==1){//外出
+			that.GetvEgressTableData(1);
+		}
+		if(that.state.showLeaveType==2){//加班
+			that.GetvOvertimeTableData(1);
+		}
+		
 	}
 
 
@@ -220,14 +236,6 @@ class AttendanceList extends React.Component {
 		api.GetAuditTypeOptions(params).then(res => {
 			console.log('请假审批状态:', res)
 			if (res.status === 0) {
-				// that.setState(preState => {
-				//     return ({
-				//         dataList: [...preState.dataList, ...res.data.rows||[]],
-				//         total: res.data.rowCount,
-				//         isNoData: res.data.rowCount === 0 ? true : false,
-				//         pageIndex: page + 1
-				//     })
-				// })
 			}
 
 		})

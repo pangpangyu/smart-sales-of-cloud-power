@@ -173,7 +173,7 @@ const api = {
   },
   //提交请假
   GetSubmitLeave(params) {
-    return request.post('admin/attendance/submitSign', params)
+    return request.post('admin/attendance/submitSign?id='+params)
   },
 
   //获取外出管理列表
@@ -199,7 +199,7 @@ const api = {
 
   //提交外出
   EgressSubmitSign(params) {
-    return request.post('admin/attendance/egressSubmitSign', params)
+    return request.post('admin/attendance/egressSubmitSign?id='+params)
   },
 
   //获取加班管理列表
@@ -229,7 +229,7 @@ const api = {
 
   //提交加班
   OvertimeSubmitSign(params) {
-    return request.post('admin/attendance/overtimeSubmitSign', params)
+    return request.post('admin/attendance/overtimeSubmitSign?id='+params)
   },
 
 
