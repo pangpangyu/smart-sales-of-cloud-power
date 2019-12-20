@@ -50,17 +50,17 @@ export default class Test extends React.Component {
 	handleSearchSubmit = e => {
 		this.setState({
 			contractManageList: [],
-			pageIndex:0
-		},()=>{
+			pageIndex: 0
+		}, () => {
 			this.getDataList();
 		})
 	}
 	loadMoreData = () => {
 		return new Promise((resolve, reject) => {
 			let pageIndex = this.state.pageIndex + 1
-			if(pageIndex * this.state.pageSize <= this.state.total){
+			if (pageIndex * this.state.pageSize <= this.state.total) {
 
-			}else{
+			} else {
 				resolve()
 			}
 		})

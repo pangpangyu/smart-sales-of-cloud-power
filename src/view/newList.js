@@ -167,7 +167,7 @@ class NewList extends React.Component {
           </div> */}
         <div className="company-new-list">
           {this.state.companyNewList.map(item => {
-            return <div key={item.id} className="item">
+            return <div key={item.id} className="item" style={{background:'#fff'}}>
               <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
                 <div className="info">
                   <div className="title">{item.title}</div>
@@ -200,7 +200,7 @@ class NewList extends React.Component {
         </div>
         { this.state.active === 1 && <div className="company-new-list">
           {this.state.alreadyRead.length > 0 && this.state.alreadyRead.map(item => {
-            return <div key={item.id} className="item">
+            return <div key={item.id} className="item" style={{background:'#fff'}}>
               <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
                 <div className="info">
                   <div className="title">{item.title}</div>
@@ -240,7 +240,7 @@ class NewList extends React.Component {
 
   render() {
     return (
-      <div style={{ background: '#fff' }}>
+      <div style={{ background: '#f0f1f3',minHeight:'100vh' }}>
         <Header title={this.state.title} back={true} search={false} />
         {this.state.type === '1' && this.showType1()}
         {this.state.type === '2' && this.showType2()}
