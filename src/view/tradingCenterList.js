@@ -5,6 +5,7 @@ import NoData from '../components/noData';
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log(props)
 		this.state = {
 			mediumAndLongTermTradeBulletin: this.props.mediumAndLongTermTradeBulletin,
 			mediumAndLongTermResult: this.props.mediumAndLongTermResult,

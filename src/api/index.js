@@ -313,6 +313,10 @@ const api = {
   //信息发布  --- 这个
   saveAndSubmit(params){
     return request.post('/admin/system/saveAndSubmit?isAudit=true' , params)
+  },
+  //信息草稿发布  --- 这个
+  editSaveAndSubmit(params){
+    return request.post('/admin/system/saveAndSubmit?isAudit=false' , params)
   }
 }
 

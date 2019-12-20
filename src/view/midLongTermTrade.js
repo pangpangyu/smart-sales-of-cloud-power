@@ -4,6 +4,7 @@ import TradingCenterList from './tradingCenterList'
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log(props)
 		this.state = {
 			active: '1',
 			tabs: [

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import api from '../api';
 import Scroll from 'react-bscroll';
 import 'react-bscroll/lib/react-scroll.css';
+import NoData from '../components/noData';
 
 export default class Test extends React.Component {
 	constructor(props) {
@@ -16,7 +17,8 @@ export default class Test extends React.Component {
 				// { id: 3, title: '山西地方电力xxx1有限公司', n1: '三级预警', n2: '8000', n3: '5000', n4: '500', n5: '5' },
 				// { id: 4, title: '山西地方电力xxx1有限公司', n1: '良好', n2: '8000', n3: '5000', n4: '500', n5: '5' }
 			],
-			pageIndex: 0
+			pageIndex: 0,
+			noData:false
 		}
 	}
 
@@ -101,6 +103,7 @@ export default class Test extends React.Component {
 									</Link>
 								</div>
 							})}
+							{this.state.noData && <NoData/> }
 						</div>
 					</div>
 				</Scroll>

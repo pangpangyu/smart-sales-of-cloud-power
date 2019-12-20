@@ -45,6 +45,7 @@ export default class Test extends React.Component {
 				noticeList:res.data.rows
 			})
 		})
+		console.log(this.state.noticeList)
 	}
 	//中长期交易交易-结果信息列表
   getResultList = () => {
@@ -115,8 +116,8 @@ export default class Test extends React.Component {
 								</ul>
 							</div>
 						</div>
-						{this.state.active === '1' && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
-						{this.state.active === '2' && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} blackList={this.state.blackList}/>}
+						{this.state.active === '1' && this.state.noticeList.length > 0 && this.state.resultList.length > 0 && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
+						{this.state.active === '2' && this.state.backupList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} blackList={this.state.blackList}/>}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
 				</div>
