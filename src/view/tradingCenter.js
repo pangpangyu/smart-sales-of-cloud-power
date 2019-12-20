@@ -83,7 +83,6 @@ export default class Test extends React.Component {
 		})
 	}
 	getDate = () => {
-		const that = this
 		this.setState({
 			year: this.state.fullYear + '-' + this.state.month,
 			open: false

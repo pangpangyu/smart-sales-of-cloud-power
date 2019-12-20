@@ -82,7 +82,7 @@ export default class Test extends React.Component {
 					</div>
 				})
 				}
-				{this.state.unifiedLoadRegulation.length == 0 && <NoData/>}
+				{this.state.unifiedLoadRegulation.length === 0 && <NoData/>}
 			</div >
 		)
 	}

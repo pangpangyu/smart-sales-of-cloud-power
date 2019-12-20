@@ -6,7 +6,6 @@ import img2 from '../assets/img/img104.png';
 import { Link } from 'react-router-dom';
 import api from '../api/index';
 import { getDataQuery } from '../utils/index';
-import { baseImgUrl } from '../config/index';
 import NoData from '../components/noData';
 
 export default class Todolist extends React.Component {

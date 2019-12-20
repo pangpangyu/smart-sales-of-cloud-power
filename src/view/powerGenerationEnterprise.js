@@ -5,7 +5,6 @@ import img1 from '../assets/img/img203.png';
 import img3 from '../assets/img/img204.png';
 import api from '../api/index';
 import { getDataQuery } from '../utils/index';
-import { baseImgUrl } from '../config/index';
 import NoData from '../components/noData';
 
 export default class Todolist extends React.Component {
