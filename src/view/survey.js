@@ -70,8 +70,9 @@ class Survey extends React.Component {
         orient: 'vertical',
         x: 'left',
         data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        itemHeight: 10,
-        itemWidth: 10,
+        itemHeight: 8,
+        itemWidth: 8,
+        icon:"circle",
         itemGap: 10,
         formatter: function (name) {
           let arr = data.filter(item => item.name === name)[0]
@@ -215,6 +216,11 @@ class Survey extends React.Component {
         right: '4%',
         bottom: '10%',
         containLabel: true
+      },
+      legend: {
+        itemHeight: 8,
+        itemWidth: 20,
+        itemStyle:{},
       },
       tooltip: {
         trigger: 'axis',
@@ -371,6 +377,9 @@ class Survey extends React.Component {
       calculable: true,
       legend: {
         data: ['申报电量', '实时电量'],
+        itemHeight: 8,
+        itemWidth: 20,
+        itemStyle:{},
         formatter: function (name) {
           return name;
         }

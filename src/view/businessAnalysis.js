@@ -58,12 +58,13 @@ export default class BsinessAnalysis extends React.Component {
     api.GetElecData(params).then(res => {
       if (res.status === 0) {
         //图表1数据处理开始
-        res.data.tradeCompareList[0].map(item => {
+        res.data.tradeCompareList[0].map((item,index) => {
           if (item !== '--' && item !== '0' && item !== 0) {
             data.data2.push(item)
           } else {
             data.data2.push(0)
           }
+          return 0
         })
         res.data.tradeCompareList[1].map(item => {
           if (item !== '--' && item !== '0' && item !== 0) {
@@ -71,6 +72,7 @@ export default class BsinessAnalysis extends React.Component {
           } else {
             data.data1.push(0)
           }
+          return 0
         })
         //图表1数据处理结束
         //图表2数据处理开始

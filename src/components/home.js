@@ -120,24 +120,26 @@ class Home extends React.Component{
           }
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
-        <Grid data={this.state.menuList}
-          columnNum={4}
-          hasLine={false}
-          renderItem={item => (
-            <div style={{padding:'5px 0'}}>
-              { item.link !== '' && <Link to={item.link}>
-                                      <img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
-                                      <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
-                                        <span>{item.name}</span>
-                                      </div>
-                                    </Link> }
-              { item.link === '' && <a href="javascript:void(0);" onClick={this.gotoxiaohui}><img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
-                <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
-                  <span>{item.name}</span>
-                </div></a>}
-            </div>
-          )}
-        />
+        <div style={{paddingBottom:'20px'}}>
+          <Grid data={this.state.menuList}
+            columnNum={4}
+            hasLine={false}
+            renderItem={item => (
+              <div style={{padding:'5px 0'}}>
+                { item.link !== '' && <Link to={item.link}>
+                                        <img src={item.url} alt="" style={{ width: '50%', height: 'auto' }}/>
+                                        <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
+                                          <span>{item.name}</span>
+                                        </div>
+                                      </Link> }
+                { item.link === '' && <a href="javascript:void(0);" onClick={this.gotoxiaohui}><img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
+                  <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
+                    <span>{item.name}</span>
+                  </div></a>}
+              </div>
+            )}
+          />
+        </div>
       </div>
     )
   }

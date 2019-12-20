@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import ModuleTit from '../components/moduleTit';
 import img1 from '../assets/img/img101.png';
 import img2 from '../assets/img/img104.png';
-import { Picker } from 'antd-mobile';
+// import { Picker } from 'antd-mobile';
 
 /*
 合同内容

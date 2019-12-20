@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../components/header';
 import api from '../api/index';
 import { Modal } from 'antd-mobile';
-import { baseUrl } from '../config/index'
+// import { baseUrl } from '../config/index'
 
 const alert = Modal.alert;
 /**

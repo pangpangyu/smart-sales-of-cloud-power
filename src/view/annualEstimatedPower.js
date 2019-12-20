@@ -1,23 +1,22 @@
 import React from 'react';
 // import { List, Picker } from 'antd-mobile';
 import { PickerView, Button } from 'antd-mobile';
-import api from '../api/index'
-import { getDataQuery } from '../utils/index'
+import api from '../api/index';
 /**
  * 年预计电量
  */
 
-const CustomChildren = props => (
-  <div
-    onClick={props.onClick}
-    style={{ backgroundColor: '#fff', paddingLeft: 15 }}
-  >
-    <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
-      <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
-      <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
-    </div>
-  </div>
-);
+// const CustomChildren = props => (
+//   <div
+//     onClick={props.onClick}
+//     style={{ backgroundColor: '#fff', paddingLeft: 15 }}
+//   >
+//     <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
+//       <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
+//       <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
+//     </div>
+//   </div>
+// );
 
 export default class annualEstimatedPower extends React.Component {
   constructor(props) {
