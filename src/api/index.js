@@ -325,7 +325,15 @@ const api = {
   //电量追踪详情-年度双边
   powerTracingAnnualBilateral(params){
     return request.post('/trade/tradeAdjustResult/list?type=0', params)
-  }
+  },
+  //电量追踪详情-合同转让转让方
+  contractTransferor(params){
+    return request.get('/trade/findListDetailed?type=0'+params)
+  },
+  //电量追踪详情-合同转让受让方
+  transfereeOfContractTransfer(params){
+    return request.get('/trade/findListDetailed?type=1'+params)
+  },
 }
 
 export default api
