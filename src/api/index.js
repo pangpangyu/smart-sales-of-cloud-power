@@ -334,6 +334,14 @@ const api = {
   transfereeOfContractTransfer(params){
     return request.get('/trade/findListDetailed?type=1'+params)
   },
+  //合同待办-获取待办信息
+  getBusinessContract(params){
+    return request.get('/nuts/crud/audit/models_business_Contract'+params)
+  },
+  //请假待办-获取待办信息
+  getAttendanceLeaveManagemen(params){
+    return request.get('/nuts/crud/audit/models_attendance_LeaveManagemen'+params)
+  },
 }
 
 export default api
