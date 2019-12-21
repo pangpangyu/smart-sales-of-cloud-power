@@ -10,6 +10,7 @@ request.defaults.crossDomain = true
 var loading = 1
 request.interceptors.request.use(
   config => {
+    console.log(config.url)
     let txt = '正在加载'
     if(config.url === 'nuts/file/upload'){
       txt = '正在上传'
@@ -20,6 +21,9 @@ request.interceptors.request.use(
     loading++
     if(config.url === 'nuts/file/upload'){
       config.headers['Content-Type'] = 'multipart/form-data'
+    }
+    if(config.url === '/admin/system/checkInfoPublishStatus' || config.url === '/admin/system/updateInfoPublishStatus'){
+      config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     }
     return config
   },
