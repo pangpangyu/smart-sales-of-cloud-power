@@ -3,41 +3,42 @@ import Header from '../components/header';
 import { PickerView, Toast } from 'antd-mobile';
 import api from '../api';
 import { getDataQuery } from '../utils/index'
+import { baseUrl } from '../config/index'
 /**
  * 信息发布-添加信息
  */
-export default class InfoDeliveyAdd extends React.Component{
-  constructor(props){
+export default class InfoDeliveyAdd extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
       options: [],
-      value:null,
-      openModel:false,
-      file1:{},
-      file2:{},
+      value: null,
+      openModel: false,
+      file1: {},
+      file2: {},
       multiple: false,
-      title:'',//标题
+      title: '',//标题
       source: '',//来源
-      introduction:'',//介绍
-      content:'',//内容
-      txt:'',
-      id:getDataQuery('id') || 0
+      introduction: '',//介绍
+      content: '',//内容
+      txt: '',
+      id: getDataQuery('id') || 0
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getInfoPublishDataDetail()
     //if(this.state.id !== 0){
-      //this.getDetail()
-      //this.checkInfoPublishStatus()
+    //this.getDetail()
+    //this.checkInfoPublishStatus()
     //}
   }
 
   checkInfoPublishStatus = () => {
     // let params = `?ids=${this.state.id}&status=publish`
     let params = {
-      ids:[this.state.id],
-      status:'publish'
+      ids: [this.state.id],
+      status: 'publish'
     }
     api.CheckInfoPublishStatus(params).then(res => {
 
@@ -55,18 +56,18 @@ export default class InfoDeliveyAdd extends React.Component{
           arr.push({ label: item.text, value: item.value })
         })
         that.setState({
-          options:arr
+          options: arr
         })
         that.setState({
-          options:arr,
-          title:res.data.title,
-          content:res.data.content,
-          introduction:res.data.introduction,
-          source:res.data.newsResource,
-          value:[res.data.publishLocation],
-          file2:res.data.attachments.length > 0 ? res.data.attachments[0] : {},
-          file1:res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
-          txt:res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
+          options: arr,
+          title: res.data.title,
+          content: res.data.content,
+          introduction: res.data.introduction,
+          source: res.data.newsResource,
+          value: [res.data.publishLocation],
+          file2: res.data.attachments.length > 0 ? res.data.attachments[0] : {},
+          file1: res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
+          txt: res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
         })
       }
     })
@@ -83,18 +84,18 @@ export default class InfoDeliveyAdd extends React.Component{
           arr.push({ label: item.text, value: item.value })
         })
         that.setState({
-          options:arr
+          options: arr
         })
         that.setState({
-          options:arr,
-          title:res.data.title,
-          content:res.data.content,
-          introduction:res.data.introduction,
-          source:res.data.newsResource,
-          value:[res.data.publishLocation],
-          file2:res.data.attachments.length > 0 ? res.data.attachments[0] : {},
-          file1:res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
-          txt:res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
+          options: arr,
+          title: res.data.title,
+          content: res.data.content,
+          introduction: res.data.introduction,
+          source: res.data.newsResource,
+          value: [res.data.publishLocation],
+          file2: res.data.attachments.length > 0 ? res.data.attachments[0] : {},
+          file1: res.data.displayImage.length > 0 ? res.data.displayImage[0] : {},
+          txt: res.data.publishLocation ? res.data.options.filter(v => v.value === res.data.publishLocation)[0].text : ''
         })
       }
     })
@@ -118,17 +119,17 @@ export default class InfoDeliveyAdd extends React.Component{
     let txt = this.state.options.filter(v => v.value === value[0])[0].label
     this.setState({
       value,
-      txt:txt
+      txt: txt
     });
   }
 
   setSaveEdit = () => {
     const that = this
-    if(!that.state.title){
+    if (!that.state.title) {
       Toast.info('请填写标题', 2, null, false);
       return
     }
-    if(!that.state.value){
+    if (!that.state.value) {
       Toast.info('请选择发布位置', 2, null, false);
       return
     }
@@ -141,54 +142,54 @@ export default class InfoDeliveyAdd extends React.Component{
       newsResource: this.state.source,
       introduction: this.state.introduction
     }
-    if(that.state.file1.id){
+    if (that.state.file1.id) {
       params.displayImage = {
-        id:that.state.file1.id
+        id: that.state.file1.id
       }
     }
-    if(that.state.file2.id){
+    if (that.state.file2.id) {
       params.attachments = {
-        id:[that.state.file2.id]
+        id: [that.state.file2.id]
       }
     }
     api.SetSaveEdit(params).then(res => {
-      if(res.status === 0){
-        Toast.info(res.message, 2, ()=>{window.history.go(-1)}, false);
+      if (res.status === 0) {
+        Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
       }
     })
   }
 
   handelChange1 = (e) => {
     this.setState({
-      title:e.target.value
+      title: e.target.value
     })
   }
 
   handelChange2 = (e) => {
     this.setState({
-      source:e.target.value
+      source: e.target.value
     })
   }
 
   handelChange3 = (e) => {
     this.setState({
-      introduction:e.target.value
+      introduction: e.target.value
     })
   }
 
   handelChange4 = (e) => {
     this.setState({
-      content:e.target.value
+      content: e.target.value
     })
   }
 
   handelChange5 = (e) => {
     let file = e.target.files[0]
     let formData = new FormData()
-    formData.append('file',file)
+    formData.append('file', file)
     api.UploadFile(formData).then(res => {
       this.setState({
-        file1:res.data
+        file1: res.data
       })
     })
   }
@@ -196,10 +197,10 @@ export default class InfoDeliveyAdd extends React.Component{
   handelChange6 = (e) => {
     let file = e.target.files[0]
     let formData = new FormData()
-    formData.append('file',file)
+    formData.append('file', file)
     api.UploadFile(formData).then(res => {
       this.setState({
-        file2:res.data
+        file2: res.data
       })
     })
   }
@@ -212,11 +213,11 @@ export default class InfoDeliveyAdd extends React.Component{
 
   saveAndSubmit = () => {
     const that = this
-    if(!that.state.title){
+    if (!that.state.title) {
       Toast.info('请填写标题', 2, null, false);
       return
     }
-    if(!that.state.value){
+    if (!that.state.value) {
       Toast.info('请选择发布位置', 2, null, false);
       return
     }
@@ -229,39 +230,42 @@ export default class InfoDeliveyAdd extends React.Component{
       newsResource: this.state.source,
       introduction: this.state.introduction
     }
-    if(that.state.file1.id){
+    if (that.state.file1.id) {
       params.displayImage = {
-        id:that.state.file1.id
+        id: that.state.file1.id
       }
     }
-    if(that.state.file2.id){
+    if (that.state.file2.id) {
       params.attachments = {
-        id:[that.state.file2.id]
+        id: [that.state.file2.id]
       }
     }
-    api.saveAndSubmit(params).then(res => {
-      if(res.status === 0){
-        Toast.info(res.message, 2, ()=>{window.history.go(-1)}, false);
-      }
-    })
+    document.getElementById('subForm').submit()
+    let obj = document.getElementById('frameName')
+    console.log(obj.contentWindow)
+    // api.saveAndSubmit(params).then(res => {
+    //   if (res.status === 0) {
+    //     Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
+    //   }
+    // })
   }
 
-  render(){
-    return(
-      <div style={{minHeight:'100vh',background:'#fff',paddingBottom:'45px'}}>
-        <Header title={'添加信息'} back={true} search={false}/>
+  render() {
+    return (
+      <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: '45px' }}>
+        <Header title={'添加信息'} back={true} search={false} />
         <div className="infoDeliveyAdd">
           <div className="view">
             <div className="item">
               <div className="l">标题</div>
-              <div className="r"><input type="text" value={this.state.title} onChange={this.handelChange1} placeholder="请输入"/></div>
+              <div className="r"><input type="text" value={this.state.title} onChange={this.handelChange1} placeholder="请输入" /></div>
             </div>
             <div className="item bgImg">
               <div className="l">发布位置</div>
-              <div className="r" onClick={ () => { this.setState({openModel:!this.state.openModel}) } }>{this.state.txt}</div>
+              <div className="r" onClick={() => { this.setState({ openModel: !this.state.openModel }) }}>{this.state.txt}</div>
             </div>
           </div>
-          <div style={{height:'10px',background:'#f0f1f3'}}></div>
+          <div style={{ height: '10px', background: '#f0f1f3' }}></div>
           <div className="view">
             <div className="item2">
               <div className="l">介绍</div>
@@ -270,7 +274,7 @@ export default class InfoDeliveyAdd extends React.Component{
               </div>
             </div>
           </div>
-          <div style={{height:'10px',background:'#f0f1f3'}}></div>
+          <div style={{ height: '10px', background: '#f0f1f3' }}></div>
           <div className="view">
             <div className="item2">
               <div className="l">内容</div>
@@ -279,50 +283,55 @@ export default class InfoDeliveyAdd extends React.Component{
               </div>
             </div>
           </div>
-          <div style={{height:'10px',background:'#f0f1f3'}}></div>
+          <div style={{ height: '10px', background: '#f0f1f3' }}></div>
           <div className="view">
             <div className="item">
               <div className="l">来源</div>
-              <div className="r"><input type="text" value={this.state.source} onChange={this.handelChange2} placeholder="请输入"/></div>
+              <div className="r"><input type="text" value={this.state.source} onChange={this.handelChange2} placeholder="请输入" /></div>
             </div>
             <div className="item bgImg">
               <div className="l">图片</div>
               <div className="r cl2">
-                <input type="file" id="file1" onChange={this.handelChange5} className="file"/>
-                { this.state.file1.name || '请选择' }
+                <input type="file" id="file1" onChange={this.handelChange5} className="file" />
+                {this.state.file1.name || '请选择'}
               </div>
             </div>
             <div className="item bgImg">
               <div className="l">附件</div>
               <div className="r cl2">
-                <input type="file" id="file2" onChange={this.handelChange6} className="file"/>
-                { this.state.file2.name || '请选择' }
+                <input type="file" id="file2" onChange={this.handelChange6} className="file" />
+                {this.state.file2.name || '请选择'}
               </div>
             </div>
           </div>
-          <div style={{height:'10px',background:'#f0f1f3'}}></div>
+          <div style={{ height: '10px', background: '#f0f1f3' }}></div>
           <div className="submit-btn">
             <button className="tj" onClick={this.saveAndSubmit}>提交审核</button>
-            <button onClick={ this.setSaveEdit }>保存</button>
+            <button onClick={this.setSaveEdit}>保存</button>
           </div>
         </div>
-        <div className={this.state.openModel ? 'infoDelivey-model on':'infoDelivey-model'}>
-          <div className="mode-view-mb" onClick={ (e) => { this.setState({openModel:!this.state.openModel}) } }></div>
+        <form id="subForm" action={baseUrl+'/admin/system/checkInfoPublishStatus'} method="post" target="frameName">
+          <input type="hidden" name="ids[]" value="109" />
+          <input type="hidden" name="status" value="publish" />
+        </form>
+        <iframe id='frameName' frameBorder="0" name="frameName"></iframe>
+        <div className={this.state.openModel ? 'infoDelivey-model on' : 'infoDelivey-model'}>
+          <div className="mode-view-mb" onClick={(e) => { this.setState({ openModel: !this.state.openModel }) }}></div>
           <div className="mode-view">
             <PickerView
               data={this.state.options}
               cascade={false}
-              style={{height:'50px'}}
+              style={{ height: '50px' }}
               onChange={this.onChange}
               value={this.state.value}
             />
-            <div style={{height:'8px',background:'#f0f1f3'}}></div>
+            <div style={{ height: '8px', background: '#f0f1f3' }}></div>
             <div className="btn">
-              <button onClick={ (e) => { this.setState({openModel:!this.state.openModel}) } }>取消</button>
-              <button className="ok" onClick={ this.savePickerView }>确定</button>
+              <button onClick={(e) => { this.setState({ openModel: !this.state.openModel }) }}>取消</button>
+              <button className="ok" onClick={this.savePickerView}>确定</button>
             </div>
-            <div style={{height:'8px',background:'#f0f1f3'}}></div>
-            <div style={{height:'20px',background:'#fff'}}></div>
+            <div style={{ height: '8px', background: '#f0f1f3' }}></div>
+            <div style={{ height: '20px', background: '#fff' }}></div>
           </div>
         </div>
       </div>
