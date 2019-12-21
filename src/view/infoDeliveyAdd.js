@@ -33,16 +33,17 @@ export default class InfoDeliveyAdd extends React.Component {
     }
   }
 
-  componentDidMount() {
-    
-  }
+  // onsubmit = (e) => {
+  //   console.log(e)
+  //   return 
+  // }
 
   checkInfoPublishStatus = () => {
-    let params = `?ids=${this.state.id}&status=publish`
-    // let params = {
-    //   ids: [this.state.id],
-    //   status: 'publish'
-    // }
+    // let params = `?ids=${this.state.id}&status=publish`
+    let params = {
+      ids: [86],
+      status: 'publish'
+    }
     api.CheckInfoPublishStatus(params).then(res => {
 
     })
@@ -202,6 +203,7 @@ export default class InfoDeliveyAdd extends React.Component {
         id: [that.state.file2.id]
       }
     }
+    console.log(params)
     document.getElementById('subForm').submit()
     // api.saveAndSubmit(params).then(res => {
     //   if (res.status === 0) {
