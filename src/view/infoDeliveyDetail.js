@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/header';
 import api from '../api/index';
-import { Modal } from 'antd-mobile';
+import { Modal,Toast } from 'antd-mobile';
 // import { baseUrl } from '../config/index'
 
 const alert = Modal.alert;
@@ -68,7 +68,29 @@ export default class InfoDeliveyDetail extends React.Component {
       },
     ])
   }
+  del = () => {
+    alert('删除消息', '确定删除这条消息吗?', [
+      { text: '取消', onPress: () => console.log('cancel') },
+      {
+        text: '确定', onPress: () => {
+          let params = {
+            ids: [this.state.id],
+            status: 'delete'
+          }
+          api.CheckInfoPublishStatus(params).then(res => {
 
+          }).then(res => {
+            api.UpdateInfoPublishStatus(params).then(res => {
+              if(res.status === 0){
+                Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
+                // window.location.href='/infoDelivey'
+              }
+            })
+          })
+        }
+      },
+    ])
+  }
   gotoEdit = () => {
     window.location.href = `/infoDeliveyAdd?id=${this.state.id}`
   }
@@ -89,8 +111,10 @@ export default class InfoDeliveyDetail extends React.Component {
           </form> */}
         </div>
         {this.state.detail.status === 'PUBLISH' && <div className="btn"><div className="b" onClick={this.revokeRelease}>撤销发布</div></div>}
-        {this.state.detail.status === 'CENCAL' && <div className="btn"><div className="b">已撤销发布</div></div>}
-        {this.state.detail.status === 'DRAFT' && <div className="btn"><div className="b" onClick={this.gotoEdit}>编辑</div></div>}
+        {this.state.detail.status === 'PASSED' && <div className="btn"><div className="b" onClick={this.revokeRelease}>撤销发布</div></div>}
+        {this.state.detail.status === 'REJECTED' && <div className="btn"><div className="b">审核不通过</div>{/*<div className="b" style={{borderLeft:'1px solid #ddd'}} onClick={ this.del }>删除</div>*/}</div>}
+        {this.state.detail.status === 'CENCAL' && <div className="btn"><div className="b" onClick={this.gotoEdit}>已撤销发布-编辑</div>{/*<div className="b" style={{borderLeft:'1px solid #ddd'}} onClick={ this.del }>删除</div>*/}</div>}
+        {this.state.detail.status === 'DRAFT' && <div className="btn"><div className="b" onClick={this.gotoEdit}>编辑</div>{/*<div className="b" style={{borderLeft:'1px solid #ddd'}} onClick={ this.del }>删除</div>*/}</div>}
         {this.state.detail.status === 'AUDITING' && <div className="btn"><div className="b">审核中</div></div>}
         
       </div>

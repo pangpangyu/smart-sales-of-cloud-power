@@ -293,9 +293,8 @@ class Survey extends React.Component {
         containLabel: true
       },
       legend: {
-        itemHeight: 8,
-        itemWidth: 20,
-        itemStyle: {},
+        itemHeight:8,
+        itemWidth: 20
       },
       tooltip: {
         trigger: 'axis',
@@ -583,7 +582,8 @@ class Survey extends React.Component {
       calculable: true,
       legend: {
         data: ['日前均价', '实时均价'],
-        // itemGap: 5
+        itemHeight:8,
+        itemWidth: 20,
         formatter: function (name) {
           //return name === '申报电量' ? '申报电量 ' + (data.data1[index - 1]) : '实时电量 ' + (data.data2[index - 1]);
           return name;

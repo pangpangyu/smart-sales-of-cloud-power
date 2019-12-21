@@ -21,6 +21,9 @@ request.interceptors.request.use(
     if(config.url === 'nuts/file/upload'){
       config.headers['Content-Type'] = 'multipart/form-data'
     }
+    if(config.url === '/admin/system/checkInfoPublishStatus' || config.url === '/admin/system/updateInfoPublishStatus'){
+      config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
     return config
   },
   error => {

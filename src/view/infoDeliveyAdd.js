@@ -28,25 +28,6 @@ export default class InfoDeliveyAdd extends React.Component {
 
   componentWillMount(){
     this.getInfoPublishDataDetail()
-    if(this.state.id !== 0){
-      this.checkInfoPublishStatus()
-    }
-  }
-
-  // onsubmit = (e) => {
-  //   console.log(e)
-  //   return 
-  // }
-
-  checkInfoPublishStatus = () => {
-    // let params = `?ids=${this.state.id}&status=publish`
-    let params = {
-      ids: [86],
-      status: 'publish'
-    }
-    api.CheckInfoPublishStatus(params).then(res => {
-
-    })
   }
 
   getInfoPublishDataDetail = () => {
@@ -203,13 +184,12 @@ export default class InfoDeliveyAdd extends React.Component {
         id: [that.state.file2.id]
       }
     }
-    console.log(params)
-    document.getElementById('subForm').submit()
-    // api.saveAndSubmit(params).then(res => {
-    //   if (res.status === 0) {
-    //     Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
-    //   }
-    // })
+    api.saveAndSubmit(params).then(res => {
+      if (res.status === 0) {
+        Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
+        // window.history.go(-1) window.location.href='/infoDelivey'
+      }
+    })
   }
 
   render() {
@@ -276,7 +256,6 @@ export default class InfoDeliveyAdd extends React.Component {
           <input type="hidden" name="ids[]" value="109" />
           <input type="hidden" name="status" value="publish" />
         </form>
-        <iframe id='frameName' frameBorder="0" name="frameName"></iframe>
         <div className={this.state.openModel ? 'infoDelivey-model on' : 'infoDelivey-model'}>
           <div className="mode-view-mb" onClick={(e) => { this.setState({ openModel: !this.state.openModel }) }}></div>
           <div className="mode-view">
