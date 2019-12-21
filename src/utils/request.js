@@ -11,7 +11,7 @@ var loading = 1
 request.interceptors.request.use(
   config => {
     let txt = '正在加载'
-    if(config.url === '/nuts/file/upload'){
+    if(config.url === 'nuts/file/upload'){
       txt = '正在上传'
     }
     if(loading === 1){
