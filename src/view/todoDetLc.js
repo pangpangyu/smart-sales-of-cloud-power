@@ -12,6 +12,9 @@ export default class Todolist extends React.Component {
 			type:'',
 			businessKey:'',
 			taskId:'',
+			title:'',
+			centent:'',
+			diagram:''
 		}
 	}
 
@@ -40,12 +43,16 @@ export default class Todolist extends React.Component {
 		let params = `?taskId=${this.state.taskId}&id=${this.state.businessKey}&_=${new Date().getTime()}`
 		if(this.state.type === 'models_business_Contract'){
 			api.getBusinessContract(params).then(res => {
-
+				this.setState({
+					title:res.data.form.fields[2][0].value,
+					centent:res.data.form.fields[4][0].value,
+					diagram:res.data.diagram.url
+				})
 			})
 		}else{
 			//models_attendance_LeaveManagement
 			api.getAttendanceLeaveManagemen(params).then(res => {
-
+				
 			})
 		}
 	}
@@ -56,20 +63,21 @@ export default class Todolist extends React.Component {
 				<Header title={'待办事项详情'} back={true} search={false}></Header>
 				<div className="tododet">
 					<div className="top">
-						<h3>山西电力合同审核流程图</h3>
-						<p>[流程编号]</p>
+						<h3>{this.state.title}</h3>
+						<p>[{this.state.id}]</p>
 					</div>
 					<div className="cont">
 						<div className="process">
 							<p>办理意见 请签批</p>
 							<div className="img">
-								<img src={require('../assets/img/img202.jpg')}></img>
+								{/* <img src={require('../assets/img/img202.jpg')}></img> */}
+								<div dangerouslySetInnerHTML={{__html:this.state.centent}}></div>
 							</div>
 						</div>
 					</div>
 					<div className="f_btn">
 						<Link to={`/todoDetList/${this.state.id}`}>流程轨迹</Link>
-						<Link to={`/todoDet/${this.state.id}`}>流程图</Link>
+						<Link to={`/todoDet/${this.state.id}?diagram=${this.state.diagram}&name=${this.state.title}`}>流程图</Link>
 					</div>
 				</div>
 			</div>
