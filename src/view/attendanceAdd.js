@@ -66,7 +66,7 @@ export default class AttendanceAdd extends React.Component {
       leaveTypeLabel:`${getDataQuery('type')}`,
       jsTypeLabel:'',//加班结算类型
 
-      leaveTypeOptions: [],//请假类型
+      leaveTypeOptions: [],//请假/加班/外出类型
       settlementOptions:[],//加班结算方式
      
       isLock:false,
@@ -90,6 +90,10 @@ export default class AttendanceAdd extends React.Component {
         //外出
         egressAddress:'',
         egressType:0,
+
+        //加班结算类型值
+        jiesuanChooseType:0,
+        jiabanIds:[],
       },
       
     }
@@ -138,9 +142,8 @@ export default class AttendanceAdd extends React.Component {
   }
 
 
-  //请假类型选择
+  //结算类型选择
   onChangeJStype = (val) => {
-    console.log(val[0]);
     this.setState({
       jsType: val
     })
@@ -149,11 +152,10 @@ export default class AttendanceAdd extends React.Component {
 
   getType2 = () => {
     var typeVal = (this.state.jsType && this.state.jsType[0]) || "0"
-    console.log(typeVal);
     this.setState({
       jsopen: false,
       jsTypeLabel: getListItem(this.state.settlementOptions, 'value', typeVal || "0")[0].label,
-      form: Object.assign({}, this.state.form, { type: typeVal })
+      form: Object.assign({}, this.state.form, { jiesuanChooseType: typeVal }),
     });
   }
 
@@ -300,7 +302,40 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-
+  //保存加班用户-新增
+  OneOvertimeInfoSave=()=>{
+    const that = this;
+    let params = {
+      "metaFormData": {
+        "id": "",
+        "startTime": that.state.form.startTime,
+        "endTime":that.state.form.endTime,
+        "containDays": "0",
+        "containHours": "0",
+        "days": that.state.form.days,
+        "hours": "0",
+        "department.id": "14",//部门id
+        "position.id": "21",//职务id
+        "userInfo.id": "64",//用户id
+        "overtimeType":that.state.form.type,
+        "settlementWayType": that.state.form.jiesuanChooseType
+      },
+      "type": "add",
+      "id": "",
+      "overtimeId": "",
+      "ids1": []
+    };
+    api.OneOvertimeInfoSave(params).then(res => {
+      console.log('加班用户:', res);
+      if (res.status === 0) {
+        let newForm=that.setState.form;
+        newForm.jiabanIds=[res.data];
+        that.setState({
+          form:newForm
+        })
+      }
+    })
+  }
 
   //外出类型
   GetEgressTypeOptions=()=>{
@@ -555,7 +590,7 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //保存加班
+  //保存加班-编辑
   OneOvertimeSave=()=>{
     const that=this;
     Toast.loading('正在保存');
@@ -613,6 +648,7 @@ export default class AttendanceAdd extends React.Component {
       isSave:true
     })
 
+    //新增
     if(that.state.applyType=="qjsq"||that.state.editType=="qjedit"){//请假
       that.GetSaveLeave();
     }
@@ -621,7 +657,13 @@ export default class AttendanceAdd extends React.Component {
       that.OneEgressSave();
     }
 
-    if(that.state.applyType=="jbsq"||that.state.editType=="jbedit"){//加班
+    if(that.state.applyType=="jbsq"){//加班
+      that.OneOvertimeInfoSave();
+    }
+
+
+    //编辑
+    if(that.state.editType=="jbedit"){//加班
       that.OneOvertimeSave();
     }
     

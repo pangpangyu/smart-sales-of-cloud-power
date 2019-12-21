@@ -222,6 +222,11 @@ const api = {
     return request.get('admin/attendance/getSettlementTypeOptions', { params: params })
   },
 
+  //新增-加班用户
+  OneOvertimeInfoSave(params) {
+    return request.post('admin/attendance/oneOvertimeInfoSave', params)
+  },
+
    //保存加班
    OneOvertimeSave(params) {
     return request.post('admin/attendance/oneOvertimeSave', params)
