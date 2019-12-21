@@ -10,8 +10,12 @@ request.defaults.crossDomain = true
 var loading = 1
 request.interceptors.request.use(
   config => {
+    let txt = '正在加载'
+    if(config.url === '/nuts/file/upload'){
+      txt = '正在上传'
+    }
     if(loading === 1){
-      Toast.loading('正在加载',0)
+      Toast.loading(txt,0)
     }
     loading++
     if(config.url === 'nuts/file/upload'){

@@ -197,75 +197,85 @@ class Survey extends React.Component {
   }
 
   getDataChart3 = () => {
-    (async () => {
-      let params = `?rowNumber=0&pageSize=1000&year=2019`
-      let data = {
-        data1: [],
-        data2: [],
-        dataX: []
+    let params = `?rowNumber=0&pageSize=1000&year=2019`
+    let data = {
+      data1: [],
+      data2: [],
+      dataX: []
+    }
+    let yearMon = ''
+    let arrPromise = []
+    new Promise((resolve, reject) => {
+      arrPromise.push(api.contractPower(params))
+    })
+    for (let i = 1; i < 13; i++) {
+      yearMon = `2019-` + i
+      let params1 = {
+        rowNumber: 0,
+        pageSize: 1000,
+        yearMon1: 1,
+        yearMon: yearMon
       }
-      await api.contractPower(params).then(res => {
-        let dataArr = res.data.rows
-        let mon1 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon1;
-        }, 0);
-        let mon2 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon3 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon4 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon5 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon6 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon7 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon8 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon9 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon10 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon11 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        let mon12 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-          return total + currentValue.mon2;
-        }, 0);
-        data.data1 = [mon1, mon2, mon3, mon4, mon5, mon6, mon7, mon8, mon9, mon10, mon11, mon12]
+      new Promise((resolve, reject) => {
+        arrPromise.push(api.contractRevenue(params1))
       })
-
-      let yearMon = ''
-      for (let i = 1; i < 13; i++) {
-        yearMon = `2019-` + i
-        let params1 = {
-          rowNumber: 0,
-          pageSize: 1000,
-          yearMon1: 1,
-          yearMon: yearMon
-        }
-        await api.contractRevenue(params1).then(res => {
-          let sum = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
-            return total + currentValue.totalFee;
-          }, 0);
-          data.data2.push(sum)
+    }
+    Promise.all(arrPromise).then(res => {
+      if (res.length === 13) {
+        res.map((item, index) => {
+          if (index === 0) {
+            let dataArr = item.data.rows
+            let mon1 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon1;
+            }, 0);
+            let mon2 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon3 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon4 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon5 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon6 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon7 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon8 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon9 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon10 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon11 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            let mon12 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.mon2;
+            }, 0);
+            data.data1 = [mon1, mon2, mon3, mon4, mon5, mon6, mon7, mon8, mon9, mon10, mon11, mon12]
+          } else {
+            let sum = item.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
+              return total + currentValue.totalFee;
+            }, 0);
+            data.data2.push(sum)
+          }
         })
       }
+    }).then(res => {
       for (let i = 0; i < 12; i++) {
         data.dataX.push(i + 1 + '月')
       }
       this.paintingChart3(data)
-    })()
+    })
   }
 
   paintingChart3 = (data) => {
