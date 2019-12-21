@@ -40,25 +40,37 @@ export default class Test extends React.Component {
 			open: false
 		})
 	}
-	powerTracingAnnualBilateral = () => {
-		let params = {
-			rowNumber: 0,
-			pageSize: 10,
-			beginTime: '2019-12',
-			companyName: '山西杏花村汾酒集团',
-			userid: 0
-		}
-		api.powerTracingAnnualBilateral(params).then(res => {
-			if (res.status === 0) {
-				let num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
-					return total + parseInt(currentValue.adjPower);
-				}, 0);
-				this.setState({
-					AnnualBilateral: num
-				})
-			}
-		})
-	}
+	//年度双边电量
+    powerTracingAnnualBilateral = () => {
+        let params = {
+            rowNumber: 0,
+            pageSize: 10,
+            beginTime: '2019-12',
+            companyName: '山西杏花村汾酒集团',
+            userid: 0
+        }
+        api.powerTracingAnnualBilateral(params).then(res => {
+            if (res.status === 0) {
+                let num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
+                    return total + parseInt(currentValue.adjPower);
+                }, 0);
+                this.setState({
+                    AnnualBilateral:num
+                })
+            }
+        })
+    }
+    //合同装让电量
+    contractTransferredElectricity = () => {
+        let params = `&rowNumber=0&pageSize=1000&userName=山西杏花村汾酒集团&statrYearMonth=2019-10&randomValue=0`
+        api.contractTransferor(params).then(res => {
+
+        })
+        let params1 = `&rowNumber=0&pageSize=1000&userName=山西老陈醋有限公司&statrYearMonth=2019-10&randomValue=0`
+        api.transfereeOfContractTransfer(params1).then(res => {
+
+        })
+    }
 	render() {
 		return (
 			<div style={{ minHeight: '100vh', background: '#f0f1f3' }}>
