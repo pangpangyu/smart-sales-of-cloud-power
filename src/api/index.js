@@ -312,7 +312,7 @@ const api = {
   },
   //信息发布  --- 这个
   saveAndSubmit(params){
-    return request.post('/admin/system/saveAndSubmit?isAudit=true' , params)
+    return request.post('/admin/system/saveAndSubmit?isAudit=false' , params)
   },
   //中长期合同收益-合同电量
   contractPower(params){

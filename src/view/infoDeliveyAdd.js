@@ -29,7 +29,7 @@ export default class InfoDeliveyAdd extends React.Component {
   componentWillMount(){
     this.getInfoPublishDataDetail()
     if(this.state.id !== 0){
-      this.checkInfoPublishStatus()
+      //this.checkInfoPublishStatus()
     }
   }
 
@@ -40,12 +40,14 @@ export default class InfoDeliveyAdd extends React.Component {
 
   checkInfoPublishStatus = () => {
     // let params = `?ids=${this.state.id}&status=publish`
+    let arr = []
+    arr.push(this.state.id)
     let params = {
-      ids: [86],
+      ids: arr,
       status: 'publish'
     }
     api.CheckInfoPublishStatus(params).then(res => {
-
+      console.log(res)
     })
   }
 
@@ -203,13 +205,11 @@ export default class InfoDeliveyAdd extends React.Component {
         id: [that.state.file2.id]
       }
     }
-    console.log(params)
-    document.getElementById('subForm').submit()
-    // api.saveAndSubmit(params).then(res => {
-    //   if (res.status === 0) {
-    //     Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
-    //   }
-    // })
+    api.saveAndSubmit(params).then(res => {
+      if (res.status === 0) {
+        Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
+      }
+    })
   }
 
   render() {
