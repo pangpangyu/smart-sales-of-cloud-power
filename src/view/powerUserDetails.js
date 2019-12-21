@@ -84,7 +84,8 @@ export default class Todolist extends React.Component {
 				detail.marketTime = res.data.marketTime.value || '' // 入市日期
 				detail.delistingTime = res.data.delistingTime.value || '' //退市时间
 				detail.address = res.data['adminRegion.id'].value ? res.data['adminRegion.id'].options.filter(v => v.value === res.data['adminRegion.id'].value)[0].text : '' //地理区域
-				detail.businessLicense = res.data['businessLicense.id'].url || '' //营业执照
+				detail.businessLicenseName = res.data['businessLicense.id'].value ?  res.data['powerOfAttorney.id'].value[0].name : '-' //营业执照
+				detail.businessLicenseUrl = res.data['businessLicense.id'].value ?  res.data['powerOfAttorney.id'].value[0].url : '-' //营业执照
 				detail.businessRegisterAddress = res.data.businessRegisterAddress.value || '' //企业注册地址
 				detail.businessScope = res.data.businessScope.value || '' //业务范围
 				detail.clientType = res.data['clientType.id'].value ? res.data['clientType.id'].options.filter(v => v.value === res.data['clientType.id'].value)[0].text : '' //用户类别
@@ -104,6 +105,10 @@ export default class Todolist extends React.Component {
 				detail.maxSupplyVoltage = res.data.maxSupplyVoltage.value || '' //最大供电电压
 				detail.tradeType = res.data['tradeType.id'].value ? res.data['tradeType.id'].options.filter(v => v.value === res.data['tradeType.id'].value)[0].text : '' //交易类型
 				detail.socialCreditNumber = res.data.socialCreditNumber.value || '' //统一社会信用代码
+				detail.openPermitName = res.data['openPermit.id'].value ?  res.data['openPermit.id'].value[0].name : '-'
+				detail.openPermitUrl = res.data['openPermit.id'].value ?  res.data['openPermit.id'].value[0].name : '-'
+				detail.powerOfAttorneyName = res.data['powerOfAttorney.id'].value ? res.data['powerOfAttorney.id'].value[0].name : '-'
+				detail.powerOfAttorneyUrl = res.data['powerOfAttorney.id'].value ? res.data['powerOfAttorney.id'].value[0].url : '-'
 				that.setState({
 					detail: detail
 				})
@@ -198,17 +203,16 @@ export default class Todolist extends React.Component {
 							<li className="item">
 								<span className="l">营业执照副本</span>
 								<span className="r">
-									{this.state.detail.businessLicense ? <Link to={`/imaView?url=${baseImgUrl + this.state.detail.businessLicense}`}>{this.state.detail.businessLicense ? '有' : ''}</Link> : '无'}
-									{/* { this.state.detail.businessLicense ? <a href={baseImgUrl + this.state.detail.businessLicense}>有</a> : '无' } */}
+									{this.state.detail.businessLicenseName }
 								</span>
 							</li>
 							<li className="item">
 								<span className="l">开户许可证</span>
-								<span className="r">{this.state.detail.companyName}</span>
+								<span className="r">{this.state.detail.openPermitName}</span>
 							</li>
 							<li className="item">
 								<span className="l">委托授权书</span>
-								<span className="r">{this.state.detail.companyName}</span>
+								<span className="r">{this.state.detail.powerOfAttorneyName}</span>
 							</li>
 						</ul>
 					</div>

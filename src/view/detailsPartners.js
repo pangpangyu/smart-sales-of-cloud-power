@@ -59,6 +59,14 @@ export default class Todolist extends React.Component {
 				detail.depositAccountName = res.data.depositAccountName.value || '' //开户名称
 				detail.depositAccountNo = res.data.depositAccountNo.value //账号
 				detail.registerAddress = res.data.registerAddress.value //注册地址
+				detail.openPermitName = res.data['openPermit.id'].value ? res.data['openPermit.id'].value[0].name : '-'
+				detail.openPermitUrl = res.data['openPermit.id'].value ? res.data['openPermit.id'].value[0].url : '-'
+				
+				detail.powerOfAttorneyName = res.data['powerOfAttorney.id'].value ? res.data['powerOfAttorney.id'].value[0].name : '-'
+				detail.powerOfAttorneyUrl = res.data['powerOfAttorney.id'].value ? res.data['powerOfAttorney.id'].value[0].url : '-'
+
+				detail.businessLicenseMame = res.data['businessLicense.id'].value ? res.data['businessLicense.id'].value[0].name : '-'
+				detail.businessLicenseUrl = res.data['businessLicense.id'].value ? res.data['businessLicense.id'].value[0].url : '-'
 				this.setState({
 					detail: detail
 				})
@@ -156,15 +164,15 @@ export default class Todolist extends React.Component {
 							</li>
 							<li className="item">
 								<span className="l">营业执照副本</span>
-								<span className="r">-</span>
+								<span className="r">{this.state.detail.businessLicenseMame}</span>
 							</li>
 							<li className="item">
 								<span className="l">开户许可证</span>
-								<span className="r">-</span>
+								<span className="r">{this.state.detail.openPermitName}</span>
 							</li>
 							<li className="item">
 								<span className="l">委托授权书</span>
-								<span className="r">-</span>
+								<span className="r">{this.state.detail.powerOfAttorneyName}</span>
 							</li>
 						</ul>
 					</div>
