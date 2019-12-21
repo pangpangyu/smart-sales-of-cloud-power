@@ -304,7 +304,7 @@ const api = {
   },
   //信息发布是否需要审核
   CheckInfoPublishStatus(params){
-    return request.get('/admin/system/checkInfoPublishStatus' + params)
+    return request.post('/admin/system/checkInfoPublishStatus' , params)
   },
   //信息发布2
   UpdateInfoPublishStatus(params){
