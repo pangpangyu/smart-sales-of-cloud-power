@@ -186,8 +186,8 @@ export default class InfoDeliveyAdd extends React.Component {
     }
     api.saveAndSubmit(params).then(res => {
       if (res.status === 0) {
-        Toast.info(res.message, 2, () => { window.location.href='/infoDelivey' }, false);
-        // window.history.go(-1)
+        Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
+        // window.history.go(-1) window.location.href='/infoDelivey'
       }
     })
   }
