@@ -1,6 +1,8 @@
 import React from 'react'
 import Header from '../components/header'
 import { Link } from 'react-router-dom'
+import { getDataQuery } from '../utils/index';
+import api from '../api';
 
 export default class Test extends React.Component {
     constructor(props) {
@@ -19,8 +21,12 @@ export default class Test extends React.Component {
             open: false,
             value: null,
             transactionUnit: '',
-            transactionUnit: 'xxx交易单元'
+            transactionUnit: 'xxx交易单元',
+            AnnualBilateral: 0, //年度双边
         }
+    }
+    componentWillMount() {
+        this.powerTracingAnnualBilateral()
     }
     onScrollChange = (value) => {
         this.setState({
@@ -32,6 +38,25 @@ export default class Test extends React.Component {
         this.setState({
             transactionUnit: this.state.value[0],
             open: false
+        })
+    }
+    powerTracingAnnualBilateral = () => {
+        let params = {
+            rowNumber: 0,
+            pageSize: 10,
+            beginTime: '2019-12',
+            companyName: '山西杏花村汾酒集团',
+            userid: 0
+        }
+        api.powerTracingAnnualBilateral(params).then(res => {
+            if (res.status === 0) {
+                let num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
+                    return total + parseInt(currentValue.adjPower);
+                }, 0);
+                this.setState({
+                    AnnualBilateral:num
+                })
+            }
         })
     }
     render() {
@@ -60,7 +85,7 @@ export default class Test extends React.Component {
                                     </li>
                                     <li className="item">
                                         <span className="l">年度双边电量</span>
-                                        <span className="r">20000兆瓦时</span>
+                                        <span className="r">{this.state.AnnualBilateral ? this.state.AnnualBilateral:0}</span>
                                     </li>
                                     <li className="item">
                                         <span className="l">合同转让电量</span>
