@@ -313,6 +313,14 @@ const api = {
   //信息发布  --- 这个
   saveAndSubmit(params){
     return request.post('/admin/system/saveAndSubmit?isAudit=true' , params)
+  },
+  //中长期合同收益-合同电量
+  contractPower(params){
+    return request.get('/trade/match/userFind'+params)
+  },
+  //中长期合同收益-合同电量
+  contractRevenue(params){
+    return request.post('/admin/settlement/listOfficialBill?type=2', params)
   }
 }
 

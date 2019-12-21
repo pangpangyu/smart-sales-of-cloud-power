@@ -15,6 +15,7 @@ class Survey extends React.Component {
       cusCount: 0,
       earnings: 0,
       electricQuantity: 0,
+      data: {}
     }
   }
 
@@ -72,7 +73,7 @@ class Survey extends React.Component {
         data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
         itemHeight: 8,
         itemWidth: 8,
-        icon:"circle",
+        icon: "circle",
         itemGap: 10,
         formatter: function (name) {
           let arr = data.filter(item => item.name === name)[0]
@@ -196,15 +197,79 @@ class Survey extends React.Component {
   }
 
   getDataChart3 = () => {
-    this.paintingChart3()
+    (async () => {
+      let params = `?rowNumber=0&pageSize=1000&year=2019`
+      let data = {
+        data1: [],
+        data2: [],
+        dataX: []
+      }
+      await api.contractPower(params).then(res => {
+        let dataArr = res.data.rows
+        let mon1 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon1;
+        }, 0);
+        let mon2 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon3 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon4 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon5 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon6 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon7 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon8 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon9 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon10 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon11 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        let mon12 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
+          return total + currentValue.mon2;
+        }, 0);
+        data.data1 = [mon1, mon2, mon3, mon4, mon5, mon6, mon7, mon8, mon9, mon10, mon11, mon12]
+      })
+
+      let yearMon = ''
+      for (let i = 1; i < 13; i++) {
+        yearMon = `2019-` + i
+        let params1 = {
+          rowNumber: 0,
+          pageSize: 1000,
+          yearMon1: 1,
+          yearMon: yearMon
+        }
+        await api.contractRevenue(params1).then(res => {
+          let sum = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
+            return total + currentValue.totalFee;
+          }, 0);
+          data.data2.push(sum)
+        })
+      }
+      for (let i = 0; i < 12; i++) {
+        data.dataX.push(i + 1 + '月')
+      }
+      this.paintingChart3(data)
+    })()
   }
-  paintingChart3 = () => {
-    var myChart = echarts.init(document.getElementById('myChart3'));
-    let data = {
-      dataX: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-      data1: [5, 6, 8, 5, 4, 5, 8, 6, 5, 8, 4, 1],
-      data2: [9, 5, 4, 8, 6, 3, 2, 1, 5, 4, 5, 9]
-    }
+
+  paintingChart3 = (data) => {
+    console.log(data)
     let option = {
       color: ['#288dfd', '#f9a30c'],
       legend: {
@@ -220,7 +285,7 @@ class Survey extends React.Component {
       legend: {
         itemHeight: 8,
         itemWidth: 20,
-        itemStyle:{},
+        itemStyle: {},
       },
       tooltip: {
         trigger: 'axis',
@@ -342,6 +407,7 @@ class Survey extends React.Component {
         }
       ]
     };
+    var myChart = echarts.init(document.getElementById('myChart3'));
     myChart.setOption(option)
   }
 
@@ -379,7 +445,7 @@ class Survey extends React.Component {
         data: ['申报电量', '实时电量'],
         itemHeight: 8,
         itemWidth: 20,
-        itemStyle:{},
+        itemStyle: {},
         formatter: function (name) {
           return name;
         }
