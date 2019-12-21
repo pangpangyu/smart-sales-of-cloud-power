@@ -318,9 +318,13 @@ const api = {
   contractPower(params){
     return request.get('/trade/match/userFind'+params)
   },
-  //中长期合同收益-合同电量
+  //中长期合同收益-合同收益
   contractRevenue(params){
     return request.post('/admin/settlement/listOfficialBill?type=2', params)
+  },
+  //电量追踪详情-年度双边
+  powerTracingAnnualBilateral(params){
+    return request.post('/trade/tradeAdjustResult/list?type=0', params)
   }
 }
 
