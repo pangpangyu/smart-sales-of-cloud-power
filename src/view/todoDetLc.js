@@ -24,7 +24,7 @@ export default class Todolist extends React.Component {
 	}
 
 	getDetailData = () => {
-		let params = `?id=2182514`
+		let params = `?id=${this.state.id}`
 		api.getmodelsNutsWorkflowProcessTask(params).then(res => {
 			this.setState({
 				type:res.data.businessType,
@@ -37,7 +37,7 @@ export default class Todolist extends React.Component {
 	}
 
 	getDataByType = () => {
-		let params = `?taskId=${this.state.taskId}&id=${this.state.businessKey}`
+		let params = `?taskId=${this.state.taskId}&id=${this.state.businessKey}&_=${new Date().getTime()}`
 		if(this.state.type === 'models_business_Contract'){
 			api.getBusinessContract(params).then(res => {
 
