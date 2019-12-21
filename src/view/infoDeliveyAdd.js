@@ -241,8 +241,6 @@ export default class InfoDeliveyAdd extends React.Component {
       }
     }
     document.getElementById('subForm').submit()
-    let obj = document.getElementById('frameName')
-    console.log(obj.contentWindow)
     // api.saveAndSubmit(params).then(res => {
     //   if (res.status === 0) {
     //     Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
