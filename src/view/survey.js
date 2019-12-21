@@ -294,9 +294,7 @@ class Survey extends React.Component {
       },
       legend: {
         itemHeight:8,
-        itemWidth: 20,
-        borderRadius: '20',
-        borderColor:'#000'
+        itemWidth: 20
       },
       tooltip: {
         trigger: 'axis',
