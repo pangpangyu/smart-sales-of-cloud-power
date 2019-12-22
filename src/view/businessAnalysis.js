@@ -357,7 +357,8 @@ export default class BsinessAnalysis extends React.Component {
 
   getChatMapData3 = () => {
     let params = {
-      year: this.state.year
+      year: this.state.year,
+      type: 1
     }
     let data = {
       dataX: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
