@@ -617,6 +617,10 @@ export default class AttendanceAdd extends React.Component {
         Toast.info(res.message);
       }
     })
+    .catch((e)=>{
+      console.log(e)
+      Toast.info("流程审批还没开始")
+    })
   }
 
   //保存加班
