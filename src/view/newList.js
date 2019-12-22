@@ -44,7 +44,7 @@ class NewList extends React.Component {
     } else {
       //消息列表已读消息
       that.getreadyNew()
-      //that.getUnreadNew()
+      that.getUnreadNew()
     }
   }
   //消息列表已读消息
@@ -62,6 +62,7 @@ class NewList extends React.Component {
       }
     })
   }
+  //消息列表未读消息
   getUnreadNew = () => {
     let params = '?hasHandled=true'
     api.getNewListPage(params).then(res => {
@@ -138,6 +139,12 @@ class NewList extends React.Component {
     // }
   }
 
+  msgChg = (e) => {
+    this.setState({
+      active: e
+    })
+  }
+
   showType1 = () => {
     return (
       <Scroll
@@ -152,7 +159,7 @@ class NewList extends React.Component {
           <div className="change_tab_list">
             <ul>
               {this.state.tabs && this.state.tabs.map((item, index) => {
-                return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}({item.num})</li>
+                return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.msgChg(item.id)}>{item.title}({item.num})</li>
               })}
             </ul>
           </div>
@@ -193,7 +200,7 @@ class NewList extends React.Component {
           <div className="change_tab_list">
             <ul>
               {this.state.tabs.map((item, index) => {
-                return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}({item.num})</li>
+                return <li className={item.id === this.state.active ? 'active' : ''} key={index}  onClick={() => this.msgChg(item.id)}>{item.title}({item.num})</li>
               })}
             </ul>
           </div>
@@ -201,7 +208,7 @@ class NewList extends React.Component {
         { this.state.active === 1 && <div className="company-new-list">
           {this.state.alreadyRead.length > 0 && this.state.alreadyRead.map(item => {
             return <div key={item.id} className={this.state.type === '1' ? 'item on' : 'item'} style={{background:'#fff'}}>
-              <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
+              <div className="box">
                 <div className="info">
                   <div className="title">{item.title}</div>
                   <div className="time">发布时间：{item.lastUpdateTime}</div>
@@ -210,7 +217,7 @@ class NewList extends React.Component {
                   {item.isShowNew && <img src={require('../assets/img/img018.png')} style={{ width: '26px', height: 'auto' }} alt="new" />}
                   <i className="iconfont iconyou"></i>
                 </div> }
-              </Link>
+              </div>
               <div style={{ background: '#f0f1f3', height: '11px' }}></div>
             </div>
           })}
@@ -218,17 +225,13 @@ class NewList extends React.Component {
         </div> }
         { this.state.active === 2 && <div className="company-new-list">
           {this.state.UnreadList.length > 0 && this.state.UnreadList.map(item => {
-            return <div key={item.id} className="item">
-              <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
+            return <div key={item.id} className={this.state.type === '1' ? 'item on' : 'item'} style={{background:'#fff'}}>
+              <div className="box">
                 <div className="info">
                   <div className="title">{item.title}</div>
                   <div className="time">发布时间：{item.lastUpdateTime}</div>
                 </div>
-                <div className="new">
-                  {item.isShowNew && <img src={require('../assets/img/img018.png')} style={{ width: '26px', height: 'auto' }} alt="new" />}
-                  <i className="iconfont iconyou"></i>
-                </div>
-              </Link>
+              </div>
               <div style={{ background: '#f0f1f3', height: '11px' }}></div>
             </div>
           })}

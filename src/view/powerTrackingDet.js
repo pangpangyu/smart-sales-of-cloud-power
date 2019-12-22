@@ -23,10 +23,16 @@ export default class Test extends React.Component {
 			transactionUnit: '',
 			transactionUnit: 'xxx交易单元',
 			AnnualBilateral: 0, //年度双边
+			contractTransfer:0,//合同转让电量
+			name:`${getDataQuery('name')}`,//公司名称
+			date:`${getDataQuery('date')}`,//交易月份
+			pageIndex:0,
+			pageSize:10
 		}
 	}
 	componentWillMount() {
 		this.powerTracingAnnualBilateral()
+		this.contractTransferredElectricity()
 	}
 	onScrollChange = (value) => {
 		this.setState({
@@ -43,10 +49,10 @@ export default class Test extends React.Component {
 	//年度双边电量
     powerTracingAnnualBilateral = () => {
         let params = {
-            rowNumber: 0,
-            pageSize: 10,
-            beginTime: '2019-12',
-            companyName: '山西杏花村汾酒集团',
+            rowNumber: this.state.pageIndex*this.state.pageSize,
+            pageSize: this.state.pageSize,
+            beginTime: this.state.date,
+            companyName: this.state.name,
             userid: 0
         }
         api.powerTracingAnnualBilateral(params).then(res => {
@@ -62,13 +68,14 @@ export default class Test extends React.Component {
     }
     //合同装让电量
     contractTransferredElectricity = () => {
-        let params = `&rowNumber=0&pageSize=1000&userName=山西杏花村汾酒集团&statrYearMonth=2019-10&randomValue=0`
+        let params = `&rowNumber=${this.state.pageIndex*this.state.pageSize}&pageSize=${this.state.pageSize}&userName=${this.state.name}&statrYearMonth=${this.state.date}&randomValue=0`
         api.contractTransferor(params).then(res => {
-
-        })
-        let params1 = `&rowNumber=0&pageSize=1000&userName=山西老陈醋有限公司&statrYearMonth=2019-10&randomValue=0`
-        api.transfereeOfContractTransfer(params1).then(res => {
-
+			let num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
+				return total + parseInt(currentValue.tradePower);
+			  }, 0);
+			  this.setState({
+				contractTransfer: num
+			  })
         })
     }
 	render() {
@@ -97,11 +104,11 @@ export default class Test extends React.Component {
 									</li>
 									<li className="item">
 										<span className="l">年度双边电量</span>
-										<span className="r">{this.state.AnnualBilateral ? this.state.AnnualBilateral : 0}</span>
+										<span className="r">{this.state.AnnualBilateral ? this.state.AnnualBilateral : 0}兆瓦时</span>
 									</li>
 									<li className="item">
 										<span className="l">合同转让电量</span>
-										<span className="r">10000兆瓦时</span>
+										<span className="r">{this.state.contractTransfer ? this.state.contractTransfer : 0}兆瓦时</span>
 									</li>
 									<li className="item">
 										<span className="l">现货申报电量</span>
