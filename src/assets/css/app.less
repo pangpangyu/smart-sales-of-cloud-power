@@ -298,6 +298,16 @@ code {
 }
 .company-new-list{
   .item{
+    &.on{
+      .title{
+        font-size: 15px;
+        color: #2b2a30;
+        line-height: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
     a{
       display: flex;
       align-items: center;
@@ -313,9 +323,6 @@ code {
           font-size: 15px;
           color: #2b2a30;
           line-height: 18px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
         }
         .time{
           font-size: 11px;
@@ -485,11 +492,11 @@ code {
       font-size: 11px;
       color: #ffffff;
       text-align: center;
-      padding:13px 0;
+      padding:13px;
       border-radius: 6px;
       box-shadow: 0 0 10px rgba(55,120,245,.8);
       margin-left: 15px;
-      width: 110px;
+      min-width: 110px;
     }
   }
   .charts-map{

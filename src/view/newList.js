@@ -200,16 +200,16 @@ class NewList extends React.Component {
         </div>
         { this.state.active === 1 && <div className="company-new-list">
           {this.state.alreadyRead.length > 0 && this.state.alreadyRead.map(item => {
-            return <div key={item.id} className="item" style={{background:'#fff'}}>
+            return <div key={item.id} className={this.state.type === '1' ? 'item on' : 'item'} style={{background:'#fff'}}>
               <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
                 <div className="info">
                   <div className="title">{item.title}</div>
                   <div className="time">发布时间：{item.lastUpdateTime}</div>
                 </div>
-                <div className="new">
+                { this.state.type === '1' && <div className="new">
                   {item.isShowNew && <img src={require('../assets/img/img018.png')} style={{ width: '26px', height: 'auto' }} alt="new" />}
                   <i className="iconfont iconyou"></i>
-                </div>
+                </div> }
               </Link>
               <div style={{ background: '#f0f1f3', height: '11px' }}></div>
             </div>

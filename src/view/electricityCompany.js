@@ -39,7 +39,7 @@ export default class ElectricityCompany extends React.Component {
       pageIndex: 0,
       total: 0,
       noData: false,
-      pageSize: 10,
+      pageSize: 1000,
       keyword: '',
       transactionList: [],//交易类型列表
       transactionValue: [],
@@ -55,6 +55,8 @@ export default class ElectricityCompany extends React.Component {
       enterpriseName: '',
       areaName: '请选择',
       hzfList: [],
+
+      electricityType:''
     }
   }
 
@@ -161,25 +163,8 @@ export default class ElectricityCompany extends React.Component {
     const that = this
     let params = {
       "rowNumber": that.state.pageIndex,
-      "pageSize": 10,
+      "pageSize": that.state.pageSize,
       "conditions": []
-      // "conditions": [
-      //   {
-      //     "operator": "%",
-      //     "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone",
-      //     "value": this.state.enterpriseName
-      //   },
-      //   {
-      //     "operator": "=",
-      //     "name": "adminRegion.id",
-      //     "value": this.state.geographicalAreaId 
-      //   },
-      //   {
-      //     "operator": "=",
-      //     "name": "electricityType.id",
-      //     "value": this.state.transactionValue
-      //   }
-      // ]
     }
     if (this.state.enterpriseName) {
       let obj = {
@@ -239,7 +224,7 @@ export default class ElectricityCompany extends React.Component {
   //获取合作方数据
   getPartnersList = (resolve) => {
     const that = this
-    let params = { "rowNumber": that.state.pageIndex, "pageSize": 10, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
+    let params = { "rowNumber": that.state.pageIndex, "pageSize": that.state.pageSize, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
     api.GetPartnersList(params).then(res => {
       if (res.status === 0) {
         res.data.rows.map(item => {
@@ -258,7 +243,7 @@ export default class ElectricityCompany extends React.Component {
   //获取售电公司客户列表数据
   getSellingElectricityList = (resolve) => {
     const that = this
-    let params = { "rowNumber": this.state.pageIndex, "pageSize": 10, "conditions": [{ "operator": "%", "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone", "value": this.state.keyword }] }
+    let params = { "rowNumber": this.state.pageIndex, "pageSize": that.state.pageSize, "conditions": [{ "operator": "%", "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone", "value": this.state.keyword }] }
     api.GetSellingElectricityList(params).then(res => {
       if (res.status === 0) {
         res.data.rows.map(item => {
@@ -499,12 +484,20 @@ export default class ElectricityCompany extends React.Component {
             </div>
             <div className="list">
               <div className="l">
-                <p>交易类型</p>
+                <p>用电类别</p>
               </div>
               <div className="r">
                 <span onClick={() => this.setState({ transactionOpen: true })}>{this.state.transactionName}</span>
               </div>
             </div>
+            {/* <div className="list">
+              <div className="l">
+                <p>交易类型</p>
+              </div>
+              <div className="r">
+                <span onClick={() => this.setState({ transactionOpen: true })}>{this.state.transactionName}</span>
+              </div>
+            </div> */}
             <div className="list">
               <div className="l">
                 <p>地理区域</p>

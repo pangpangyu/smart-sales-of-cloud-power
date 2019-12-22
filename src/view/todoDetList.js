@@ -39,10 +39,10 @@ export default class Todolist extends React.Component {
 														<p>发起</p>
 													</div>
 													<div className="web">
-														<p><span>办理人员：</span>张三</p>
-														<p><span>开始时间：</span>2019-08-12 09:50:00</p>
-														<p><span>操作时间：</span>2019-08-12 09:50:00</p>
-														<p><span>办理意见：</span>—</p>
+														<p><span>办理人员：</span>{item.comment}</p>
+														<p><span>开始时间：</span>{item.task.startTime}</p>
+														<p><span>操作时间：</span>{item.task.endTime}</p>
+														<p><span>办理意见：</span>{item.comment}</p>
 														<div className="result">
 															<span>已办理</span>
 															<p className="on">不同意</p>
