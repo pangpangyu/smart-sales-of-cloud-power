@@ -65,7 +65,7 @@ class NewList extends React.Component {
   //消息列表未读消息
   getUnreadNew = () => {
     let params = '?hasHandled=true'
-    api.getNewListPage(params).then(res => {
+    api.getNewListPage2(params).then(res => {
       if (res.status === 0) {
         let arr = this.state.tabs
         arr[1].num = res.data.rows.length
