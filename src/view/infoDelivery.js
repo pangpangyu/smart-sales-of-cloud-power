@@ -15,7 +15,7 @@ export default class InfoDelivery extends React.Component{
     this.state = {
       list:[],
       pageIndex:0,
-      pageSize:1000,
+      pageSize:10,
       keyword:'',
       total:10000,
       isNotData: '1',
@@ -31,7 +31,7 @@ export default class InfoDelivery extends React.Component{
   getListData = () => {
     const that = this
     let params = {
-      "rowNumber":that.state.pageIndex,
+      "rowNumber":that.state.pageIndex*that.state.pageSize,
       "pageSize":that.state.pageSize,
       "orders":[],
       "conditions":[{"operator":"like","name":"keyword","value":that.state.keyword}]
@@ -74,7 +74,7 @@ export default class InfoDelivery extends React.Component{
     return new Promise((resolve,reject) => {
       if(pageIndex * that.state.pageSize <= that.state.total){
         let params = {
-          "rowNumber":pageIndex,
+          "rowNumber":pageIndex*that.state.pageSize,
           "pageSize":that.state.pageSize,
           "orders":[],
           "conditions":[{"operator":"like","name":"keyword","value":that.state.keyword}]

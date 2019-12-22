@@ -43,10 +43,10 @@ export default class Todolist extends React.Component {
 														<p><span>开始时间：</span>{formatTime(item.task.startTime)}</p>
 														<p><span>操作时间：</span>{formatTime(item.task.endTime)}</p>
 														<p><span>办理意见：</span>{item.comment}</p>
-														<div className="result">
+														{/* <div className="result">
 															<span>已办理</span>
 															<p className="on">不同意</p>
-														</div>
+														</div> */}
 													</div>
 												</li>
 								}) }
