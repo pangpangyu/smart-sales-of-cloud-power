@@ -37,9 +37,9 @@ export default class ElectricityCompany extends React.Component {
       type: this.props.match.params.type,
       companyList: [],
       pageIndex: 0,
+      pageSize: 10,
       total: 0,
       noData: false,
-      pageSize: 1000,
       keyword: '',
       transactionList: [],//交易类型列表
       transactionValue: [],
@@ -56,7 +56,9 @@ export default class ElectricityCompany extends React.Component {
       areaName: '请选择',
       hzfList: [],
 
-      electricityType:''
+      electricityType:[],//用电类别集合
+      electricityTypeValue:[],//用电类别选中值
+      electricityTypeTxt:'请选择',//用电类别选择文字
     }
   }
 
@@ -80,8 +82,13 @@ export default class ElectricityCompany extends React.Component {
     api.GetPowerUserAdvancedSearchOptions().then(res => {
       if (res.status === 0) {
         let transactionList = []
+        let electricityType = []
         res.data.tradeType.options.map(item => {
           transactionList.push({ label: item.text, value: item.value })
+          return item.id
+        })
+        res.data.electricityType.options.map(item => {
+          electricityType.push({ label: item.text, value: item.value })
           return item.id
         })
         let geographicalAreaList = []
@@ -100,7 +107,8 @@ export default class ElectricityCompany extends React.Component {
         })
         that.setState({
           transactionList: transactionList,
-          geographicalAreaList: geographicalAreaList
+          geographicalAreaList: geographicalAreaList,
+          electricityType:electricityType
         })
       }
     })
@@ -119,12 +127,29 @@ export default class ElectricityCompany extends React.Component {
       });
     }
   };
+  electricityOnChange = (value) => {
+    if (value.length > 0) {
+      this.setState({
+        electricityTypeValue: value
+      });
+    }
+  };
   transactionType = () => {
     if (this.state.transactionValue.length > 0) {
       let arr = this.state.transactionList.filter(item => item.value === this.state.transactionValue[0])
       let txt = arr[0].label
       this.setState({
         transactionName: txt,
+        transactionOpen: false
+      })
+    }
+  }
+  electricityTypeSend = () => {
+    if (this.state.electricityTypeValue.length > 0) {
+      let arr = this.state.electricityType.filter(item => item.value === this.state.electricityTypeValue[0])
+      let txt = arr[0].label
+      this.setState({
+        electricityTypeTxt: txt,
         transactionOpen: false
       })
     }
@@ -162,7 +187,7 @@ export default class ElectricityCompany extends React.Component {
   getPowerUserList = (resolve) => {
     const that = this
     let params = {
-      "rowNumber": that.state.pageIndex,
+      "rowNumber": that.state.pageIndex*that.state.pageSize,
       "pageSize": that.state.pageSize,
       "conditions": []
     }
@@ -182,14 +207,22 @@ export default class ElectricityCompany extends React.Component {
       }
       params.conditions.push(obj)
     }
-    if (this.state.transactionValue.length > 0) {
+    if (this.state.electricityTypeValue.length > 0) {
       let obj = {
         "operator": "=",
         "name": "electricityType.id",
-        "value": this.state.transactionValue[0]
+        "value": this.state.electricityTypeValue[0]
       }
       params.conditions.push(obj)
     }
+    // if (this.state.transactionValue.length > 0) {
+    //   let obj = {
+    //     "operator": "=",
+    //     "name": "electricityType.id",
+    //     "value": this.state.transactionValue[0]
+    //   }
+    //   params.conditions.push(obj)
+    // }
     api.GetPowerUsersList(params).then(res => {
       if (res.status === 0) {
         that.setState({
@@ -204,7 +237,7 @@ export default class ElectricityCompany extends React.Component {
   //获取发电企业数据
   getElectricityGenerationList = (resolve) => {
     const that = this
-    let params = { "rowNumber": that.state.pageIndex, "pageSize": 10, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
+    let params = { "rowNumber": that.state.pageIndex*that.state.pageSize, "pageSize": that.state.pageSize, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
     api.GetPowerPlantList(params).then(res => {
       if (res.status === 0) {
         res.data.rows.map(item => {
@@ -224,7 +257,7 @@ export default class ElectricityCompany extends React.Component {
   //获取合作方数据
   getPartnersList = (resolve) => {
     const that = this
-    let params = { "rowNumber": that.state.pageIndex, "pageSize": that.state.pageSize, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
+    let params = { "rowNumber": that.state.pageIndex*that.state.pageSize, "pageSize": that.state.pageSize, "conditions": [{ "name": "name", "operator": "%", "value": this.state.keyword }] }
     api.GetPartnersList(params).then(res => {
       if (res.status === 0) {
         res.data.rows.map(item => {
@@ -243,7 +276,7 @@ export default class ElectricityCompany extends React.Component {
   //获取售电公司客户列表数据
   getSellingElectricityList = (resolve) => {
     const that = this
-    let params = { "rowNumber": this.state.pageIndex, "pageSize": that.state.pageSize, "conditions": [{ "operator": "%", "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone", "value": this.state.keyword }] }
+    let params = { "rowNumber": that.state.pageIndex*that.state.pageSize, "pageSize": that.state.pageSize, "conditions": [{ "operator": "%", "name": "name,shortName,companyStaff.name,companyStaff.mobilePhone", "value": this.state.keyword }] }
     api.GetSellingElectricityList(params).then(res => {
       if (res.status === 0) {
         res.data.rows.map(item => {
@@ -262,7 +295,7 @@ export default class ElectricityCompany extends React.Component {
   loadMoreData = () => {
     return new Promise((resolve, reject) => {
       let pageIndex = this.state.pageIndex + 1
-      if (pageIndex * this.state.pageSize <= this.state.total) {
+      if (pageIndex * this.state.pageSize < this.state.total) {
         this.setState({
           pageIndex: pageIndex
         }, () => {
@@ -479,7 +512,7 @@ export default class ElectricityCompany extends React.Component {
                 <p>企业名称</p>
               </div>
               <div className="r">
-                <input type="text" onChange={(e) => this.getEnterpriseName(e.target.value)} />
+                <input type="text" placeholder="请输入" onChange={(e) => this.getEnterpriseName(e.target.value)} />
               </div>
             </div>
             <div className="list">
@@ -487,7 +520,7 @@ export default class ElectricityCompany extends React.Component {
                 <p>用电类别</p>
               </div>
               <div className="r">
-                <span onClick={() => this.setState({ transactionOpen: true })}>{this.state.transactionName}</span>
+                <span onClick={() => this.setState({ transactionOpen: true })}>{this.state.electricityTypeTxt}</span>
               </div>
             </div>
             {/* <div className="list">
@@ -526,9 +559,26 @@ export default class ElectricityCompany extends React.Component {
           {this.state.type === '4' && this.sellingElectricity()}
 
         </Scroll>
-        {this.state.noData && <div style={{ paddingTop: '200px' }}><NoData /></div>}
+        {this.state.noData && <div style={{ paddingTop: '100px' }}><NoData /></div>}
         {/* 交易类型选择 */}
         <div className={this.state.transactionOpen ? 'modal on' : 'modal'}>
+          <div className="modal_bg" onClick={() => this.setState({ transactionOpen: false })}></div>
+          <div className="pick_box">
+            <PickerView
+              data={this.state.electricityType}
+              onChange={this.electricityOnChange}
+              cascade={false}
+              value={this.state.electricityTypeValue}
+            />
+            <div className="module-space"></div>
+            <div className="btns">
+              <Button className="btn" type="primary" onClick={() => this.setState({ transactionOpen: false })}>取消</Button>
+              <Button className="btn btn1" type="primary" onClick={this.electricityTypeSend}>确定</Button>
+              {/* this.transactionType */}
+            </div>
+          </div>
+        </div>
+        {/* <div className={this.state.transactionOpen ? 'modal on' : 'modal'}>
           <div className="modal_bg" onClick={() => this.setState({ transactionOpen: false })}></div>
           <div className="pick_box">
             <PickerView
@@ -543,7 +593,7 @@ export default class ElectricityCompany extends React.Component {
               <Button className="btn btn1" type="primary" onClick={this.transactionType}>确定</Button>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* 地理区域选择 */}
         <div className={this.state.geographicalAreaOpen ? 'modal on' : 'modal'}>
           <div className="modal_bg" onClick={() => this.setState({ geographicalAreaOpen: false })}></div>
