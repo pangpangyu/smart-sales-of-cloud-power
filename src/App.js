@@ -7,6 +7,7 @@ import { Toast } from 'antd-mobile';
 
 class App extends React.Component {
   componentDidMount() {
+    //setCookies('PLAY_SESSION', '4680269fd3b5593ce11fbf08d18bad3128633ee5-account=appusr')
     if(process.env.NODE_ENV === 'development'){
       setCookies('PLAY_SESSION', '4680269fd3b5593ce11fbf08d18bad3128633ee5-account=appusr')
     }else{
