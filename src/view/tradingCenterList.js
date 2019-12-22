@@ -25,13 +25,13 @@ export default class Test extends React.Component {
 				{this.state.mediumAndLongTermTradeBulletin.length > 0 && this.state.mediumAndLongTermTradeBulletin.map(item => {
 					return <div className="item" key={item.id}>
 						<Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
-							<h3>{item.title}</h3>
+							<h3>{item.zhuTi}</h3>
 							<div className="list">
 								<ul>
-									<li><p><span>交易品种：</span>{item.n1}</p></li>
-									<li><p><span>交易规模：</span>{item.n2}</p></li>
-									<li><p><span>交易开始：</span>{item.n3}</p></li>
-									<li><p><span>交易结束：</span>{item.n4}</p></li>
+									<li><p><span>交易品种：</span>{item.pingZhong}</p></li>
+									<li><p><span>交易规模：</span>{item.guiMo}</p></li>
+									<li><p><span>交易开始：</span>{item.startTime}</p></li>
+									<li><p><span>交易结束：</span>{item.stopTime}</p></li>
 								</ul>
 							</div>
 						</Link>
@@ -48,13 +48,13 @@ export default class Test extends React.Component {
 				{this.state.mediumAndLongTermResult.length > 0 && this.state.mediumAndLongTermResult.map(item => {
 					return <div className="item" key={item.id}>
 						<Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
-							<h3>{item.title}</h3>
+							<h3>{item.shenBaoFangShi}</h3>
 							<div className="list">
 								<ul>
-									<li><p><span>交易品种：</span>{item.n1}</p></li>
-									<li><p><span>成交均价：</span>{item.n2}</p></li>
-									<li><p><span>成交主体数：</span>{item.n3}</p></li>
-									<li><p><span>成交电量：</span>{item.n4}</p></li>
+									<li><p><span>交易品种：</span>{item.shenBaoFangShi}</p></li>
+									<li><p><span>成交均价：</span>{item.chengJiaoJunJia}</p></li>
+									<li><p><span>成交主体数：</span>{item.chengJiaoShiChangZhuTiShu}</p></li>
+									<li><p><span>成交电量：</span>{item.zuiZhongChengJiaoDianLiang}</p></li>
 								</ul>
 							</div>
 						</Link>
@@ -95,9 +95,9 @@ export default class Test extends React.Component {
 					return <div className="item" key={item.id}>
 						<div className="list">
 							<ul>
-								<li><p><span>备用类型：</span>{item.n1}</p></li>
-								<li><p><span>预测：</span>{item.n2}</p></li>
-								<li><p><span>日期：</span>{item.n3}</p></li>
+								<li><p><span>备用类型：</span>{item.beiYongLeiXing}</p></li>
+								<li><p><span>预测：</span>{item.yuCe}</p></li>
+								<li><p><span>日期：</span>{item.riQi}</p></li>
 							</ul>
 						</div>
 					</div>
@@ -114,9 +114,9 @@ export default class Test extends React.Component {
 					return <div className="item" key={item.id}>
 						<div className="list">
 							<ul>
-								<li><p><span>元件名称：</span>{item.n1}</p></li>
-								<li><p><span>电压等级：</span>{item.n2}</p></li>
-								<li><p><span>日期：</span>{item.n3}</p></li>
+								<li><p><span>元件名称：</span>{item.yuanJianMinCheng}</p></li>
+								<li><p><span>电压等级：</span>{item.dianYaDengJi}</p></li>
+								<li><p><span>日期：</span>{item.riQi}</p></li>
 							</ul>
 						</div>
 					</div>
@@ -132,12 +132,12 @@ export default class Test extends React.Component {
 			<div className="tradingCenterList">
 				{this.state.block && this.state.block.map(item => {
 					return <div className="item" key={item.id}>
-						<h3>{item.title}</h3>
+						<h3>{item.mingCheng}</h3>
 						<div className="list">
 							<ul>
-								<li><p><span>正向极限：</span>{item.n1}</p></li>
-								<li><p><span>负向极限：</span>{item.n2}</p></li>
-								<li><p><span>周期：</span>{item.n3}</p></li>
+								<li><p><span>正向极限：</span>{item.zhengXiangJiXian}</p></li>
+								<li><p><span>负向极限：</span>{item.fanXiangJiXian}</p></li>
+								<li><p><span>周期：</span>{item.zhouQi}</p></li>
 							</ul>
 						</div>
 					</div>

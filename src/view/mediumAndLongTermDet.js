@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import { getDataQuery } from '../utils/index'
+import api from '../api'
 
 export default class Test extends React.Component {
     constructor(props) {
@@ -8,6 +9,15 @@ export default class Test extends React.Component {
         this.state = {
 
         }
+    }
+    componentWillMount(){
+        this.mediumAndLongTermResultDetData()
+    }
+    mediumAndLongTermResultDetData = () => {
+        let params = `?rowNumber=0&pageSize=10`
+        api.getResultDetail(params).then(res => {
+
+        })
     }
     //中长期交易公告信息
     mediumAndLongTermTradeBulletinDet = () => {
