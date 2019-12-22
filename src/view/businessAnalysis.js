@@ -116,6 +116,8 @@ export default class BsinessAnalysis extends React.Component {
       calculable: true,
       legend: {
         data: ['交易电量', '实际用电量'],
+        itemHeight:8,
+        itemWidth: 20,
         formatter: function (name) {
           return name;
         }
@@ -222,6 +224,8 @@ export default class BsinessAnalysis extends React.Component {
       calculable: true,
       legend: {
         data: ['年度双边', '年度撮合', '月度双边', '月度撮合', '月度挂牌'],
+        itemHeight:8,
+        itemWidth: 20,
         formatter: function (name) {
           return name;
         }
@@ -558,6 +562,8 @@ export default class BsinessAnalysis extends React.Component {
       calculable: true,
       legend: {
         data: ['售电成本', '购电成本', '成本差', '成本差环比（%）', '成本差同比（%）'],
+        itemHeight:8,
+        itemWidth: 20,
         formatter: function (name) {
           return name;
         }
@@ -744,6 +750,8 @@ export default class BsinessAnalysis extends React.Component {
       calculable: true,
       legend: {
         data: ['售电成本', '购电成本', '转让代理费', '总收益', '总收益环比（%）', '总收益同比（%）'],
+        itemHeight:8,
+        itemWidth: 20,
         formatter: function (name) {
           return name;
         }
