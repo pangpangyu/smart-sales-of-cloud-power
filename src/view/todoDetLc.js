@@ -14,7 +14,8 @@ export default class Todolist extends React.Component {
 			taskId:'',
 			title:'',
 			centent:'',
-			diagram:''
+			diagram:'',
+			history:[]
 		}
 	}
 
@@ -28,11 +29,12 @@ export default class Todolist extends React.Component {
 
 	getDetailData = () => {
 		let params = `?id=${this.state.id}`
+		sessionStorage.removeItem('history')
 		api.getmodelsNutsWorkflowProcessTask(params).then(res => {
 			this.setState({
 				type:res.data.businessType,
 				taskId:res.data.taskId,
-				businessKey:res.data.businessKey
+				businessKey:res.data.businessKey,
 			},()=>{
 				this.getDataByType()
 			})
@@ -46,13 +48,25 @@ export default class Todolist extends React.Component {
 				this.setState({
 					title:res.data.form.fields[2][0].value,
 					centent:res.data.form.fields[4][0].value,
-					diagram:res.data.diagram.url
+					diagram:res.data.diagram.url,
+					history:res.data.history
+				},()=>{
+					let arr = res.data.history
+					sessionStorage.setItem('history',arr)
 				})
 			})
 		}else{
 			//models_attendance_LeaveManagement
 			api.getAttendanceLeaveManagemen(params).then(res => {
-				
+				this.setState({
+					title:res.data.form.fields[2][0].value,
+					centent:res.data.form.fields[4][0].value,
+					diagram:res.data.diagram.url,
+					history:res.data.history
+				},()=>{
+					let arr = res.data.history
+					sessionStorage.setItem('history',arr)
+				})
 			})
 		}
 	}

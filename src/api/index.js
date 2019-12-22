@@ -345,7 +345,7 @@ const api = {
   },
   //请假待办-获取待办信息
   getAttendanceLeaveManagemen(params){
-    return request.get('/nuts/crud/audit/models_attendance_LeaveManagemen'+params)
+    return request.get('/nuts/crud/audit/models_attendance_LeaveManagement'+params)
   },
 }
 
