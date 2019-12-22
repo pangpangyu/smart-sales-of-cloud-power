@@ -18,7 +18,10 @@ export default class Test extends React.Component {
 				// { id: 4, title: '山西地方电力xxx1有限公司', n1: '良好', n2: '8000', n3: '5000', n4: '500', n5: '5' }
 			],
 			pageIndex: 0,
-			noData:false
+			pageSize:10,
+			noData:false,
+			currentDate:new Date().getFullYear() + '年' + (new Date().getMonth() + 1) + '月',
+			currentDate1:new Date().getFullYear() + '-' + (new Date().getMonth() + 1)
 		}
 	}
 
@@ -26,12 +29,12 @@ export default class Test extends React.Component {
 		this.getDataList()
 	}
 
-	getDataList = () => {
+	getDataList = (resolve) => {
 		let params = {
-			"rowNumber": this.state.pageIndex,
-			"pageSize": 10,
+			"rowNumber": this.state.pageIndex*this.state.pageSize,
+			"pageSize": this.state.pageSize,
 			"yearMon1": 1,
-			"yearMon": '2019-11'
+			"yearMon": this.state.currentDate1
 		}
 		api.GetRealtimePowerTableData(params).then(res => {
 			if (res.status === 0) {
@@ -41,6 +44,7 @@ export default class Test extends React.Component {
 					noData: res.data.rowCount === 0 ? true : false
 				})
 			}
+			resolve && resolve()
 		})
 	}
 
@@ -60,8 +64,12 @@ export default class Test extends React.Component {
 	loadMoreData = () => {
 		return new Promise((resolve, reject) => {
 			let pageIndex = this.state.pageIndex + 1
-			if (pageIndex * this.state.pageSize <= this.state.total) {
-
+			if (pageIndex * this.state.pageSize < this.state.total) {
+				this.setState({
+					pageIndex: pageIndex
+				},() => {
+					this.getDataList(resolve)
+				})
 			} else {
 				resolve()
 			}
@@ -82,14 +90,14 @@ export default class Test extends React.Component {
 					<div className="power_tracking">
 						<div className="top">
 							<div className="current_date">
-								<p>当前日期：2019年12月</p>
+								<p>当前日期：{this.state.currentDate}</p>
 							</div>
 							<Search title={'搜客户名称'} onInput={this.handleSearchInput} onSubmit={this.handleSearchSubmit} />
 						</div>
 						<div className="tab">
 							{this.state.list && this.state.list.map(item => {
 								return <div className="item" key={item.id}>
-									<Link to={`/powerTrackingDet`}>{this.state.txt}
+									<Link to={`/powerTrackingDet?name=`+item.power_user_name+`&date=`+this.state.currentDate1}>{this.state.txt}
 										<h3>{item.power_user_name}</h3>
 										<div className="list">
 											<ul>
