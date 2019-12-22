@@ -573,7 +573,7 @@ export default class AttendanceAdd extends React.Component {
         "containDays": "",
         "containHours": "",
         "hours": "0",
-        "egressAddress": that.state.form.egressAddress,
+        "egressAddress": that.state.form.egressAddress||'',
         "creator": "APP测试",
         "createDateTime1": "",
         "id": "",
