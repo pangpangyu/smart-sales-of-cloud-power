@@ -18,6 +18,7 @@ class AttendanceList extends React.Component {
 		super(props)
 		this.state = {
 			searchInput: '',
+			isSearch:false,
 			dataList: [],
 			dataListwc: [],
 			dataListjb: [],
@@ -41,40 +42,38 @@ class AttendanceList extends React.Component {
 	componentWillMount() {
 		const that = this;
 		document.documentElement.scrollTop = document.body.scrollTop = 0;
-		that.queryDataList(1)//考勤列表
+		that.queryDataList(0)//考勤列表
 	}
 
 	//
 	handleTabs = (val) => {
 		const that = this;
-		console.log(val)
+		//console.log(val)
 		that.setState(preState => {
 			return ({
 				showLeaveType: val.id,
+				pageIndex:0,
 			})
 
 		})
-
 		if (val.title === "请假") {
-			that.queryDataList(1)//考勤列表
+			that.queryDataList(0)//考勤列表
 		}
 		if (val.title === "外出") {
-			that.GetvEgressTableData(1)//外出列表
+			that.GetvEgressTableData(0)//外出列表
 		}
 		if (val.title === "加班") {
-			that.GetvOvertimeTableData(1)//加班列表
+			that.GetvOvertimeTableData(0)//加班列表
 		}
 	}
 
 	// 获取考勤列表
 	queryDataList = (page, loadmoreResolve) => {
 		const that = this
-		console.log('11', this.state.searchInput)
 		let params = {
-			// "rowNumber": this.state.pageIndex,
-			"rowNumber":1,
+			"rowNumber": page*that.state.pageSize,
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
-			"pageSize": 1000
+			"pageSize": that.state.pageSize
 		}
 		api.GetLeaveTableData(params).then(res => {
 			console.log('考勤列表:', res)
@@ -95,18 +94,30 @@ class AttendanceList extends React.Component {
 
 	// 获取加班管理列表
 	GetvOvertimeTableData = (page, loadmoreResolve) => {
-		const that = this
-		let params = {
-			//"rowNumber": this.state.pageIndex,
-			"rowNumber": 1,
-			"pageSize": 1000,
-			"conditions": [{
-				"name": "name",
-				"operator": "%",
-				"value": this.state.searchInput
-			}],
-			"random": 0
+		const that = this;
+		//查询时
+		let params;
+		if(that.state.isSearch&&that.state.searchInput!=''){//查询时候
+			params = {
+				"rowNumber":  page*that.state.pageSize,
+				"pageSize": that.state.pageSize,
+				"conditions": [{
+					"name": "name",
+					"operator": "%",
+					"value": this.state.searchInput
+				}],
+				"random": 0,
+				"time":new Date().getTime()
+			}
+		}else{
+			params = {
+				"rowNumber":  page*that.state.pageSize,
+				"pageSize": that.state.pageSize,
+				"random": 0,
+				"time":new Date().getTime()
+			}
 		}
+		
 		api.GetvOvertimeTableData(params).then(res => {
 			console.log('加班管理列表:', res)
 			if (res.status === 0) {
@@ -129,10 +140,9 @@ class AttendanceList extends React.Component {
 	GetvEgressTableData = (page, loadmoreResolve) => {
 		const that = this
 		let params = {
-			//"rowNumber": this.state.pageIndex,
-			"rowNumber":1,
+			"rowNumber": page*that.state.pageSize,
 			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
-			"pageSize": 1000
+			"pageSize":that.state.pageSize
 		}
 		api.GetvEgressTableData(params).then(res => {
 			console.log('获取外出管理列表:', res)
@@ -147,9 +157,7 @@ class AttendanceList extends React.Component {
 						})
 					})
 					loadmoreResolve && loadmoreResolve();
-				}
-				
-				
+				}	
 			}
 
 		})
@@ -164,23 +172,29 @@ class AttendanceList extends React.Component {
 	}
 	handleSearchSubmit = e => {
 		const that=this;
-		that.setState({
-			dataList: [],
-			dataListwc: [],
-			dataListjb: [],
-			pageIndex: 0,
-			pageSize: 10,
-			total: 0,
-		})
-		if(that.state.showLeaveType==0){//请假
-			that.queryDataList(1);
-		}
-		if(that.state.showLeaveType==1){//外出
-			that.GetvEgressTableData(1);
-		}
-		if(that.state.showLeaveType==2){//加班
-			that.GetvOvertimeTableData(1);
-		}
+		setTimeout(function(){
+			that.setState({
+				dataList: [],
+				dataListwc: [],
+				dataListjb: [],
+				pageIndex: 0,
+				pageSize: 10,
+				total: 0,
+				isSearch:true
+			})
+			if(that.state.showLeaveType==0){//请假
+				that.queryDataList(0);
+			}
+			if(that.state.showLeaveType==1){//外出
+				that.GetvEgressTableData(0);
+			}
+			if(that.state.showLeaveType==2){//加班
+				that.GetvOvertimeTableData(0);
+			}
+
+		},0)
+		
+		
 		
 	}
 
@@ -190,7 +204,16 @@ class AttendanceList extends React.Component {
 	loadMoreData = () => {
 		return new Promise((resolve, reject) => {
 			if (this.state.dataList.length < this.state.total) {
-				this.queryDataList(this.state.pageIndex, resolve);
+				if(this.state.showLeaveType==0){
+					this.queryDataList(this.state.pageIndex, resolve);
+				}
+				if(this.state.showLeaveType==1){
+					this.GetvEgressTableData(this.state.pageIndex, resolve);
+				}
+				if(this.state.showLeaveType==2){
+					this.GetvOvertimeTableData(this.state.pageIndex, resolve);
+				}
+				
 			} else {
 				resolve()
 			}
@@ -200,7 +223,7 @@ class AttendanceList extends React.Component {
 
 
 	handleCheckChanged = e => {
-		console.log(e.target.value)
+		//console.log(e.target.value)
 		this.setState({
 			applyType: e.target.value
 		})

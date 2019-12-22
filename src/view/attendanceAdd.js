@@ -90,10 +90,12 @@ export default class AttendanceAdd extends React.Component {
         //外出
         egressAddress:'',
         egressType:0,
+        waichuIds:[],
 
         //加班结算类型值
         jiesuanChooseType:0,
         jiabanIds:[],
+    
       },
       
     }
@@ -220,7 +222,7 @@ export default class AttendanceAdd extends React.Component {
       }
       if(that.state.editType=="wcedit"){
         that.GetDefaultEgressInfo();//获取外出部门信息1
-        that.GetEgressUserTableData();//获取外出部门信息2
+        that.GetEgressUserTableData();//获取请假人
         that.GetEgressTypeOptions();//获取外出类型
         that.setState({
           title:"外出"
@@ -229,7 +231,6 @@ export default class AttendanceAdd extends React.Component {
       }
       if(that.state.editType=="jbedit"){
         that.GetDefaultOvertimeInfo();//获取加班部门信息1
-        that.GetOvertimeInfoTableData();//获取加班部门信息2
         that.GetOvertimeTypeOptions();//获取加班类型
         that.GetSettlementTypeOptions();//加班结算方式
         that.setState({
@@ -328,11 +329,40 @@ export default class AttendanceAdd extends React.Component {
     api.OneOvertimeInfoSave(params).then(res => {
       console.log('加班用户:', res);
       if (res.status === 0) {
-        let newForm=that.setState.form;
+        let newForm=that.state.form;
         newForm.jiabanIds=[res.data];
         that.setState({
           form:newForm
         })
+        that.OneOvertimeSave();
+      }
+    })
+  }
+
+  //保存外出用户-新增
+  OneEgressInfoSave=()=>{
+    const that = this;
+    let params = {
+      "metaFormData": {
+        "id": "",
+        "department.id": "14",//部门id
+        "position.id": "21",//用户id
+        "userInfo.id": "64"//职务id
+      },
+      "type": "add",
+      "id": "",
+      "egressId": "",
+      "ids1": []
+    }
+    api.OneEgressInfoSave(params).then(res => {
+      console.log('外出用户:', res);
+      if (res.status === 0) {
+        let newForm=that.state.form;
+        newForm.waichuIds=[res.data];
+        that.setState({
+          form:newForm
+        })
+        that.OneEgressSave();
       }
     })
   }
@@ -384,7 +414,7 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //获取外出信息详细1 main
+  //获取外出信息详细
   GetDefaultEgressInfo=()=>{
     const that=this;
     let params={
@@ -408,16 +438,17 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //获取外出信息详细2
+  //获取外出请假人
   GetEgressUserTableData=()=>{
     const that=this;
     let params={
       "rowNumber":0,
       "pageSize":10,
+      //"ids1":[that.state.leaveId]
       "ids1":[that.state.leaveId]
     };
     api.GetEgressUserTableData(params).then(res => {
-      console.log('获取外出信息详细2:', res);
+      console.log('获取外出请假人:', res);
       if (res.status === 0) {
    
       }
@@ -436,27 +467,27 @@ export default class AttendanceAdd extends React.Component {
       if (res.status === 0) {
         let newform=that.state.form;
         newform.leaveReason=res.data.overtimeReason;//理由
-
+        newform.jiabanIds=res.data.overtimeInfoIds;
         that.setState({
           form:newform
         })
-        
+        that.GetOvertimeInfoTableData();
       }
 
     })
   }
 
-  //获取加班信息详细2 
+  //获取加班请假人
   GetOvertimeInfoTableData=()=>{
     const that=this;
     let params={
       "rowNumber": 0,
       "pageSize": 10,
-      "ids1": [that.state.leaveId]||[],
-      "overtimeId": ""
+      "ids1": that.state.form.jiabanIds,
+      "overtimeId": that.state.leaveId
     };
     api.GetOvertimeInfoTableData(params).then(res => {
-      console.log('获取加班信息详细2:', res);
+      console.log('获取加班请假人:', res);
       if (res.status === 0) {
         let newform=that.state.form;
         newform.startTime=res.data.rows[0].startTime;//结束时间
@@ -487,14 +518,14 @@ export default class AttendanceAdd extends React.Component {
         "hours": "0", 
         "creator": "", 
         "createDateTime1": "", 
-        "id": "", 
-        "userinfo.id": "", 
+        "id":that.state.leaveId!="null"?that.state.leaveId:'', 
+        "userinfo.id": "64", 
         "leaveReason": that.state.form.leaveReason, 
         "leaveType": 0, 
         "attachedFile1": [] 
       }, 
       "type": "0",
-	    "id": ""
+	    "id": that.state.leaveId!="null"?that.state.leaveId:''
       
     }
     console.log(params)
@@ -554,7 +585,7 @@ export default class AttendanceAdd extends React.Component {
       },
       "type": "add",
       "id": "",
-      "ids1": [30],
+      "ids1": that.state.form.waichuIds,
       "egressId": ""
     };
     api.OneEgressSave(params).then(res => {
@@ -590,23 +621,24 @@ export default class AttendanceAdd extends React.Component {
     })
   }
 
-  //保存加班-编辑
+  //保存加班
   OneOvertimeSave=()=>{
     const that=this;
     Toast.loading('正在保存');
     let params={
       "metaFormData": {
-        "creator": "APP测试",
-        "createDateTime1": "2019-12-18 21:01:22",
+        "creator": "",
+        "createDateTime1": "",
         "id": "",
         "overtimeReason": that.state.form.leaveReason,
         "attachedFile1": []
       },
-      "type": "add",
-      "id": 0,
-      "ids1": [15],
-      "overtimeId": ""
+      "type": "",
+      "id": "",
+      "ids1": that.state.form.jiabanIds,
+      "overtimeId": that.state.leaveId
     };
+
     api.OneOvertimeSave(params).then(res => {
       console.log('保存加班:', res);
       if (res.status === 0) {
@@ -653,16 +685,20 @@ export default class AttendanceAdd extends React.Component {
       that.GetSaveLeave();
     }
 
-    if(that.state.applyType=="wcsq"||that.state.editType=="wcedit"){//外出
-      that.OneEgressSave();
+    if(that.state.applyType=="wcsq"){//外出
+      that.OneEgressInfoSave();//保存外出用户
     }
 
     if(that.state.applyType=="jbsq"){//加班
-      that.OneOvertimeInfoSave();
+      that.OneOvertimeInfoSave();//保存加班用户
     }
 
 
     //编辑
+    if(that.state.editType=="wcedit"){//外出
+      that.OneEgressSave();
+    }
+
     if(that.state.editType=="jbedit"){//加班
       that.OneOvertimeSave();
     }

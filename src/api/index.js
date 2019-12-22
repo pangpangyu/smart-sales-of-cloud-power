@@ -186,9 +186,14 @@ const api = {
     return request.get('admin/attendance/getDefaultEgressInfo', { params: params })
   },
 
-   //获取外出信息详细2
+   //获取请假人
   GetEgressUserTableData(params) {
     return request.post('admin/attendance/getEgressUserTableData',params)
+  },
+
+  //保存外出用户
+  OneEgressInfoSave(params){
+    return request.post('admin/attendance/oneEgressInfoSave',params)
   },
 
 
@@ -202,7 +207,7 @@ const api = {
     return request.post('admin/attendance/egressSubmitSign?id='+params)
   },
 
-  //获取加班管理列表
+  //获取加班请假人
   GetOvertimeInfoTableData(params) {
     return request.post('admin/attendance/getOvertimeInfoTableData', params)
   },
