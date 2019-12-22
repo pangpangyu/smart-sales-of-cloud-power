@@ -23,7 +23,7 @@ export default class Todolist extends React.Component {
 
 	getDataList = () => {
 		const that = this
-		let params = `?rowNumber=${that.state.pageIndex}&pageSize=${that.state.pageSize}`
+		let params = `?rowNumber=${that.state.pageIndex*that.state.pageSize}&pageSize=${that.state.pageSize}`
 		api.GetScheduleList(params).then(res => {
 			if (res.status === 0) {
 				that.setState({
