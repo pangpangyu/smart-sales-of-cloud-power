@@ -67,8 +67,11 @@ class NewList extends React.Component {
     let params = '?hasHandled=true'
     api.getNewListPage(params).then(res => {
       if (res.status === 0) {
+        let arr = this.state.tabs
+        arr[1].num = res.data.rows.length
         this.setState({
-          UnreadList: res.data.rows
+          UnreadList: res.data.rows,
+          tabs:arr
         })
       }
     })
