@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import { Button } from 'antd-mobile';
-import { getDataQuery } from '../utils/index';
+import { getDataQuery, formatTime } from '../utils/index';
 
 export default class Todolist extends React.Component {
 	constructor(props) {
@@ -36,12 +36,12 @@ export default class Todolist extends React.Component {
 								{ this.state.history && this.state.history.map((item,index) => {
 									return <li key={index}>
 													<div className="title">
-														<p>发起</p>
+														<p>{item.userName}</p>
 													</div>
 													<div className="web">
-														<p><span>办理人员：</span>{item.comment}</p>
-														<p><span>开始时间：</span>{item.task.startTime}</p>
-														<p><span>操作时间：</span>{item.task.endTime}</p>
+														<p><span>办理人员：</span>{item.task.name}</p>
+														<p><span>开始时间：</span>{formatTime(item.task.startTime)}</p>
+														<p><span>操作时间：</span>{formatTime(item.task.endTime)}</p>
 														<p><span>办理意见：</span>{item.comment}</p>
 														<div className="result">
 															<span>已办理</span>
