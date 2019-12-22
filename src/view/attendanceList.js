@@ -138,11 +138,19 @@ class AttendanceList extends React.Component {
 
 	// 获取外出管理列表
 	GetvEgressTableData = (page, loadmoreResolve) => {
-		const that = this
-		let params = {
-			"rowNumber": page*that.state.pageSize,
-			"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
-			"pageSize":that.state.pageSize
+		const that = this;
+		let params;
+		if(that.state.isSearch&&that.state.searchInput!=''){//查询时候
+			params = {
+				"rowNumber": page*that.state.pageSize,
+				"conditions": [{ "name": "name", "operator": "%", "value": this.state.searchInput }],
+				"pageSize":that.state.pageSize
+			}
+		}else{
+			params = {
+				"rowNumber": page*that.state.pageSize,
+				"pageSize":that.state.pageSize
+			}
 		}
 		api.GetvEgressTableData(params).then(res => {
 			console.log('获取外出管理列表:', res)
