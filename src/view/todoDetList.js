@@ -7,9 +7,21 @@ export default class Todolist extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-
+			history:[],
+			nodata:false
 		}
 	}
+
+	componentWillMount(){
+		let arr = window.sessionStorage.getItem('history') || []
+		arr = JSON.parse(arr)
+		this.setState({
+			history:arr,
+			nodata:arr.length > 0 ? false : true
+		})
+		console.log(arr)
+	}
+
 	render() {
 		return (
 			<div className="page_bg">
@@ -21,7 +33,24 @@ export default class Todolist extends React.Component {
 					<div className="cont contpd">
 						<div className="det_list">
 							<ul>
-								<li>
+								{ this.state.history && this.state.history.map((item,index) => {
+									return <li key={index}>
+													<div className="title">
+														<p>发起</p>
+													</div>
+													<div className="web">
+														<p><span>办理人员：</span>张三</p>
+														<p><span>开始时间：</span>2019-08-12 09:50:00</p>
+														<p><span>操作时间：</span>2019-08-12 09:50:00</p>
+														<p><span>办理意见：</span>—</p>
+														<div className="result">
+															<span>已办理</span>
+															<p className="on">不同意</p>
+														</div>
+													</div>
+												</li>
+								}) }
+								{/* <li>
 									<div className="title">
 										<p>发起</p>
 									</div>
@@ -65,7 +94,7 @@ export default class Todolist extends React.Component {
 											<p className="on">不同意</p>
 										</div>
 									</div>
-								</li>
+								</li> */}
 							</ul>
 						</div>
 					</div>
