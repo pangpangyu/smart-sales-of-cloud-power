@@ -84,8 +84,8 @@ export default class Todolist extends React.Component {
 				detail.marketTime = res.data.marketTime.value || '' // 入市日期
 				detail.delistingTime = res.data.delistingTime.value || '' //退市时间
 				detail.address = res.data['adminRegion.id'].value ? res.data['adminRegion.id'].options.filter(v => v.value === res.data['adminRegion.id'].value)[0].text : '' //地理区域
-				detail.businessLicenseName = res.data['businessLicense.id'].value ?  res.data['powerOfAttorney.id'].value[0].name : '-' //营业执照
-				detail.businessLicenseUrl = res.data['businessLicense.id'].value ?  res.data['powerOfAttorney.id'].value[0].url : '-' //营业执照
+				detail.businessLicenseName = res.data['businessLicense.id'].value ?  res.data['businessLicense.id'].value[0].name : '-' //营业执照
+				detail.businessLicenseUrl = res.data['businessLicense.id'].value ?  res.data['businessLicense.id'].value[0].url : '-' //营业执照
 				detail.businessRegisterAddress = res.data.businessRegisterAddress.value || '' //企业注册地址
 				detail.businessScope = res.data.businessScope.value || '' //业务范围
 				detail.clientType = res.data['clientType.id'].value ? res.data['clientType.id'].options.filter(v => v.value === res.data['clientType.id'].value)[0].text : '' //用户类别
