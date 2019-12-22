@@ -68,7 +68,7 @@ export default class Todolist extends React.Component {
 					</div>
 					<div className="cont">
 						<div className="process">
-							<p>办理意见 请签批</p>
+							{/* <p>办理意见 请签批</p> */}
 							<div className="img">
 								{/* <img src={require('../assets/img/img202.jpg')}></img> */}
 								<div dangerouslySetInnerHTML={{__html:this.state.centent}}></div>
@@ -76,7 +76,7 @@ export default class Todolist extends React.Component {
 						</div>
 					</div>
 					<div className="f_btn">
-						<Link to={`/todoDetList/${this.state.id}`}>流程轨迹</Link>
+						<Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`}>流程轨迹</Link>
 						<Link to={`/todoDet/${this.state.id}?diagram=${this.state.diagram}&name=${this.state.title}`}>流程图</Link>
 					</div>
 				</div>
