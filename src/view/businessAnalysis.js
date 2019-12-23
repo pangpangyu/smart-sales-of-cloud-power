@@ -944,35 +944,55 @@ export default class BsinessAnalysis extends React.Component {
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont icondianliang"></i>电量对比分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}>
+            {/* <i className="iconfont icondianliang"></i> */}
+            <img src={require('../assets/img/img022.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            电量对比分析
+          </div>
           <div className="f2-map-view">
             <div id="myChart1" style={{ height: '240px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconjiaoyizhongxin"></i>交易电量分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}>
+            {/* <i className="iconfont iconjiaoyizhongxin"></i> */}
+            <img src={require('../assets/img/img026.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            交易电量分析
+          </div>
           <div className="f2-map-view">
             <div id="myChart2" style={{ height: '320px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconjingyingfenxix"></i>偏差电量分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}>
+            {/* <i className="iconfont iconjingyingfenxix"></i> */}
+            <img src={require('../assets/img/img027.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            偏差电量分析
+          </div>
           <div className="f2-map-view">
             <div id="myChart3" style={{ height: '320px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconjiage"></i>购电成本分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}>
+            {/* <i className="iconfont iconjiage"></i> */}
+            <img src={require('../assets/img/img021.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            购电成本分析
+          </div>
           <div className="f2-map-view">
             <div id="myChart4" style={{ height: '320px' }}></div>
           </div>
         </div>
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="f2-map">
-          <div className="t" style={{ marginBottom: '10px' }}><i className="iconfont iconshouyi"></i>收益分析</div>
+          <div className="t" style={{ marginBottom: '10px' }}>
+            {/* <i className="iconfont iconshouyi"></i> */}
+            <img src={require('../assets/img/img023.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            收益分析
+          </div>
           <div className="f2-map-view">
             <div id="myChart5" style={{ height: '320px' }}></div>
           </div>
