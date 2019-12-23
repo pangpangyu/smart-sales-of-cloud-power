@@ -294,7 +294,8 @@ class Survey extends React.Component {
       },
       legend: {
         itemHeight:8,
-        itemWidth: 20
+        itemWidth: 20,
+        borderRadius:[5,5,5,5],
       },
       tooltip: {
         trigger: 'axis',
@@ -412,6 +413,7 @@ class Survey extends React.Component {
         {
           name: '合同收益',
           type: 'line',
+          symbolSize:8,
           data: data.data2
         }
       ]
@@ -649,8 +651,8 @@ class Survey extends React.Component {
           name: '日前均价',
           type: 'line',
           data: data.data2,
-          barWidth: 9,
           barGap: 0,
+          symbolSize:8,
           itemStyle: {
             normal: {
               barBorderRadius: 10
@@ -663,6 +665,7 @@ class Survey extends React.Component {
         {
           name: '实时均价',
           type: 'line',
+          symbolSize:8,
           data: data.data1,
         }
       ]
@@ -696,7 +699,8 @@ class Survey extends React.Component {
         <div style={{ height: '10px', color: '#f0f1f3' }}></div>
         <div className="charts-map">
           <div className="title" style={{ borderBottom: '1px solid #eeeeee' }}>
-            <i className="iconfont iconhetong"></i>合同数量（2019年）
+            <img src={require('../assets/img/img020.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            {/* <i className="iconfont iconhetong"></i> */}
           </div>
           <div className="chear-view">
             <div style={{ fontSize: '12px', color: '#2b2a30', margin: '20px 0 10px 0' }}>各月份合同数据</div>
@@ -708,7 +712,9 @@ class Survey extends React.Component {
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
           <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
-            <i className="iconfont iconjiage"></i>中长期合同收益（2019年）
+            {/* <i className="iconfont iconjiage"></i> */}
+            <img src={require('../assets/img/img021.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
+            中长期合同收益（2019年）
           </div>
           <div className="chear-view">
             <div id="myChart3" style={{ height: '230px' }}></div>
@@ -717,7 +723,9 @@ class Survey extends React.Component {
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
           <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
-            <i className="iconfont icondianliang"></i>现货电量（2019年11月）
+            {/* <i className="iconfont icondianliang"></i> */}
+            <img src={require('../assets/img/img022.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
+            现货电量（2019年11月）
           </div>
           <div className="chear-view" style={{ paddingBottom: '10px' }}>
             <div id="myChart4" style={{ height: '230px' }}></div>
@@ -726,7 +734,9 @@ class Survey extends React.Component {
         <div style={{ height: '10px', background: '#f0f1f3' }}></div>
         <div className="charts-map">
           <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
-            <i className="iconfont iconshouyi"></i>现货价格（2019年）
+            {/* <i className="iconfont iconshouyi"></i> */}
+            <img src={require('../assets/img/img023.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
+            现货价格（2019年）
           </div>
           <div className="chear-view">
             <div id="myChart5" style={{ height: '230px' }}></div>
