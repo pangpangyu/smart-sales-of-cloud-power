@@ -19,8 +19,10 @@ class Index extends React.Component{
 	
   render() {
     return (
-      <div style={this.state.fullScreen ? { position: 'fixed', height: '100vh', width: '100%', top: 0, background: '#fff' } : { height: 400 }}>
-        <TabBar
+      // style={this.state.fullScreen ? { position: 'fixed', height: '100vh', width: '100%', top: 0, background: '#fff' } : { height: 400 }}
+      <div>
+        <Home />
+        {/* <TabBar
           unselectedTintColor="#949494"
           tintColor="#33A3F4"
           barTintColor="white"
@@ -131,7 +133,7 @@ class Index extends React.Component{
           >
             第四个页面组件
           </TabBar.Item>
-        </TabBar>
+        </TabBar> */}
       </div>
 		);
 	}
