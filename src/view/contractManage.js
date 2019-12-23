@@ -138,9 +138,9 @@ class ContractManage extends React.Component {
                                                     <div className="mes">
                                                         <span>签约电量：</span>{item.contractPower}兆瓦时
                                 </div>
-                                                    <div className="mes">
+                                                    {/* <div className="mes">
                                                         <span>合同时间：</span>{item.createDateTime}
-                                                    </div>
+                                                    </div> */}
                                                 </Link>
                                             </li>
                                         )

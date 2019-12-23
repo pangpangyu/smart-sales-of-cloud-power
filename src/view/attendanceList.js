@@ -256,6 +256,9 @@ class AttendanceList extends React.Component {
 		if (this.state.applyType === '') {
 			Toast.info("请选择");
 		} else {
+			this.setState({
+				addStatus:false
+			})
 			window.location.href = "/attendanceAdd?applyType=" + this.state.applyType + "&addStatus=1" // addStatus=1 设为新增标识
 		}
 	}
