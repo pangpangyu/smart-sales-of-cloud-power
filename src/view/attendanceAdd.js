@@ -45,6 +45,7 @@ export default class AttendanceAdd extends React.Component {
     super(props)
     console.log(`${getDataQuery('applyType')}`)
     let title = '请假';
+    let userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
     this.state = {
       leaveTypeParams:`${getDataQuery('type')}`,
       status:`${getDataQuery('status')}`,
@@ -71,6 +72,8 @@ export default class AttendanceAdd extends React.Component {
      
       isLock:false,
       isSave:false,
+      
+      userInfo:userInfo,
 
       form: {
         departmentName: "",
@@ -313,9 +316,9 @@ export default class AttendanceAdd extends React.Component {
         "containHours": "0",
         "days": that.state.form.days,
         "hours": "0",
-        "department.id": "14",//部门id
-        "position.id": "21",//职务id
-        "userInfo.id": "64",//用户id
+        "department.id": this.state.userInfo.departmentId || 0,//"14",//部门id
+        "position.id": this.state.userInfo.positionId || 0,//"21",//职务id
+        "userInfo.id": this.state.userInfo.userInfoId || 0,//"64",//用户id
         "overtimeType":that.state.form.type,
         "settlementWayType": that.state.form.jiesuanChooseType
       },
@@ -343,9 +346,9 @@ export default class AttendanceAdd extends React.Component {
     let params = {
       "metaFormData": {
         "id": "",
-        "department.id": "14",//部门id
-        "position.id": "21",//用户id
-        "userInfo.id": "64"//职务id
+        "department.id": this.state.userInfo.departmentId || 0,//"14",//部门id
+        "position.id": this.state.userInfo.positionId || 0,//"21",//职务id
+        "userInfo.id": this.state.userInfo.userInfoId || 0,//"64",//用户id
       },
       "type": "add",
       "id": "",

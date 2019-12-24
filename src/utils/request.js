@@ -15,7 +15,7 @@ request.interceptors.request.use(
       txt = '正在上传'
     }
     if(loading === 1){
-      Toast.loading(txt,0)
+      Toast.loading(txt,60)
     }
     loading++
     if(config.url === 'nuts/file/upload'){
@@ -35,7 +35,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   response => {
     loading--
-    if(loading === 1 && window.sessionStorage.getItem('userInfo')){
+    if(loading === 1){
+      //&& window.sessionStorage.getItem('userInfo')
       Toast.hide()
     }
     let data = response.data
@@ -43,8 +44,8 @@ request.interceptors.response.use(
   },
   error => {
     console.log(error)
-    //loading--
-    //Toast.hide()
+    loading--
+    Toast.hide()
     //Toast.info('系统异常，请联系开发人员',3)
     return Promise.reject(error)
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../components/header'
 import { Link } from 'react-router-dom'
 import api from '../api';
-import noData from '../components/noData';
+import NoData from '../components/noData';
 import Scroll from 'react-bscroll';
 import 'react-bscroll/lib/react-scroll.css';
 
@@ -91,7 +91,7 @@ export default class Todolist extends React.Component {
 								})
 							}
 						</ul>
-						{this.state.noData && <noData />}
+						{this.state.noData && <NoData />}
 					</div>
 				</Scroll>
 			</div>
