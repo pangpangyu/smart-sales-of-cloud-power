@@ -29,7 +29,10 @@ class AttendanceList extends React.Component {
 			pageSize: 10,
 			total: 0,
 
-			isNoData: false,
+			isNoData1: false,
+			isNoData2: false,
+			isNoData3: false,
+
 			tabs: [
 				{ id: 0, title: '请假' },
 				{ id: 1, title: '外出' },
@@ -43,6 +46,8 @@ class AttendanceList extends React.Component {
 		const that = this;
 		document.documentElement.scrollTop = document.body.scrollTop = 0;
 		that.queryDataList(0)//考勤列表
+		that.GetvEgressTableData(0)//外出列表
+		that.GetvOvertimeTableData(0)//加班列表
 	}
 
 	//
@@ -56,15 +61,15 @@ class AttendanceList extends React.Component {
 			})
 
 		})
-		if (val.title === "请假") {
-			that.queryDataList(0)//考勤列表
-		}
-		if (val.title === "外出") {
-			that.GetvEgressTableData(0)//外出列表
-		}
-		if (val.title === "加班") {
-			that.GetvOvertimeTableData(0)//加班列表
-		}
+		// if (val.title === "请假") {
+		// 	that.queryDataList(0)//考勤列表
+		// }
+		// if (val.title === "外出") {
+		// 	that.GetvEgressTableData(0)//外出列表
+		// }
+		// if (val.title === "加班") {
+		// 	that.GetvOvertimeTableData(0)//加班列表
+		// }
 	}
 
 	// 获取考勤列表
@@ -82,7 +87,7 @@ class AttendanceList extends React.Component {
 					return ({
 						dataList: [...preState.dataList, ...res.data.rows || []],
 						total: res.data.rowCount,
-						isNoData: res.data.rowCount === 0 ? true : false,
+						isNoData1: res.data.rowCount === 0 ? true : false,
 						pageIndex: page + 1
 					})
 				})
@@ -125,7 +130,7 @@ class AttendanceList extends React.Component {
 					return ({
 						dataListjb: [...preState.dataListjb, ...res.data.rows || []],
 						total: res.data.rowCount,
-						isNoData: res.data.rowCount === 0 ? true : false,
+						isNoData3: res.data.rowCount === 0 ? true : false,
 						pageIndex: page + 1
 					})
 				})
@@ -160,7 +165,7 @@ class AttendanceList extends React.Component {
 						return ({
 							dataListwc: [...preState.dataListwc, ...res.data.rows || []],
 							total: res.data.rowCount,
-							isNoData: res.data.rowCount === 0 ? true : false,
+							isNoData2: res.data.rowCount === 0 ? true : false,
 							pageIndex: page + 1
 						})
 					})
@@ -312,8 +317,9 @@ class AttendanceList extends React.Component {
 			</div>
 		let qingjia =
 			<ul className="attendance-list">
+				{ this.state.isNoData1 && <NoData /> }
 				{
-					this.state.dataList.map((item, index) => {
+					this.state.dataList.length > 0 && this.state.dataList.map((item, index) => {
 						return (
 							<Fragment key={index}>
 								<li className="item" >
@@ -342,8 +348,9 @@ class AttendanceList extends React.Component {
 			</ul>
 		let waichu =
 			<ul className="attendance-list">
+				{ this.state.isNoData2 && <NoData /> }
 				{
-					this.state.dataListwc.map((item, index) => {
+					this.state.dataListwc.length > 0 && this.state.dataListwc.map((item, index) => {
 						return (
 							<Fragment key={index}>
 								<li className="item" >
@@ -373,8 +380,9 @@ class AttendanceList extends React.Component {
 
 		let jiaban =
 			<ul className="attendance-list">
+				{ this.state.isNoData3 && <NoData /> }
 				{
-					this.state.dataListjb.map((item, index) => {
+					this.state.dataListjb.length > 0 && this.state.dataListjb.map((item, index) => {
 						return (
 							<Fragment key={index}>
 								<li className="item" >
@@ -415,20 +423,18 @@ class AttendanceList extends React.Component {
 						onChange={this.handleTabs}
 					>
 					</Tabs>
-					{this.state.isNoData ? <NoData /> :
+					
 						<Scroll
 							ref='scroll'
 							pullUpLoad
 							pullUpLoadMoreData={this.loadMoreData}
-							isPullUpTipHide={false}
+							isPullUpTipHide={true}
 							bounce={false}
 							click={true}>
-
-
 							{this.state.showLeaveType === 0 ? qingjia : ''}
 							{this.state.showLeaveType === 1 ? waichu : ''}
 							{this.state.showLeaveType === 2 ? jiaban : ''}
-						</Scroll>}
+						</Scroll>
 				</div>
 
 				{this.state.addStatus ? mask : ''}
