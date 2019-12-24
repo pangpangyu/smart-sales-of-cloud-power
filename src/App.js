@@ -15,7 +15,7 @@ class App extends React.Component {
   componentDidMount() {
     // setCookies('PLAY_SESSION', '4680269fd3b5593ce11fbf08d18bad3128633ee5-account=appusr')
     // window.sessionStorage.setItem('userInfo','64')
-    if(process.env.NODE_ENV !== 'development'){
+    if(process.env.NODE_ENV === 'development'){
       setCookies('PLAY_SESSION', '4680269fd3b5593ce11fbf08d18bad3128633ee5-account=appusr')
       let userInfo = {
         "positionId": "21",
