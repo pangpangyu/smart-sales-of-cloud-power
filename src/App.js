@@ -41,11 +41,11 @@ class App extends React.Component {
             setCookies('PLAY_SESSION', res.data.token)
             let userInfo = {
               "positionId": res.data.positionId || 0,//0,
-              "accountName": res.data.positionId || "",//"APP测试",
-              "departmentId": res.data.positionId || "",//"14",
-              "account": res.data.positionId || "",//"appusr",
-              "token": res.data.positionId || "",//"appusr",
-              "userInfoId": res.data.positionId || "",//"64"
+              "accountName": res.data.accountName || "",//"APP测试",
+              "departmentId": res.data.departmentId || "",//"14",
+              "account": res.data.account || "",//"appusr",
+              "token": res.data.token || "",//"appusr",
+              "userInfoId": res.data.userInfoId || "",//"64"
             }
             let info = JSON.stringify(userInfo)
             window.sessionStorage.setItem('userInfo',info)

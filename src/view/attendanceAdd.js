@@ -46,6 +46,7 @@ export default class AttendanceAdd extends React.Component {
     console.log(`${getDataQuery('applyType')}`)
     let title = '请假';
     let userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
+    console.log(userInfo)
     this.state = {
       leaveTypeParams:`${getDataQuery('type')}`,
       status:`${getDataQuery('status')}`,
