@@ -356,6 +356,18 @@ const api = {
   getAttendanceLeaveManagemen(params){
     return request.get('/nuts/crud/audit/models_attendance_LeaveManagement'+params)
   },
+  //售电情况-当前年份合同按月统计
+  getConractNumByYearMonth(params){
+    return request.get('admin/contract/getConractNumByYearMonth')
+  },
+  //日前市场交易-统调负荷信息列表
+  getTradeUnifiedSearch(params){
+    return request.get('admin/market/trade/unified/search'+params)
+  },
+  //日前市场交易-统调负荷信息详情
+  getUnifiedById(params){
+    return request.get('adminmarket/trade/unified/getUnifiedById'+params)
+  }
 }
 
 export default api

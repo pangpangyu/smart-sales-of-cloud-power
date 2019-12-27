@@ -43,24 +43,46 @@ class Survey extends React.Component {
     })
   }
   getDataChart1 = () => {
-    this.paintingChart1()
+    api.getConractNumByYearMonth().then(res => {
+      let keyArr = Object.keys(res.data)
+      let totle = 0
+      keyArr.map((item,index) => {
+        totle += res.data[item]
+        return totle
+      })
+      let data = [
+        { value: res.data['1m'], name: '1月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['1m'] / totle * 100)) + '%') },
+        { value: res.data['2m'], name: '2月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['2m'] / totle * 100)) + '%') },
+        { value: res.data['3m'], name: '3月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['3m'] / totle * 100)) + '%') },
+        { value: res.data['4m'], name: '4月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['4m'] / totle * 100)) + '%') },
+        { value: res.data['5m'], name: '5月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['5m'] / totle * 100)) + '%') },
+        { value: res.data['6m'], name: '6月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['6m'] / totle * 100)) + '%') },
+        { value: res.data['7m'], name: '7月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['7m'] / totle * 100)) + '%') },
+        { value: res.data['8m'], name: '8月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['8m'] / totle * 100)) + '%') },
+        { value: res.data['9m'], name: '9月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['9m'] / totle * 100)) + '%') },
+        { value: res.data['10m'], name: '10月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['10m'] / totle * 100)) + '%') },
+        { value: res.data['11m'], name: '11月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['11m'] / totle * 100)) + '%') },
+        { value: res.data['12m'], name: '12月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['12m'] / totle * 100)) + '%') }
+      ]
+      this.paintingChart1(data)
+    })
   }
-  paintingChart1 = () => {
+  paintingChart1 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart1'));
-    let data = [
-      { value: '5', name: '1月', percentage: '6%' },
-      { value: '5', name: '2月', percentage: '6%' },
-      { value: '5', name: '3月', percentage: '6%' },
-      { value: '5', name: '4月', percentage: '6%' },
-      { value: '5', name: '5月', percentage: '6%' },
-      { value: '5', name: '6月', percentage: '6%' },
-      { value: '5', name: '7月', percentage: '6%' },
-      { value: '5', name: '8月', percentage: '6%' },
-      { value: '5', name: '9月', percentage: '6%' },
-      { value: '5', name: '10月', percentage: '6%' },
-      { value: '5', name: '11月', percentage: '6%' },
-      { value: '5', name: '12月', percentage: '6%' },
-    ]
+    // let data = [
+    //   { value: '5', name: '1月', percentage: '6%' },
+    //   { value: '5', name: '2月', percentage: '6%' },
+    //   { value: '5', name: '3月', percentage: '6%' },
+    //   { value: '5', name: '4月', percentage: '6%' },
+    //   { value: '5', name: '5月', percentage: '6%' },
+    //   { value: '5', name: '6月', percentage: '6%' },
+    //   { value: '5', name: '7月', percentage: '6%' },
+    //   { value: '5', name: '8月', percentage: '6%' },
+    //   { value: '5', name: '9月', percentage: '6%' },
+    //   { value: '5', name: '10月', percentage: '6%' },
+    //   { value: '5', name: '11月', percentage: '6%' },
+    //   { value: '5', name: '12月', percentage: '6%' },
+    // ]
     let option = {
       color: ['#616fd8', '#dc6142', '#6dcfce', '#ddc275', '#e1a26d', '#b3b273', '#7aa0ca', '#c380a6', '#44c489', '#288dfd', '#f9a30c', '#ac663d'],
       tooltip: {

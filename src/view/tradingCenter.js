@@ -36,10 +36,18 @@ export default class Test extends React.Component {
 		this.getBackupList()
 		this.getSubstationList()
 		this.getBlackList()
+		this.getTradeUnifiedSearch()
+	}
+	//日前市场交易-统调负荷信息列表
+	getTradeUnifiedSearch = () =>{
+		let params = `?rowNumber=0&pageSize=100&time=1577415393405`
+		api.getTradeUnifiedSearch(params).then(res => {
+
+		})
 	}
 	//中长期交易交易-公告信息列表
 	getNoticeList = () => {
-		let params = `?rowNumber=0&pageSize=10`
+		let params = `?rowNumber=0&pageSize=100`
 		api.getNoticeList(params).then(res => {
 			this.setState({
 				noticeList:res.data.rows
@@ -49,7 +57,7 @@ export default class Test extends React.Component {
 	}
 	//中长期交易交易-结果信息列表
   getResultList = () => {
-		let params = `?rowNumber=0&pageSize=10`
+		let params = `?rowNumber=0&pageSize=100`
 		api.getResultList(params).then(res => {
 			this.setState({
 				resultList:res.data.rows
@@ -58,7 +66,7 @@ export default class Test extends React.Component {
 	}
 	//日前交易市场备用信息
 	getBackupList = () => {
-		let params = `?rowNumber=0&pageSize=10`
+		let params = `?rowNumber=0&pageSize=100`
 		api.GetBackupList(params).then(res => {
 			this.setState({
 				backupList:res.data.rows
@@ -67,7 +75,7 @@ export default class Test extends React.Component {
 	}
 	//日前交易市场输变电检修信息
 	getSubstationList = () => {
-		let params = `?rowNumber=0&pageSize=10`
+		let params = `?rowNumber=0&pageSize=100`
 		api.GetSubstationList(params).then(res => {
 			this.setState({
 				substationList:res.data.rows
@@ -76,7 +84,7 @@ export default class Test extends React.Component {
 	}
 	//日前交易市场阻塞
 	getBlackList = () => {
-		let params = `?rowNumber=0&pageSize=10`
+		let params = `?rowNumber=0&pageSize=100`
 		api.GetBlackList(params).then(res => {
 			this.setState({
 				blackList:res.data.rows
