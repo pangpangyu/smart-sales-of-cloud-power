@@ -362,7 +362,7 @@ const api = {
   },
   //日前市场交易-统调负荷信息列表
   getTradeUnifiedSearch(params){
-    return request.get('admin/market/trade/unified/search'+params)
+    return request.get('market/trade/unified/search'+params)
   },
   //日前市场交易-统调负荷信息详情
   getUnifiedById(params){

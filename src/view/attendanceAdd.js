@@ -523,7 +523,7 @@ export default class AttendanceAdd extends React.Component {
         "id":that.state.leaveId!="null"?that.state.leaveId:'', 
         "userinfo.id": "64", 
         "leaveReason": that.state.form.leaveReason, 
-        "leaveType": 0, 
+        "leaveType": that.state.form.type, 
         "attachedFile1": [] 
       }, 
       "type": "0",
@@ -543,7 +543,10 @@ export default class AttendanceAdd extends React.Component {
       }else{
         Toast.info(res.message);
       }
-
+    })
+    .catch((e)=>{
+      console.log(e)
+      Toast.info(e.message)
     })
   }
 
