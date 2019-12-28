@@ -366,7 +366,8 @@ const api = {
   },
   //日前市场交易-统调负荷信息详情
   getUnifiedById(params){
-    return request.get('adminmarket/trade/unified/getUnifiedById'+params)
+    //adminmarket/trade/unified/getUnifiedById
+    return request.get('admin/market/trade/unified/getUnifiedById'+params)
   },
   //
   getAudit(){

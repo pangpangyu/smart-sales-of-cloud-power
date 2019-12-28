@@ -27,7 +27,8 @@ export default class Test extends React.Component {
 			resultList:[],
 			backupList:[],
 			substationList:[],
-			blackList:[]
+			blackList:[],
+			tradeUnifiedList:[]
 		}
 	}
 	componentWillMount(){
@@ -40,9 +41,14 @@ export default class Test extends React.Component {
 	}
 	//日前市场交易-统调负荷信息列表
 	getTradeUnifiedSearch = () =>{
-		let params = `?rowNumber=0&pageSize=100&time=1577415393405`
+		let params = `?rowNumber=0&pageSize=100`
 		api.getTradeUnifiedSearch(params).then(res => {
-
+			res.data.rows.map(item => {
+				item.infoArr = JSON.parse(item.info)
+			})
+			this.setState({
+				tradeUnifiedList:res.data.rows
+			})
 		})
 	}
 	//中长期交易交易-公告信息列表
@@ -125,7 +131,7 @@ export default class Test extends React.Component {
 							</div>
 						</div>
 						{this.state.active === '1' && this.state.noticeList.length > 0 && this.state.resultList.length > 0 && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
-						{this.state.active === '2' && this.state.backupList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} blackList={this.state.blackList}/>}
+						{this.state.active === '2' && this.state.backupList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} tradeUnifiedList={this.state.tradeUnifiedList} blackList={this.state.blackList}/>}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
 				</div>

@@ -1,12 +1,16 @@
 import React from 'react'
 import Header from '../components/header'
 import api from '../api';
+import { getDataQuery } from '../utils/index';
 
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
+		let id = getDataQuery('id') || 0
 		this.state = {
-
+			id:id,
+			data:[],
+			time:'',
 		}
 	}
 	componentWillMount() {
@@ -14,10 +18,28 @@ export default class Test extends React.Component {
 	}
 
 	getData = () => {
-		let params = `?unifiedId=1`
+		let params = `?unifiedId=${this.state.id}`
 		api.getUnifiedById(params).then(res => {
-			
+			let arr = JSON.parse(res.data.info)
+			let data = []
+			arr.map((item,index) => {
+				data.push({time:this.getFormatTime(index),data:item})
+			})
+			console.log(data)
+			this.setState({
+				time:res.data.date,
+				data:data
+			})
 		})
+	}
+
+	//从00:00开始 参数从0开始  每+1则加15分钟
+	getFormatTime = (i) => {
+		let t = 15 * 60 * 1000 //15分钟
+		let time = 1577808000000 // 2020-01-01 00:00:00 时间搓
+		let hours = new Date(time + t * i).getHours() < 10 ? '0' + new Date(time + t * i).getHours() : new Date(time + t * i).getHours() //获取小时
+		let minutes = new Date(time + t * i).getMinutes() < 10 ? '0' + new Date(time + t * i).getMinutes() : new Date(time + t * i).getMinutes() //获取分
+		return hours + ':' + minutes
 	}
 
 	render() {
@@ -30,60 +52,14 @@ export default class Test extends React.Component {
 							<ul>
 								<li className="item">
 									<span className="l">时间</span>
-									<span className="r">2019年10月10日</span>
+									<span className="r">{this.state.time}</span>
 								</li>
-								<li className="item">
-									<span className="l">00:00</span>
-									<span className="r">320</span>
-								</li>
-								<li className="item">
-									<span className="l">00:15</span>
-									<span className="r">110</span>
-								</li>
-								<li className="item">
-									<span className="l">00:30</span>
-									<span className="r">280</span>
-								</li>
-								<li className="item">
-									<span className="l">00:45</span>
-									<span className="r">225</span>
-								</li>
-								<li className="item">
-									<span className="l">01:00</span>
-									<span className="r">320</span>
-								</li>
-								<li className="item">
-									<span className="l">01:15</span>
-									<span className="r">280</span>
-								</li>
-								<li className="item">
-									<span className="l">01:30</span>
-									<span className="r">225</span>
-								</li>
-								<li className="item">
-									<span className="l">01:45</span>
-									<span className="r">321</span>
-								</li>
-								<li className="item">
-									<span className="l">02:00</span>
-									<span className="r">280</span>
-								</li>
-								<li className="item">
-									<span className="l">02:30</span>
-									<span className="r">225</span>
-								</li>
-								<li className="item">
-									<span className="l">02:45</span>
-									<span className="r">321</span>
-								</li>
-								<li className="item">
-									<span className="l">03:00</span>
-									<span className="r">308</span>
-								</li>
-								<li className="item">
-									<span className="l">03:15</span>
-									<span className="r">295</span>
-								</li>
+								{ this.state.data && this.state.data.map((item,index) => {
+									return <li className="item" key={index}>
+										<span className="l">{ item.time }</span>
+										<span className="r">{ item.data }</span>
+									</li>
+								}) }
 							</ul>
 						</div>
 					</div>

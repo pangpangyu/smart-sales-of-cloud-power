@@ -67,16 +67,17 @@ export default class Test extends React.Component {
 	}
 	//目前交易市场统调负荷信息
 	UnifiedLoadRegulation = () => {
+		console.log(this.state.unifiedLoadRegulation)
 		return (
 			<div className="tradingCenterList">
 				{this.state.unifiedLoadRegulation.length > 0 && this.state.unifiedLoadRegulation.map(item => {
 					return <div className="item" key={item.id}>
-						<Link to={`/unifiedLoadRegulationDet`}>
+						<Link to={`/unifiedLoadRegulationDet?id=${item.id}`}>
 							<div className="list">
 								<ul>
-									<li><p><span>时间：</span>{item.n1}</p></li>
-									<li><p><span>最大负荷：</span>{item.n2}</p></li>
-									<li><p><span>最低负荷：</span>{item.n3}</p></li>
+									<li><p><span>时间：</span>{item.date}</p></li>
+									<li><p><span>最大负荷：</span>{ Math.max(...item.infoArr) }</p></li>
+									<li><p><span>最低负荷：</span>{ Math.min(...item.infoArr) }</p></li>
 								</ul>
 							</div>
 						</Link>
