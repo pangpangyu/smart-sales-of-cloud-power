@@ -75,12 +75,12 @@ export default class Test extends React.Component {
                             <div className="list">
                                 <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.title}</span></h3>
                                 <ul className={item.check ? 'active' : ''} onClick={() => this.chgCheck(index)}>
-                                    <li><p>批发市场电费：<span>{item.n1}</span>元</p></li>
-                                    <li><p>偏差考核电费：<span>{item.n2}</span>元</p></li>
-                                    <li><p>成交电量：<span>{item.n3}</span>千千瓦时</p></li>
-                                    <li><p>结算电量：<span>{item.n4}</span>千千瓦时</p></li>
-                                    <li><p>成交均价：<span>{item.n5}</span>千千瓦时</p></li>
-                                    <li><p>偏差考核电量：<span>{item.n6}</span>千千瓦时</p></li>
+                                    <li><p>批发市场电费：<span>{item.n1}</span>元/兆瓦时</p></li>
+                                    <li><p>偏差考核电费：<span>{item.n2}</span>元/兆瓦时</p></li>
+                                    <li><p>成交电量：<span>{item.n3}</span>兆瓦时</p></li>
+                                    <li><p>结算电量：<span>{item.n4}</span>兆瓦时</p></li>
+                                    <li><p>成交均价：<span>{item.n5}</span>兆瓦时</p></li>
+                                    <li><p>偏差考核电量：<span>{item.n6}</span>兆瓦时</p></li>
                                 </ul>
                             </div>
                         </div>

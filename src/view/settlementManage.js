@@ -50,6 +50,7 @@ export default class Test extends React.Component {
             settlementElectricityYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
             retailMarketListIsNoData: false,
             settlementElectricityIsNoData: false,
+            retailMarketCxList:[]
         }
     }
     componentWillMount() {
@@ -111,12 +112,12 @@ export default class Test extends React.Component {
                             <div className="list">
                                 <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.type}交易</span></h3>
                                 <ul className={item.check ? 'active' : ''} onClick={() => this.WholesaleMarketChgCheck(index)}>
-                                    <li><p>批发市场电费：<span>{item.settleFee}</span>元</p></li>
-                                    <li><p>偏差考核电费：<span>{item.devAssFee}</span>元</p></li>
-                                    <li><p>成交电量：<span>{item.contractPower}</span>千千瓦时</p></li>
-                                    <li><p>结算电量：<span>{item.realPower}</span>千千瓦时</p></li>
-                                    <li><p>成交均价：<span>{item.contractPrice}</span>千千瓦时</p></li>
-                                    <li><p>偏差考核电量：<span>{item.devAssPower}</span>千千瓦时</p></li>
+                                    <li><p>批发市场电费：<span>{item.settleFee}</span>元/兆瓦时</p></li>
+                                    <li><p>偏差考核电费：<span>{item.devAssFee}</span>元/兆瓦时</p></li>
+                                    <li><p>成交电量：<span>{item.contractPower}</span>兆瓦时</p></li>
+                                    <li><p>结算电量：<span>{item.realPower}</span>兆瓦时</p></li>
+                                    <li><p>成交均价：<span>{item.contractPrice}</span>兆瓦时</p></li>
+                                    <li><p>偏差考核电量：<span>{item.devAssPower}</span>兆瓦时</p></li>
                                 </ul>
                             </div>
                         </div>
@@ -181,12 +182,16 @@ export default class Test extends React.Component {
                     let retailMarketOrdinaryList = []
                     let retailMarketAkeyList = []
                     let retailMarketList = []
+                    let retailMarketCxList = []
                     res.data.rows.map(item => {
                         if (item.type === '普通') {
                             retailMarketOrdinaryList.push({ item })
                         }
                         if (item.type === '重点') {
                             retailMarketAkeyList.push({ item })
+                        }
+                        if (item.type === '长协') {
+                            retailMarketCxList.push({ item })
                         }
                     })
                     let arr = retailMarketOrdinaryList
@@ -203,7 +208,20 @@ export default class Test extends React.Component {
                     if(arr2.length > 0){
                         arr2[arr2.length - 1].item.icon = 'iconjiage'
                     }
-                    retailMarketList.push({ title: '重点交易', list: retailMarketAkeyList }, { title: '普通交易', list: retailMarketOrdinaryList })
+                    if(retailMarketAkeyList.length > 0){
+                        retailMarketList.push({ title: '重点交易', list: retailMarketAkeyList })
+                    }
+                    if(retailMarketOrdinaryList.length > 0){
+                        retailMarketList.push({ title: '普通交易', list: retailMarketOrdinaryList })
+                    }
+                    if(retailMarketCxList.length > 0){
+                        retailMarketCxList.map(item => {
+                            item.item.icon = 'iconqiyejibenxinxi'
+                        })
+                        retailMarketCxList[retailMarketCxList.length - 1].item.icon = 'iconjiage'
+                        retailMarketList.push({ title: '长协', list: retailMarketCxList })
+                    }
+                    // retailMarketList.push({ title: '重点交易', list: retailMarketAkeyList }, { title: '普通交易', list: retailMarketOrdinaryList })
                     this.setState({
                         retailMarketOrdinaryList: arr,
                         retailMarketAkeyList: arr2,
@@ -239,12 +257,12 @@ export default class Test extends React.Component {
                                         return <div className="list" key={k}>
                                             <h3><i className={['iconfont ', v.item.icon].join('')}></i><span>{v.item.customerName}</span></h3>
                                             <ul className={v.check ? 'active' : ''} onClick={() => this.retailMarketChgCheck(index, k)}>
-                                                <li><p>零售市场电费：<span>{v.item.userSettlementFee}</span>元</p></li>
-                                                <li><p>承担偏差电费：<span>{v.item.devAssFee}</span>元</p></li>
-                                                <li><p>电量计划：<span>{v.item.planPower}</span>千千瓦时</p></li>
-                                                <li><p>实际用电量：<span>{v.item.realElectricity}</span>千千瓦时</p></li>
-                                                <li><p>直接交易电量：<span>{v.item.userSettlementPower}</span>千千瓦时</p></li>
-                                                <li><p>协议电价：<span>{v.item.contractPrice}</span>元/千千瓦时</p></li>
+                                                <li><p>零售市场电费：<span>{v.item.userSettlementFee}</span>元/兆瓦时</p></li>
+                                                <li><p>承担偏差电费：<span>{v.item.devAssFee}</span>元/兆瓦时</p></li>
+                                                <li><p>电量计划：<span>{v.item.planPower}</span>/兆瓦时</p></li>
+                                                <li><p>实际用电量：<span>{v.item.realElectricity}</span>/兆瓦时</p></li>
+                                                <li><p>直接交易电量：<span>{v.item.userSettlementPower}</span>/兆瓦时</p></li>
+                                                <li><p>协议电价：<span>{v.item.contractPrice}</span>元/兆瓦时</p></li>
                                             </ul>
                                         </div>
                                     })}
