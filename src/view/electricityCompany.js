@@ -285,7 +285,7 @@ export default class ElectricityCompany extends React.Component {
         that.setState({
           companyList: [...this.state.companyList, ...res.data.rows],
           total: res.data.rowCount,
-          noData: res.data.rowCount === 0 ? true : false
+          noData: res.data.rowCount === '0' ? true : false
         })
         resolve && resolve()
       }
@@ -385,6 +385,7 @@ export default class ElectricityCompany extends React.Component {
             <div style={{ height: '10px', background: '#f0f1f3' }}></div>
           </div>
         })}
+        { this.state.noData && <NoData/> }
       </div>
     )
   }

@@ -26,7 +26,7 @@ class Home extends React.Component{
         { id:7 ,name:'考勤管理',url:require('../assets/img/img007.png'),link:'/attendanceList' },
         { id:8 ,name:'信息发布',url:require('../assets/img/img008.png'),link:'/infoDelivey' },
         { id:9 ,name:'交易中心',url:require('../assets/img/img009.png'),link:'/tradingCenter' },
-        { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'xiaohui://schemas.onecloud.cn/im/conversation' },
+        { id:10 ,name:'聊一聊',url:require('../assets/img/img010.png'),link:'' },//xiaohui://schemas.onecloud.cn/im/conversation
         { id:11 ,name:'待办事项',url:require('../assets/img/img011.png'),link:'/todolist' },
         { id:12 ,name:'公司公告',url:require('../assets/img/img012.png'),link:'/newList/1' }
       ]
@@ -62,6 +62,7 @@ class Home extends React.Component{
 
   gotoxiaohui = () => {
     window.location.href = 'xiaohui://schemas.onecloud.cn/im/conversation'
+    // window.location.href = 'http://www.baidu.com'
   }
 
   render(){
@@ -132,7 +133,8 @@ class Home extends React.Component{
                                           <span>{item.name}</span>
                                         </div>
                                       </Link> }
-                { item.link === '' && <a href="javascript:void(0);" onClick={this.gotoxiaohui}><img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
+                { item.link === '' && <a href="xiaohui://schemas.onecloud.cn/im/conversation">
+                  <img src={item.url} alt="" style={{ width: '50px', height: 'auto' }}/>
                   <div style={{fontSize:'12px',color:'#2b2a30',marginTop:'3px'}}>
                     <span>{item.name}</span>
                   </div></a>}

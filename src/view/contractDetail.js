@@ -129,6 +129,16 @@ class ContractDetail extends React.Component {
 		}
 	}
 
+	setDownDoc = () => {
+		this.setState({
+			docType: 'doc'
+		})
+	}
+	setDownPdf = () => {
+		this.setState({
+			docType: 'pdf'
+		})
+	}
 
 	render() {
 		let t =
@@ -146,18 +156,20 @@ class ContractDetail extends React.Component {
 				<div className="attedance-dialog">
 					<div className="tit">请选择导出格式</div>
 					<div className="cont">
-						<div className="item">
+						<div className="item" onClick={this.setDownDoc}>
 							<img className="img" src={require('../assets/img/img210.png')} alt="" />
 							<div className="self-radio">
-								<input id="r1" type="radio" value={"doc"} name="attedance" checked={this.state.docType === 'doc'} onChange={this.handleCheckChanged} />
-								<label htmlFor="r1">WORD</label>
+								{/* <input id="r1" type="radio" value={"doc"} name="attedance" checked={this.state.docType === 'doc'}/> */}
+								{/* onChange={this.handleCheckChanged}  */}
+								<label className={this.state.docType === 'doc'?'on':''} htmlFor="r1">WORD</label>
 							</div>
 						</div>
-						<div className="item">
+						<div className="item" onClick={this.setDownPdf}>
 							<img className="img" src={require('../assets/img/img211.png')} alt="" />
 							<div className="self-radio">
-								<input id="r2" type="radio" value={"pdf"} name="attedance" checked={this.state.docType === 'pdf'} onChange={this.handleCheckChanged} />
-								<label htmlFor="r2">PDF</label>
+								{/* <input id="r2" type="radio" value={"pdf"} name="attedance" checked={this.state.docType === 'pdf'}/> */}
+								{/* onChange={this.handleCheckChanged}  */}
+								<label className={this.state.docType === 'pdf'?'on':''} htmlFor="r2">PDF</label>
 							</div>
 						</div>
 					</div>
