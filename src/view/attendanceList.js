@@ -280,6 +280,21 @@ class AttendanceList extends React.Component {
 		})
 	}
 
+	setApplyTypeQjsq = () => {
+		this.setState({
+			applyType: 'qjsq'
+		})
+	}
+	setApplyTypeWcsq = () => {
+		this.setState({
+			applyType: 'wcsq'
+		})
+	}
+	setApplyTypeJbsq = () => {
+		this.setState({
+			applyType: 'jbsq'
+		})
+	}
 	// 
 	render() {
 		let mask =
@@ -287,25 +302,25 @@ class AttendanceList extends React.Component {
 				<div className="attedance-dialog">
 					<div className="tit">考勤管理</div>
 					<div className="cont">
-						<div className="item">
+						<div className="item" onClick={this.setApplyTypeQjsq}>
 							<img className="img" src={require('../assets/img/img105.png')} alt="" />
 							<div className="self-radio">
-								<input id="r1" type="radio" value={"qjsq"} name="attedance" onChange={this.handleCheckChanged} />
-								<label htmlFor="r1">请假申请</label>
+								{/* <input id="r1" type="radio" value={"qjsq"} name="attedance" onChange={this.handleCheckChanged} /> */}
+								<label class={this.state.applyType === 'qjsq' ? 'on':''} htmlFor="r1">请假申请</label>
 							</div>
 						</div>
-						<div className="item">
+						<div className="item" onClick={this.setApplyTypeWcsq}>
 							<img className="img" src={require('../assets/img/img106.png')} alt="" />
 							<div className="self-radio">
-								<input id="r2" type="radio" value={"wcsq"} name="attedance" onChange={this.handleCheckChanged} />
-								<label htmlFor="r2">外出申请</label>
+								{/* <input id="r2" type="radio" value={"wcsq"} name="attedance" onChange={this.handleCheckChanged} /> */}
+								<label class={this.state.applyType === 'wcsq' ? 'on':''} htmlFor="r2">外出申请</label>
 							</div>
 						</div>
-						<div className="item">
+						<div className="item" onClick={this.setApplyTypeJbsq}>
 							<img className="img" src={require('../assets/img/img107.png')} alt="" />
 							<div className="self-radio">
-								<input id="r3" type="radio" value={"jbsq"} name="attedance" onChange={this.handleCheckChanged} />
-								<label htmlFor="r3">加班申请</label>
+								{/* <input id="r3" type="radio" value={"jbsq"} name="attedance" onChange={this.handleCheckChanged} /> */}
+								<label class={this.state.applyType === 'jbsq' ? 'on':''} htmlFor="r3">加班申请</label>
 							</div>
 						</div>
 					</div>
