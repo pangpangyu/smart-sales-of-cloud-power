@@ -325,8 +325,8 @@ const api = {
     return request.post('/admin/system/updateInfoPublishStatus' , params)
   },
   //信息发布  --- 这个
-  saveAndSubmit(params){
-    return request.post('/admin/system/saveAndSubmit?isAudit=false' , params)
+  saveAndSubmit(params,audit){
+    return request.post('/admin/system/saveAndSubmit?isAudit='+audit , params)
   },
   //中长期合同收益-合同电量
   contractPower(params){
@@ -367,7 +367,11 @@ const api = {
   //日前市场交易-统调负荷信息详情
   getUnifiedById(params){
     return request.get('adminmarket/trade/unified/getUnifiedById'+params)
-  }
+  },
+  //
+  getAudit(){
+    return request.get('admin/system/getAudit')
+  },
 }
 
 export default api

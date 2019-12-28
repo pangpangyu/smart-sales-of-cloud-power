@@ -22,12 +22,15 @@ export default class InfoDeliveyAdd extends React.Component {
       introduction: '',//介绍
       content: '',//内容
       txt: '',
-      id: getDataQuery('id') || 0
+      id: getDataQuery('id') || 0,
+      title: getDataQuery('id') ? '编辑信息' : '添加信息',
+      audit:false
     }
   }
 
   componentWillMount(){
     this.getInfoPublishDataDetail()
+    this.getAudit()
   }
 
   getInfoPublishDataDetail = () => {
@@ -184,18 +187,28 @@ export default class InfoDeliveyAdd extends React.Component {
         id: [that.state.file2.id]
       }
     }
-    api.saveAndSubmit(params).then(res => {
+    if(this.state.id){
+      params.id = this.state.id
+    }
+    api.saveAndSubmit(params,this.state.audit).then(res => {
       if (res.status === 0) {
-        Toast.info(res.message, 2, () => { window.history.go(-1) }, false);
+        Toast.info(res.message, 2, () => { window.history.go(-2) }, false);
         // window.history.go(-1) window.location.href='/infoDelivey'
       }
     })
   }
 
+  getAudit = () => {
+    api.getAudit().then(res => {
+      this.setState({
+        audit:res.data.audit
+      })
+    })
+  }
   render() {
     return (
       <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: '45px' }}>
-        <Header title={'添加信息'} back={true} search={false} />
+        <Header title={this.state.title} back={true} search={false} />
         <div className="infoDeliveyAdd">
           <div className="view">
             <div className="item">

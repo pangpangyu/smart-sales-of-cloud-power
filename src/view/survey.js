@@ -40,7 +40,14 @@ class Survey extends React.Component {
         electricQuantity: res.electricQuantity,
         year: res.year,
       })
+      let data = [
+        [res.contractNum,res.year],
+        [res.prvContractNum,res.prvYear],
+        [res.lastContractNum,res.lastYear]
+      ]
+      this.paintingChart2(data)
     })
+
   }
   getDataChart1 = () => {
     api.getConractNumByYearMonth().then(res => {
@@ -69,20 +76,6 @@ class Survey extends React.Component {
   }
   paintingChart1 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart1'));
-    // let data = [
-    //   { value: '5', name: '1月', percentage: '6%' },
-    //   { value: '5', name: '2月', percentage: '6%' },
-    //   { value: '5', name: '3月', percentage: '6%' },
-    //   { value: '5', name: '4月', percentage: '6%' },
-    //   { value: '5', name: '5月', percentage: '6%' },
-    //   { value: '5', name: '6月', percentage: '6%' },
-    //   { value: '5', name: '7月', percentage: '6%' },
-    //   { value: '5', name: '8月', percentage: '6%' },
-    //   { value: '5', name: '9月', percentage: '6%' },
-    //   { value: '5', name: '10月', percentage: '6%' },
-    //   { value: '5', name: '11月', percentage: '6%' },
-    //   { value: '5', name: '12月', percentage: '6%' },
-    // ]
     let option = {
       color: ['#616fd8', '#dc6142', '#6dcfce', '#ddc275', '#e1a26d', '#b3b273', '#7aa0ca', '#c380a6', '#44c489', '#288dfd', '#f9a30c', '#ac663d'],
       tooltip: {
@@ -135,18 +128,19 @@ class Survey extends React.Component {
   }
 
   getDataChart2 = () => {
-    this.paintingChart2()
+    //this.paintingChart2()
   }
-  paintingChart2 = () => {
+  paintingChart2 = (data) => {
+    // [
+    //   [90, 2017],
+    //   [103, 2018],
+    //   [124, 2019]
+    // ]
     var myChart = echarts.init(document.getElementById('myChart2'));
     let option = {
       color: ['#288dfd'],
       dataset: {
-        source: [
-          [90, 2017],
-          [103, 2018],
-          [124, 2019]
-        ]
+        source: data
       },
       grid: {
         top: '10%',
@@ -305,7 +299,7 @@ class Survey extends React.Component {
     let option = {
       color: ['#288dfd', '#f9a30c'],
       legend: {
-        data: ['合同电量', '合同收益']
+        data: ['合同电量(万千瓦时)', '合同收益']
       },
       grid: {
         top: '20%',
@@ -417,7 +411,7 @@ class Survey extends React.Component {
       ],
       series: [
         {
-          name: '合同电量',
+          name: '合同电量(万千瓦时)',
           type: 'bar',
           xAxisIndex: 1,
           yAxisIndex: 1,
@@ -433,7 +427,7 @@ class Survey extends React.Component {
           }
         },
         {
-          name: '合同收益',
+          name: '合同收益(万元)',
           type: 'line',
           symbolSize:8,
           data: data.data2
@@ -475,7 +469,7 @@ class Survey extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['申报电量', '实时电量'],
+        data: ['申报电量(万千瓦时)', '实时电量(万千瓦时)'],
         itemHeight: 8,
         itemWidth: 20,
         itemStyle: {},
@@ -540,7 +534,7 @@ class Survey extends React.Component {
       ],
       series: [
         {
-          name: '申报电量',
+          name: '申报电量(万千瓦时)',
           type: 'bar',
           data: data.data2,
           barWidth: 9,
@@ -555,7 +549,7 @@ class Survey extends React.Component {
           }
         },
         {
-          name: '实时电量',
+          name: '实时电量(万千瓦时)',
           type: 'bar',
           data: data.data1,
           barWidth: 9,

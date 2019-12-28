@@ -115,7 +115,7 @@ export default class BsinessAnalysis extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['交易电量', '实际用电量'],
+        data: ['交易电量(万千瓦时)', '实际用电量(万千瓦时)'],
         itemHeight:8,
         itemWidth: 20,
         formatter: function (name) {
@@ -164,7 +164,7 @@ export default class BsinessAnalysis extends React.Component {
       ],
       series: [
         {
-          name: '交易电量',
+          name: '交易电量(万千瓦时)',
           type: 'bar',
           data: data.data2,
           barWidth: 8,
@@ -179,7 +179,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '实际用电量',
+          name: '实际用电量(万千瓦时)',
           type: 'bar',
           data: data.data1,
           barWidth: 8,
@@ -223,7 +223,7 @@ export default class BsinessAnalysis extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['年度双边', '年度撮合', '月度双边', '月度撮合', '月度挂牌'],
+        data: ['年度双边(万千瓦时)', '年度撮合(万千瓦时)', '月度双边(万千瓦时)', '月度撮合(万千瓦时)', '月度挂牌(万千瓦时)'],
         itemHeight:8,
         itemWidth: 20,
         formatter: function (name) {
@@ -279,7 +279,7 @@ export default class BsinessAnalysis extends React.Component {
       ],
       series: [
         {
-          name: '年度双边',
+          name: '年度双边(万千瓦时)',
           type: 'bar',
           data: data.data2,
           barWidth: 4,
@@ -294,7 +294,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '年度撮合',
+          name: '年度撮合(万千瓦时)',
           type: 'bar',
           data: data.data1,
           barWidth: 4,
@@ -308,7 +308,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '月度双边',
+          name: '月度双边(万千瓦时)',
           type: 'bar',
           data: data.data3,
           barWidth: 4,
@@ -322,7 +322,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '月度撮合',
+          name: '月度撮合(万千瓦时)',
           type: 'bar',
           data: data.data4,
           barWidth: 4,
@@ -336,7 +336,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '月度挂牌',
+          name: '月度挂牌(万千瓦时)',
           type: 'bar',
           data: data.data5,
           barWidth: 4,
@@ -388,7 +388,7 @@ export default class BsinessAnalysis extends React.Component {
     let option = {
       color: ['#f9a30c','#288dfd'],
       legend: {
-        data: ['偏差电量', '偏差率']
+        data: ['偏差电量(万千瓦时)', '偏差率(%)']
       },
       grid: {
         top: '10%',
@@ -497,14 +497,14 @@ export default class BsinessAnalysis extends React.Component {
       ],
       series: [
         {
-          name: '偏差率',
+          name: '偏差率(%)',
           type: 'line',
           xAxisIndex: 1,
           yAxisIndex: 1,
           data: data.data1,
         },
         {
-          name: '偏差电量',
+          name: '偏差电量(万千瓦时)',
           type: 'bar',
           barWidth: 10,
           data: data.data2,
@@ -562,7 +562,7 @@ export default class BsinessAnalysis extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['售电成本', '购电成本', '成本差', '成本差环比（%）', '成本差同比（%）'],
+        data: ['售电成本(万元)', '购电成本(万元)', '成本差(万元)', '成本差环比（%）', '成本差同比（%）'],
         itemHeight:8,
         itemWidth: 20,
         formatter: function (name) {
@@ -637,7 +637,7 @@ export default class BsinessAnalysis extends React.Component {
       ],
       series: [
         {
-          name: '售电成本',
+          name: '售电成本(万元)',
           type: 'bar',
           data: data.data2,
           barWidth: 4,
@@ -652,7 +652,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '购电成本',
+          name: '购电成本(万元)',
           type: 'bar',
           data: data.data1,
           barWidth: 4,
@@ -666,7 +666,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '成本差',
+          name: '成本差(万元)',
           type: 'bar',
           data: data.data3,
           barWidth: 4,
@@ -750,7 +750,7 @@ export default class BsinessAnalysis extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['售电成本', '购电成本', '转让代理费', '总收益', '总收益环比（%）', '总收益同比（%）'],
+        data: ['售电成本(万元)', '购电成本(万元)', '转让代理费(万元)', '总收益(万元)', '总收益环比（%）', '总收益同比（%）'],
         itemHeight:8,
         itemWidth: 20,
         formatter: function (name) {
@@ -841,7 +841,7 @@ export default class BsinessAnalysis extends React.Component {
       ],
       series: [
         {
-          name: '售电成本',
+          name: '售电成本(万元)',
           type: 'bar',
           data: data.data2,
           barWidth: 4,
@@ -856,7 +856,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '购电成本',
+          name: '购电成本(万元)',
           type: 'bar',
           data: data.data1,
           barWidth: 4,
@@ -870,7 +870,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '转让代理费',
+          name: '转让代理费(万元)',
           type: 'bar',
           data: data.data3,
           barWidth: 4,
@@ -884,7 +884,7 @@ export default class BsinessAnalysis extends React.Component {
           }
         },
         {
-          name: '总收益',
+          name: '总收益(万元)',
           type: 'bar',
           data: data.data4,
           barWidth: 4,
@@ -946,7 +946,7 @@ export default class BsinessAnalysis extends React.Component {
         <div className="f2-map">
           <div className="t" style={{ marginBottom: '10px' }}>
             {/* <i className="iconfont icondianliang"></i> */}
-            <img src={require('../assets/img/img022.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            <img src={require('../assets/img/img022.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
             电量对比分析
           </div>
           <div className="f2-map-view">
@@ -957,7 +957,7 @@ export default class BsinessAnalysis extends React.Component {
         <div className="f2-map">
           <div className="t" style={{ marginBottom: '10px' }}>
             {/* <i className="iconfont iconjiaoyizhongxin"></i> */}
-            <img src={require('../assets/img/img026.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            <img src={require('../assets/img/img026.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
             交易电量分析
           </div>
           <div className="f2-map-view">
@@ -968,7 +968,7 @@ export default class BsinessAnalysis extends React.Component {
         <div className="f2-map">
           <div className="t" style={{ marginBottom: '10px' }}>
             {/* <i className="iconfont iconjingyingfenxix"></i> */}
-            <img src={require('../assets/img/img027.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            <img src={require('../assets/img/img027.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
             偏差电量分析
           </div>
           <div className="f2-map-view">
@@ -979,7 +979,7 @@ export default class BsinessAnalysis extends React.Component {
         <div className="f2-map">
           <div className="t" style={{ marginBottom: '10px' }}>
             {/* <i className="iconfont iconjiage"></i> */}
-            <img src={require('../assets/img/img021.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            <img src={require('../assets/img/img021.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
             购电成本分析
           </div>
           <div className="f2-map-view">
@@ -990,7 +990,7 @@ export default class BsinessAnalysis extends React.Component {
         <div className="f2-map">
           <div className="t" style={{ marginBottom: '10px' }}>
             {/* <i className="iconfont iconshouyi"></i> */}
-            <img src={require('../assets/img/img023.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            <img src={require('../assets/img/img023.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
             收益分析
           </div>
           <div className="f2-map-view">
