@@ -46,7 +46,9 @@ export default class AttendanceAdd extends React.Component {
     console.log(`${getDataQuery('applyType')}`)
     let title = '请假';
     let userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
-    console.log(userInfo)
+    let systemUser=JSON.parse(window.sessionStorage.getItem('systemUser'))
+    //console.log(userInfo)
+    //console.log(systemUser)
     this.state = {
       leaveTypeParams:`${getDataQuery('type')}`,
       status:`${getDataQuery('status')}`,
@@ -75,6 +77,7 @@ export default class AttendanceAdd extends React.Component {
       isSave:false,
       
       userInfo:userInfo,
+      systemUser:systemUser,
 
       form: {
         departmentName: "",
@@ -509,9 +512,9 @@ export default class AttendanceAdd extends React.Component {
     Toast.loading('正在保存');
     let params = { 
       "metaFormData": { 
-        "userinfo.departmentName": "总经理办公室", 
-        "userinfo.positionName":"总经理", 
-        "userinfo.systemUserName": "APP测试", 
+        "userinfo.departmentName": that.state.systemUser.departmentName, 
+        "userinfo.positionName":that.state.systemUser.positionName, 
+        "userinfo.systemUserName": that.state.systemUser.systemUserName, 
         "startTime": that.state.form.startTime, 
         "endTime": that.state.form.endTime, 
         "days": that.state.form.days, 
@@ -530,7 +533,7 @@ export default class AttendanceAdd extends React.Component {
 	    "id": that.state.leaveId!="null"?that.state.leaveId:''
       
     }
-    console.log(params)
+    //console.log(params)
     api.GetSaveLeave(params).then(res => {
       console.log('保存请假:', res);
       if (res.status === 0) {
@@ -688,6 +691,24 @@ export default class AttendanceAdd extends React.Component {
     that.setState({
       isSave:true
     })
+    if(!that.state.form.type){
+      Toast.info(`请选择${that.state.title}类型`);
+      return 
+    }
+    if(!that.state.form.startTime){
+
+      Toast.info("请选择开始时间");
+      return 
+    }
+    if(!that.state.form.endTime){
+      Toast.info("请选择结束时间");
+      return 
+    }
+    if(that.state.form.leaveReason==""){
+      Toast.info("请输入填写理由");
+      return 
+    }
+
 
     //新增
     if(that.state.applyType=="qjsq"||that.state.editType=="qjedit"){//请假

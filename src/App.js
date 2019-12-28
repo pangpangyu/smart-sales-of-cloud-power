@@ -25,8 +25,15 @@ class App extends React.Component {
         "token": "appusr",
         "userInfoId": "64"
       }
+      let systemUser={
+        "departmentName":"总经理办公室",
+        "positionName":"总经理",
+        "systemUserName":"APP测试",
+      }
       let info = JSON.stringify(userInfo)
+      let info2=JSON.stringify(systemUser)
       window.sessionStorage.setItem('userInfo',info)
+      window.sessionStorage.setItem('systemUser',info2)
     }else{
       let companyName = getDataQuery('companyName') || '亦云信息'
       let token = getDataQuery('token') || ''
@@ -49,6 +56,7 @@ class App extends React.Component {
             }
             let info = JSON.stringify(userInfo)
             window.sessionStorage.setItem('userInfo',info)
+            this.FindSystemUser(res.data.userInfoId)
           }else{
             Toast.fail(res.message,0)
           }
@@ -57,6 +65,21 @@ class App extends React.Component {
         })
       }
     }
+  }
+  FindSystemUser=(id)=>{
+    let params={
+      id:id
+    }
+    api.FindSystemUser(params).then(res=>{
+      //console.log(res)
+      let systemUser={
+        "departmentName":res.data.systemUserInfo.position.department.departmentName,
+        "positionName":res.data.systemUserInfo.position.positionName,
+        "systemUserName":res.data.systemUserInfo.systemUserName,
+      }
+      let info2=JSON.stringify(systemUser)
+      window.sessionStorage.setItem('systemUser',info2)
+    })
   }
   render() {
     return (

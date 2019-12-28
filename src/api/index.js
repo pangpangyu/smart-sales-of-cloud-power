@@ -3,6 +3,11 @@ import request from '../utils/request'
 const api = {
   login(params) {
     return request.post('nuts/login', params)
+
+  },
+   //获取系统用户信息
+   FindSystemUser(params){
+    return request.get('/nuts/crud/find/findSystemUser',{ params: params })
   },
   //首页轮播图列表
   GetHomeCarouselList(params) {
@@ -245,8 +250,6 @@ const api = {
   OvertimeSubmitSign(params) {
     return request.post('admin/attendance/overtimeSubmitSign?id='+params)
   },
-
-
 
   //信息列表
   GetInfoPublishData(params) {
