@@ -87,10 +87,17 @@
             flex: 1;
             color: @mainblack;
             text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 0;
         }
 
         .r {
             color: @mainblue;
+            &.on{
+                color: #999;
+            }
         }
     }
 }

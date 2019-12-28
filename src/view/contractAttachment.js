@@ -74,33 +74,33 @@ class ContractAttachment extends React.Component {
 						<li className="item">
 							<span className="l">合同扫描件</span>
 							<span className="m">{this.state.contract.contractAttachedFile ? this.state.contract.contractAttachedFile.name : '--'}</span>
-							<span className="r" onClick={this.toSee(1)}>点击查看</span>
+							<span className={this.state.contract.contractAttachedFile ? 'r': 'r on'} onClick={this.toSee(1)}>点击查看</span>
 						</li>
 
 						<li className="item">
 							<span className="l">营业执照附件</span>
 							<span className="m">{this.state.contractMesAll.businessLicense ? (this.state.contractMesAll.businessLicense[0] && this.state.contractMesAll.businessLicense[0].name) || '--' : '--'}</span>
-							<span className="r" onClick={this.toSee(2)}>点击查看</span>
+							<span className={this.state.contract.businessLicense ? 'r': 'r on'} onClick={this.toSee(2)}>点击查看</span>
 						</li>
 						<li className="item">
 							<span className="l">甲方授权委托书</span>
 							<span className="m">{this.state.contract.contractAttachedFile3 ? this.state.contract.contractAttachedFile3.name : '--'}</span>
-							<span className="r" onClick={this.toSee(3)}>点击查看</span>
+							<span className={this.state.contract.contractAttachedFile3 ? 'r': 'r on'} onClick={this.toSee(3)}>点击查看</span>
 						</li>
 						<li className="item">
 							<span className="l">乙方授权委托书</span>
 							<span className="m">{this.state.contract.contractAttachedFile4 ? this.state.contract.contractAttachedFile4.name : '--'}</span>
-							<span className="r" onClick={this.toSee(4)}>点击查看</span>
+							<span className={this.state.contract.contractAttachedFile4 ? 'r': 'r on'} onClick={this.toSee(4)}>点击查看</span>
 						</li>
 						<li className="item">
 							<span className="l">开户许可证</span>
 							<span className="m">{this.state.contract.openPermit ? this.state.contract.openPermit.name : '--'}</span>
-							<span className="r" onClick={this.toSee(5)}>点击查看</span>
+							<span className={this.state.contract.openPermit ? 'r': 'r on'} onClick={this.toSee(5)}>点击查看</span>
 						</li>
 						<li className="item">
 							<span className="l">其它附件</span>
 							<span className="m">{this.state.contractMesAll.contractFileMetas ? (this.state.contractMesAll.contractFileMetas[0] && this.state.contractMesAll.contractFileMetas[0].name) || '--' : '--'}</span>
-							<span className="r" onClick={this.toSee(6)}>点击查看</span>
+							<span className={this.state.contract.contractFileMetas ? 'r': 'r on'} onClick={this.toSee(6)}>点击查看</span>
 						</li>
 
 					</ul>
