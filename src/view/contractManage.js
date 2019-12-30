@@ -134,7 +134,7 @@ class ContractManage extends React.Component {
                                         return (
                                             <li className="item" key={index}>
                                                 <Link to={`/contractDetail/${item.id}`}>
-                                                    <div className="tit">{item.participantName}</div>
+                                                    <div className="tit">{item.name}</div>
                                                     <div className="mes">
                                                         <span>签约电量：</span>{item.contractPower}兆瓦时
                                 </div>

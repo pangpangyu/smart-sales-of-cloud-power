@@ -110,7 +110,7 @@ export default class Test extends React.Component {
                     return <div className="tab" key={item.id}>
                         <div className="item">
                             <div className="list">
-                                <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.type}交易</span></h3>
+                                <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.type}</span></h3>
                                 <ul className={item.check ? 'active' : ''} onClick={() => this.WholesaleMarketChgCheck(index)}>
                                     <li><p>批发市场电费：<span>{item.settleFee}</span>元/兆瓦时</p></li>
                                     <li><p>偏差考核电费：<span>{item.devAssFee}</span>元/兆瓦时</p></li>
@@ -209,10 +209,10 @@ export default class Test extends React.Component {
                         arr2[arr2.length - 1].item.icon = 'iconjiage'
                     }
                     if(retailMarketAkeyList.length > 0){
-                        retailMarketList.push({ title: '重点交易', list: retailMarketAkeyList })
+                        retailMarketList.push({ title: '重点', list: retailMarketAkeyList })
                     }
                     if(retailMarketOrdinaryList.length > 0){
-                        retailMarketList.push({ title: '普通交易', list: retailMarketOrdinaryList })
+                        retailMarketList.push({ title: '普通', list: retailMarketOrdinaryList })
                     }
                     if(retailMarketCxList.length > 0){
                         retailMarketCxList.map(item => {
@@ -259,9 +259,9 @@ export default class Test extends React.Component {
                                             <ul className={v.check ? 'active' : ''} onClick={() => this.retailMarketChgCheck(index, k)}>
                                                 <li><p>零售市场电费：<span>{v.item.userSettlementFee}</span>元/兆瓦时</p></li>
                                                 <li><p>承担偏差电费：<span>{v.item.devAssFee}</span>元/兆瓦时</p></li>
-                                                <li><p>电量计划：<span>{v.item.planPower}</span>/兆瓦时</p></li>
-                                                <li><p>实际用电量：<span>{v.item.realElectricity}</span>/兆瓦时</p></li>
-                                                <li><p>直接交易电量：<span>{v.item.userSettlementPower}</span>/兆瓦时</p></li>
+                                                <li><p>电量计划：<span>{v.item.planPower}</span>兆瓦时</p></li>
+                                                <li><p>实际用电量：<span>{v.item.realElectricity}</span>兆瓦时</p></li>
+                                                <li><p>直接交易电量：<span>{v.item.userSettlementPower}</span>兆瓦时</p></li>
                                                 <li><p>协议电价：<span>{v.item.contractPrice}</span>元/兆瓦时</p></li>
                                             </ul>
                                         </div>
@@ -381,9 +381,9 @@ export default class Test extends React.Component {
                             <div className="list">
                                 <h3><i className={['iconfont ', item.icon].join('')}></i><span>{item.companyName}</span></h3>
                                 <ul className="ul1">
-                                    <li><p>结算电量：<span>{item.wholesaleBidPower}</span>千千瓦时</p></li>
-                                    <li><p>结算电费：<span>{item.totalFee}</span>元</p></li>
-                                    <li><p>偏差考核电费：<span>{item.assessFee}</span>元</p></li>
+                                    <li><p>结算电量：<span>{item.wholesaleBidPower}</span>兆瓦时</p></li>
+                                    <li><p>结算电费：<span>{item.totalFee}</span>元/兆瓦时</p></li>
+                                    <li><p>偏差考核电费：<span>{item.assessFee}</span>元/兆瓦时</p></li>
                                 </ul>
                             </div>
                         </div>

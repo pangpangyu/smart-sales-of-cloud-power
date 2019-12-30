@@ -732,6 +732,8 @@ export default class BsinessAnalysis extends React.Component {
         data.names.push(i + 1 + '月')
       }
       this.paintingMap5(data)
+    }).catch(err => {
+      
     })
   }
   paintingMap5 = (data) => {

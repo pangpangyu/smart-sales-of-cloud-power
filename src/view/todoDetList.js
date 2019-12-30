@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/header'
 import { Button } from 'antd-mobile';
 import { getDataQuery, formatTime } from '../utils/index';
+import NoData from '../components/noData';
 
 export default class Todolist extends React.Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ export default class Todolist extends React.Component {
 			history:arr,
 			nodata:arr.length > 0 ? false : true
 		})
-		console.log(arr)
+		console.log(arr.length)
 	}
 
 	render() {
@@ -96,6 +97,7 @@ export default class Todolist extends React.Component {
 									</div>
 								</li> */}
 							</ul>
+							{ this.state.nodata && <NoData/> }
 						</div>
 					</div>
 					<div className="f_btn">

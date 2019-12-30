@@ -97,7 +97,7 @@ class Survey extends React.Component {
       },
       series: [
         {
-          name: '访问来源',
+          name: '合同数量',
           type: 'pie',
           radius: ['50%', '70%'],
           center: ['80%', '50%'],
