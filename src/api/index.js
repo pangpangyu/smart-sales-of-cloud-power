@@ -376,6 +376,10 @@ const api = {
   getAudit(){
     return request.get('admin/system/getAudit')
   },
+  //
+  getStartStopInfo(params){
+    return request.get('/market/trade/start_stop/search'+params)
+  },
 }
 
 export default api

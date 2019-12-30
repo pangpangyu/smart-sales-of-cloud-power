@@ -805,13 +805,15 @@
         background: #fff;
         padding: 10px 15px;
         ul{
+            overflow-x: auto;
+            white-space: nowrap;
             &::after{
                 content: '';
                 display: block;
                 clear: both;
             }
             li{
-                float: left;
+                display: inline-block;
                 height: 22px;
                 line-height: 22px;
                 border-radius: 22px;

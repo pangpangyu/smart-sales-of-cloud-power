@@ -28,7 +28,8 @@ export default class Test extends React.Component {
 			backupList:[],
 			substationList:[],
 			blackList:[],
-			tradeUnifiedList:[]
+			tradeUnifiedList:[],
+			startStopInfo:[]
 		}
 	}
 	componentWillMount(){
@@ -38,6 +39,19 @@ export default class Test extends React.Component {
 		this.getSubstationList()
 		this.getBlackList()
 		this.getTradeUnifiedSearch()
+		this.getStartStopInfo()
+	}
+	//必开必停信息
+	getStartStopInfo = () => {
+		let params = '?rowNumber=0&pageSize=100'
+		api.getStartStopInfo(params).then(res => {
+			console.log(res)
+			if(res.status === 0){
+				this.setState({
+					startStopInfo:res.data.rows
+				})
+			}
+		})
 	}
 	//日前市场交易-统调负荷信息列表
 	getTradeUnifiedSearch = () =>{
@@ -131,7 +145,7 @@ export default class Test extends React.Component {
 							</div>
 						</div>
 						{this.state.active === '1' && this.state.noticeList.length > 0 && this.state.resultList.length > 0 && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
-						{this.state.active === '2' && this.state.backupList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} tradeUnifiedList={this.state.tradeUnifiedList} blackList={this.state.blackList}/>}
+						{this.state.active === '2' && this.state.backupList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} tradeUnifiedList={this.state.tradeUnifiedList} blackList={this.state.blackList} startStopInfo={this.state.startStopInfo}/>}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
 				</div>

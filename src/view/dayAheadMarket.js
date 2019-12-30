@@ -10,7 +10,8 @@ export default class Test extends React.Component {
                 { id: '1', title: '统调负荷信息' },
                 { id: '2', title: '备用信息' },
                 { id: '3', title: '输变电检修信息' },
-                { id: '4', title: '阻塞' }
+                { id: '4', title: '阻塞' },
+                { id: '5', title: '必开必停信息' }
             ],
             unifiedLoadRegulation:[
                 {id:'1', n1:'2019年10月10日', n2:'333.33兆瓦', n3:'100兆瓦'},
@@ -54,6 +55,7 @@ export default class Test extends React.Component {
                 {this.state.active === '2' && <TradingCenterList type='2' active={this.state.active} backupInfo={this.props.backupList} />}
                 {this.state.active === '3' && <TradingCenterList type='2' active={this.state.active} maintenanceInfo={this.props.substationList} />}
                 {this.state.active === '4' && <TradingCenterList type='2' active={this.state.active} block={this.props.blackList} />}
+                {this.state.active === '5' && <TradingCenterList type='2' active={this.state.active} startStopInfo={this.props.startStopInfo} />}
             </div>
         )
     }

@@ -15,7 +15,8 @@ export default class Test extends React.Component {
 			block: this.props.block,
 			FMMarket: this.props.FMMarket,
 			provincialNetwork: this.props.provincialNetwork,
-			outwardDeliveryPlan: this.props.outwardDeliveryPlan
+			outwardDeliveryPlan: this.props.outwardDeliveryPlan,
+			startStopInfo:this.props.startStopInfo
 		}
 	}
 	//中长期交易公告信息
@@ -212,6 +213,27 @@ export default class Test extends React.Component {
 			</div >
 		)
 	}
+	//必开必停
+	startStopInfo = () => {
+		return (
+			<div className="tradingCenterList">
+				{this.state.startStopInfo && this.state.startStopInfo.map(item => {
+					return <div className="item" key={item.id}>
+						{/* <h3>{item.type}</h3> */}
+						<div className="list">
+							<ul>
+								<li><p><span>时间：</span>{item.riQi}</p></li>
+								<li><p><span>类型：</span>{item.type}</p></li>
+								<li><p><span>必开机组：</span>{item.biKaiJiZu}</p></li>
+								<li><p><span>必停机组：</span>{item.biTingJiZu}</p></li>
+							</ul>
+						</div>
+					</div>
+				})}
+				{ this.state.startStopInfo.length === 0 && <div style={{background:'#fff'}}><NoData/></div> }
+			</div>
+		)
+	}
 	render() {
 		return (
 			<div>
@@ -222,6 +244,7 @@ export default class Test extends React.Component {
 				{this.props.active === '2' && this.props.type === '2' && this.BackupInfo()}
 				{this.props.active === '3' && this.props.type === '2' && this.MaintenanceInfo()}
 				{this.props.active === '4' && this.props.type === '2' && this.Block()}
+				{this.props.active === '5' && this.props.type === '2' && this.startStopInfo()}
 
 				{this.props.active === '1' && this.props.type === '3' && this.FMMarket()}
 				{this.props.active === '2' && this.props.type === '3' && this.ProvincialNetwork()}
