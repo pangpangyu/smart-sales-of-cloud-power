@@ -181,7 +181,7 @@ class NewList extends React.Component {
               <Link to={`/newDetaile/${this.state.type}/${item.id}`}>
                 <div className="info">
                   <div className="title">{item.title}</div>
-                  <div className="time">发布时间：{item.lastUpdateTime}</div>
+                  <div className="time">发布时间：{item.createTime}</div>
                 </div>
                 <div className="new">
                   {item.isShowNew && <img src={require('../assets/img/img018.png')} style={{ width: '26px', height: 'auto' }} alt="new" />}
@@ -214,7 +214,7 @@ class NewList extends React.Component {
               <div className="box">
                 <div className="info">
                   <div className="title">{item.title}</div>
-                  <div className="time">发布时间：{item.lastUpdateTime}</div>
+                  <div className="time">发布时间：{item.createTime}</div>
                 </div>
                 { this.state.type === '1' && <div className="new">
                   {item.isShowNew && <img src={require('../assets/img/img018.png')} style={{ width: '26px', height: 'auto' }} alt="new" />}
@@ -238,7 +238,7 @@ class NewList extends React.Component {
               <div style={{ background: '#f0f1f3', height: '11px' }}></div>
             </div>
           })}
-          {this.state.UnreadList.length == 0 && <NoData />}
+          {this.state.UnreadList.length === 0 && <NoData />}
         </div> }
       </div>
     )

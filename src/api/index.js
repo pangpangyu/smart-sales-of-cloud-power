@@ -359,6 +359,14 @@ const api = {
   getAttendanceLeaveManagemen(params){
     return request.get('/nuts/crud/audit/models_attendance_LeaveManagement'+params)
   },
+  //待办详情---接口是动态传入
+  getThingDetail(url,params){
+    return request.get(url+params)
+  },
+  //待办详情 --- 信息发布详情 
+  getAuditMeta(params){
+    return request.get('/admin/system/infoPublish/getAuditMeta'+params)
+  },
   //售电情况-当前年份合同按月统计
   getConractNumByYearMonth(params){
     return request.get('admin/contract/getConractNumByYearMonth')
