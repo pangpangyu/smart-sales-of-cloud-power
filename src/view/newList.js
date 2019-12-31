@@ -232,7 +232,7 @@ class NewList extends React.Component {
               <div className="box">
                 <div className="info">
                   <div className="title">{item.title}</div>
-                  <div className="time">发布时间：{item.lastUpdateTime}</div>
+                  <div className="time">发布时间：{item.createTime}</div>
                 </div>
               </div>
               <div style={{ background: '#f0f1f3', height: '11px' }}></div>
