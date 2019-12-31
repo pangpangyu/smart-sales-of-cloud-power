@@ -388,6 +388,14 @@ const api = {
   getStartStopInfo(params){
     return request.get('/market/trade/start_stop/search'+params)
   },
+  //公告信息详情
+  getNoticeById(params){
+    return request.get('/admin/market/trade/notice/getNoticeById' + params)
+  },
+  //结果信息详情
+  getResultById(params){
+    return request.get('/admin/market/trade/result/getResultById' + params)
+  }
 }
 
 export default api

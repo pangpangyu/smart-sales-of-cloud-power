@@ -39,6 +39,13 @@ export default class Test extends React.Component {
             ]
         }
     }
+    componentDidMount(){
+        if(window.sessionStorage.getItem('active2')){
+            this.setState({
+                active:window.sessionStorage.getItem('active2')
+            })
+        }
+    }
     render() {
         return (
             <div className="midLongTermTrade">
@@ -46,7 +53,7 @@ export default class Test extends React.Component {
                     <div className="chg_list">
                         <ul>
                             {this.state.tabs && this.state.tabs.map((item, index) => {
-                                return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}</li>
+                                return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => {this.setState({ active: item.id });window.sessionStorage.setItem('active2',item.id)}}>{item.title}</li>
                             })}
                         </ul>
                     </div>

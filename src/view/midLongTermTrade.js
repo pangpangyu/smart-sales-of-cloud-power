@@ -11,8 +11,8 @@ export default class Test extends React.Component {
 				{ id: '1', title: '交易公告信息' },
 				{ id: '2', title: '交易结果信息' }
 			],
-			mediumAndLongTermTradeBulletin:this.props.noticeList,
-			mediumAndLongTermResult:this.props.resultList
+			mediumAndLongTermTradeBulletin: this.props.noticeList,
+			mediumAndLongTermResult: this.props.resultList
 			// mediumAndLongTermTradeBulletin: [
 			// 	{ id: '1', title: '2019年年度双边电力直接交易有约束结果发布', n1: '年度双边交易', n2: '', n3: '2019年1月10日', n4: '2019年1月15日' },
 			// 	{ id: '2', title: '2019年年度双边电力直接交易有约束结果发布', n1: '年度双边交易', n2: '', n3: '2019年1月10日', n4: '2019年1月15日' },
@@ -27,6 +27,13 @@ export default class Test extends React.Component {
 			// ]
 		}
 	}
+	componentDidMount() {
+		if (window.sessionStorage.getItem('active2')) {
+			this.setState({
+				active: window.sessionStorage.getItem('active2')
+			})
+		}
+	}
 	render() {
 		return (
 			<div className="midLongTermTrade">
@@ -34,7 +41,7 @@ export default class Test extends React.Component {
 					<div className="chg_list">
 						<ul>
 							{this.state.tabs && this.state.tabs.map((item, index) => {
-								return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id })}>{item.title}</li>
+								return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => {this.setState({ active: item.id });window.sessionStorage.setItem('active2',item.id)}}>{item.title}</li>
 							})}
 						</ul>
 					</div>

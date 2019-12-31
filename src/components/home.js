@@ -50,7 +50,7 @@ class Home extends React.Component{
   }
   GetNewList = () => {
     const that = this
-    let params = {"rowNumber":0,"pageSize":5}
+    let params = {"rowNumber":0,"pageSize":5,"_":new Date().getTime()}
     api.GetNewList(params).then(res => {
       if(res.status === 0){
         that.setState({
@@ -96,7 +96,7 @@ class Home extends React.Component{
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div style={{height:'50px',overflow:'hidden'}}>
-          { this.state.newList &&  
+          { this.state.newList &&  this.state.newList.length &&
             <div className="new-abstract">
               <i className="iconfont iconxiaoxi"></i>
               <div className="new-abstract">

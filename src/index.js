@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from './router/index'
+import Router from './router/index';
 import * as serviceWorker from './serviceWorker';
+import { AliveScope } from 'react-activation';
 
 ReactDOM.render(
-  <Router />,
+  <AliveScope><Router /></AliveScope>,
   document.getElementById('root')
 );
 

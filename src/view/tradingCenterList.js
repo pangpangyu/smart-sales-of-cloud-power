@@ -25,7 +25,7 @@ export default class Test extends React.Component {
 			<div className="tradingCenterList">
 				{this.state.mediumAndLongTermTradeBulletin.length > 0 && this.state.mediumAndLongTermTradeBulletin.map(item => {
 					return <div className="item" key={item.id}>
-						<Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
+						<Link to={`/mediumAndLongTermDet?active=${this.props.active}&id=${item.id}`}>
 							<h3>{item.zhuTi}</h3>
 							<div className="list">
 								<ul>
@@ -48,7 +48,7 @@ export default class Test extends React.Component {
 			<div className="tradingCenterList">
 				{this.state.mediumAndLongTermResult.length > 0 && this.state.mediumAndLongTermResult.map(item => {
 					return <div className="item" key={item.id}>
-						<Link to={`/mediumAndLongTermDet?active=` + this.props.active}>
+						<Link to={`/mediumAndLongTermDet?active=${this.props.active}&id=${item.id}`}>
 							<h3>{item.shenBaoFangShi}</h3>
 							<div className="list">
 								<ul>

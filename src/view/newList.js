@@ -28,10 +28,10 @@ class NewList extends React.Component {
       search: '',
       pageIndex: 0,
       tabs: [
-        { id: 1, title: '已读消息', num: 0 },
-        { id: 2, title: '未读消息', num: 0 }
+        { id: 2, title: '未读消息', num: 0 },
+        { id: 1, title: '已读消息', num: 0 }
       ],
-      active: 1,
+      active: 2,
       alreadyRead: [],
       UnreadList: [],
     }
@@ -49,11 +49,11 @@ class NewList extends React.Component {
   }
   //消息列表已读消息
   getreadyNew = () => {
-    let params = '?hasHandled=false'
+    let params = '?hasHandled=true'
     api.getNewListPage(params).then(res => {
       if (res.status === 0) {
         let arr = this.state.tabs
-        arr[0].num = res.data.rows.length
+        arr[1].num = res.data.rows.length
         console.log(arr)
         this.setState({
           alreadyRead:res.data.rows,
@@ -64,11 +64,11 @@ class NewList extends React.Component {
   }
   //消息列表未读消息
   getUnreadNew = () => {
-    let params = '?hasHandled=true'
+    let params = '?hasHandled=false'
     api.getNewListPage2(params).then(res => {
       if (res.status === 0) {
         let arr = this.state.tabs
-        arr[1].num = res.data.rows.length
+        arr[0].num = res.data.rows.length
         this.setState({
           UnreadList: res.data.rows,
           tabs:arr

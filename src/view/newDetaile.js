@@ -25,7 +25,7 @@ export default class NewDetaile extends React.Component{
 
   getNoticeDetaile = () => {
     const that = this
-    let params = `?id=${that.state.id}&groupId=1`
+    let params = `?id=${that.state.id}&groupId=-1`
     api.GetCompanyNoticeDetail(params).then(res => {
       that.setState({
         detail:res
@@ -49,8 +49,8 @@ export default class NewDetaile extends React.Component{
                     </div>  
           })
         }
-        <div className="txt">
-          { this.state.detail.content }
+        <div className="txt" dangerouslySetInnerHTML={{__html:this.state.detail.content}}>
+          {/* { this.state.detail.content } */}
         </div>
       </div>
     )

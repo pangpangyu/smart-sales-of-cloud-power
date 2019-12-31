@@ -40,12 +40,20 @@ export default class Test extends React.Component {
 		this.getBlackList()
 		this.getTradeUnifiedSearch()
 		this.getStartStopInfo()
+		if(!window.sessionStorage.getItem('active1') && !window.sessionStorage.getItem('active2')){
+			window.sessionStorage.setItem('active1','1')
+			window.sessionStorage.setItem('active2','1')
+		}else{
+			this.setState({
+				active: window.sessionStorage.getItem('active1'),
+				type: window.sessionStorage.getItem('active2'),
+			})
+		}
 	}
 	//必开必停信息
 	getStartStopInfo = () => {
 		let params = '?rowNumber=0&pageSize=100'
 		api.getStartStopInfo(params).then(res => {
-			console.log(res)
 			if(res.status === 0){
 				this.setState({
 					startStopInfo:res.data.rows
@@ -139,13 +147,13 @@ export default class Test extends React.Component {
 							<div className="change_tab_list">
 								<ul>
 									{this.state.tabs && this.state.tabs.map((item, index) => {
-										return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => this.setState({ active: item.id, type: item.type })}>{item.title}</li>
+										return <li className={item.id === this.state.active ? 'active' : ''} key={index} onClick={() => {this.setState({ active: item.id, type: item.type });window.sessionStorage.setItem('active1',item.id)}}>{item.title}</li>
 									})}
 								</ul>
 							</div>
 						</div>
 						{this.state.active === '1' && this.state.noticeList.length > 0 && this.state.resultList.length > 0 && <MidLongTermTrade noticeList={this.state.noticeList} resultList={this.state.resultList}/>}
-						{this.state.active === '2' && this.state.backupList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} tradeUnifiedList={this.state.tradeUnifiedList} blackList={this.state.blackList} startStopInfo={this.state.startStopInfo}/>}
+						{this.state.active === '2' && this.state.backupList.length > 0 && this.state.tradeUnifiedList.length > 0 && <DayAheadMarket backupList={this.state.backupList} substationList={this.state.substationList} tradeUnifiedList={this.state.tradeUnifiedList} blackList={this.state.blackList} startStopInfo={this.state.startStopInfo}/>}
 						{this.state.active === '3' && <RealTimeMarket />}
 					</div>
 				</div>
