@@ -367,18 +367,20 @@ export default class BsinessAnalysis extends React.Component {
       data1: [],
     }
     api.GetSouDianCompanyAnalysis(params).then(res => {
+      // data.data2 = res.pictureData2.deviationPower
+      // data.data1 = res.pictureData2.deviationRate
       res.pictureData2.deviationPower.map(item => {
         if (item) {
           data.data2.push(item)
         } else {
-          data.data2.push(0)
+          data.data2.push('-')
         }
       })
       res.pictureData2.deviationRate.map(item => {
         if (item) {
           data.data1.push(item)
         } else {
-          data.data1.push(0)
+          data.data1.push('-')
         }
       })
       this.paintingMap3(data)
@@ -461,8 +463,8 @@ export default class BsinessAnalysis extends React.Component {
           type: 'value',
           scale: true,
           boundaryGap: data.dataX,
-          max: 10000,
-          min: -10000,
+          max: 1000,
+          min: -1000,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -480,8 +482,8 @@ export default class BsinessAnalysis extends React.Component {
           type: 'value',
           scale: true,
           boundaryGap: data.dataX,
-          max: 500,
-          min: -500,
+          max: 100,
+          min: -100,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -573,7 +575,7 @@ export default class BsinessAnalysis extends React.Component {
       grid: {
         top: '20%',
         left: '5%',
-        right: '8%',
+        right: '5%',
         bottom: '8%',
         containLabel: true
       },
@@ -598,7 +600,9 @@ export default class BsinessAnalysis extends React.Component {
       yAxis: [
         {
           type: 'value',
-          name: '',
+          name: 'left',
+          scale: true,
+          boundaryGap: data.dataX,
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -607,31 +611,29 @@ export default class BsinessAnalysis extends React.Component {
             }
           },
           axisLabel: {
+            textStyle: {
+              color: '#666666',//坐标值得具体的颜色
+            }
+          }
+        },
+        {
+          type: 'value',
+          name: 'right',
+          axisLine: {
+            lineStyle: {
+              type: 'solid',
+              color: '#eeeeee',
+              width: '1'
+            }
+          },
+          axisLabel: {
+            formatter: '{value}%',
             textStyle: {
               color: '#666666',//坐标值得具体的颜色
               formatter: function (a) {
                 a = +a;
                 return isFinite(a) ? echarts.format.addCommas(+a / 1000) : '';
               }
-            }
-          }
-        },
-        {
-          type: 'value',
-          scale: true,
-          boundaryGap: data.dataX,
-          max: 100,
-          min: -100,
-          axisLine: {
-            lineStyle: {
-              type: 'solid',
-              color: '#eeeeee',
-              width: '1'
-            }
-          },
-          axisLabel: {
-            textStyle: {
-              color: '#666666',//坐标值得具体的颜色
             }
           }
         }
@@ -643,6 +645,7 @@ export default class BsinessAnalysis extends React.Component {
           data: data.data2,
           barWidth: 4,
           barGap: 0,
+          yAxisIndex:0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -656,6 +659,7 @@ export default class BsinessAnalysis extends React.Component {
           name: '购电成本(万元)',
           type: 'bar',
           data: data.data1,
+          yAxisIndex:0,
           barWidth: 4,
           itemStyle: {
             normal: {
@@ -670,6 +674,7 @@ export default class BsinessAnalysis extends React.Component {
           name: '成本差(万元)',
           type: 'bar',
           data: data.data3,
+          yAxisIndex:0,
           barWidth: 4,
           itemStyle: {
             normal: {
@@ -683,11 +688,13 @@ export default class BsinessAnalysis extends React.Component {
         {
           name: '成本差环比（%）',
           type: 'line',
+          yAxisIndex:1,
           data: data.data4
         },
         {
           name: '成本差同比（%）',
           type: 'line',
+          yAxisIndex:1,
           data: data.data5
         }
       ]
@@ -719,14 +726,14 @@ export default class BsinessAnalysis extends React.Component {
         if (item) {
           data.data5.push(item)
         } else {
-          data.data5.push(0)
+          data.data5.push('-')
         }
       })
       res.pictureData1.yearOnYear.map(item => {
         if (item) {
           data.data6.push(item)
         } else {
-          data.data6.push(0)
+          data.data6.push('-')
         }
       })
       for (let i = 0; i < 12; i++) {
@@ -763,7 +770,7 @@ export default class BsinessAnalysis extends React.Component {
       grid: {
         top: '20%',
         left: '5%',
-        right: '10%',
+        right: '5%',
         bottom: '8%',
         containLabel: true
       },
@@ -805,6 +812,7 @@ export default class BsinessAnalysis extends React.Component {
       yAxis: [
         {
           type: 'value',
+          name: 'left',
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -824,6 +832,7 @@ export default class BsinessAnalysis extends React.Component {
         },
         {
           type: 'value',
+          name: 'right',
           axisLine: {
             lineStyle: {
               type: 'solid',
@@ -832,6 +841,7 @@ export default class BsinessAnalysis extends React.Component {
             }
           },
           axisLabel: {
+            formatter: '{value}%',
             textStyle: {
               color: '#666666',//坐标值得具体的颜色
               formatter: function (a) {
@@ -849,6 +859,7 @@ export default class BsinessAnalysis extends React.Component {
           data: data.data2,
           barWidth: 4,
           barGap: 0,
+          yAxisIndex:0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -863,6 +874,7 @@ export default class BsinessAnalysis extends React.Component {
           type: 'bar',
           data: data.data1,
           barWidth: 4,
+          yAxisIndex:0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -877,6 +889,7 @@ export default class BsinessAnalysis extends React.Component {
           type: 'bar',
           data: data.data3,
           barWidth: 4,
+          yAxisIndex:0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -891,6 +904,7 @@ export default class BsinessAnalysis extends React.Component {
           type: 'bar',
           data: data.data4,
           barWidth: 4,
+          yAxisIndex:0,
           itemStyle: {
             normal: {
               barBorderRadius: 4
@@ -903,11 +917,13 @@ export default class BsinessAnalysis extends React.Component {
         {
           name: '总收益环比（%）',
           type: 'line',
+          yAxisIndex:1,
           data: data.data5
         },
         {
           name: '总收益同比（%）',
           type: 'line',
+          yAxisIndex:1,
           data: data.data6
         }
       ]
