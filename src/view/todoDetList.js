@@ -14,7 +14,7 @@ export default class Todolist extends React.Component {
 	}
 
 	componentWillMount(){
-		let arr = window.sessionStorage.getItem('history') || []
+		let arr = window.sessionStorage.getItem('history') || '[]'
 		arr = JSON.parse(arr)
 		this.setState({
 			history:arr,

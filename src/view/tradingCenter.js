@@ -14,8 +14,8 @@ export default class Test extends React.Component {
 			open: false,
 			time: new Date(),
 			month: '',
-			fullYear: '',
-			year: '2019-08',
+			fullYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+			year: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
 			active: '1',
 			type: '1',
 			tabs: [
@@ -63,7 +63,7 @@ export default class Test extends React.Component {
 	}
 	//日前市场交易-统调负荷信息列表
 	getTradeUnifiedSearch = () =>{
-		let params = `?rowNumber=0&pageSize=100`
+		let params = `?rowNumber=0&pageSize=100&riQi=${this.state.year}`
 		api.getTradeUnifiedSearch(params).then(res => {
 			res.data.rows.map(item => {
 				item.infoArr = JSON.parse(item.info)
@@ -75,17 +75,16 @@ export default class Test extends React.Component {
 	}
 	//中长期交易交易-公告信息列表
 	getNoticeList = () => {
-		let params = `?rowNumber=0&pageSize=100`
+		let params = `?rowNumber=0&pageSize=100&startTime=${this.state.year}-01&stopTime=${this.state.year}-31`
 		api.getNoticeList(params).then(res => {
 			this.setState({
 				noticeList:res.data.rows
 			})
 		})
-		console.log(this.state.noticeList)
 	}
 	//中长期交易交易-结果信息列表
   getResultList = () => {
-		let params = `?rowNumber=0&pageSize=100`
+		let params = `?rowNumber=0&pageSize=100&jiaoYiShiJian=${this.state.year}`
 		api.getResultList(params).then(res => {
 			this.setState({
 				resultList:res.data.rows
@@ -94,7 +93,7 @@ export default class Test extends React.Component {
 	}
 	//日前交易市场备用信息
 	getBackupList = () => {
-		let params = `?rowNumber=0&pageSize=100`
+		let params = `?rowNumber=0&pageSize=100&riQi=${this.state.year}`
 		api.GetBackupList(params).then(res => {
 			this.setState({
 				backupList:res.data.rows
@@ -103,7 +102,7 @@ export default class Test extends React.Component {
 	}
 	//日前交易市场输变电检修信息
 	getSubstationList = () => {
-		let params = `?rowNumber=0&pageSize=100`
+		let params = `?rowNumber=0&pageSize=100&riQi=${this.state.year}`
 		api.GetSubstationList(params).then(res => {
 			this.setState({
 				substationList:res.data.rows
@@ -123,6 +122,8 @@ export default class Test extends React.Component {
 		this.setState({
 			year: this.state.fullYear + '-' + this.state.month,
 			open: false
+		},()=>{
+			this.componentWillMount()
 		})
 	}
 	onChange = (value) => {

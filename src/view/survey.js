@@ -10,7 +10,8 @@ class Survey extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      year: 2019,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1 ,
       contractNum: 0,
       cusCount: 0,
       earnings: 0,
@@ -31,7 +32,7 @@ class Survey extends React.Component {
   //售电情况总览
   getTitleData = () => {
     //const that = this
-    let params = { "electricQuantity": 48178, "cusCount": 12, "earnings": 0.01, "year": 2019, "contractNum": 5 }
+    let params = { "electricQuantity": 48178, "cusCount": 12, "earnings": 0.01, "year": this.state.year, "contractNum": 5 }
     api.GetTabControlData(params).then(res => {
       this.setState({
         contractNum: res.contractNum,
@@ -213,7 +214,7 @@ class Survey extends React.Component {
   }
 
   getDataChart3 = () => {
-    let params = `?rowNumber=0&pageSize=1000&year=2019`
+    let params = `?rowNumber=0&pageSize=1000&year=${this.state.year}`
     let data = {
       data1: [],
       data2: [],
@@ -439,6 +440,10 @@ class Survey extends React.Component {
   }
 
   getDataChart4 = () => {
+    let params = `?tradeDate=${this.state.year}-${this.state.month}`
+    api.getGoodsTradeResultStataByYearMonth(params).then(res => {
+
+    })
     this.paintingChart4()
   }
   paintingChart4 = () => {
@@ -469,7 +474,7 @@ class Survey extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['申报电量(万千瓦时)', '实时电量(万千瓦时)'],
+        data: ['日前电量(万千瓦时)', '实时电量(万千瓦时)'],
         itemHeight: 8,
         itemWidth: 20,
         itemStyle: {},
@@ -534,7 +539,7 @@ class Survey extends React.Component {
       ],
       series: [
         {
-          name: '申报电量(万千瓦时)',
+          name: '日前电量(万千瓦时)',
           type: 'bar',
           data: data.data2,
           barWidth: 9,
@@ -599,7 +604,7 @@ class Survey extends React.Component {
       },
       calculable: true,
       legend: {
-        data: ['日前均价', '实时均价'],
+        data: ['日前电价', '实时电价'],
         itemHeight:8,
         itemWidth: 20,
         formatter: function (name) {
@@ -664,7 +669,7 @@ class Survey extends React.Component {
       ],
       series: [
         {
-          name: '日前均价',
+          name: '日前电价',
           type: 'line',
           data: data.data2,
           barGap: 0,
@@ -679,7 +684,7 @@ class Survey extends React.Component {
           }
         },
         {
-          name: '实时均价',
+          name: '实时电价',
           type: 'line',
           symbolSize:8,
           data: data.data1,
@@ -715,7 +720,7 @@ class Survey extends React.Component {
         <div style={{ height: '10px', color: '#f0f1f3' }}></div>
         <div className="charts-map">
           <div className="title" style={{ borderBottom: '1px solid #eeeeee' }}>
-            <img src={require('../assets/img/img020.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（2019年）
+            <img src={require('../assets/img/img020.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>合同数量（{this.state.year}年）
             {/* <i className="iconfont iconhetong"></i> */}
           </div>
           <div className="chear-view">
@@ -730,7 +735,7 @@ class Survey extends React.Component {
           <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
             {/* <i className="iconfont iconjiage"></i> */}
             <img src={require('../assets/img/img021.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
-            中长期合同收益（2019年）
+            中长期合同收益（{this.state.year}年）
           </div>
           <div className="chear-view">
             <div id="myChart3" style={{ height: '230px' }}></div>
@@ -741,7 +746,7 @@ class Survey extends React.Component {
           <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
             {/* <i className="iconfont icondianliang"></i> */}
             <img src={require('../assets/img/img022.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
-            现货电量（2019年11月）
+            现货电量（{this.state.year}年{this.state.month}月）
           </div>
           <div className="chear-view" style={{ paddingBottom: '10px' }}>
             <div id="myChart4" style={{ height: '230px' }}></div>
@@ -752,7 +757,7 @@ class Survey extends React.Component {
           <div className="title" style={{ borderBottom: '1px solid #eeeeee', marginBottom: '10px' }}>
             {/* <i className="iconfont iconshouyi"></i> */}
             <img src={require('../assets/img/img023.png')} style={{width:'17px',display:'inline-block',verticalAlign:'middle',margin:'-3px 3px 0 0'}} alt=""/>
-            现货价格（2019年）
+            现货价格（{this.state.year}年）
           </div>
           <div className="chear-view">
             <div id="myChart5" style={{ height: '230px' }}></div>

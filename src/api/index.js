@@ -395,6 +395,10 @@ const api = {
   //结果信息详情
   getResultById(params){
     return request.get('/admin/market/trade/result/getResultById' + params)
+  },
+  //售电图标数据
+  getGoodsTradeResultStataByYearMonth(params){
+    return request.get('/trade/goods/result/getGoodsTradeResultStataByYearMonth' + params)
   }
 }
 
