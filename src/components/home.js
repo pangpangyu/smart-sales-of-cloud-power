@@ -96,7 +96,7 @@ class Home extends React.Component{
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
         <div style={{height:'50px',overflow:'hidden'}}>
-          { this.state.newList &&  this.state.newList.length &&
+          { this.state.newList &&  this.state.newList.length > 0 &&
             <div className="new-abstract">
               <i className="iconfont iconxiaoxi"></i>
               <div className="new-abstract">

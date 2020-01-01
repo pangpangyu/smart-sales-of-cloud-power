@@ -10,6 +10,11 @@ request.defaults.crossDomain = true
 var loading = 1
 request.interceptors.request.use(
   config => {
+    if(window.sessionStorage.getItem('token')){
+      config.headers['token'] = window.sessionStorage.getItem('token')
+    }else{
+      config.headers['token'] = ''
+    }
     let txt = '正在加载'
     if(config.url === 'nuts/file/upload'){
       txt = '正在上传'

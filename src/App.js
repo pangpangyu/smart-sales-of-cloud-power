@@ -34,6 +34,7 @@ class App extends React.Component {
       let info2=JSON.stringify(systemUser)
       window.sessionStorage.setItem('userInfo',info)
       window.sessionStorage.setItem('systemUser',info2)
+      window.sessionStorage.setItem('token','4680269fd3b5593ce11fbf08d18bad3128633ee5-account=appusr')
     }else{
       let companyName = getDataQuery('companyName') || '亦云信息'
       let token = getDataQuery('token') || ''
@@ -46,6 +47,7 @@ class App extends React.Component {
         api.login(params).then(res => {
           if(res.status === 0){
             setCookies('PLAY_SESSION', res.data.token)
+            window.sessionStorage.setItem('token',res.data.token)
             let userInfo = {
               "positionId": res.data.positionId || 0,//0,
               "accountName": res.data.accountName || "",//"APP测试",
