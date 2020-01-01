@@ -72,7 +72,7 @@ export default class Todolist extends React.Component {
 					history: res.data.history
 				}, () => {
 					let arr = res.data.history
-					sessionStorage.setItem('history', arr)
+					sessionStorage.setItem('history', JSON.stringify(arr))
 				})
 			} else {
 				api.getAuditMeta(params).then(res => {

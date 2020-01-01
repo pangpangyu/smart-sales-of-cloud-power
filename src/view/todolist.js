@@ -11,7 +11,7 @@ export default class Todolist extends React.Component {
 		super(props);
 		this.state = {
 			pageIndex: 0,
-			pageSize:10,
+			pageSize: 10,
 			total: 0,
 			dataList: [],
 			noData: false
@@ -23,11 +23,21 @@ export default class Todolist extends React.Component {
 
 	getDataList = () => {
 		const that = this
-		let params = `?rowNumber=${that.state.pageIndex*that.state.pageSize}&pageSize=${that.state.pageSize}`
+		// let params = `?rowNumber=${that.state.pageIndex * that.state.pageSize}&pageSize=${that.state.pageSize}`
+		let params = {
+			'rowNumber': that.state.pageIndex * that.state.pageSize,
+			'pageSize': that.state.pageSize,
+			"orders": [
+				{
+					"order": "down",
+					"name": "taskCreateTime"
+				}
+			],
+		}
 		api.GetScheduleList(params).then(res => {
 			if (res.status === 0) {
 				that.setState({
-					dataList: [...this.state.dataList,...res.data.rows],
+					dataList: [...this.state.dataList, ...res.data.rows],
 					total: res.data.rowCount,
 					noData: res.data.rowCount === 0 ? true : false
 				})
@@ -40,12 +50,22 @@ export default class Todolist extends React.Component {
 		let pageIndex = that.state.pageIndex + 1
 		return new Promise((resolve, reject) => {
 			if (pageIndex * that.state.pageSize < that.state.total) {
-				let params = `?rowNumber=${pageIndex*that.state.pageSize}&pageSize=${that.state.pageSize}`
+				// let params = `?rowNumber=${pageIndex*that.state.pageSize}&pageSize=${that.state.pageSize}`
+				let params = {
+					'rowNumber': pageIndex * that.state.pageSize,
+					'pageSize': that.state.pageSize,
+					"orders": [
+						{
+							"order": "down",
+							"name": "taskCreateTime"
+						}
+					],
+				}
 				api.GetScheduleList(params).then(res => {
 					if (res.status === 0) {
 						that.setState({
-							pageIndex:pageIndex,
-							dataList: [...this.state.dataList,...res.data.rows],
+							pageIndex: pageIndex,
+							dataList: [...this.state.dataList, ...res.data.rows],
 							total: res.data.rowCount,
 							noData: res.data.rowCount === 0 ? true : false
 						})

@@ -40,7 +40,7 @@ const api = {
   },
   //待办事项列表
   GetScheduleList(params) {
-    return request.get('nuts/crud/processTask' + params)
+    return request.post('nuts/crud/processTask' , params)
   },
   //售电情况总览
   GetTabControlData(params) {
