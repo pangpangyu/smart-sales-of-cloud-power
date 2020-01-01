@@ -10,9 +10,10 @@ import { PickerView } from 'antd-mobile';
 export default class BsinessAnalysis extends React.Component {
   constructor(props) {
     super(props)
+    let year = new Date().getFullYear()
     this.state = {
-      year: '2019',
-      value:['2019'],
+      year: year,
+      value:[year],
       openPickerView:false,
       yearList: [
         {label:'2010',value:'2010'},
