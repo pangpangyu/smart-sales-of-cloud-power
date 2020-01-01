@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Toast } from 'antd-mobile';
+import { getDataQuery } from './index';
 var request = axios.create({})
 
 request.defaults.baseURL = process.env.NODE_ENV === "production" ? "/api" : "/"
@@ -11,9 +12,9 @@ var loading = 1
 request.interceptors.request.use(
   config => {
     if(window.sessionStorage.getItem('token')){
-      config.headers['token'] = window.sessionStorage.getItem('token')
+      config.headers['token'] =  window.sessionStorage.getItem('token')
     }else{
-      config.headers['token'] = ''
+      config.headers['token'] = getDataQuery('token') || ''
     }
     let txt = '正在加载'
     if(config.url === 'nuts/file/upload'){
