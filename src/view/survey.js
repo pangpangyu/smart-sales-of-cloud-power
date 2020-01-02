@@ -296,7 +296,6 @@ class Survey extends React.Component {
   }
 
   paintingChart3 = (data) => {
-    console.log(data)
     let option = {
       color: ['#288dfd', '#f9a30c'],
       legend: {
@@ -440,26 +439,55 @@ class Survey extends React.Component {
   }
 
   getDataChart4 = () => {
-    let params = `?tradeDate=${this.state.year}-${this.state.month}`
-    api.getGoodsTradeResultStataByYearMonth(params).then(res => {
-
-    })
-    this.paintingChart4()
-  }
-  paintingChart4 = () => {
-    var myChart = echarts.init(document.getElementById('myChart4'));
-    let data = {
+    // let params = `?tradeDate=${this.state.year}-${this.state.month < 10 ? '0' + this.state.month : this.state.month}`
+    let data4 = {
       "data1": [],
       "data2": [],
-      "delta": [],
       "names": []
     }
-    for (let i = 0; i < 31; i++) {
-      data.data1.push(parseInt(Math.random() * 100))
-      data.data2.push(parseInt(Math.random() * 200))
-      data.delta.push(i)
-      data.names.push(i + 1 + '日')
+    let data5 = {
+      "data1": [],
+      "data2": [],
+      "names": []
     }
+    api.getGoodsTradeResultStataByYearMonth('').then(res => {
+      let data = res.data
+      let t = new Date()
+      let day = new Date(t.getFullYear(),t.getMonth(),0).getDate()
+      for(let i=0;i<day;i++){
+        let arr = res.data.filter(v => parseInt(v.tradeDate) === (i+1))
+        if(arr.length > 0){
+          data4.data1[i] = arr[0].prevSumPower
+          data4.data2[i] = arr[0].realSumPower
+          data5.data1[i] = arr[0].prevSumPrice
+          data5.data2[i] = arr[0].realSumPrice
+        }else{
+          data4.data1[i] = 0
+          data4.data2[i] = 0
+          data5.data1[i] = '-'
+          data5.data2[i] = '-'
+        }
+        data4.names.push(i + 1 + '日')
+        data5.names.push(i + 1 + '日')
+      }
+      this.paintingChart4(data4)
+      this.paintingChart5(data5)
+    })
+  }
+  paintingChart4 = (data) => {
+    var myChart = echarts.init(document.getElementById('myChart4'));
+    // let data = {
+    //   "data1": [],
+    //   "data2": [],
+    //   // "delta": [],
+    //   "names": []
+    // }
+    // for (let i = 0; i < 31; i++) {
+    //   data.data1.push(parseInt(Math.random() * 100))
+    //   data.data2.push(parseInt(Math.random() * 200))
+    //   // data.delta.push(i)
+    //   data.names.push(i + 1 + '日')
+    // }
     let option = {
       color: ['#288dfd', '#f9a30c'],
       tooltip: {
@@ -574,22 +602,23 @@ class Survey extends React.Component {
   }
 
   getDataChart5 = () => {
-    this.paintingChart5()
+    //this.paintingChart5()
   }
-  paintingChart5 = () => {
+  paintingChart5 = (data) => {
+    console.log(data)
     var myChart = echarts.init(document.getElementById('myChart5'));
-    let data = {
-      "data1": [],
-      "data2": [],
-      "delta": [],
-      "names": []
-    }
-    for (let i = 0; i < 31; i++) {
-      data.data1.push(parseInt(Math.random() * 100))
-      data.data2.push(parseInt(Math.random() * 200))
-      data.delta.push(i)
-      data.names.push(i + 1 + '日')
-    }
+    // let data = {
+    //   "data1": [],
+    //   "data2": [],
+    //   "delta": [],
+    //   "names": []
+    // }
+    // for (let i = 0; i < 31; i++) {
+    //   data.data1.push(parseInt(Math.random() * 100))
+    //   data.data2.push(parseInt(Math.random() * 200))
+    //   data.delta.push(i)
+    //   data.names.push(i + 1 + '日')
+    // }
     let option = {
       color: ['#288dfd', '#f9a30c'],
       tooltip: {
@@ -616,7 +645,7 @@ class Survey extends React.Component {
         top: '15%',
         left: '1%',
         right: '3%',
-        bottom: '3%',
+        bottom: '8%',
         containLabel: true
       },
       xAxis: [
@@ -681,6 +710,11 @@ class Survey extends React.Component {
             emphasis: {
               barBorderRadius: 10
             }
+          },
+          formatter:function(params){
+            if(params.value  !== 0){
+              return params.value 
+            }
           }
         },
         {
@@ -688,6 +722,13 @@ class Survey extends React.Component {
           type: 'line',
           symbolSize:8,
           data: data.data1,
+          label:{
+            formatter:function(params){
+              if(params.value  !== 0){
+                return params.value 
+              }
+            }
+          }
         }
       ]
     };
