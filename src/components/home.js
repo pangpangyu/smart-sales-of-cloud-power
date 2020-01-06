@@ -35,6 +35,8 @@ class Home extends React.Component{
   componentDidMount(){
     const that = this
     document.documentElement.scrollTop = document.body.scrollTop =0;
+    window.sessionStorage.setItem('active1','1')
+		window.sessionStorage.setItem('active2','1')
     if(process.env.NODE_ENV === 'development'){
       setCookies('PLAY_SESSION', '4680269fd3b5593ce11fbf08d18bad3128633ee5-account=appusr')
       let userInfo = {

@@ -98,7 +98,7 @@ export default class Test extends React.Component {
 						<div className="list">
 							<ul>
 								<li><p><span>备用类型：</span>{item.beiYongLeiXing}</p></li>
-								<li><p><span>预测：</span>{item.yuCe}</p></li>
+								<li><p><span>预测：</span>{item.yuCe}MW</p></li>
 								<li><p><span>日期：</span>{item.riQi}</p></li>
 							</ul>
 						</div>
@@ -137,8 +137,8 @@ export default class Test extends React.Component {
 						<h3>{item.mingCheng}</h3>
 						<div className="list">
 							<ul>
-								<li><p><span>正向极限：</span>{item.zhengXiangJiXian}</p></li>
-								<li><p><span>负向极限：</span>{item.fanXiangJiXian}</p></li>
+								<li><p><span>正向极限：</span>{item.zhengXiangJiXian}MW</p></li>
+								<li><p><span>负向极限：</span>{item.fanXiangJiXian}MW</p></li>
 								<li><p><span>周期：</span>{item.zhouQi}</p></li>
 							</ul>
 						</div>

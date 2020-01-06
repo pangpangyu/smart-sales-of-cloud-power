@@ -10,12 +10,15 @@ import api from '../api'
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
+		let time = new Date()
+		let year = time.getFullYear()
+		let m = (time.getMonth() + 1) < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1
 		this.state = {
 			open: false,
-			time: new Date(),
+			time: time,
 			month: '',
-			fullYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
-			year: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+			fullYear: year + '-' + m,
+			year: year + '-' + m,
 			active: '1',
 			type: '1',
 			tabs: [
@@ -127,11 +130,14 @@ export default class Test extends React.Component {
 		})
 	}
 	onChange = (value) => {
-		let fullYear = new Date(value).getFullYear()
-		let month = new Date(value).getMonth() + 1
+		let time = new Date(value)
+		let fullYear = time.getFullYear()
+		let month = (time.getMonth() + 1) < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1
+		console.log(value)
 		this.setState({
 			month: month,
 			fullYear: fullYear,
+			year: fullYear + '-' + month,
 			time: value
 		});
 	};
