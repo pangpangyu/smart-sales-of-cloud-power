@@ -59,18 +59,18 @@ class Survey extends React.Component {
         return totle
       })
       let data = [
-        { value: res.data['1m'], name: '1月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['1m'] / totle * 100)) + '%') },
-        { value: res.data['2m'], name: '2月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['2m'] / totle * 100)) + '%') },
-        { value: res.data['3m'], name: '3月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['3m'] / totle * 100)) + '%') },
-        { value: res.data['4m'], name: '4月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['4m'] / totle * 100)) + '%') },
-        { value: res.data['5m'], name: '5月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['5m'] / totle * 100)) + '%') },
-        { value: res.data['6m'], name: '6月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['6m'] / totle * 100)) + '%') },
-        { value: res.data['7m'], name: '7月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['7m'] / totle * 100)) + '%') },
-        { value: res.data['8m'], name: '8月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['8m'] / totle * 100)) + '%') },
-        { value: res.data['9m'], name: '9月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['9m'] / totle * 100)) + '%') },
-        { value: res.data['10m'], name: '10月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['10m'] / totle * 100)) + '%') },
-        { value: res.data['11m'], name: '11月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['11m'] / totle * 100)) + '%') },
-        { value: res.data['12m'], name: '12月', percentage: totle === 0 ? '0%' : ((parseInt(res.data['12m'] / totle * 100)) + '%') }
+        { value: res.data['1m'], name: '1月', percentage: totle === 0 ? '0%' : (((res.data['1m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['2m'], name: '2月', percentage: totle === 0 ? '0%' : (((res.data['2m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['3m'], name: '3月', percentage: totle === 0 ? '0%' : (((res.data['3m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['4m'], name: '4月', percentage: totle === 0 ? '0%' : (((res.data['4m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['5m'], name: '5月', percentage: totle === 0 ? '0%' : (((res.data['5m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['6m'], name: '6月', percentage: totle === 0 ? '0%' : (((res.data['6m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['7m'], name: '7月', percentage: totle === 0 ? '0%' : (((res.data['7m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['8m'], name: '8月', percentage: totle === 0 ? '0%' : (((res.data['8m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['9m'], name: '9月', percentage: totle === 0 ? '0%' : (((res.data['9m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['10m'], name: '10月', percentage: totle === 0 ? '0%' : (((res.data['10m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['11m'], name: '11月', percentage: totle === 0 ? '0%' : (((res.data['11m'] / totle * 100).toFixed(2)) + '%') },
+        { value: res.data['12m'], name: '12月', percentage: totle === 0 ? '0%' : (((res.data['12m'] / totle * 100).toFixed(2)) + '%') }
       ]
       this.paintingChart1(data)
     })
@@ -214,82 +214,28 @@ class Survey extends React.Component {
   }
 
   getDataChart3 = () => {
-    let params = `?rowNumber=0&pageSize=1000&year=${this.state.year}`
+    // let params = `?rowNumber=0&pageSize=1000&year=${this.state.year}`
+    let params = `?year=${new Date().getFullYear()}`
     let data = {
       data1: [],
       data2: [],
       dataX: []
     }
     let yearMon = ''
-    let arrPromise = []
-    new Promise((resolve, reject) => {
-      arrPromise.push(api.contractPower(params))
-    })
-    for (let i = 1; i < 13; i++) {
-      yearMon = `2019-` + i
-      let params1 = {
-        rowNumber: 0,
-        pageSize: 1000,
-        yearMon1: 1,
-        yearMon: yearMon
-      }
-      new Promise((resolve, reject) => {
-        arrPromise.push(api.contractRevenue(params1))
-      })
-    }
+    let arrPromise = [
+      api.getOfficialBillByYear(params),
+      api.getYearTreadeByYear(params)
+    ]
     Promise.all(arrPromise).then(res => {
-      if (res.length === 13) {
-        res.map((item, index) => {
-          if (index === 0) {
-            let dataArr = item.data.rows
-            let mon1 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon1;
-            }, 0);
-            let mon2 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon3 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon4 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon5 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon6 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon7 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon8 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon9 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon10 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon11 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            let mon12 = dataArr.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.mon2;
-            }, 0);
-            data.data1 = [mon1, mon2, mon3, mon4, mon5, mon6, mon7, mon8, mon9, mon10, mon11, mon12]
-          } else {
-            let sum = item.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
-              return total + currentValue.totalFee;
-            }, 0);
-            data.data2.push(sum)
-          }
-        })
-      }
-    }).then(res => {
-      for (let i = 0; i < 12; i++) {
-        data.dataX.push(i + 1 + '月')
+      let data0 = res[0].data
+      let data1 = res[1].data
+      let time = new Date().getFullYear() + '-'
+      for(let i=0;i<12;i++){
+        let t = (i + 1) < 10 ? '0' + (i + 1) : (i + 1)
+        let key = time + t
+        data.data2[i] = data0[key] || '-'
+        data.data1[i] = data1[key] || '-'
+        data.dataX.push(i + '月')
       }
       this.paintingChart3(data)
     })
@@ -450,6 +396,35 @@ class Survey extends React.Component {
       "data2": [],
       "names": []
     }
+    let m = new Date().getMonth()+1
+    let params = {
+      time: new Date().getTime(),
+      rowNumber:0,
+      pageSize:31,
+      tradeMonth:new Date().getFullYear() + '-' + ((m < 10) ? '0'+m : m)
+    }
+    api.getsearchData(params).then(res => {
+      let data = res.data.rows
+      //data.length
+      for(let i=0;i<31;i++){
+        if(i < data.length){
+          data4.data2[i] = data[i].prevDayPower
+          data4.data1[i] = data[i].realPower
+          data5.data1[i] = data[i].prevDayPrice
+          data5.data2[i] = data[i].realPrice
+        }else{
+          data4.data2[i] = '-'
+          data4.data1[i] = '-'
+          data5.data1[i] = '-'
+          data5.data2[i] = '-'
+        }
+        data4.names.push(i + 1 + '日')
+        data5.names.push(i + 1 + '日')
+      }
+      this.paintingChart4(data4)
+      this.paintingChart5(data5)
+    })
+    /***
     api.getGoodsTradeResultStataByYearMonth('').then(res => {
       let data = res.data
       let t = new Date()
@@ -457,8 +432,8 @@ class Survey extends React.Component {
       for(let i=0;i<day;i++){
         let arr = res.data.filter(v => parseInt(v.tradeDate) === (i+1))
         if(arr.length > 0){
-          data4.data1[i] = arr[0].prevSumPower
-          data4.data2[i] = arr[0].realSumPower
+          data4.data2[i] = arr[0].prevSumPower
+          data4.data1[i] = arr[0].realSumPower
           data5.data1[i] = arr[0].prevSumPrice
           data5.data2[i] = arr[0].realSumPrice
         }else{
@@ -473,21 +448,10 @@ class Survey extends React.Component {
       this.paintingChart4(data4)
       this.paintingChart5(data5)
     })
+    ***/
   }
   paintingChart4 = (data) => {
     var myChart = echarts.init(document.getElementById('myChart4'));
-    // let data = {
-    //   "data1": [],
-    //   "data2": [],
-    //   // "delta": [],
-    //   "names": []
-    // }
-    // for (let i = 0; i < 31; i++) {
-    //   data.data1.push(parseInt(Math.random() * 100))
-    //   data.data2.push(parseInt(Math.random() * 200))
-    //   // data.delta.push(i)
-    //   data.names.push(i + 1 + '日')
-    // }
     let option = {
       color: ['#288dfd', '#f9a30c'],
       tooltip: {
@@ -498,6 +462,10 @@ class Survey extends React.Component {
             show: true,
             color: '#000'
           }
+        },
+        formatter:function (params){
+          let html = '<p>日前电量:'+params[0].value+'</p><p>实时电量:'+params[1].value+'</p>'
+          return html
         }
       },
       calculable: true,
@@ -605,7 +573,6 @@ class Survey extends React.Component {
     //this.paintingChart5()
   }
   paintingChart5 = (data) => {
-    console.log(data)
     var myChart = echarts.init(document.getElementById('myChart5'));
     // let data = {
     //   "data1": [],

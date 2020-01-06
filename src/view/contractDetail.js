@@ -20,6 +20,7 @@ class ContractDetail extends React.Component {
 			botBtnShow: true,
 			addStatus: false,
 			docType: "doc",//文档类型 
+			hetongId:0,
 		}
 	}
 
@@ -43,7 +44,8 @@ class ContractDetail extends React.Component {
 			if (res.status === 0) {
 				that.setState(() => {
 					return ({
-						contractDetail: res.data
+						contractDetail: res.data,
+						hetongId: res.data.powerUserContract.contract.id
 					})
 				})
 			} else {
@@ -86,11 +88,13 @@ class ContractDetail extends React.Component {
 		const that = this
 		if (that.state.docType === "doc") {
 			console.log("isDoc")
-			let url = `${baseUrl}/nuts/crud/contract/wordTransForm?contractId=${this.state.contractId}`
+			let url = `${baseUrl}/nuts/crud/contract/wordTransForm?contractId=${this.state.hetongId}`
+			console.log(url)
 			window.open(url)
 		} else if (that.state.docType === "pdf") {//pdf
 			console.log("isPdf")
-			let url = `${baseUrl}/nuts/crud/contract/PdfTransform?contractId=${this.state.contractId}`
+			let url = `${baseUrl}/nuts/crud/contract/PdfTransform?contractId=${this.state.hetongId}`
+			console.log(url)
 			window.open(url)
 		}
 		//window.open("http://61.146.164.91:8000/nuts/crud/contract/wordTransForm?contractId=" += 300)

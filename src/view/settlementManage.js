@@ -1,9 +1,6 @@
 import React from 'react'
 import Header from '../components/header'
 import NoData from '../components/noData'
-import WholesaleMarket from './wholesaleMarket'
-import RetailMarket from './retailMarket'
-import SettlementElectricity from './settlementElectricity'
 import Search from '../components/search';
 import { DatePickerView, Button } from 'antd-mobile';
 import enUs from 'antd-mobile/lib/date-picker-view/locale/en_US';
@@ -12,6 +9,9 @@ import api from '../api/index';
 export default class Test extends React.Component {
     constructor(props) {
         super(props);
+        let time = new Date()
+        let year = time.getFullYear()
+        let month = (time.getMonth()+1) < 10 ? '0' + (time.getMonth()+1) : (time.getMonth()+1)
         this.state = {
             tabs: [
                 { id: '1', title: '批发市场' },
@@ -22,10 +22,10 @@ export default class Test extends React.Component {
             WholesaleMarketList: [],
             WholesaleMarketListTotal: {},
             WholesaleMarketOpen: false,
-            WholesaleMarketTime: new Date(),
-            WholesaleMarketMonth: (new Date().getMonth() + 1),
-            WholesaleMarketFullYear: new Date().getFullYear(),
-            WholesaleMarketYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+            WholesaleMarketTime: time,
+            WholesaleMarketMonth: month,
+            WholesaleMarketFullYear: time,
+            WholesaleMarketYear: year + '-' + month,
             WholesaleMarketNodata:false,
             retailMarketList: [],
             retailMarketOrdinaryList: [],//结算管理零售市场普通列表
@@ -33,10 +33,10 @@ export default class Test extends React.Component {
             retailMarketAkeyList: [],//结算管理零售市场重点列表
             retailMarketAkeyListSum: {},//结算管理零售市场重点列表合计
             retailMarketOpen: false,
-            retailMarketTime: new Date(),
-            retailMarketMonth: (new Date().getMonth() + 1),
-            retailMarketFullYear: new Date().getFullYear(),
-            retailMarketYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+            retailMarketTime: time,
+            retailMarketMonth: month,
+            retailMarketFullYear: time,
+            retailMarketYear: year + '-' + month,
             settlementElectricityList: [
                 { id: 1, title: '国网山西电力公司', n1: '1000', n2: '20', n3: '1000', icon: 'iconqiyejibenxinxi' },
                 { id: 2, title: '山西地方电力有限公司', n1: '1000', n2: '20', n3: '1000', icon: 'iconqiyejibenxinxi' },
@@ -44,10 +44,10 @@ export default class Test extends React.Component {
             ],
             settlementElectricityListSum:{},
             settlementElectricityOpen: false,
-            settlementElectricityTime: new Date(),
-            settlementElectricityMonth: (new Date().getMonth() + 1),
-            settlementElectricityFullYear: new Date().getFullYear(),
-            settlementElectricityYear: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
+            settlementElectricityTime: time,
+            settlementElectricityMonth: month,
+            settlementElectricityFullYear: time,
+            settlementElectricityYear: year + '-' + month,
             retailMarketListIsNoData: false,
             settlementElectricityIsNoData: false,
             retailMarketCxList:[]
@@ -154,8 +154,10 @@ export default class Test extends React.Component {
     }
     //批发市场获取改变后的日期
     wholesaleMarketOnChange = (value) => {
-        let fullYear = new Date(value).getFullYear()
-        let month = new Date(value).getMonth() + 1
+        let time = new Date(value)
+        let m = time.getMonth() + 1
+        let fullYear = time.getFullYear()
+        let month = m < 10 ? '0' + m : m
         this.setState({
             WholesaleMarketMonth: month,
             WholesaleMarketFullYear: fullYear,
@@ -327,8 +329,10 @@ export default class Test extends React.Component {
     }
     //零售市场获取修改后日期
     retailMarketOnChange = (value) => {
-        let fullYear = new Date(value).getFullYear()
-        let month = new Date(value).getMonth() + 1
+        let time = new Date(value)
+        let m = new Date(value).getMonth() + 1
+        let fullYear = time.getFullYear()
+        let month = m < 10 ? '0' + m : m
         this.setState({
             retailMarketMonth: month,
             retailMarketFullYear: fullYear,
@@ -338,7 +342,7 @@ export default class Test extends React.Component {
 
     //结算管理售电公司数据
     getSettlementElectricityData = () => {
-        const that = this
+        console.log(this.state.settlementElectricityYear)
         let params = {
             rowNumber: 0,
             pageSize: 10,
@@ -419,7 +423,7 @@ export default class Test extends React.Component {
     }
     settlementElectricityOnChange = (value) => {
         let fullYear = new Date(value).getFullYear()
-        let month = new Date(value).getMonth() + 1
+        let month = (new Date(value).getMonth() + 1) < 10 ? ('0'+(new Date(value).getMonth() + 1)) : (new Date(value).getMonth() + 1)
         this.setState({
             settlementElectricityMonth: month,
             settlementElectricityFullYear: fullYear,

@@ -399,6 +399,18 @@ const api = {
   //售电图标数据
   getGoodsTradeResultStataByYearMonth(params){
     return request.get('/trade/goods/result/getGoodsTradeResultStataByYearMonth' + params)
+  },
+  //售电概况最底下两个图表数据
+  getsearchData(params){
+    return request.post('/trade/goods/result/searchData' , params)
+  },
+  //售电概况合同收益
+  getOfficialBillByYear(params){
+    return request.get('/admin/settlement/getOfficialBillByYear' + params)
+  },
+  //售电概况合同电量
+  getYearTreadeByYear(params){
+    return request.get('/trade/match/getYearTreadeByYear' + params)
   }
 }
 
