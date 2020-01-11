@@ -209,10 +209,10 @@ export default class Todolist extends React.Component {
 							})
 							}
 						</div>
-						{ this.state.data.length > 0 && <div className="examine-btn">
+						{/* { this.state.data.length > 0 && <div className="examine-btn">
 							<button onClick={this.ProcessTaskAdopt}>通过</button>
 							<button onClick={this.ProcessTaskUnadopt}>不通过</button>
-						</div> }
+						</div> } */}
 					</div>
 					<div className="f_btn">
 						<Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`}>流程轨迹</Link>
