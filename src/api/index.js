@@ -42,6 +42,10 @@ const api = {
   GetScheduleList(params) {
     return request.post('nuts/crud/processTask' , params)
   },
+  //待办事项审核通过
+  ProcessTaskAdopt(flag,params) {
+    return request.post('nuts/crud/audit/ProcessTask?_form.pass=' + flag , params)
+  },
   //售电情况总览
   GetTabControlData(params) {
     return request.post('admin/getTabControlData', params)
