@@ -2,7 +2,10 @@ import React from 'react'
 import Header from '../components/header';
 import api from '../api';
 import { Link } from 'react-router-dom';
-import { Toast } from 'antd-mobile';
+import { Toast,Modal } from 'antd-mobile';
+
+const alert = Modal.alert;
+const prompt = Modal.prompt;
 
 export default class Todolist extends React.Component {
 	constructor(props) {
@@ -19,7 +22,8 @@ export default class Todolist extends React.Component {
 			diagram: '',
 			history: [],
 			yuanyin:'',
-			data:[]
+			data:[],
+			tId:0
 		}
 	}
 
@@ -58,15 +62,7 @@ export default class Todolist extends React.Component {
 		api.getThingDetail(url, params).then(res => {
 			if (res.status === 0) {
 				this.setState({
-					// title: res.data.form.fields[2][0].value,
-					// centent: res.data.form.fields[4][0].value,
-					// diagram: res.data.diagram.url,
-					// history: res.data.history
-					// title: res.data.form.fields[3][0].value,
 					title: res.data.form.title === '审批' ? '信息发布审批' : res.data.form.title,
-					// centent: res.data.form.fields[8][0].value,
-					// centent2: res.data.form.fields[4][0].value,
-					// yuanyin: res.data.form.fields[4][0].value,
 					data: res.data.form.fields,
 					diagram: res.data.diagram.url,
 					history: res.data.history
@@ -77,11 +73,7 @@ export default class Todolist extends React.Component {
 			} else {
 				api.getAuditMeta(params).then(res => {
 					this.setState({
-						// title: res.data.form.fields[3][0].value,
-						title: res.data.form.title === '审批' ? '信息发布审批' : res.data.form.title,//res.data.form.title,
-						// centent: res.data.form.fields[8][0].value,
-						// centent2: res.data.form.fields[4][0].value,
-						// yuanyin: res.data.form.fields[4][0].value,
+						title: res.data.form.title === '审批' ? '信息发布审批' : res.data.form.title,
 						data: res.data.form.fields,
 						diagram: res.data.diagram.url,
 						history: res.data.history
@@ -94,34 +86,97 @@ export default class Todolist extends React.Component {
 				})
 			}
 		})
-		// if(this.state.type === 'models_business_Contract'){
-		// 	api.getBusinessContract(params).then(res => {
-		// 		this.setState({
-		// 			title:res.data.form.fields[2][0].value,
-		// 			centent:res.data.form.fields[4][0].value,
-		// 			diagram:res.data.diagram.url,
-		// 			history:res.data.history
-		// 		},()=>{
-		// 			let arr = res.data.history
-		// 			sessionStorage.setItem('history',arr)
-		// 		})
-		// 	})
-		// }else{
-		// 	//models_attendance_LeaveManagement
-		// 	api.getAttendanceLeaveManagemen(params).then(res => {
-		// 		this.setState({
-		// 			title:res.data.form.fields[2][0].value,
-		// 			centent:res.data.form.fields[4][0].value,
-		// 			diagram:res.data.diagram.url,
-		// 			history:res.data.history
-		// 		},()=>{
-		// 			let arr = res.data.history
-		// 			sessionStorage.setItem('history',JSON.stringify(arr))
-		// 		})
-		// 	})
-		// }
 	}
-
+	//待办审核通过
+	ProcessTaskAdopt = () => {
+		alert('待办审核','确定该待办事项审核通过?',[
+			{ text: '取消', onPress: () => console.log('cancel') },
+			{ text: '确定', onPress: () => {
+				console.log(this.state.type)
+				let params = {}
+				if(this.state.type === 'models_business_Contract'){
+					//合同审批
+					params = {
+						contractType: this.state.data[3][0].value,
+						id: this.state.data[0].value,
+						name: this.state.data[2][0].value,
+						_form: {
+							comment:"",
+							taskId:this.state.data[1].value
+						}
+					}
+				}else if(this.state.type === 'models_attendance_LeaveManagement'){
+					//请假审批
+					params = {
+						'id': this.state.data[0].value,
+						'leaveCode': this.state.data[3][0].value,
+						'leaveReason': "手机端测试",
+						'leaveType': this.state.data[4][0].value,
+						'_form': {
+							comment:'',
+							taskId:this.state.data[1].value
+						}
+					}
+				}
+				console.log(params)
+				api.ProcessTaskAdopt(true,params).then(res => {
+					if(res.status === 0){
+						Toast.info('操作成功', 2);
+						window.location.href = '/todolist'
+					}else{
+						Toast.info(res.message, 2);
+					}
+				})
+			} }
+		])
+	}
+	ProcessTaskUnadopt = () => {
+		prompt('待办审核','确定该待办事项审核不通过?',[
+			{ text: '取消', onPress: () => console.log('cancel') },
+			{ text: '确定', onPress: (value) => new Promise((resolve, reject) =>{
+				if(value !== ""){
+					let params = {}
+					if(this.state.type === 'models_business_Contract'){
+						//合同审批
+						params = {
+							contractType: this.state.data[3][0].value,
+							id: this.state.data[0].value,
+							name: this.state.data[2][0].value,
+							_form: {
+								comment:value,
+								taskId:this.state.data[1].value
+							}
+						}
+					}else if(this.state.type === 'models_attendance_LeaveManagement'){
+						//请假审批
+						params = {
+							'id': this.state.data[0].value,
+							'leaveCode': this.state.data[3][0].value,
+							'leaveReason': this.state.data[5][0].value,
+							'leaveType': this.state.data[4][0].value,
+							'_form': {
+								comment:value,
+								taskId:this.state.data[1].value
+							}
+						}
+					}
+					console.log(params)
+					api.ProcessTaskAdopt(false,params).then(res => {
+						if(res.status === 0){
+							Toast.info('操作成功', 2);
+							resolve()
+							window.location.href = '/todolist'
+						}else{
+							Toast.info(res.message, 2);
+						}
+					})
+				}else{
+					Toast.info('请输入审核不通过原因', 2);
+					reject()
+				}
+			}) }
+		])
+	}
 	render() {
 		return (
 			<div className="page_bg">
@@ -154,6 +209,10 @@ export default class Todolist extends React.Component {
 							})
 							}
 						</div>
+						{/* { this.state.data.length > 0 && <div className="examine-btn">
+							<button onClick={this.ProcessTaskAdopt}>通过</button>
+							<button onClick={this.ProcessTaskUnadopt}>不通过</button>
+						</div> } */}
 					</div>
 					<div className="f_btn">
 						<Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`}>流程轨迹</Link>
