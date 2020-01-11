@@ -80,7 +80,7 @@ export default class Test extends React.Component {
 		api.powerTracingAnnualBilateral(params).then(res => {
 			if (res.status === 0) {
 				let num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
-					return total + parseInt(currentValue.adjPower);
+					return total + parseInt(currentValue.adjokPower);
 				}, 0);
 				this.setState({
 					AnnualBilateral: num
@@ -88,26 +88,55 @@ export default class Test extends React.Component {
 			}
 		})
 	}
-	//合同装让电量
+	//合同转让电量
 	contractTransferredElectricity = () => {
-		let params = `&rowNumber=${this.state.pageIndex * this.state.pageSize}&pageSize=${this.state.pageSize}&userName=${this.state.name}&statrYearMonth=${this.state.date}&randomValue=0`
-		api.contractTransferor(params).then(res => {
-			let num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
-				return total + parseInt(currentValue.tradePower);
-			}, 0);
+		//let params = `?type=0&rowNumber=${this.state.pageIndex * this.state.pageSize}&pageSize=${this.state.pageSize}&userName=${this.state.name}&statrYearMonth=${this.state.date}&randomValue=0`
+		let params1 = `?type=0&rowNumber=${this.state.pageIndex * this.state.pageSize}&pageSize=${this.state.pageSize}&userName=${this.state.name}&statrYearMonth=${this.state.date}&randomValue=0`
+		let params2 = `?type=1&rowNumber=${this.state.pageIndex * this.state.pageSize}&pageSize=${this.state.pageSize}&userName=${this.state.name}&statrYearMonth=${this.state.date}&randomValue=0`//
+		let arr = [
+			api.contractTransferor(params1),
+			api.contractTransferor(params2)
+		]
+		Promise.all(arr).then(res => {
+			let data1 = res[0].data.rows
+			let data2 = res[1].data.rows
+			let num1 = 0
+			let num2 = 0
+			if(data1.length > 0){
+				num1 = data1.reduce(function (total, currentValue, currentIndex, arr) {
+					return total + parseInt(currentValue.tradePower);
+				}, 0);
+			}
+			if(data2.length > 0){
+				num1 = data2.reduce(function (total, currentValue, currentIndex, arr) {
+					return total + parseInt(currentValue.tradePower);
+				}, 0);
+			}
 			this.setState({
-				contractTransfer: num
+				contractTransfer: num1 - num2
 			})
 		})
+		// console.log(params)
+		// api.contractTransferor(params).then(res => {
+		// 	let num = 0
+		// 	if(res.data.rows.length > 0){
+		// 		num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
+		// 			return total + parseInt(currentValue.tradePower);
+		// 		}, 0);
+		// 	}
+		// 	this.setState({
+		// 		contractTransfer: num
+		// 	})
+		// })
 	}
 	render() {
 		return (
 			<div style={{ minHeight: '100vh', background: '#f0f1f3' }}>
 				<Header title='电量跟踪详情' back={true} search={false}></Header>
 				<div className="power_tracking_det">
-					<div className="top">
+					{/* <div className="top">
 						<h3>山西电力技术有限公司</h3>
-					</div>
+					</div> */}
 					<div className="cont">
 						<div className="contract-mes">
 							<div className="module-list">

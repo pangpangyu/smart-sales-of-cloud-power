@@ -30,11 +30,11 @@ request.interceptors.request.use(
     if(config.url === '/admin/system/checkInfoPublishStatus' || config.url === '/admin/system/updateInfoPublishStatus'){
       config.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
     }
-    if(config.url.indexOf('?') > -1){
-      config.url += '&ttt=' + new Date().getTime()
-    }else{
-      config.url += '?ttt=' + new Date().getTime()
-    }
+    // if(config.url.indexOf('?') > -1){
+    //   config.url += '&ttt=' + new Date().getTime()
+    // }else{
+    //   config.url += '?ttt=' + new Date().getTime()
+    // }
     return config
   },
   error => {

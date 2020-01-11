@@ -10,6 +10,9 @@ import NoData from '../components/noData';
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
+		let t = new Date()
+		let y = t.getFullYear()
+		let m = (t.getMonth() + 1) < 10 ? '0'+(t.getMonth() + 1) : t.getMonth() + 1
 		this.state = {
 			list: [
 				// { id: 1, title: '山西地方电力xxx1有限公司', n1: '一级预警', n2: '8000', n3: '5000', n4: '500', n5: '5' },
@@ -20,8 +23,8 @@ export default class Test extends React.Component {
 			pageIndex: 0,
 			pageSize:10,
 			noData:false,
-			currentDate:new Date().getFullYear() + '年' + (new Date().getMonth() + 1) + '月',
-			currentDate1:new Date().getFullYear() + '-' + (new Date().getMonth() + 1)
+			currentDate:y + '年' + m + '月',
+			currentDate1:y + '-' + m
 		}
 	}
 

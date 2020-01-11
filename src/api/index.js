@@ -345,7 +345,7 @@ const api = {
   },
   //电量追踪详情-合同转让转让方
   contractTransferor(params){
-    return request.get('/trade/findListDetailed?type=0'+params)
+    return request.get('/trade/findListDetailed'+params)
   },
   //电量追踪详情-合同转让受让方
   transfereeOfContractTransfer(params){

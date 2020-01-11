@@ -15,6 +15,7 @@ export default class ElectricityCompany extends React.Component {
     super(props)
     let title = '公司信息'
     let searchShow = false
+    let pl = "搜公告标题、内容、介绍"
     if (this.props.match.params.type === '1') {
       //电力用户信息
       title = '电力用户'
@@ -23,14 +24,17 @@ export default class ElectricityCompany extends React.Component {
       //发电厂信息
       title = '发电企业'
       searchShow = false
+      pl = '搜公司名'
     } else if (this.props.match.params.type === '3') {
       //合作方信息
       title = '合作方'
       searchShow = false
+      pl = '搜索客户名称'
     } else if (this.props.match.params.type === '4') {
       //售电公司信息
       title = '售电公司'
       searchShow = false
+      pl = '搜索客户名称'
     }
     this.state = {
       title: title,
@@ -59,6 +63,7 @@ export default class ElectricityCompany extends React.Component {
       electricityType:[],//用电类别集合
       electricityTypeValue:[],//用电类别选中值
       electricityTypeTxt:'请选择',//用电类别选择文字
+      pl:pl
     }
   }
 
@@ -365,7 +370,7 @@ export default class ElectricityCompany extends React.Component {
         <div className="electricityCompany-search">
           <div className="search-input">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
-              <input type="search" onChange={this.handelChange} placeholder="搜公告标题、内容、介绍" />
+              <input type="search" onChange={this.handelChange} placeholder={this.state.pl} />
             </form>
           </div>
         </div>
@@ -404,7 +409,7 @@ export default class ElectricityCompany extends React.Component {
         <div className="electricityCompany-search">
           <div className="search-input">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
-              <input type="search" placeholder="搜公告标题、内容、介绍" onChange={(e) => this.getSearchData(e.target.value)} />
+              <input type="search" placeholder={this.state.pl} onChange={(e) => this.getSearchData(e.target.value)} />
             </form>
           </div>
         </div>
@@ -447,7 +452,7 @@ export default class ElectricityCompany extends React.Component {
         <div className="electricityCompany-search">
           <div className="search-input">
             <form onSubmit={(e) => this.getSearchTxt(e)}>
-              <input type="search" placeholder="搜公告标题、内容、介绍" onChange={(e) => this.getSearchData(e.target.value)} />
+              <input type="search" placeholder={this.state.pl} onChange={(e) => this.getSearchData(e.target.value)} />
             </form>
           </div>
         </div>
