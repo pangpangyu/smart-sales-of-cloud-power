@@ -3,6 +3,7 @@ import Header from '../components/header';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { Toast,Modal } from 'antd-mobile';
+import { baseImgUrl } from '../config/index'
 
 const alert = Modal.alert;
 const prompt = Modal.prompt;
@@ -23,7 +24,9 @@ export default class Todolist extends React.Component {
 			history: [],
 			yuanyin:'',
 			data:[],
-			tId:0
+			tId:0,
+			openShowImg:false,
+			textarea:''
 		}
 	}
 
@@ -76,7 +79,8 @@ export default class Todolist extends React.Component {
 						title: res.data.form.title === '审批' ? '信息发布审批' : res.data.form.title,
 						data: res.data.form.fields,
 						diagram: res.data.diagram.url,
-						history: res.data.history
+						history: res.data.history,
+						textarea:res.data.form.fields[5][0].value || ''
 					}, () => {
 						let arr = res.data.history
 						sessionStorage.setItem('history', JSON.stringify(arr))
@@ -101,7 +105,7 @@ export default class Todolist extends React.Component {
 						id: this.state.data[0].value,
 						name: this.state.data[2][0].value,
 						_form: {
-							comment:"",
+							comment:this.state.textarea,
 							taskId:this.state.data[1].value
 						}
 					}
@@ -110,10 +114,10 @@ export default class Todolist extends React.Component {
 					params = {
 						'id': this.state.data[0].value,
 						'leaveCode': this.state.data[3][0].value,
-						'leaveReason': "手机端测试",
+						'leaveReason': this.state.data[5][0].value,
 						'leaveType': this.state.data[4][0].value,
 						'_form': {
-							comment:'',
+							comment:this.state.textarea,
 							taskId:this.state.data[1].value
 						}
 					}
@@ -131,10 +135,10 @@ export default class Todolist extends React.Component {
 		])
 	}
 	ProcessTaskUnadopt = () => {
-		prompt('待办审核','确定该待办事项审核不通过?',[
+		alert('待办审核','确定该待办事项审核不通过?',[
 			{ text: '取消', onPress: () => console.log('cancel') },
-			{ text: '确定', onPress: (value) => new Promise((resolve, reject) =>{
-				if(value !== ""){
+			{ text: '确定', onPress: () => new Promise((resolve, reject) =>{
+				if(this.state.textarea !== ""){
 					let params = {}
 					if(this.state.type === 'models_business_Contract'){
 						//合同审批
@@ -143,7 +147,7 @@ export default class Todolist extends React.Component {
 							id: this.state.data[0].value,
 							name: this.state.data[2][0].value,
 							_form: {
-								comment:value,
+								comment:this.state.textarea,
 								taskId:this.state.data[1].value
 							}
 						}
@@ -155,7 +159,7 @@ export default class Todolist extends React.Component {
 							'leaveReason': this.state.data[5][0].value,
 							'leaveType': this.state.data[4][0].value,
 							'_form': {
-								comment:value,
+								comment:this.state.textarea,
 								taskId:this.state.data[1].value
 							}
 						}
@@ -177,6 +181,12 @@ export default class Todolist extends React.Component {
 			}) }
 		])
 	}
+	setTextarea = (e) => {
+		console.log(e.target.value)
+		this.setState({
+			textarea:e.target.value
+		})
+	}
 	render() {
 		return (
 			<div className="page_bg">
@@ -188,35 +198,42 @@ export default class Todolist extends React.Component {
 					</div>
 					<div className="cont">
 						<div className="process">
-							{/* <p style={{margin:'10px 0'}}>审批意见/退回原因：-</p> */}
-							{/* <div className="img">
-								<div style={{padding:'15px 0 5px 0',borderTop:'1px solid #eee',marginTop:'15px'}}>内容介绍</div>
-								<div style={{padding:'5px 10px'}} dangerouslySetInnerHTML={{ __html: this.state.centent2 }}></div>
-								<div style={{padding:'15px 0 5px 0',borderTop:'1px solid #eee',marginTop:'15px'}}>内容</div>
-								<div style={{padding:'5px 10px'}} dangerouslySetInnerHTML={{ __html: this.state.centent }}></div>
-							</div> */}
+							<div>
+								<div className="item">
+									<div className="l">流程图</div>
+									<div className="r" onClick={()=>{this.setState({openShowImg:!this.state.openShowImg})}}><img src={this.state.openShowImg ? require('../assets/img/img207-1.png') : require('../assets/img/img207.png')} width="15" alt=""/></div>
+								</div>
+								{ this.state.openShowImg && <div style={{borderBottom:"1px solid #ddd"}}><img src={baseImgUrl + this.state.diagram} style={{width:"100%"}} alt=""/></div> }
+							</div>
 							{ this.state.data && this.state.data.map((item,index) => {
 								return <div key={index}>
 									{ item.type !== "hidden" && <div className={(item[0].type === "editor" || item[0].type === "textarea") ? 'editor' : 'item'}>
 										<div className="l">{item[0]['label']}</div>
-										{ item[0].options && item[0].options.length > 0 && <div  className="r">
+										{ item[0].type === "textarea" && <div className="r">
+											<textarea style={{width:"100%",border:"1px solid #ddd",padding:'10px',boxSizing: 'border-box'}} rows="4" onChange={this.setTextarea}>{item[0].value}</textarea>
+										</div> }
+										{ item[0].options && item[0].options.length > 0 && <div className="r">
 											{ !item[0].value && '--' }
 											{ item[0].value && item[0].options.filter(i => i.value === item[0].value )[0].text }
 										</div> }
-										{ !item[0].options && <div className="r" dangerouslySetInnerHTML={{ __html: item[0].value || '-' }}></div> }
+									{ !item[0].options && item[0].type !== "textarea" && <div className="r" dangerouslySetInnerHTML={{ __html: item[0].value || '-' }}></div> }
 									</div> }
 							</div>
 							})
 							}
+							<div>
+								<div className="item">
+									<div className="l">流程轨迹</div>
+									<div className="r"><Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`} style={{display:"block"}}><img src={require('../assets/img/img201.png')} width="8" alt=""/></Link></div>
+								</div>
+							</div>
 						</div>
-						{/* { this.state.data.length > 0 && <div className="examine-btn">
-							<button onClick={this.ProcessTaskAdopt}>通过</button>
-							<button onClick={this.ProcessTaskUnadopt}>不通过</button>
-						</div> } */}
 					</div>
 					<div className="f_btn">
-						<Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`}>流程轨迹</Link>
-						<Link to={`/todoDet/${this.state.id}?diagram=${this.state.diagram}&name=${this.state.title}`}>流程图</Link>
+						<a onClick={this.ProcessTaskAdopt}>通过</a>
+						<a onClick={this.ProcessTaskUnadopt}>不通过</a>
+						{/* <Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`}>流程轨迹</Link>
+						<Link to={`/todoDet/${this.state.id}?diagram=${this.state.diagram}&name=${this.state.title}`}>流程图</Link> */}
 					</div>
 				</div>
 			</div>
