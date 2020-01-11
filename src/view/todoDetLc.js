@@ -152,7 +152,7 @@ export default class Todolist extends React.Component {
 						params = {
 							'id': this.state.data[0].value,
 							'leaveCode': this.state.data[3][0].value,
-							'leaveReason': "手机端测试",
+							'leaveReason': this.state.data[5][0].value,
 							'leaveType': this.state.data[4][0].value,
 							'_form': {
 								comment:value,
