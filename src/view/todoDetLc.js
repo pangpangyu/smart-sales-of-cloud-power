@@ -93,13 +93,54 @@ export default class Todolist extends React.Component {
 			}
 		})
 	}
+	ProcessTaskEvent(url,type){
+		if(url){
+			if(type === '提交'){
+				this.ProcessTaskSubmit(url)
+			}else if(type === '不通过'){
+				this.ProcessTaskUnadopt(url)
+			}else if(type === '通过'){
+				this.ProcessTaskAdopt(url)
+			}
+		}else{
+			window.history.go(-1)
+		}
+	}
+	ProcessTaskSubmit = (url) => {
+		alert('待办审核','确定该待办事项提交?',[
+			{ text: '取消', onPress: () => console.log('cancel') },
+			{ text: '确定', onPress: () => new Promise((resolve, reject) => {
+				let params = {}
+				this.state.data.map(item => {
+					console.log(item.length)
+					if(item.length === 1){
+						if(item[0].type === "textarea"){
+							params[item[0].name] = this.state.textarea || item[0].value || ''
+						}else{
+							params[item[0].name] = item[0].value || ''
+						}
+					}else{
+						params[item.name] = item.value || ''
+					}
+				})
+				api.ProcessTaskAdopt(url,params).then(res => {
+					if(res.status === 0){
+						Toast.info('操作成功', 2);
+						resolve()
+						window.location.href = '/todolist'
+					}else{
+						Toast.info(res.message, 2);
+					}
+				})
+			}) },
+		])
+	}
 	//待办审核通过
-	ProcessTaskAdopt = () => {
+	ProcessTaskAdopt = (url) => {
 		alert('待办审核','确定该待办事项审核通过?',[
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => {
 				let params = {}
-				let url = this.state.action[1].url
 				if(this.state.type === 'models_business_Contract'){
 					//合同审批
 					params = {
@@ -135,13 +176,13 @@ export default class Todolist extends React.Component {
 			} }
 		])
 	}
-	ProcessTaskUnadopt = () => {
+	//审核不通过
+	ProcessTaskUnadopt = (url) => {
 		alert('待办审核','确定该待办事项审核不通过?',[
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => new Promise((resolve, reject) =>{
 				if(this.state.textarea !== ""){
 					let params = {}
-					let url = this.state.action[0].url
 					if(this.state.type === 'models_business_Contract'){
 						//合同审批
 						params = {
@@ -207,7 +248,7 @@ export default class Todolist extends React.Component {
 	}
 	setTextarea = (e) => {
 		this.setState({
-			textarea:e.target.value
+			textarea:e.target.value,
 		})
 	}
 	render() {
@@ -253,8 +294,11 @@ export default class Todolist extends React.Component {
 						</div>
 					</div>
 					<div className="f_btn">
-						<a onClick={this.ProcessTaskAdopt}>通过</a>
-						<a onClick={this.ProcessTaskUnadopt}>不通过</a>
+						{ this.state.action && this.state.action.map((item,index) => {
+							return <a key={index} onClick={this.ProcessTaskEvent.bind(this,item.url,item.label)}>{item.label}</a>
+						}) }
+						{/* <a onClick={this.ProcessTaskAdopt}>通过</a>
+						<a onClick={this.ProcessTaskUnadopt}>不通过</a> */}
 						{/* <Link to={`/todoDetList/${this.state.id}?name=${this.state.title}`}>流程轨迹</Link>
 						<Link to={`/todoDet/${this.state.id}?diagram=${this.state.diagram}&name=${this.state.title}`}>流程图</Link> */}
 					</div>
