@@ -20,7 +20,6 @@ export default class Todolist extends React.Component {
 			history:arr,
 			nodata:arr.length > 0 ? false : true
 		})
-		console.log(arr.length)
 	}
 
 	render() {

@@ -57,12 +57,6 @@ class ContractMes extends React.Component {
         that.state.curCompanyName = that.state.curCompanyMes[0].text;
         that.state.batteryList = nextProps.content.taoCanVariableList;
         that.state.contractId = nextProps.contractId;
-        //console.log('合同内容',that.state.contractMesAll)
-        // console.log(nextProps.content.powerUsersOptions)
-        // console.log(that.state.curCompanyId)
-        // console.log(that.state.curCompanyMes)
-        // console.log(that.state.curCompanyMes[0].text)
-        //console.log(that.state.contractId)
     }
 
 
@@ -132,7 +126,7 @@ class ContractMes extends React.Component {
 
     //
     handlePick=(val)=>{
-        console.log(val)
+        
     }
 }
 

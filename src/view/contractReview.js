@@ -23,7 +23,6 @@ class ContractReview extends React.Component {
 
         };
         api.GetContractDetail(params).then(res=>{
-            console.log("售电合同详情",res);
             if(res.status===0){
                 let ohtml=res.data.powerUserContract.contract.content;
                 that.setState(()=>{

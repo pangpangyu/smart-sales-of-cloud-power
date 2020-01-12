@@ -35,7 +35,6 @@ export default class InfoDeliveyAdd extends React.Component {
 
   getInfoPublishDataDetail = () => {
     const that = this
-    console.log(this.state.id)
     let params = `?id=${this.state.id === 0 ? '' : this.state.id}`
     api.GetInfoPublishDataDetail(params).then(res => {
       if (res.status === 0) {
@@ -62,7 +61,6 @@ export default class InfoDeliveyAdd extends React.Component {
   }
 
   onChange = (value) => {
-    console.log(value[0])
     let txt = this.state.options.filter(v => v.value === value[0])[0].label
     this.setState({
       value,

@@ -9,7 +9,6 @@ import { baseImgUrl } from '../config/index';
 export default class NewDetaile extends React.Component{
   constructor(props){
     super(props)
-    console.log(this.props.match.params.type)
     this.state = {
       type: this.props.match.params.type,
       id: this.props.match.params.id,

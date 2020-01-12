@@ -144,13 +144,11 @@ export default class Test extends React.Component {
         })
     }
     handleSearchInput = e => {
-        // console.log(e.target.value);
         this.setState({
             searchInput: e.target.value
         })
     }
     handleSearchSubmit = e => {
-        //console.log(this.state.searchInput);
         this.setState({
             contractManageList: []
         })

@@ -29,7 +29,6 @@ class ContractAttachment extends React.Component {
 		const that = this;
 		that.state.contractMesAll = nextProps.content;//接受从父组件传过来的接口数据
 		that.state.contract = nextProps.content.powerUserContract.contract;
-		console.log(that.state.contractMesAll)
 	}
 	toSee(e) {
 		return () => {
@@ -56,7 +55,6 @@ class ContractAttachment extends React.Component {
 				default:
 					break;
 			}
-			console.log(e, url)
 			if (url) {
 				window.open(baseUrl+url);
 			} else {

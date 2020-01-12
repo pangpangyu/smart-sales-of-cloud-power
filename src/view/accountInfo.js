@@ -8,7 +8,6 @@ import api from '../api/index';
 export default class AccountInfo extends React.Component{
   constructor(props){
     super(props)
-    console.log(getDataQuery('u'))
     this.state = {
       userInfo : {}
     }

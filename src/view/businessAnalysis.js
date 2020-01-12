@@ -87,7 +87,6 @@ export default class BsinessAnalysis extends React.Component {
           data.names.push(i + 1 + '月')
           data2.names.push(i + 1 + '月')
         }
-        console.log(data2)
         this.paintingMap1(data)
         this.paintingMap2(data2)
       }
@@ -940,7 +939,6 @@ export default class BsinessAnalysis extends React.Component {
 
   sure = () => {
     if(this.state.value.length > 0){
-      console.log(this.state.value[0])
       this.setState({
         year:this.state.value[0],
         openPickerView:false

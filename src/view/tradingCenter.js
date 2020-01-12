@@ -133,7 +133,6 @@ export default class Test extends React.Component {
 		let time = new Date(value)
 		let fullYear = time.getFullYear()
 		let month = (time.getMonth() + 1) < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1
-		console.log(value)
 		this.setState({
 			month: month,
 			fullYear: fullYear,

@@ -10,7 +10,6 @@ import NoData from '../components/noData';
 export default class Todolist extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props)
 		this.state = {
 			tabs: [
 				{ id: '1', title: '基本资料' },

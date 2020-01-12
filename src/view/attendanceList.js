@@ -53,7 +53,6 @@ class AttendanceList extends React.Component {
 	//
 	handleTabs = (val) => {
 		const that = this;
-		//console.log(val)
 		that.setState(preState => {
 			return ({
 				showLeaveType: val.id,
@@ -81,7 +80,6 @@ class AttendanceList extends React.Component {
 			"pageSize": that.state.pageSize
 		}
 		api.GetLeaveTableData(params).then(res => {
-			console.log('考勤列表:', res)
 			if (res.status === 0) {
 				that.setState(preState => {
 					return ({
@@ -124,7 +122,6 @@ class AttendanceList extends React.Component {
 		}
 		
 		api.GetvOvertimeTableData(params).then(res => {
-			console.log('加班管理列表:', res)
 			if (res.status === 0) {
 				that.setState(preState => {
 					return ({
@@ -158,7 +155,6 @@ class AttendanceList extends React.Component {
 			}
 		}
 		api.GetvEgressTableData(params).then(res => {
-			console.log('获取外出管理列表:', res)
 			if (res.status === 0) {
 				if(res.data){
 					that.setState(preState => {
@@ -236,7 +232,6 @@ class AttendanceList extends React.Component {
 
 
 	handleCheckChanged = e => {
-		//console.log(e.target.value)
 		this.setState({
 			applyType: e.target.value
 		})
@@ -273,7 +268,6 @@ class AttendanceList extends React.Component {
 		const that = this
 		let params = {}
 		api.GetAuditTypeOptions(params).then(res => {
-			console.log('请假审批状态:', res)
 			if (res.status === 0) {
 			}
 

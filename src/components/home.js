@@ -129,7 +129,6 @@ class Home extends React.Component{
       id:id
     }
     api.FindSystemUser(params).then(res=>{
-      //console.log(res)
       let systemUser={
         "departmentName":res.data.systemUserInfo.position.department.departmentName,
         "positionName":res.data.systemUserInfo.position.positionName,

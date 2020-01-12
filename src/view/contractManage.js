@@ -35,7 +35,6 @@ class ContractManage extends React.Component {
             "sizePrePage": 1000
         }
         api.GetContractList(params).then(res => {
-            console.log('售电合同列表:', res)
             if (res.status === 0) {
                 that.setState(preState => {
                     return ({
@@ -54,13 +53,11 @@ class ContractManage extends React.Component {
     }
 
     handleSearchInput = e => {
-        // console.log(e.target.value);
         this.setState({
             searchInput: e.target.value
         })
     }
     handleSearchSubmit = e => {
-        //console.log(this.state.searchInput);
         this.setState({
             contractManageList: []
         })
@@ -157,7 +154,7 @@ class ContractManage extends React.Component {
 
     //
     handleItem = () => {
-        console.log(this)
+        
     }
 }
 

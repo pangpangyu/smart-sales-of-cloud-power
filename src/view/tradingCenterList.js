@@ -5,7 +5,6 @@ import NoData from '../components/noData';
 export default class Test extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props)
 		this.state = {
 			mediumAndLongTermTradeBulletin: this.props.mediumAndLongTermTradeBulletin,
 			mediumAndLongTermResult: this.props.mediumAndLongTermResult,
@@ -68,7 +67,6 @@ export default class Test extends React.Component {
 	}
 	//目前交易市场统调负荷信息
 	UnifiedLoadRegulation = () => {
-		console.log(this.state.unifiedLoadRegulation)
 		return (
 			<div className="tradingCenterList">
 				{this.state.unifiedLoadRegulation.length > 0 && this.state.unifiedLoadRegulation.map(item => {

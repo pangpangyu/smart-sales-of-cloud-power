@@ -116,18 +116,6 @@ export default class Test extends React.Component {
 				contractTransfer: num1 - num2
 			})
 		})
-		// console.log(params)
-		// api.contractTransferor(params).then(res => {
-		// 	let num = 0
-		// 	if(res.data.rows.length > 0){
-		// 		num = res.data.rows.reduce(function (total, currentValue, currentIndex, arr) {
-		// 			return total + parseInt(currentValue.tradePower);
-		// 		}, 0);
-		// 	}
-		// 	this.setState({
-		// 		contractTransfer: num
-		// 	})
-		// })
 	}
 	render() {
 		return (

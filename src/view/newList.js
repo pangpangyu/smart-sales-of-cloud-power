@@ -13,7 +13,6 @@ class NewList extends React.Component {
   constructor(props) {
     super(props)
     let title = "消息"
-    console.log(props)
     if (this.props.match.params.type === '1') {
       title = '公司公告'
     } else if (this.props.match.params.type === '2') {
@@ -54,7 +53,6 @@ class NewList extends React.Component {
       if (res.status === 0) {
         let arr = this.state.tabs
         arr[1].num = res.data.rows.length
-        console.log(arr)
         this.setState({
           alreadyRead:res.data.rows,
           tabs:arr

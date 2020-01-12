@@ -304,13 +304,11 @@ export default class Test extends React.Component {
         })
     }
     handleSearchInput = e => {
-        // console.log(e.target.value);
         this.setState({
             searchInput: e.target.value
         })
     }
     handleSearchSubmit = e => {
-        //console.log(this.state.searchInput);
         this.setState({
             contractManageList: []
         },() => {
@@ -342,7 +340,6 @@ export default class Test extends React.Component {
 
     //结算管理售电公司数据
     getSettlementElectricityData = () => {
-        console.log(this.state.settlementElectricityYear)
         let params = {
             rowNumber: 0,
             pageSize: 10,

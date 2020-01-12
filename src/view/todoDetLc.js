@@ -11,7 +11,6 @@ const prompt = Modal.prompt;
 export default class Todolist extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props)
 		this.state = {
 			id: this.props.match.params.id,
 			type: '',
@@ -26,7 +25,8 @@ export default class Todolist extends React.Component {
 			data:[],
 			tId:0,
 			openShowImg:false,
-			textarea:''
+			textarea:'',
+			action:[]
 		}
 	}
 
@@ -68,7 +68,8 @@ export default class Todolist extends React.Component {
 					title: res.data.form.title === '审批' ? '信息发布审批' : res.data.form.title,
 					data: res.data.form.fields,
 					diagram: res.data.diagram.url,
-					history: res.data.history
+					history: res.data.history,
+					action:res.data.form.actions
 				}, () => {
 					let arr = res.data.history
 					sessionStorage.setItem('history', JSON.stringify(arr))
@@ -80,7 +81,8 @@ export default class Todolist extends React.Component {
 						data: res.data.form.fields,
 						diagram: res.data.diagram.url,
 						history: res.data.history,
-						textarea:res.data.form.fields[5][0].value || ''
+						textarea:res.data.form.fields[5][0].value || '',
+						action:res.data.form.actions
 					}, () => {
 						let arr = res.data.history
 						sessionStorage.setItem('history', JSON.stringify(arr))
@@ -96,8 +98,8 @@ export default class Todolist extends React.Component {
 		alert('待办审核','确定该待办事项审核通过?',[
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => {
-				console.log(this.state.type)
 				let params = {}
+				let url = this.state.action[1].url
 				if(this.state.type === 'models_business_Contract'){
 					//合同审批
 					params = {
@@ -122,8 +124,7 @@ export default class Todolist extends React.Component {
 						}
 					}
 				}
-				console.log(params)
-				api.ProcessTaskAdopt(true,params).then(res => {
+				api.ProcessTaskAdopt(url,params).then(res => {
 					if(res.status === 0){
 						Toast.info('操作成功', 2);
 						window.location.href = '/todolist'
@@ -140,6 +141,7 @@ export default class Todolist extends React.Component {
 			{ text: '确定', onPress: () => new Promise((resolve, reject) =>{
 				if(this.state.textarea !== ""){
 					let params = {}
+					let url = this.state.action[0].url
 					if(this.state.type === 'models_business_Contract'){
 						//合同审批
 						params = {
@@ -163,9 +165,31 @@ export default class Todolist extends React.Component {
 								taskId:this.state.data[1].value
 							}
 						}
+					}else if('models_attendance_EgressManagement'){
+						//外出审批
+						params = {
+							'id': this.state.data[0].value,
+							'leaveCode': this.state.data[3][0].value,
+							'leaveReason': this.state.data[5][0].value,
+							'leaveType': this.state.data[4][0].value,
+							'_form': {
+								comment:this.state.textarea,
+								taskId:this.state.data[1].value
+							}
+						}
+					}else{
+						params = {
+							'id': this.state.data[0].value,
+							'leaveCode': this.state.data[3][0].value,
+							'leaveReason': this.state.data[5][0].value,
+							'leaveType': this.state.data[4][0].value,
+							'_form': {
+								comment:this.state.textarea,
+								taskId:this.state.data[1].value
+							}
+						}
 					}
-					console.log(params)
-					api.ProcessTaskAdopt(false,params).then(res => {
+					api.ProcessTaskAdopt(url,params).then(res => {
 						if(res.status === 0){
 							Toast.info('操作成功', 2);
 							resolve()
@@ -182,7 +206,6 @@ export default class Todolist extends React.Component {
 		])
 	}
 	setTextarea = (e) => {
-		console.log(e.target.value)
 		this.setState({
 			textarea:e.target.value
 		})

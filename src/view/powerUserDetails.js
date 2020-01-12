@@ -51,7 +51,6 @@ export default class Todolist extends React.Component {
 		}
 	}
 	onChange = (value) => {
-		console.log(value)
 		this.setState({
 			fullYear: value[0],
 			time: value

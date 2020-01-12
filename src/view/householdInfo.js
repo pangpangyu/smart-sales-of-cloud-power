@@ -9,7 +9,6 @@ import NoData from '../components/noData';
 class PowerDetails extends React.Component {
 	constructor(props) {
 		super(props)
-		console.log(props)
 		this.state = {
 			id:this.props.id,
 			list:[],

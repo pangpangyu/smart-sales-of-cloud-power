@@ -43,8 +43,9 @@ const api = {
     return request.post('nuts/crud/processTask' , params)
   },
   //待办事项审核通过
-  ProcessTaskAdopt(flag,params) {
-    return request.post('nuts/crud/audit/ProcessTask?_form.pass=' + flag , params)
+  ProcessTaskAdopt(url,params) {
+    //nuts/crud/audit/ProcessTask?_form.pass=' + flag 
+    return request.post(url, params)
   },
   //售电情况总览
   GetTabControlData(params) {

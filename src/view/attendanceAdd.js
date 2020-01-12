@@ -13,7 +13,6 @@ const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
 // Make sure that in `time` mode, the maxDate and minDate are within one day.
 let minDate = new Date(nowTimeStamp - 1e7);
 const maxDate = new Date(nowTimeStamp + 1e7);
-// console.log(minDate, maxDate);
 if (minDate.getDate() !== maxDate.getDate()) {
   // set the minDate to the 0 of maxDate
   minDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
@@ -43,12 +42,9 @@ export default class AttendanceAdd extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log(`${getDataQuery('applyType')}`)
     let title = '请假';
     let userInfo = JSON.parse(window.sessionStorage.getItem('userInfo'))
     let systemUser=JSON.parse(window.sessionStorage.getItem('systemUser'))
-    //console.log(userInfo)
-    //console.log(systemUser)
     this.state = {
       leaveTypeParams:`${getDataQuery('type')}`,
       status:`${getDataQuery('status')}`,
@@ -141,7 +137,6 @@ export default class AttendanceAdd extends React.Component {
 
   //请假类型选择
   onChangeQJtype = (val) => {
-    console.log(val[0]);
     this.setState({
       leaveType: val
     })
@@ -149,7 +144,6 @@ export default class AttendanceAdd extends React.Component {
 
   getType = () => {
     var typeVal = (this.state.leaveType && this.state.leaveType[0]) || "0"
-    console.log(typeVal);
     this.setState({
       qjopen: false,
       leaveTypeLabel: getListItem(this.state.leaveTypeOptions, 'value', typeVal || "0")[0].label,
@@ -194,7 +188,6 @@ export default class AttendanceAdd extends React.Component {
 
 
   onChange = (value) => {
-    console.log(value);
     this.setState({
       time: value
     });
@@ -267,7 +260,6 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     let params = {}
     api.GetleaveTypeOptions(params).then(res => {
-      console.log('请假类型:', res);
       let rawData = res.data || [];
       let options = rawData.map((option) => {
         return { label: option.text, value: option.value }
@@ -285,7 +277,6 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     let params = {}
     api.GetOvertimeTypeOptions(params).then(res => {
-      console.log('加班类型:', res);
       let rawData = res.data || [];
       let options = rawData.map((option) => {
         return { label: option.text, value: option.value }
@@ -303,7 +294,6 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     let params = {}
     api.GetSettlementTypeOptions(params).then(res => {
-      console.log('加班结算方式:', res);
       let rawData = res.data || [];
       let options = rawData.map((option) => {
         return { label: option.text, value: option.value }
@@ -340,7 +330,6 @@ export default class AttendanceAdd extends React.Component {
       "ids1": that.state.form.jiabanIds||[]
     };
     api.OneOvertimeInfoSave(params).then(res => {
-      console.log('加班用户:', res);
       if (res.status === 0) {
         let newForm=that.state.form;
         newForm.jiabanIds=[res.data];
@@ -368,7 +357,6 @@ export default class AttendanceAdd extends React.Component {
       "ids1": []
     }
     api.OneEgressInfoSave(params).then(res => {
-      console.log('外出用户:', res);
       if (res.status === 0) {
         let newForm=that.state.form;
         newForm.waichuIds=[res.data];
@@ -385,7 +373,6 @@ export default class AttendanceAdd extends React.Component {
     const that = this;
     let params = {}
     api.GetEgressTypeOptions(params).then(res => {
-      console.log('外出类型:', res);
       let rawData = res.data || [];
       let options = rawData.map((option) => {
         return { label: option.text, value: option.value }
@@ -406,7 +393,6 @@ export default class AttendanceAdd extends React.Component {
       leaveType:that.state.leaveTypeParams
     };
     api.GetDefaultPersonalInfo(params).then(res => {
-      console.log('获取考勤部门信息:', res);
       if (res.status === 0) {
         let newform=that.state.form;
         newform.leaveReason=res.data.leaveReason;//理由
@@ -435,7 +421,6 @@ export default class AttendanceAdd extends React.Component {
       id:that.state.leaveId,
     };
     api.GetDefaultEgressInfo(params).then(res => {
-      console.log('获取外出信息详细:', res);
       if (res.status === 0) {
         let newform=that.state.form;
         newform.leaveReason=res.data.egressReason;//理由
@@ -461,7 +446,6 @@ export default class AttendanceAdd extends React.Component {
       id:that.state.leaveId,
     };
     api.GetDefaultOvertimeInfo(params).then(res => {
-      console.log('获取加班信息详细:', res);
       if (res.status === 0) {
         let newform=that.state.form;
         newform.leaveReason=res.data.overtimeReason;//理由
@@ -485,7 +469,6 @@ export default class AttendanceAdd extends React.Component {
       "ids1":that.state.form.waichuIds
     };
     api.GetEgressUserTableData(params).then(res => {
-      console.log('获取外出请假人:', res);
       if (res.status === 0) {
    
       }
@@ -502,7 +485,6 @@ export default class AttendanceAdd extends React.Component {
       "overtimeId": that.state.leaveId
     };
     api.GetOvertimeInfoTableData(params).then(res => {
-      console.log('获取加班请假人:', res);
       if (res.status === 0) {
         let newform=that.state.form;
         let jiabanPersonInfo=res.data;
@@ -528,7 +510,9 @@ export default class AttendanceAdd extends React.Component {
           jstypeCurObject=rawData2.filter(item=>{
             return item.text==jiabanPersonInfo.rows[0].settlementWayType;
           })
-          newform.jiesuanChooseType=jstypeCurObject[0].value;
+          if(jstypeCurObject.length > 0){
+            newform.jiesuanChooseType=jstypeCurObject[0].value;
+          }
           that.setState({
             form:newform
           })
@@ -570,9 +554,7 @@ export default class AttendanceAdd extends React.Component {
 	    "id": that.state.leaveId!="null"?that.state.leaveId:''
       
     }
-    //console.log(params)
     api.GetSaveLeave(params).then(res => {
-      console.log('保存请假:', res);
       if (res.status === 0) {
         Toast.info(res.message);
         if(that.state.addStatus==1){
@@ -585,7 +567,6 @@ export default class AttendanceAdd extends React.Component {
       }
     })
     .catch((e)=>{
-      console.log(e)
       Toast.info(e.message)
     })
   }
@@ -595,7 +576,6 @@ export default class AttendanceAdd extends React.Component {
     const that=this;
     Toast.loading('正在提交');
     api.GetSubmitLeave(that.state.leaveId).then(res=>{
-      console.log('提交请假',res)
       if(res.status === 0){
         Toast.info(res.message);   
         setTimeout(function(){
@@ -634,7 +614,6 @@ export default class AttendanceAdd extends React.Component {
       "egressId": that.state.leaveId
     };
     api.OneEgressSave(params).then(res => {
-      console.log('保存外出:', res);
       if (res.status === 0) {
         Toast.info(res.message);
         if(that.state.addStatus==1){
@@ -654,7 +633,6 @@ export default class AttendanceAdd extends React.Component {
     const that=this;
     Toast.loading('正在提交');
     api.EgressSubmitSign(that.state.leaveId).then(res=>{
-      console.log('提交外出审核',res)
       if(res.status === 0){
         Toast.info(res.message);
         setTimeout(function(){
@@ -665,7 +643,6 @@ export default class AttendanceAdd extends React.Component {
       }
     })
     .catch((e)=>{
-      console.log(e)
       Toast.info("流程审批还没开始")
     })
   }
@@ -687,9 +664,7 @@ export default class AttendanceAdd extends React.Component {
       "ids1": that.state.form.jiabanIds,
       "overtimeId": that.state.leaveId
     };
-    console.log(params)
     api.OneOvertimeSave(params).then(res => {
-      console.log('保存加班:', res);
       if (res.status === 0) {
         Toast.info(res.message);
         if(that.state.addStatus==1){
@@ -709,7 +684,6 @@ export default class AttendanceAdd extends React.Component {
     const that=this;
     Toast.loading('正在提交');
     api.OvertimeSubmitSign(that.state.leaveId).then(res=>{
-      console.log('提交加班审核',res)
       if(res.status === 0){
         Toast.info(res.message);   
         setTimeout(function(){

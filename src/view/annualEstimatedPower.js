@@ -78,7 +78,6 @@ export default class annualEstimatedPower extends React.Component {
           electricTotal:res.data.rows[0].total,
           year:res.data.rows[0].yearDate
         })
-        console.log(this.state.yearPowerTab)
       }
     })
   }

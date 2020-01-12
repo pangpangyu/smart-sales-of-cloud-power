@@ -9,7 +9,6 @@ import { baseUrl } from '../config/index'
 class ContractDetail extends React.Component {
 	constructor(props) {
 		super(props)
-		console.log(this.props.match.params)
 		this.state = {
 			tabs: [
 				{ id: 0, title: '合同内容' },
@@ -40,7 +39,6 @@ class ContractDetail extends React.Component {
 			templId: 0,
 		};
 		api.GetContractDetail(params).then(res => {
-			console.log("售电合同详情1", res);
 			if (res.status === 0) {
 				that.setState(() => {
 					return ({
@@ -64,7 +62,6 @@ class ContractDetail extends React.Component {
 	}
 
 	handleCheckChanged = e => {
-		console.log(e.target.value)
 		this.setState({
 			docType: e.target.value
 		})
@@ -87,34 +84,12 @@ class ContractDetail extends React.Component {
 		e.preventDefault()
 		const that = this
 		if (that.state.docType === "doc") {
-			console.log("isDoc")
 			let url = `${baseUrl}/nuts/crud/contract/wordTransForm?contractId=${this.state.hetongId}`
-			console.log(url)
 			window.open(url)
 		} else if (that.state.docType === "pdf") {//pdf
-			console.log("isPdf")
 			let url = `${baseUrl}/nuts/crud/contract/PdfTransform?contractId=${this.state.hetongId}`
-			console.log(url)
 			window.open(url)
 		}
-		//window.open("http://61.146.164.91:8000/nuts/crud/contract/wordTransForm?contractId=" += 300)
-		// let params = {
-		//     contractId: that.state.contractId,
-		// };
-		// api.GetContractDownloadWord(params).then(res => {
-		//     console.log("world", res);
-		//     if (res.status === 0) {
-		//         that.setState(() => {
-		//             return ({
-		//                 //contractDetail: res.data
-		//             })
-		//         })
-		//     } 
-		// })
-
-		// this.setState({
-		//     addStatus:false
-		// })
 	}
 
 

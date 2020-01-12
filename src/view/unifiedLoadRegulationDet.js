@@ -25,7 +25,6 @@ export default class Test extends React.Component {
 			arr.map((item,index) => {
 				data.push({time:this.getFormatTime(index),data:item})
 			})
-			console.log(data)
 			this.setState({
 				time:res.data.date,
 				data:data
