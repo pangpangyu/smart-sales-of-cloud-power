@@ -112,7 +112,6 @@ export default class Todolist extends React.Component {
 			{ text: '确定', onPress: () => new Promise((resolve, reject) => {
 				let params = {}
 				this.state.data.map(item => {
-					console.log(item.length)
 					if(item.length === 1){
 						if(item[0].type === "textarea"){
 							params[item[0].name] = this.state.textarea || item[0].value || ''
@@ -141,30 +140,17 @@ export default class Todolist extends React.Component {
 			{ text: '取消', onPress: () => console.log('cancel') },
 			{ text: '确定', onPress: () => {
 				let params = {}
-				if(this.state.type === 'models_business_Contract'){
-					//合同审批
-					params = {
-						contractType: this.state.data[3][0].value,
-						id: this.state.data[0].value,
-						name: this.state.data[2][0].value,
-						_form: {
-							comment:this.state.textarea,
-							taskId:this.state.data[1].value
+				this.state.data.map(item => {
+					if(item.length === 1){
+						if(item[0].type === "textarea"){
+							params[item[0].name] = this.state.textarea || item[0].value || ''
+						}else{
+							params[item[0].name] = item[0].value || ''
 						}
+					}else{
+						params[item.name] = item.value || ''
 					}
-				}else if(this.state.type === 'models_attendance_LeaveManagement'){
-					//请假审批
-					params = {
-						'id': this.state.data[0].value,
-						'leaveCode': this.state.data[3][0].value,
-						'leaveReason': this.state.data[5][0].value,
-						'leaveType': this.state.data[4][0].value,
-						'_form': {
-							comment:this.state.textarea,
-							taskId:this.state.data[1].value
-						}
-					}
-				}
+				})
 				api.ProcessTaskAdopt(url,params).then(res => {
 					if(res.status === 0){
 						Toast.info('操作成功', 2);
@@ -183,53 +169,17 @@ export default class Todolist extends React.Component {
 			{ text: '确定', onPress: () => new Promise((resolve, reject) =>{
 				if(this.state.textarea !== ""){
 					let params = {}
-					if(this.state.type === 'models_business_Contract'){
-						//合同审批
-						params = {
-							contractType: this.state.data[3][0].value,
-							id: this.state.data[0].value,
-							name: this.state.data[2][0].value,
-							_form: {
-								comment:this.state.textarea,
-								taskId:this.state.data[1].value
+					this.state.data.map(item => {
+						if(item.length === 1){
+							if(item[0].type === "textarea"){
+								params[item[0].name] = this.state.textarea || item[0].value || ''
+							}else{
+								params[item[0].name] = item[0].value || ''
 							}
+						}else{
+							params[item.name] = item.value || ''
 						}
-					}else if(this.state.type === 'models_attendance_LeaveManagement'){
-						//请假审批
-						params = {
-							'id': this.state.data[0].value,
-							'leaveCode': this.state.data[3][0].value,
-							'leaveReason': this.state.data[5][0].value,
-							'leaveType': this.state.data[4][0].value,
-							'_form': {
-								comment:this.state.textarea,
-								taskId:this.state.data[1].value
-							}
-						}
-					}else if('models_attendance_EgressManagement'){
-						//外出审批
-						params = {
-							'id': this.state.data[0].value,
-							'leaveCode': this.state.data[3][0].value,
-							'leaveReason': this.state.data[5][0].value,
-							'leaveType': this.state.data[4][0].value,
-							'_form': {
-								comment:this.state.textarea,
-								taskId:this.state.data[1].value
-							}
-						}
-					}else{
-						params = {
-							'id': this.state.data[0].value,
-							'leaveCode': this.state.data[3][0].value,
-							'leaveReason': this.state.data[5][0].value,
-							'leaveType': this.state.data[4][0].value,
-							'_form': {
-								comment:this.state.textarea,
-								taskId:this.state.data[1].value
-							}
-						}
-					}
+					})
 					api.ProcessTaskAdopt(url,params).then(res => {
 						if(res.status === 0){
 							Toast.info('操作成功', 2);
