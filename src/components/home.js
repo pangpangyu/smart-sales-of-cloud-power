@@ -143,29 +143,25 @@ class Home extends React.Component{
     return(
       <div>
         <Header title={'首页'} back={false} search={false}/>
-        <div className="banner" style={{height:'180px',color:'#fff'}}>
+        <div className="banner" style={{height:'142px',color:'#fff',touchAction: 'none' }}>
           {
             ( this.state.carouselList && this.state.carouselList.length ) && 
             <Carousel
-                cellSpacing={8}
-                slideWidth={0.8}
-                dots={false}
-                autoplay
-                infinite
-                autoplayInterval={3000}
-                afterChange={index => this.setState({ slideIndex: index })}
-                style={{minHeight:'180px'}}
-              >
-                {this.state.carouselList.map((item,index) => (
+              infinite
+              dots={false}
+              autoplay
+              autoplayInterval={3000}
+            >
+              {this.state.carouselList.map((item,index) => (
                   <div 
                     className="banner-item"
                     key={index} >
-                      <div className="banner-img" style={{transform: this.state.slideIndex === index ? 'scale(1)' : 'scale(0.9)',height:this.state.imgHeight}}>
+                      <div className="banner-img" style={{height:this.state.imgHeight}}>
                         <img src={ baseImgUrl + item.url } alt={item.name} style={{width:"100%"}}/>
                       </div>
                   </div>
-                ))}
-              </Carousel>
+              ))}
+            </Carousel>
           }
         </div>
         <div style={{height:'10px',background:'#f0f1f3'}}></div>
